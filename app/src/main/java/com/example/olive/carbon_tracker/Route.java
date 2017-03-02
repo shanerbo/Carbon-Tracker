@@ -1,6 +1,5 @@
 package com.example.olive.carbon_tracker;
 
-import java.security.InvalidParameterException;
 
 public class Route {
     private String Name;
@@ -19,7 +18,7 @@ public class Route {
 
     public void setName(String name) {
         if (name.length() == 0) {
-            throw new InvalidParameterException();
+            throw new IllegalArgumentException();
         }
         Name = name;
     }
@@ -30,7 +29,7 @@ public class Route {
 
     public void setCityDistance(int cityDistance) {
         if (cityDistance == 0) {
-            throw new InvalidParameterException();
+            throw new IllegalArgumentException();
         }
         CityDistance = cityDistance;
     }
@@ -41,7 +40,7 @@ public class Route {
 
     public void setHighwayDistance(int highwayDistance) {
         if (highwayDistance == 0) {
-            throw new InvalidParameterException();
+            throw new IllegalArgumentException();
         }
         HighwayDistance = highwayDistance;
     }
