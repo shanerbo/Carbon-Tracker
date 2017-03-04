@@ -1,4 +1,4 @@
-Scrum Master:
-Project Owner:
+Scrum Master: Kyle Chung
+Project Owner: Rishi Dholliwar
 Repository Manager: Nichlas Fung
-Team Member: 
+Team Member: Frank
