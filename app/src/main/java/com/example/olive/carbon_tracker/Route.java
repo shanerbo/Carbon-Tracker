@@ -20,7 +20,7 @@ public class Route {
         if (name.length() == 0) {
             throw new IllegalArgumentException();
         }
-        Name = name;
+        this.Name = name;
     }
 
     public int getCityDistance() {
@@ -31,7 +31,7 @@ public class Route {
         if (cityDistance == 0) {
             throw new IllegalArgumentException();
         }
-        CityDistance = cityDistance;
+        this.CityDistance = cityDistance;
     }
 
     public int getHighwayDistance() {
@@ -42,6 +42,6 @@ public class Route {
         if (highwayDistance == 0) {
             throw new IllegalArgumentException();
         }
-        HighwayDistance = highwayDistance;
+        this.HighwayDistance = highwayDistance;
     }
 }
