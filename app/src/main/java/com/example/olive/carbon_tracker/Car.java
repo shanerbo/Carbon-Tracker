@@ -21,7 +21,7 @@ public class Car {
         if (name.length() == 0) {
             throw new IllegalArgumentException();
         }
-        Name = name;
+        this.Name = name;
     }
 
     public String getMake() {
@@ -32,7 +32,7 @@ public class Car {
         if (make.length() == 0) {
             throw new IllegalArgumentException();
         }
-        Make = make;
+        this.Make = make;
     }
 
     public int getModel() {
@@ -43,7 +43,7 @@ public class Car {
         if (model == 0) {
             throw new IllegalArgumentException();
         }
-        Model = model;
+        this.Model = model;
     }
 
     public int getYear() {
@@ -54,6 +54,6 @@ public class Car {
         if (year == 0) {
             throw new IllegalArgumentException();
         }
-        Year = year;
+        this.Year = year;
     }
 }
