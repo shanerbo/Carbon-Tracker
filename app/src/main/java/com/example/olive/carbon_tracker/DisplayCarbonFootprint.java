@@ -21,7 +21,6 @@ public class DisplayCarbonFootprint extends AppCompatActivity {
     private static final int NUM_COLS = 2;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,7 +30,7 @@ public class DisplayCarbonFootprint extends AppCompatActivity {
         getWindow().getDecorView().setBackgroundColor(Color.rgb(49, 86, 28));
     }
 
-    // will be used when we set up pie chart class
+    //TODO will be used when we set up pie chart class
     private void setupPieChart() {
         Button btn = (Button) findViewById(R.id.btn_PieChart);
         btn.setOnClickListener(new View.OnClickListener() {
@@ -56,44 +55,35 @@ public class DisplayCarbonFootprint extends AppCompatActivity {
         for (int i = 0; i < NUM_ROWS; i++) {
             TableRow tableRow = new TableRow(this);
             TextView dateOfTrip = new TextView(this);
-            dateOfTrip.setText(" ");
-            dateOfTrip.setTextColor(Color.WHITE);
-            dateOfTrip.setGravity(Gravity.CENTER);
-            tableRow.addView(dateOfTrip);
+            enterRowInfo(dateOfTrip, tableRow);
 
             TextView routeName = new TextView(this);
-            routeName.setText(" ");
-            routeName.setTextColor(Color.WHITE);
-            routeName.setGravity(Gravity.CENTER);
-            tableRow.addView(routeName);
+            enterRowInfo(routeName, tableRow);
 
             TextView distance = new TextView(this);
-            distance.setText("");
-            distance.setTextColor(Color.WHITE);
-            distance.setGravity(Gravity.CENTER);
-            tableRow.addView(distance);
+            enterRowInfo(distance, tableRow);
 
             TextView vehicleName = new TextView(this);
-            vehicleName.setTextColor(Color.WHITE);
-            vehicleName.setGravity(Gravity.CENTER);
-            tableRow.addView(vehicleName);
+            enterRowInfo(vehicleName, tableRow);
 
             TextView carbonEmission = new TextView(this);
-            carbonEmission.setText("" );
-            carbonEmission.setTextColor(Color.WHITE);
-            carbonEmission.setGravity(Gravity.CENTER);
-            tableRow.addView(carbonEmission);
+            enterRowInfo(carbonEmission, tableRow);
 
             table.addView(tableRow);
         }
-
     }
-
 
     public void makeColumnHeading(String heading, TableRow tableRow0) {
         TextView tableColumn = new TextView(this);
         tableColumn.setText(heading);
         tableColumn.setTextColor(Color.BLACK);
         tableRow0.addView(tableColumn);
+    }
+
+    public void enterRowInfo(TextView textView, TableRow tableRow) {
+        textView.setText(" ");
+        textView.setTextColor(Color.WHITE);
+        textView.setGravity(Gravity.CENTER);
+        tableRow.addView(textView);
     }
 }
