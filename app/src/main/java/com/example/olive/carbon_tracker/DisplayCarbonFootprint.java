@@ -24,10 +24,11 @@ public class DisplayCarbonFootprint extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_display_carbon_footprint);
         setupPieChart();
         populateCarbonFootprintTable();
         getWindow().getDecorView().setBackgroundColor(Color.rgb(49, 86, 28));
+
     }
 
     //TODO will be used when we set up pie chart class

@@ -32,7 +32,7 @@ public class MainMenu extends AppCompatActivity {
                         //showActivity = new Intent(MainMenu.this, );
                         break;
                     case R.id.btnCurrentFootprint:
-                        //showActivity = new Intent(MainMenu.this, );
+                        showActivity = new Intent(MainMenu.this,DisplayCarbonFootprint.class);
                         break;
                 }
                 startActivity(showActivity);
