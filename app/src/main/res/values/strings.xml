@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Carbon_Tracker</string>
     <string name="pie_chart">Pie Chart</string>
+    <string name="main_menu">Main Menu</string>
+    <string name="new_journey">New Journey</string>
+    <string name="select_journey">Select Journey</string>
+    <string name="carbon_footprint">Carbon Footprint</string>
 </resources>

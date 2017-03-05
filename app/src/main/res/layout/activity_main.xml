@@ -11,7 +11,36 @@
     tools:context="com.example.olive.carbon_tracker.MainActivity">
 
     <TextView
+        android:id="@+id/txtMainMenu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:text="@string/main_menu"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/btnCreateJourney"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/txtMainMenu"
+        android:layout_marginTop="58dp"
+        android:text="@string/new_journey" />
+
+    <Button
+        android:id="@+id/btnSelectJourney"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/btnCreateJourney"
+        android:layout_marginTop="71dp"
+        android:text="@string/select_journey" />
+
+    <Button
+        android:id="@+id/btnCurrentFootprint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/btnSelectJourney"
+        android:layout_marginTop="70dp"
+        android:text="@string/carbon_footprint" />
 </RelativeLayout>
