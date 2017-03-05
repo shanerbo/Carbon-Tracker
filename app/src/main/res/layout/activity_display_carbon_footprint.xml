@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.olive.carbon_tracker.DisplayCarbonFootprint">
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#31561C"
+        android:layout_marginTop="48dp"
+        android:layout_alignTop="@+id/btn_PieChart"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <HorizontalScrollView
+            android:id="@+id/horizontalscroll"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" >
+
+            <RelativeLayout
+                android:id="@+id/RelativeLayout1"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical" >
+
+                <TableLayout
+                    android:id="@+id/tableCarbonFootprint"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    >
+                </TableLayout>
+
+            </RelativeLayout>
+        </HorizontalScrollView>
+    </ScrollView>
+
+    <Button
+        android:text="@string/pie_chart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_PieChart"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:textStyle="normal|bold"
+        android:layout_weight="1"
+        android:textSize="10sp"
+        android:layout_alignParentTop="true"
+        />
+</android.support.constraint.ConstraintLayout>
