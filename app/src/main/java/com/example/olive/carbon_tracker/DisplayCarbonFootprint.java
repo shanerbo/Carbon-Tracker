@@ -19,9 +19,8 @@ public class DisplayCarbonFootprint extends AppCompatActivity {
 
     private static final int NUM_ROWS = 3;   //rows will be dynamic
     private static final int NUM_COLS = 2;
-   
 
-    float testCarbomEmissionData[] = {10.4f, 55.5f, 45.5f};
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,13 +31,13 @@ public class DisplayCarbonFootprint extends AppCompatActivity {
         getWindow().getDecorView().setBackgroundColor(Color.rgb(49, 86, 28));
     }
 
+    // will be used when we set up pie chart class
     private void setupPieChart() {
         Button btn = (Button) findViewById(R.id.btn_PieChart);
         btn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(DisplayCarbonFootprint.this, PieChart.class);
                 startActivity(intent);
-                finish();
             }
         });
     }
@@ -62,7 +61,6 @@ public class DisplayCarbonFootprint extends AppCompatActivity {
             dateOfTrip.setGravity(Gravity.CENTER);
             tableRow.addView(dateOfTrip);
 
-
             TextView routeName = new TextView(this);
             routeName.setText(" ");
             routeName.setTextColor(Color.WHITE);
@@ -81,7 +79,7 @@ public class DisplayCarbonFootprint extends AppCompatActivity {
             tableRow.addView(vehicleName);
 
             TextView carbonEmission = new TextView(this);
-            carbonEmission.setText("" + testCarbomEmissionData[i]);
+            carbonEmission.setText("" );
             carbonEmission.setTextColor(Color.WHITE);
             carbonEmission.setGravity(Gravity.CENTER);
             tableRow.addView(carbonEmission);
