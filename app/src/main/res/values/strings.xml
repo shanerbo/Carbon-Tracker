@@ -5,4 +5,11 @@
     <string name="new_journey">New Journey</string>
     <string name="select_journey">Select Journey</string>
     <string name="carbon_footprint">Carbon Footprint</string>
+
+    <string-array name="make_list">
+        <item>Toyota</item>
+        <item>Nissan</item>
+        <item>BMW</item>
+    </string-array>
+
 </resources>
