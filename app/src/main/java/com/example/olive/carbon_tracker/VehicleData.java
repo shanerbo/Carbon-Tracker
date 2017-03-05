@@ -38,7 +38,7 @@ public class VehicleData {
             int skipFirstLine = 0;
             while ((line = reader.readLine()) != null) {
                 Log.d("MyActivity", "Line: " + line);
-                //Split by ','
+                //Split by '@'
                 String[] tokens = line.split("@");
                 //Read data
                 Vehicle vehicle = new Vehicle();
