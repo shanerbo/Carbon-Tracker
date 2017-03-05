@@ -19,7 +19,7 @@ public class DisplayCarbonFootprint extends AppCompatActivity {
 
     private static final int NUM_ROWS = 3;   //rows will be dynamic
     private static final int NUM_COLS = 2;
-    //ModelMain modelMain = ModelMain.getInstance();
+   
 
     float testCarbomEmissionData[] = {10.4f, 55.5f, 45.5f};
 
@@ -44,7 +44,7 @@ public class DisplayCarbonFootprint extends AppCompatActivity {
     }
 
     public void populateCarbonFootprintTable() {
-      //  List<String> make = modelMain.getVehicleMake(this);
+
         TableLayout table = (TableLayout) findViewById(R.id.tableCarbonFootprint);
         TableRow tableRow0 = new TableRow(this);
         makeColumnHeading(" Date of Trip ", tableRow0);
@@ -76,7 +76,6 @@ public class DisplayCarbonFootprint extends AppCompatActivity {
             tableRow.addView(distance);
 
             TextView vehicleName = new TextView(this);
-         //   vehicleName.setText(make.get(i));
             vehicleName.setTextColor(Color.WHITE);
             vehicleName.setGravity(Gravity.CENTER);
             tableRow.addView(vehicleName);
