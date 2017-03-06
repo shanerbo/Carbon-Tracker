@@ -9,9 +9,7 @@ public class Singleton {
     private List<Vehicle> Vehicles = new ArrayList<>();
     private List<Route> Routes = new ArrayList<>();
 
-    private Singleton() {
-        currInstance = this;
-    }
+    private Singleton() {}
 
     public static Singleton getCurrInstance() {
         return currInstance;
