@@ -5,4 +5,9 @@
     <string name="new_journey">New Journey</string>
     <string name="select_journey">Select Journey</string>
     <string name="carbon_footprint">Carbon Footprint</string>
+    <string name="title_activity_display_route_list">DisplayRouteList</string>
+    <string name="large_text">
+        "route list"
+    </string>
+    <string name="action_settings">Settings</string>
 </resources>
