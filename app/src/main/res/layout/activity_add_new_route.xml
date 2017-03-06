@@ -1,83 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.olive.carbon_tracker.AddNewRoute">
 
-    <!--<TextView-->
-        <!--android:id="@+id/RouteName"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="Name: "-->
-        <!--android:textSize="18sp"-->
-        <!--tools:layout_editor_absoluteX="135dp"-->
-        <!--tools:layout_editor_absoluteY="86dp" />-->
+    <TextView
+        android:id="@+id/AddRouteName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="92dp"
+        android:layout_marginTop="136dp"
+        android:text="@string/AddRouteName"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
 
-    <!--<TextView-->
-        <!--android:id="@+id/CityRoute"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="Distance in City: "-->
-        <!--android:textSize="18sp"-->
-        <!--tools:layout_editor_absoluteX="61dp"-->
-        <!--tools:layout_editor_absoluteY="158dp" />-->
+    <TextView
+        android:id="@+id/AddCityDst"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="45dp"
+        android:text="@string/CityDst"
+        android:layout_below="@+id/AddRouteName"
+        android:layout_alignEnd="@+id/AddRouteName" />
 
-    <!--<TextView-->
-        <!--android:id="@+id/HighwayRoute"-->
-        <!--android:layout_width="171dp"-->
-        <!--android:layout_height="25dp"-->
-        <!--android:text="Distance in Highway:"-->
-        <!--android:textSize="18sp"-->
-        <!--tools:layout_editor_absoluteX="21dp"-->
-        <!--tools:layout_editor_absoluteY="226dp" />-->
+    <TextView
+        android:id="@+id/AddHwayDst"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="45dp"
+        android:text="@string/HwayDst"
+        android:layout_below="@+id/AddCityDst"
+        android:layout_alignEnd="@+id/AddCityDst" />
 
-    <!--<TextView-->
-        <!--android:id="@+id/textView4"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="Total Distance: "-->
-        <!--android:textSize="18sp"-->
-        <!--tools:layout_editor_absoluteX="67dp"-->
-        <!--tools:layout_editor_absoluteY="296dp" />-->
+    <TextView
+        android:id="@+id/TotalDst"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="45dp"
+        android:text="@string/TotalDst"
+        android:layout_below="@+id/AddHwayDst"
+        android:layout_alignEnd="@+id/AddHwayDst" />
 
-    <!--<EditText-->
-        <!--android:id="@+id/NameInput"-->
-        <!--android:layout_width="119dp"-->
-        <!--android:layout_height="40dp"-->
-        <!--android:ems="10"-->
-        <!--android:inputType="textPersonName"-->
-        <!--tools:layout_editor_absoluteX="208dp"-->
-        <!--tools:layout_editor_absoluteY="75dp" />-->
+    <EditText
+        android:id="@+id/RouteNameInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/AddRouteName"
+        android:layout_alignBottom="@+id/AddRouteName"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="32dp"
+        android:ems="10"
+        android:hint="@string/Hint_Route_name"
+        android:inputType="textPersonName"
+        android:textSize="12sp"
+        tools:ignore="RelativeOverlap" />
 
-    <!--<EditText-->
-        <!--android:id="@+id/CityDstInput"-->
-        <!--android:layout_width="116dp"-->
-        <!--android:layout_height="40dp"-->
-        <!--android:ems="10"-->
-        <!--android:inputType="textPersonName"-->
-        <!--tools:layout_editor_absoluteX="208dp"-->
-        <!--tools:layout_editor_absoluteY="148dp" />-->
+    <EditText
+        android:id="@+id/CityDstInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/AddCityDst"
+        android:layout_alignBottom="@+id/AddCityDst"
+        android:layout_alignStart="@+id/RouteNameInput"
+        android:ems="10"
+        android:hint="@string/City_in_km"
+        android:inputType="number"
+        android:textSize="12sp" />
 
-    <!--<EditText-->
-        <!--android:id="@+id/HwayDstInput"-->
-        <!--android:layout_width="119dp"-->
-        <!--android:layout_height="41dp"-->
-        <!--android:ems="10"-->
-        <!--android:inputType="textPersonName"-->
-        <!--tools:layout_editor_absoluteX="208dp"-->
-        <!--tools:layout_editor_absoluteY="287dp" />-->
+    <EditText
+        android:id="@+id/HwayDstInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/AddHwayDst"
+        android:layout_alignBottom="@+id/AddHwayDst"
+        android:layout_alignStart="@+id/CityDstInput"
+        android:ems="10"
+        android:hint="@string/hway_in_km"
+        android:inputType="number"
+        android:textSize="12sp" />
 
-    <!--<EditText-->
-        <!--android:id="@+id/TotalDst"-->
-        <!--android:layout_width="116dp"-->
-        <!--android:layout_height="40dp"-->
-        <!--android:ems="10"-->
-        <!--android:inputType="textPersonName"-->
-        <!--tools:layout_editor_absoluteX="208dp"-->
-        <!--tools:layout_editor_absoluteY="219dp" />-->
+    <EditText
+        android:id="@+id/TotalDstCal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/default_totalDst_0"
+        android:inputType="number"
+        android:textSize="12sp"
+        android:layout_alignBaseline="@+id/TotalDst"
+        android:layout_alignBottom="@+id/TotalDst"
+        android:layout_alignStart="@+id/HwayDstInput" />
 
-    <!--android:hint="@string/name_input"-->
-    />
-</android.support.constraint.ConstraintLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/comfirm_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="39dp"
+        android:clickable="true"
+        app:backgroundTint="@android:color/holo_green_dark"
+        app:fabSize="normal"
+        app:srcCompat="@android:drawable/checkbox_on_background"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/TotalDstCal"
+        android:layout_marginBottom="52dp" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/comfirm_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/comfirm_add"
+        android:layout_alignStart="@+id/AddRouteName"
+        android:clickable="true"
+        app:backgroundTint="@android:color/holo_red_light"
+        app:fabSize="normal"
+        app:srcCompat="@android:drawable/btn_dialog" />
+</RelativeLayout>
