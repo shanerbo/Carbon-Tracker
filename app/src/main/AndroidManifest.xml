@@ -17,11 +17,13 @@
         </activity>
         <activity android:name=".MainMenu" />
         <activity android:name=".DisplayCarbonFootprint" />
-        <activity android:name=".CarList" android:exported="true" />
+        <activity
+            android:name=".CarList"
+            android:exported="true" />
         <activity android:name=".AddCar" />
-        <activity android:name=".PieChart"></activity>
-        <activity android:name=".CreateNewJourney"></activity>
-
+        <activity android:name=".PieChart" />
+        <activity android:name=".CreateNewJourney" />
+        <activity android:name=".EditOrDeleteCar"></activity>
     </application>
 
 </manifest>

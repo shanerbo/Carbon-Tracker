@@ -22,6 +22,7 @@ public class VehicleData {
     List<Vehicle> vehicleDataArray = new ArrayList<>();
 
     List<String> uniqueVehicleMakeArray = new ArrayList<>();
+    List<String> getModelsForMake = new ArrayList<>();
 
     //TODO Find out the information we need and extract from
     // TODO the excel file as needed
@@ -107,6 +108,18 @@ public class VehicleData {
             }
         }
         return found;
+    }
+
+
+    public  List<String>  getModelsForAMake(String vehicleMake){
+        for(int i =0;i<vehicleMakeArray.size();i++){
+            String currentVehicle = vehicleMakeArray.get(i);
+            if(vehicleMake.equals(currentVehicle)){
+                getModelsForMake.add(vehicleModelArray.get(i));
+            }
+        }
+        return getModelsForMake;
+
     }
 
 

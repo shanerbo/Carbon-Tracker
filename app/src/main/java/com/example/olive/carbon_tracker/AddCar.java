@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,12 +26,14 @@ public class AddCar extends AppCompatActivity {
 
         populateDropDownMenus();
         setupAddCarButton();
+        EditCar();
     }
 
     private void populateDropDownMenus() {
         myCar.ExtractVehicleData(this);
 
         //TODO extract method
+        //TODO access via singleton class
 
 //        List<Vehicle> make_list = Singleton.getCurrInstance().getVehicle();
 //        ArrayAdapter<Vehicle>make_adapter =  new ArrayAdapter<>(
@@ -42,7 +45,27 @@ public class AddCar extends AppCompatActivity {
         Spinner Make_spinner = (Spinner) findViewById(R.id.ID_drop_down_make);
         Make_spinner.setAdapter(make_adapter);
 
-        List<String> model_list = myCar.getVehicleModelArray();
+
+
+        Make_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                //List<String> model_list = myCar.getModelsForAMake(parent.getSelectedItem().toString());
+//                ArrayAdapter<String> model_adapter =  new ArrayAdapter<String>(
+//                        this, android.R.layout.simple_dropdown_item_1line, model_list);
+//                Spinner Model_spinner = (Spinner) findViewById(R.id.ID_drop_down_model);
+//                Model_spinner.setAdapter(model_adapter);
+                Toast.makeText(AddCar.this, parent.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
+            }
+
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) { }
+        });
+
+
+        //List<String> model_list = myCar.getVehicleModelArray();
+        List<String> model_list = myCar.getModelsForAMake(Make_spinner.getSelectedItem().toString());
         ArrayAdapter<String> model_adapter =  new ArrayAdapter<>(
                 this, android.R.layout.simple_dropdown_item_1line, model_list);
         Spinner Model_spinner = (Spinner) findViewById(R.id.ID_drop_down_model);
@@ -102,7 +125,15 @@ public class AddCar extends AppCompatActivity {
             }
         });
 
+    }
 
 
+    private void EditCar() {
+        if (getIntent().getStringExtra("Car Name") != null) {
+            if (getIntent().getStringExtra("Car Name").length() != 0) {
+                EditText DisplayCarName = (EditText) findViewById(R.id.ID_Car_Name);
+                DisplayCarName.setText(getIntent().getStringExtra("Car Name"));
+            }
+        }
     }
 }
