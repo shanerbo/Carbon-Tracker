@@ -5,26 +5,40 @@ public class Route {
     private String Name;
     private int CityDistance;
     private int HighwayDistance;
-
-    public Route(String name, int cityDistance, int highwayDistance) {
-        setName(name);
-        setCityDistance(cityDistance);
-        setHighwayDistance(highwayDistance);
+    private int TotalDistance;
+    private int iconId = R.drawable.routesign;
+    public Route(String name, int cityDistance, int highwayDistance, int totalDistance) {
+        Name = name;
+        CityDistance = cityDistance;
+        HighwayDistance = highwayDistance;
+        TotalDistance = totalDistance;
     }
 
     public String getName() {
         return Name;
     }
 
+
+    public int getIconId(){
+        return iconId;
+    }
+    public int getCityDistance() {
+        return CityDistance;
+    }
+
+
+
+    public int getHighwayDistance() {
+        return HighwayDistance;
+    }
+    public int getTotalDistance(){
+        return TotalDistance;
+    }
     public void setName(String name) {
         if (name.length() == 0) {
             throw new IllegalArgumentException();
         }
         this.Name = name;
-    }
-
-    public int getCityDistance() {
-        return CityDistance;
     }
 
     public void setCityDistance(int cityDistance) {
@@ -34,14 +48,17 @@ public class Route {
         this.CityDistance = cityDistance;
     }
 
-    public int getHighwayDistance() {
-        return HighwayDistance;
-    }
-
     public void setHighwayDistance(int highwayDistance) {
         if (highwayDistance == 0) {
             throw new IllegalArgumentException();
         }
         this.HighwayDistance = highwayDistance;
+    }
+
+    public void setTotalDistance(int totalDistance) {
+        if (totalDistance == 0) {
+            throw new IllegalArgumentException();
+        }
+        this.TotalDistance = totalDistance;
     }
 }

@@ -54,10 +54,11 @@
         android:ems="10"
         android:hint="@string/Hint_Route_name"
         android:inputType="textPersonName"
-        android:textSize="12sp" />
+        android:textSize="12sp"
+        tools:ignore="RelativeOverlap" />
 
     <EditText
-        android:id="@+id/CityDsyInput"
+        android:id="@+id/CityDstInput"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/AddCityDst"
@@ -66,7 +67,6 @@
         android:ems="10"
         android:hint="@string/City_in_km"
         android:inputType="number"
-        android:text="@string/DistanceInCity"
         android:textSize="12sp" />
 
     <EditText
@@ -75,11 +75,10 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/AddHwayDst"
         android:layout_alignBottom="@+id/AddHwayDst"
-        android:layout_alignStart="@+id/CityDsyInput"
+        android:layout_alignStart="@+id/CityDstInput"
         android:ems="10"
         android:hint="@string/hway_in_km"
         android:inputType="number"
-        android:text="@string/DistanceInHighWay"
         android:textSize="12sp" />
 
     <EditText

@@ -32,6 +32,12 @@
     <string name="hway_in_km">in KM</string>
     <string name="DistanceInHighWay">KM</string>
     <string name="DistanceInCity">KM</string>
+    <string name="tempRouteName">TextView</string>
+    <string name="tempTotalDst">TextView</string>
+    <string name="tempCityDst">TextView</string>
+    <string name="tempHwatDst">TextView</string>
+    <string name="Warning">The Route Will be discarded, Do you still want to delete it?</string>
+    <string name="UserDeletePot">The Route You Select has been deleted</string>
 
     <!--CreateNewJourney-->
 

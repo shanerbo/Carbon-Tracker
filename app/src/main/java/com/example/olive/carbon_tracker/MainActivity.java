@@ -10,7 +10,7 @@ import android.widget.Button;
 import com.github.mikephil.charting.charts.PieChart;
 
 public class MainActivity extends AppCompatActivity {
-    private static int exist_time = 3000;
+    private static int exist_time = 1000;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         getSupportActionBar().hide();

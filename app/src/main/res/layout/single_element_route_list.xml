@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <TextView
+        android:id="@+id/totalDistanceWImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tempTotalDst"
+        android:textSize="12sp"
+        android:layout_below="@+id/HwayDistanceWithimage"
+        android:layout_toEndOf="@+id/RouteImage" />
+
+    <TextView
+        android:id="@+id/RouteNameWithimage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tempRouteName"
+        android:textSize="12sp"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/RouteImage" />
+
+    <TextView
+        android:id="@+id/cityDistanceWithimage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tempCityDst"
+        android:textSize="12sp"
+        android:layout_below="@+id/RouteNameWithimage"
+        android:layout_toEndOf="@+id/RouteImage" />
+
+    <ImageView
+        android:id="@+id/RouteImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/routesign"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:contentDescription="" />
+
+    <TextView
+        android:id="@+id/HwayDistanceWithimage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tempHwatDst"
+        android:textSize="12sp"
+        android:layout_below="@+id/cityDistanceWithimage"
+        android:layout_toEndOf="@+id/RouteImage" />
+
+</RelativeLayout>
