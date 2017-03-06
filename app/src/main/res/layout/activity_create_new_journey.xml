@@ -11,18 +11,18 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:text="Select Transportation Mode"
+        android:text="@string/select_transportation_mode"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="135dp" />
+        android:layout_marginTop="134dp" />
 
     <Button
         android:id="@+id/Select_Route"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Select Route"
+        android:text="@string/select_route"
         android:layout_below="@+id/Select_Transportation_Mode"
         android:layout_centerHorizontal="true"
         app:layout_constraintLeft_toLeftOf="parent"
