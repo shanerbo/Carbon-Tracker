@@ -6,18 +6,17 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class MainMenu extends AppCompatActivity {
+public class CreateNewJourney extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_menu);
-        setButton(R.id.btnCreateJourney);
-        setButton(R.id.btnSelectJourney);
-        setButton(R.id.btnCurrentFootprint);
+        setContentView(R.layout.activity_create_new_journey);
+        setButton(R.id.Select_Transportation_Mode);
+        setButton(R.id.Select_Route);
     }
 
-    private void setButton(final int id) {
+    public void setButton(final int id) {
         Button button = (Button) findViewById(id);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -25,20 +24,16 @@ public class MainMenu extends AppCompatActivity {
                 Intent showActivity = new Intent();
                 switch (id) {
                     //TODO: Enter the names of the other Activity classes
-                    case R.id.btnCreateJourney:
-                        showActivity = new Intent(MainMenu.this,CreateNewJourney.class );
+                    case R.id.Select_Transportation_Mode:
+                        //showActivity = new Intent(CreateNewJourney.this,);
                         break;
-                    case R.id.btnSelectJourney:
-                        //showActivity = new Intent(MainMenu.this, );
+                    case R.id.Select_Route:
+                        //showActivity = new Intent(CreateNewJourney.this, AddRoute.class);
                         break;
-                    case R.id.btnCurrentFootprint:
-                        showActivity = new Intent(MainMenu.this,DisplayCarbonFootprint.class);
-                        break;
+
                 }
                 startActivity(showActivity);
             }
         });
     }
-
-
 }

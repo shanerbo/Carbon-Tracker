@@ -20,6 +20,8 @@
         <activity android:name=".CarList" android:exported="true" />
         <activity android:name=".AddCar" />
         <activity android:name=".PieChart"></activity>
+        <activity android:name=".CreateNewJourney"></activity>
+
     </application>
 
 </manifest>
