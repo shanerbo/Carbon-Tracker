@@ -19,7 +19,7 @@
         <activity android:name=".DisplayCarbonFootprint" />
         <activity android:name=".CarList" android:exported="true" />
         <activity android:name=".AddCar" />
-
+        <activity android:name=".PieChart"></activity>
     </application>
 
 </manifest>

@@ -22,7 +22,7 @@ public class CarList extends AppCompatActivity {
 
     private void populateListView() {
         String[] my_car_list = {"Toyota", "Dodge", "BMW"}; //TODO sample car list
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 this, R.layout.car_list_listview, my_car_list);
         ListView list = (ListView) findViewById(R.id.ID_Car_List);
         list.setAdapter(adapter);

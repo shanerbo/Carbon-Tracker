@@ -32,10 +32,11 @@
         android:id="@+id/ID_add_new_car_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/ID_Car_List"
+        android:layout_centerHorizontal="true"
+        android:background="@android:color/holo_blue_light"
         android:text="Add Car"
         tools:layout_editor_absoluteX="148dp"
-        tools:layout_editor_absoluteY="447dp"
-        android:layout_below="@+id/ID_Car_List"
-        android:layout_centerHorizontal="true" />
+        tools:layout_editor_absoluteY="447dp" />
 
 </RelativeLayout>
