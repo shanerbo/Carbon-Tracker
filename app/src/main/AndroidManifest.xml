@@ -17,7 +17,7 @@
         </activity>
         <activity android:name=".MainMenu" />
         <activity android:name=".DisplayCarbonFootprint" />
-        <activity android:name=".CreateNewJourney"></activity>
+        <activity android:name=".PieChart"></activity>
     </application>
 
 </manifest>
