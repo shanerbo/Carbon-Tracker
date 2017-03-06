@@ -3,10 +3,10 @@ package com.example.olive.carbon_tracker;
 public class Car {
     private String Name;
     private String Make;
-    private int Model;
+    private String Model;
     private int Year;
 
-    public Car(String name, String make, int model, int year) {
+    public Car(String name, String make, String model, int year) {
         setName(name);
         setMake(make);
         setModel(model);
@@ -35,12 +35,12 @@ public class Car {
         this.Make = make;
     }
 
-    public int getModel() {
+    public String getModel() {
         return Model;
     }
 
-    public void setModel(int model) {
-        if (model == 0) {
+    public void setModel(String model) {
+        if (model.length() == 0) {
             throw new IllegalArgumentException();
         }
         this.Model = model;

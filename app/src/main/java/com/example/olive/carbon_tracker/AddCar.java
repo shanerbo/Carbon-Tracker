@@ -1,6 +1,8 @@
 package com.example.olive.carbon_tracker;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -27,10 +29,14 @@ public class AddCar extends AppCompatActivity {
 
     private void populateDropDownMenus() {
         myCar.ExtractVehicleData(this);
-        List<String> make_list = myCar.getVehicleMakeArray();
+
+        //TODO extract method
+
 //        List<Vehicle> make_list = Singleton.getCurrInstance().getVehicle();
 //        ArrayAdapter<Vehicle>make_adapter =  new ArrayAdapter<>(
 //                this, android.R.layout.simple_dropdown_item_1line, make_list);
+        //List<String> make_list = myCar.getVehicleMakeArray();
+        List<String> make_list = myCar.getUniqueVehicleMakeArray();
         ArrayAdapter<String> make_adapter =  new ArrayAdapter<>(
                this, android.R.layout.simple_dropdown_item_1line, make_list);
         Spinner Make_spinner = (Spinner) findViewById(R.id.ID_drop_down_make);
@@ -43,27 +49,60 @@ public class AddCar extends AppCompatActivity {
         Model_spinner.setAdapter(model_adapter);
 
         List<Integer> year_list = myCar.getVehicleYearArray();
-        ArrayAdapter<Integer> year_adapter = new ArrayAdapter<Integer>(
+        ArrayAdapter<Integer> year_adapter = new ArrayAdapter<>(
                 this, android.R.layout.simple_dropdown_item_1line, year_list);
         Spinner Year_spinner = (Spinner) findViewById(R.id.ID_drop_down_year);
         Year_spinner.setAdapter(year_adapter);
 
 
-
-
     }
 
     private void setupAddCarButton() {
-        Button AddCar = (Button) findViewById(R.id.ID_add_new_car_button);
-//        AddCar.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                EditText NickName = (EditText) findViewById(R.id.ID_Car_Name);
-//                if(NickName.length() <= 0){
-//                    Toast.makeText(AddCar.this, "Adding Car Failed: car name cannot be empty", Toast.LENGTH_LONG).show();
-//                    finish();
-//                }
-//            }
-//        });
+        Button AddCar = (Button) findViewById(R.id.ID_button_OKAdd);
+        AddCar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                EditText nickname = (EditText) findViewById(R.id.ID_Car_Name);
+                Spinner Make_spinner = (Spinner) findViewById(R.id.ID_drop_down_make);
+                Spinner Model_spinner = (Spinner) findViewById(R.id.ID_drop_down_model);
+                Spinner Year_spinner = (Spinner) findViewById(R.id.ID_drop_down_year);
+
+                if(nickname.length() == 0){
+                    Toast.makeText(AddCar.this, "Adding Car Failed: car name cannot be empty", Toast.LENGTH_LONG).show();
+                    finish();
+                }
+
+
+                String CarName = nickname.getText().toString();
+                String CarMake = Make_spinner.getSelectedItem().toString();
+                String CarModel = Model_spinner.getSelectedItem().toString();
+                int CarYear = Integer.parseInt(Year_spinner.getSelectedItem().toString());
+
+
+                Intent saveData = new Intent();
+                saveData.putExtra("Car Name", CarName);
+                saveData.putExtra("Car Make", CarMake);
+                saveData.putExtra("Car Model", CarModel);
+                saveData.putExtra("Car Year", CarYear);
+                setResult(Activity.RESULT_OK, saveData);
+                Toast.makeText(AddCar.this, "Saving your "+ CarName +"'s info... ", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        });
+
+        Button Cancel = (Button) findViewById(R.id.ID_button_cancel_add);
+        Cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(AddCar.this, "Nothing has been saved", Toast.LENGTH_SHORT).show();
+                Intent noData = new Intent();
+                setResult(Activity.RESULT_CANCELED, noData);
+                finish();
+            }
+        });
+
+
+
     }
 }
