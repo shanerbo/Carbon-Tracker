@@ -28,7 +28,7 @@ public class CreateNewJourney extends AppCompatActivity {
                         //showActivity = new Intent(CreateNewJourney.this,);
                         break;
                     case R.id.Select_Route:
-                        //showActivity = new Intent(CreateNewJourney.this, AddRoute.class);
+                        showActivity = new Intent(CreateNewJourney.this, DisplayRouteList.class);
                         break;
 
                 }

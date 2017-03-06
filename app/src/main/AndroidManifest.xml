@@ -17,9 +17,13 @@
         </activity>
         <activity android:name=".MainMenu" />
         <activity android:name=".DisplayCarbonFootprint" />
-        <activity android:name=".PieChart"></activity>
-        <activity android:name=".CreateNewJourney"></activity>
-
+        <activity android:name=".PieChart" />
+        <activity android:name=".CreateNewJourney" />
+        <activity
+            android:name=".DisplayRouteList"
+            android:label="@string/title_activity_display_route_list"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".AddNewRoute"></activity>
     </application>
 
 </manifest>
