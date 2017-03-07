@@ -50,11 +50,11 @@ public class AddCar extends AppCompatActivity {
         Make_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                //List<String> model_list = myCar.getModelsForAMake(parent.getSelectedItem().toString());
-//                ArrayAdapter<String> model_adapter =  new ArrayAdapter<String>(
-//                        this, android.R.layout.simple_dropdown_item_1line, model_list);
-//                Spinner Model_spinner = (Spinner) findViewById(R.id.ID_drop_down_model);
-//                Model_spinner.setAdapter(model_adapter);
+                List<String> model_list = myCar.getModelsForAMake(parent.getSelectedItem().toString());
+                ArrayAdapter<String> model_adapter =  new ArrayAdapter<String>(
+                        this, android.R.layout.simple_dropdown_item_1line, model_list);
+                Spinner Model_spinner = (Spinner) findViewById(R.id.ID_drop_down_model);
+                Model_spinner.setAdapter(model_adapter);
                 Toast.makeText(AddCar.this, parent.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
             }
 
