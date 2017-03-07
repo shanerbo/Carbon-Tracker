@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.annotation.IntegerRes;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -48,6 +49,9 @@ public class AddCar extends AppCompatActivity {
 
             EditText Name = (EditText) findViewById(R.id.ID_Car_Name);
             Name.setText(VehicleName);
+
+
+
         }else{
             position = singleton.getAddPosition_car();
         }
@@ -58,34 +62,70 @@ public class AddCar extends AppCompatActivity {
         delButton(position);
     }
 
+    private int getIndex(Spinner spinner, String myString) {
+        int index = 0;
+
+        for (int i=0;i<spinner.getCount();i++){
+            if (spinner.getItemAtPosition(i).equals(myString)){
+                index = i;
+            }
+        }
+        return index;
+    }
+    private int getIndex(Spinner spinner, int myString) {
+        int index = 0;
+
+        for (int i=0;i<spinner.getCount();i++){
+            if (spinner.getItemAtPosition(i).equals(myString)){
+                index = i;
+            }
+        }
+        return index;
+    }
+
     private void populateDropDownMenus() {
 
         ArrayAdapter<String> make_adapter =  new ArrayAdapter<>(
                this, android.R.layout.simple_dropdown_item_1line, make_list);
         Spinner Make_spinner = (Spinner) findViewById(R.id.ID_drop_down_make);
+
         Make_spinner.setAdapter(make_adapter);
+        if (VehicleList.size() != 0&&singleton.checkEdit_car() ==1){
+            Vehicle VehicleToBeEdit = VehicleList.get(position);
+            Make_spinner.setSelection(getIndex(Make_spinner,VehicleToBeEdit.getMake()));
+        }
 
 
 
         Make_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemSelected(AdapterView<?> parent, View view, int position_model, long id) {
                 String Make = parent.getSelectedItem().toString();
                 List<String> model_list = singleton.updateModels(Make);
                 ArrayAdapter<String> model_adapter =  new ArrayAdapter<>(
                         AddCar.this, android.R.layout.simple_dropdown_item_1line, model_list);
                 Spinner Model_spinner = (Spinner) findViewById(R.id.ID_drop_down_model);
                 Model_spinner.setAdapter(model_adapter);
+                if (VehicleList.size() != 0&&singleton.checkEdit_car() ==1){
+                    Vehicle VehicleToBeEdit = VehicleList.get(position);
+                    Model_spinner.setSelection(getIndex(Model_spinner,VehicleToBeEdit.getModel()));
+                }
 
                 Model_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    public void onItemSelected(AdapterView<?> parent, View view, int position_year, long id) {
                         String Model = parent.getSelectedItem().toString();
                         List<Integer> year_list = singleton.updateYears(Model);
                         ArrayAdapter<Integer> year_adapter = new ArrayAdapter<>(
                                 AddCar.this, android.R.layout.simple_dropdown_item_1line, year_list);
                         Spinner Year_spinner = (Spinner) findViewById(R.id.ID_drop_down_year);
                         Year_spinner.setAdapter(year_adapter);
+                        if (VehicleList.size() != 0&&singleton.checkEdit_car() ==1){
+                            Vehicle VehicleToBeEdit = VehicleList.get(position);
+                            int Year = VehicleToBeEdit.getYear();
+                            Year_spinner.setSelection(getIndex(Year_spinner,Year));
+                        }
+
                     }
 
                     @Override
