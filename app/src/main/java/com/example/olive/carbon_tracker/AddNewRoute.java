@@ -48,7 +48,7 @@ public class AddNewRoute extends AppCompatActivity {
             position = singleton.getAddPosition();
         }
         checkButton(position);
-        //delButton();
+        delButton(position);
     }
 
     private void checkButton(final int position) {
@@ -72,14 +72,14 @@ public class AddNewRoute extends AppCompatActivity {
                     int totalDst = Integer.parseInt(temp_totalDst);
                     if (cityDst <= 0 || highWayDst <=0 || totalDst <=0){
                         Snackbar.make(v, "The Distance Cannot Be Smaller Than 0", Snackbar.LENGTH_SHORT)
-                        .setAction("Action", null).show();
+                                .setAction("Action", null).show();
                         return;
                     }
                     Route userInput = new Route(name,cityDst,highWayDst,totalDst);
                     if (singleton.checkEdit() == 1){
                         allRoutes.changeRoute(userInput,position);
                         singleton.setUserRoutes(allRoutes);
-            //changing Route to Route list
+                        //changing Route to Route list
                         RouteList.set(position,userInput);
                         singleton.setRouteList(RouteList);
                         singleton.userFinishEdit();
@@ -88,6 +88,7 @@ public class AddNewRoute extends AppCompatActivity {
                         singleton.setUserRoutes(allRoutes);
                         RouteList.add(userInput);
                         singleton.setRouteList(RouteList);
+                        singleton.userFinishAdd();
                     }
 
                     finish();
@@ -95,46 +96,49 @@ public class AddNewRoute extends AppCompatActivity {
             }
         });
     }
-//
-//    private void delButton() {
-//        FloatingActionButton delete = (FloatingActionButton) findViewById(R.id.comfirm_delete);
-//        if (passedInData.getStringExtra("edit or add").matches("add")){
-//            delete.setVisibility(View.INVISIBLE);
-//            //hide the delete button
-//            return;
-//        }
-//        delete.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                new AlertDialog.Builder(AddNewRoute.this)
-//                        .setTitle("Delete Route")
-//                        .setMessage(R.string.Warning)
-//                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                Intent del_intent = new Intent();
-//                                del_intent.putExtra("action","del");
-//                                del_intent.putExtra("theIndex",passedInData.getIntExtra("pot index",0));
-//                                setResult(Activity.RESULT_OK,del_intent);
-//                                Toast.makeText(AddNewRoute.this,getString(R.string.UserDeletePot),Toast.LENGTH_LONG).show();
-//                                finish();
-//                            }
-//                        })
-//                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                dialog.cancel();
-//                                finish();
-//                            }
-//                        })
-//                        .setIcon(android.R.drawable.ic_dialog_alert).show();
-//            }
-//        });
-//    }
+    //
+    private void delButton(final int position) {
+        FloatingActionButton delete = (FloatingActionButton) findViewById(R.id.comfirm_delete);
+        if (singleton.checkAdd() == 1){
+            delete.setVisibility(View.INVISIBLE);
+            //hide the delete button
+            return;
+        }
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AlertDialog.Builder(AddNewRoute.this)
+                        .setTitle("Delete Route")
+                        .setMessage(R.string.Warning)
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent del_intent = new Intent();
+                                allRoutes.delRoute(position);
+                                singleton.setUserRoutes(allRoutes);
+                                //deleting pot form list
+                                RouteList.remove(position);
+                                singleton.setRouteList(RouteList);
+                                setResult(Activity.RESULT_OK,del_intent);
+                                Toast.makeText(AddNewRoute.this,getString(R.string.UserDeletePot),Toast.LENGTH_LONG).show();
+                                finish();
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                                finish();
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert).show();
+            }
+        });
+    }
 
 
 
     public static Intent makeIntent(Context context) {
-            return new Intent(context, AddNewRoute.class);
+        return new Intent(context, AddNewRoute.class);
     }
 }

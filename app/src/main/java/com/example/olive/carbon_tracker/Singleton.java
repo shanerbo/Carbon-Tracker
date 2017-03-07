@@ -56,9 +56,9 @@ public class Singleton {
     }
 
 //-----------------------------------Route's function-------------------------------------------
-    public void setUserRoutes(RouteCollection userRoutes){
-        Routes = userRoutes;
-    }
+public void setUserRoutes(RouteCollection userRoutes){
+    Routes = userRoutes;
+}
     public RouteCollection getUserRoutes(){
         return Routes;
     }
@@ -68,9 +68,7 @@ public class Singleton {
     public void setRouteList(List<Route> newRoute){
         RouteList = newRoute;
     }
-    public void userEditRoute(){
-        editRoute = 1;
-    }
+
     public int checkEdit(){
         return editRoute;
     }
@@ -84,20 +82,23 @@ public class Singleton {
     public int getEditPosition(){
         return editPosition;
     }
-
+    public void userEditRoute(){
+        editRoute = 1;
+    }
     public int userFinishEdit(){
         editRoute = 0;
         return editRoute;
     }
-    public int userAddRoute(){
+    public void userAddRoute(){
         addRoute = 1;
-        return addRoute;
     }
     public int userFinishAdd(){
         addRoute = 0;
         return addRoute;
     }
-
+    public int checkAdd(){
+        return addRoute;
+    }
 //-----------------------------------Route's function-------------------------------------------
 
 
