@@ -26,11 +26,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AddCar extends AppCompatActivity {
-    //private PotCollection MyPot = new PotCollection();
 
-    private List<Vehicle> VehicleList = new ArrayList<Vehicle>();
-    List<String> make_list = new ArrayList<String>();
-    List<Integer> year_list = new ArrayList<Integer>();
+    private List<Vehicle> VehicleList = new ArrayList<>();
+    List<String> make_list = new ArrayList<>();
+    List<Integer> year_list = new ArrayList<>();
     Singleton singleton = Singleton.getInstance();
     private int position;
     VehicleData vehicleData = new VehicleData();
@@ -60,15 +59,6 @@ public class AddCar extends AppCompatActivity {
 
     private void populateDropDownMenus() {
 
-
-        //TODO extract method
-        //TODO access via singleton class
-
-//        List<Vehicle> make_list = Singleton.getCurrInstance().getVehicle();
-//        ArrayAdapter<Vehicle>make_adapter =  new ArrayAdapter<>(
-//                this, android.R.layout.simple_dropdown_item_1line, make_list);
-        //List<String> make_list = myCar.getVehicleMakeArray();
-//        List<String> make_list = myCar.getUniqueVehicleMakeArray();
         ArrayAdapter<String> make_adapter =  new ArrayAdapter<>(
                this, android.R.layout.simple_dropdown_item_1line, make_list);
         Spinner Make_spinner = (Spinner) findViewById(R.id.ID_drop_down_make);
@@ -80,15 +70,26 @@ public class AddCar extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String Make = parent.getSelectedItem().toString();
-                Toast.makeText(AddCar.this, "the make is: " + Make, Toast.LENGTH_SHORT).show();
                 List<String> model_list = singleton.updateModels(Make);
-                Toast.makeText(AddCar.this, "the first model is : " + model_list.get(0), Toast.LENGTH_SHORT).show();
-
-
-                ArrayAdapter<String> model_adapter =  new ArrayAdapter<String>(
+                ArrayAdapter<String> model_adapter =  new ArrayAdapter<>(
                         AddCar.this, android.R.layout.simple_dropdown_item_1line, model_list);
                 Spinner Model_spinner = (Spinner) findViewById(R.id.ID_drop_down_model);
                 Model_spinner.setAdapter(model_adapter);
+
+                Model_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        String Model = parent.getSelectedItem().toString();
+                        List<Integer> year_list = singleton.updateYears(Model);
+                        ArrayAdapter<Integer> year_adapter = new ArrayAdapter<>(
+                                AddCar.this, android.R.layout.simple_dropdown_item_1line, year_list);
+                        Spinner Year_spinner = (Spinner) findViewById(R.id.ID_drop_down_year);
+                        Year_spinner.setAdapter(year_adapter);
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) { }
+                });
 
             }
 
@@ -96,18 +97,6 @@ public class AddCar extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) { }
         });
 
-
-        //List<String> model_list = myCar.getVehicleModelArray();
-        List<String> model_list = vehicleData.getModelsForAMake(Make_spinner.getSelectedItem().toString());
-        ArrayAdapter<String> model_adapter =  new ArrayAdapter<>(
-                this, android.R.layout.simple_dropdown_item_1line, model_list);
-        Spinner Model_spinner = (Spinner) findViewById(R.id.ID_drop_down_model);
-        Model_spinner.setAdapter(model_adapter);
-
-        ArrayAdapter<Integer> year_adapter = new ArrayAdapter<>(
-                this, android.R.layout.simple_dropdown_item_1line, year_list);
-        Spinner Year_spinner = (Spinner) findViewById(R.id.ID_drop_down_year);
-        Year_spinner.setAdapter(year_adapter);
 
 
     }
