@@ -14,19 +14,28 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class AddNewRoute extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.List;
 
+public class AddNewRoute extends AppCompatActivity {
+    private RouteCollection allRoutes = new RouteCollection();
+    private List<Route> RouteList = new ArrayList<Route>();
+    private int position;
+    Singleton singleton  = Singleton.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
         setContentView(R.layout.activity_add_new_route);
-        Intent passedInData = getIntent();
-        if(passedInData.getStringExtra("edit or add").matches("edit")){
-            String RouteName = passedInData.getStringExtra("route name");
-            int Route_city_dis = passedInData.getIntExtra("city distance",0);
-            int Route_hWay_dis = passedInData.getIntExtra("highway distance",0);
-            int Route_total_dis = passedInData.getIntExtra("total distance",0);
+        allRoutes = singleton.getUserRoutes();
+        RouteList = singleton.getRouteList();
+        if(singleton.checkEdit() == 1){
+            position = singleton.getEditPosition();
+            Route RouteToBeEdited = RouteList.get(position);
+            String RouteName = RouteToBeEdited.getName();
+            int Route_city_dis = RouteToBeEdited.getCityDistance();
+            int Route_hWay_dis = RouteToBeEdited.getHighwayDistance();
+            int Route_total_dis = RouteToBeEdited.getTotalDistance();
             EditText Name = (EditText)findViewById(R.id.RouteNameInput);
             EditText cityDst = (EditText)findViewById(R.id.CityDstInput);
             EditText hWayDst = (EditText)findViewById(R.id.HwayDstInput);
@@ -35,12 +44,14 @@ public class AddNewRoute extends AppCompatActivity {
             cityDst.setText(""+Route_city_dis);
             hWayDst.setText(""+Route_hWay_dis);
             totalDst.setText(""+Route_total_dis);
+        }else{
+            position = singleton.getAddPosition();
         }
-        checkButton(passedInData);
-        delButton(passedInData);
+        checkButton(position);
+        //delButton();
     }
 
-    private void checkButton(final Intent passedInData) {
+    private void checkButton(final int position) {
         FloatingActionButton check = (FloatingActionButton) findViewById(R.id.comfirm_add);
         check.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,7 +60,8 @@ public class AddNewRoute extends AppCompatActivity {
                 EditText CityDst = (EditText)findViewById(R.id.CityDstInput);
                 EditText HighWayDst = (EditText)findViewById(R.id.HwayDstInput);
                 EditText TotalDst = (EditText)findViewById(R.id.TotalDstCal);
-                int Route_index = passedInData.getIntExtra("route index",0);
+
+//                int Route_index = passedInData.getIntExtra("route index",0);
                 String name = Name.getText().toString();
                 String temp_cityDst = CityDst.getText().toString();
                 String temp_highWayDst = HighWayDst.getText().toString();
@@ -63,55 +75,62 @@ public class AddNewRoute extends AppCompatActivity {
                         .setAction("Action", null).show();
                         return;
                     }
-                    Intent returnValues = new Intent();
-                    returnValues.putExtra("theName",name);
-                    returnValues.putExtra("theRouteCityDst",cityDst);
-                    returnValues.putExtra("theRouteHwayDst",highWayDst);
-                    returnValues.putExtra("theRouteTotalDst",totalDst);
-                    returnValues.putExtra("theIndex",Route_index);
-                    returnValues.putExtra("action","add&Edit");
-                    setResult(Activity.RESULT_OK,returnValues);
+                    Route userInput = new Route(name,cityDst,highWayDst,totalDst);
+                    if (singleton.checkEdit() == 1){
+                        allRoutes.changeRoute(userInput,position);
+                        singleton.setUserRoutes(allRoutes);
+            //changing Route to Route list
+                        RouteList.set(position,userInput);
+                        singleton.setRouteList(RouteList);
+                        singleton.userFinishEdit();
+                    }else{
+                        allRoutes.addRoute(userInput);
+                        singleton.setUserRoutes(allRoutes);
+                        RouteList.add(userInput);
+                        singleton.setRouteList(RouteList);
+                    }
+
                     finish();
                 }
             }
         });
     }
-
-    private void delButton(final Intent passedInData) {
-        FloatingActionButton delete = (FloatingActionButton) findViewById(R.id.comfirm_delete);
-        if (passedInData.getStringExtra("edit or add").matches("add")){
-            delete.setVisibility(View.INVISIBLE);
-            //hide the delete button
-            return;
-        }
-        delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new AlertDialog.Builder(AddNewRoute.this)
-                        .setTitle("Delete Route")
-                        .setMessage(R.string.Warning)
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Intent del_intent = new Intent();
-                                del_intent.putExtra("action","del");
-                                del_intent.putExtra("theIndex",passedInData.getIntExtra("pot index",0));
-                                setResult(Activity.RESULT_OK,del_intent);
-                                Toast.makeText(AddNewRoute.this,getString(R.string.UserDeletePot),Toast.LENGTH_LONG).show();
-                                finish();
-                            }
-                        })
-                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
-                                finish();
-                            }
-                        })
-                        .setIcon(android.R.drawable.ic_dialog_alert).show();
-            }
-        });
-    }
+//
+//    private void delButton() {
+//        FloatingActionButton delete = (FloatingActionButton) findViewById(R.id.comfirm_delete);
+//        if (passedInData.getStringExtra("edit or add").matches("add")){
+//            delete.setVisibility(View.INVISIBLE);
+//            //hide the delete button
+//            return;
+//        }
+//        delete.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                new AlertDialog.Builder(AddNewRoute.this)
+//                        .setTitle("Delete Route")
+//                        .setMessage(R.string.Warning)
+//                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                Intent del_intent = new Intent();
+//                                del_intent.putExtra("action","del");
+//                                del_intent.putExtra("theIndex",passedInData.getIntExtra("pot index",0));
+//                                setResult(Activity.RESULT_OK,del_intent);
+//                                Toast.makeText(AddNewRoute.this,getString(R.string.UserDeletePot),Toast.LENGTH_LONG).show();
+//                                finish();
+//                            }
+//                        })
+//                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                dialog.cancel();
+//                                finish();
+//                            }
+//                        })
+//                        .setIcon(android.R.drawable.ic_dialog_alert).show();
+//            }
+//        });
+//    }
 
 
 

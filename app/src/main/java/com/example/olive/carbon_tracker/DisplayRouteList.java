@@ -23,56 +23,25 @@ import java.util.List;
 public class DisplayRouteList extends AppCompatActivity {
     private RouteCollection allRoutes = new RouteCollection();
     private List<Route> RouteList = new ArrayList<Route>();
-
+    Singleton singleton  = Singleton.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_route_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.ChooseRoute);
         setSupportActionBar(toolbar);
-
-//        FloatingActionButton UserCreateRoute = (FloatingActionButton) findViewById(R.id.AddRoute);
-//        UserCreateRoute.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_SHORT)
-//                        .setAction("Action", null).show();
-//                Intent addNewRoute = new Intent(DisplayRouteList.this, AddNewRoute.class);
-//                startActivityForResult(addNewRoute, 1);//1 means edit the route
-//            }
-//        });
-
-        showAllRoute();
+        allRoutes = singleton.getUserRoutes();
+        RouteList = singleton.getRouteList();
         AddRoute();
         EditRoute();
+        showAllRoute();
 
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        int RoutePosition = data.getIntExtra("theIndex", 0);
-        if (data.getStringExtra("action").matches("del")) {
-            listViewDelete(RoutePosition);
-            //Delete route
-            return;
-        }
-        String Name = data.getStringExtra("theName");
-        int RouteCityDst = data.getIntExtra("theRouteCityDst", 0);
-        int RouteHwayDst = data.getIntExtra("theRouteHwayDst", 0);
-        int RouteTotalDst = data.getIntExtra("theRouteTotalDst", 0);
-        switch (requestCode) {
-            case 1:
-                //update listView
-                listViewUpdate(Name, RouteCityDst, RouteHwayDst, RoutePosition,RouteTotalDst, 0);
-                //add route
-                break;
-            case 2:
-                //update listView
-                listViewUpdate(Name, RouteCityDst, RouteHwayDst, RoutePosition,RouteTotalDst, 1);
-                //edit route
-                break;
-        }
+        showAllRoute();
     }
 
     private void EditRoute() {
@@ -81,18 +50,13 @@ public class DisplayRouteList extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent EditIntent = AddNewRoute.makeIntent(DisplayRouteList.this);
-                EditIntent.putExtra("edit or add", "edit");
-                EditIntent.putExtra("route name", allRoutes.getRoute(position).getName());
-                EditIntent.putExtra("city distance", allRoutes.getRoute(position).getCityDistance());
-                EditIntent.putExtra("highway distance", allRoutes.getRoute(position).getHighwayDistance());
-                EditIntent.putExtra("total distance", allRoutes.getRoute(position).getTotalDistance());
-                EditIntent.putExtra("route index", position);
-                startActivityForResult(EditIntent, 2);
+                singleton.setEditPosition(position);
+                singleton.userEditRoute();
+                startActivityForResult(EditIntent,0);//case 1 means add route
                 //case 2 means edit route
                 return true;
             }
         });
-
     }
 
     private void AddRoute() {
@@ -101,8 +65,6 @@ public class DisplayRouteList extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent AddIntent = AddNewRoute.makeIntent(DisplayRouteList.this);
-                AddIntent.putExtra("route index",allRoutes.countRoutes()-1);
-                AddIntent.putExtra("edit or add","add");
                 startActivityForResult(AddIntent,1);//case 1 means add route
             }
         });
@@ -142,30 +104,35 @@ public class DisplayRouteList extends AppCompatActivity {
 
     private void listViewDelete(int RoutePosition) {
         allRoutes.delRoute(RoutePosition);
+        singleton.setUserRoutes(allRoutes);
         //deleting pot form list
         RouteList.remove(RoutePosition);
+        singleton.setRouteList(RouteList);
 
         showAllRoute();
     }
 
-    private void listViewUpdate(String Name, int RouteCityDst, int RouteHwayDst, int RoutePosition,int RouteTotalDst, int action) {
-        if(action==0) {//code 0: add a route
-            Route newRoute = new Route(Name, RouteCityDst,RouteHwayDst,RouteTotalDst);
-            allRoutes.addRoute(newRoute);
-            //adding Route to list
-            RouteList.add(newRoute);
-
-        }
-        //-----------------------edit Route--------------------------
-        else if(action==1){//code 1: change a route
-            Route editedRoute = new Route(Name, RouteCityDst,RouteHwayDst,RouteTotalDst);
-            allRoutes.changeRoute(editedRoute,RoutePosition);
-            //changing Route to Route list
-            RouteList.set(RoutePosition,editedRoute);
-        }
-        //-----------------------show list-------------------------
-        showAllRoute();
-    }
+//    private void listViewUpdate(String Name, int RouteCityDst, int RouteHwayDst, int RoutePosition,int RouteTotalDst, int action) {
+//        if(action==0) {//code 0: add a route
+//            Route newRoute = new Route(Name, RouteCityDst,RouteHwayDst,RouteTotalDst);
+//            allRoutes.addRoute(newRoute);
+//            singleton.setUserRoutes(allRoutes);
+//            RouteList.add(newRoute);
+//            singleton.setRouteList(RouteList);
+//
+//        }
+//        //-----------------------edit Route--------------------------
+//        else if(action==1){//code 1: change a route
+//            Route editedRoute = new Route(Name, RouteCityDst,RouteHwayDst,RouteTotalDst);
+//            allRoutes.changeRoute(editedRoute,RoutePosition);
+//            singleton.setUserRoutes(allRoutes);
+//            //changing Route to Route list
+//            RouteList.set(RoutePosition,editedRoute);
+//            singleton.setRouteList(RouteList);
+//        }
+//        //-----------------------show list-------------------------
+//        showAllRoute();
+//    }
 
 }
 

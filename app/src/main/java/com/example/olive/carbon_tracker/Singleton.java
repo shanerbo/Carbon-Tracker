@@ -1,19 +1,42 @@
 package com.example.olive.carbon_tracker;
 
 
+import android.content.Context;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Singleton {
     private static Singleton currInstance = new Singleton();
     private List<Vehicle> Vehicles = new ArrayList<>();
-    private List<Route> Routes = new ArrayList<>();
+    private List<Route> RouteList = new ArrayList<>();
+    private RouteCollection Routes = new RouteCollection();
+    private static int editRoute ;
+    private static int editPosition ;
+    private static int addRoute ;
+    private static int deleteRoute ;
+    private static Singleton instance = new Singleton();
 
-    private Singleton() {}
-
-    public static Singleton getCurrInstance() {
-        return currInstance;
+    public static Singleton getInstance(){
+        return instance;
     }
+
+
+    private Singleton(){
+
+    }
+
+
+    public List<String> getMake(Context context){
+        VehicleData vehicleData = new VehicleData();
+        vehicleData.ExtractVehicleData(context);
+        List<String> make = vehicleData.getUniqueVehicleMakeArray();
+        return make;
+    }
+
+
+
+
 
     public void addVehicle(Vehicle vehicle) {
         this.Vehicles.add(vehicle);
@@ -24,18 +47,58 @@ public class Singleton {
         return this.Vehicles.get(index);
     }
 
-    public void addRoute(Route route) {
-        this.Routes.add(route);
-    }
 
-    public Route getRoute(int index) {
-        validateIndex(this.Routes, index);
-        return this.Routes.get(index);
-    }
 
     private void validateIndex(List list, int index) {
         if (index < 0 || index >= list.size()) {
             throw new IllegalArgumentException();
         }
     }
+
+//-----------------------------------Route's function-------------------------------------------
+    public void setUserRoutes(RouteCollection userRoutes){
+        Routes = userRoutes;
+    }
+    public RouteCollection getUserRoutes(){
+        return Routes;
+    }
+    public List<Route> getRouteList(){
+        return RouteList;
+    }
+    public void setRouteList(List<Route> newRoute){
+        RouteList = newRoute;
+    }
+    public void userEditRoute(){
+        editRoute = 1;
+    }
+    public int checkEdit(){
+        return editRoute;
+    }
+    public void setEditPosition(int Position){
+        editPosition = Position;
+    }
+    public int getAddPosition(){
+        int position = RouteList.size()-1;
+        return position;
+    }
+    public int getEditPosition(){
+        return editPosition;
+    }
+
+    public int userFinishEdit(){
+        editRoute = 0;
+        return editRoute;
+    }
+    public int userAddRoute(){
+        addRoute = 1;
+        return addRoute;
+    }
+    public int userFinishAdd(){
+        addRoute = 0;
+        return addRoute;
+    }
+
+//-----------------------------------Route's function-------------------------------------------
+
+
 }

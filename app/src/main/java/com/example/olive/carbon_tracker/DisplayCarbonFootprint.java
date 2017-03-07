@@ -20,7 +20,7 @@ public class DisplayCarbonFootprint extends AppCompatActivity {
     private static final int NUM_ROWS = 3;   //rows will be dynamic
     private static final int NUM_COLS = 2;
 
-
+Singleton singleton =  Singleton.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +43,7 @@ public class DisplayCarbonFootprint extends AppCompatActivity {
     }
 
     public void populateCarbonFootprintTable() {
-
+List<String> vehicleMake = singleton.getMake(this);
         TableLayout table = (TableLayout) findViewById(R.id.tableCarbonFootprint);
         TableRow tableRow0 = new TableRow(this);
         makeColumnHeading(" Date of Trip ", tableRow0);
@@ -56,9 +56,9 @@ public class DisplayCarbonFootprint extends AppCompatActivity {
         for (int i = 0; i < NUM_ROWS; i++) {
             TableRow tableRow = new TableRow(this);
             TextView dateOfTrip = new TextView(this);
-            enterRowInfo(dateOfTrip, tableRow);
+            enterRowInfo(dateOfTrip, tableRow,vehicleMake,i);
 
-            TextView routeName = new TextView(this);
+         /*   TextView routeName = new TextView(this);
             enterRowInfo(routeName, tableRow);
 
             TextView distance = new TextView(this);
@@ -68,7 +68,7 @@ public class DisplayCarbonFootprint extends AppCompatActivity {
             enterRowInfo(vehicleName, tableRow);
 
             TextView carbonEmission = new TextView(this);
-            enterRowInfo(carbonEmission, tableRow);
+            enterRowInfo(carbonEmission, tableRow);*/
 
             table.addView(tableRow);
         }
@@ -81,8 +81,8 @@ public class DisplayCarbonFootprint extends AppCompatActivity {
         tableRow0.addView(tableColumn);
     }
 
-    public void enterRowInfo(TextView textView, TableRow tableRow) {
-        textView.setText(" ");
+    public void enterRowInfo(TextView textView, TableRow tableRow,List<String> make, int i) {
+        textView.setText(make.get(i));
         textView.setTextColor(Color.WHITE);
         textView.setGravity(Gravity.CENTER);
         tableRow.addView(textView);

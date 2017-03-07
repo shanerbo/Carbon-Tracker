@@ -39,6 +39,9 @@ public class RouteCollection {
         return descriptions;
     }
 
+    public List<Route> allRouteList(){
+        return routes;
+    }
     private void validateIndexWithException(int index) {
         if (index < 0 || index >= countRoutes()) {
             throw new IllegalArgumentException();
