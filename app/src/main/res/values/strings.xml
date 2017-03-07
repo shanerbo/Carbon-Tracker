@@ -42,4 +42,24 @@
     <!--CreateNewJourney-->
 
 
+    <string name="nickname_for_your_car">nickname for your car</string>
+
+    <string-array name="make_list">
+        <item>Toyota</item>
+        <item>Nissan</item>
+        <item>BMW</item>
+    </string-array>
+
+    <string-array name="model_list">
+        <item>Corolla</item>
+        <item>Loyale</item>
+        <item>Regal</item>
+    </string-array>
+
+    <string-array name="year_list">
+        <item>1985</item>
+        <item>1993</item>
+        <item>2007</item>
+    </string-array>
+
 </resources>

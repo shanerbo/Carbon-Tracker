@@ -21,6 +21,9 @@ public class VehicleData {
     List<Integer> vehicleYearArray = new ArrayList<>();
     List<Vehicle> vehicleDataArray = new ArrayList<>();
 
+    List<String> uniqueVehicleMakeArray = new ArrayList<>();
+    List<String> getModelsForMake = new ArrayList<>();
+
     //TODO Find out the information we need and extract from
     // TODO the excel file as needed
     public void ExtractVehicleData(Context context) {
@@ -80,4 +83,45 @@ public class VehicleData {
     public List<Vehicle>  getVehicleDataArray(){
         return vehicleDataArray;
     }
+
+
+
+    public List<String> getUniqueVehicleMakeArray(){
+        for(int i =0;i<vehicleMakeArray.size();i++){
+            String currentMake= vehicleMakeArray.get(i);
+
+            boolean found = checkForUniqueVehicles(currentMake);
+
+            if(found == false){
+                uniqueVehicleMakeArray.add(currentMake);
+            }
+        }
+        return uniqueVehicleMakeArray;
+    }
+
+    public boolean checkForUniqueVehicles(String currentMake){
+        boolean found = false;
+        for(int i =0;i<uniqueVehicleMakeArray.size();i++){
+            if(currentMake.equals(uniqueVehicleMakeArray.get(i))){
+                found= true;
+                break;
+            }
+        }
+        return found;
+    }
+
+
+    public  List<String>  getModelsForAMake(String vehicleMake){
+        for(int i =0;i<vehicleMakeArray.size();i++){
+            String currentVehicle = vehicleMakeArray.get(i);
+            if(vehicleMake.equals(currentVehicle)){
+                getModelsForMake.add(vehicleModelArray.get(i));
+            }
+        }
+        return getModelsForMake;
+
+    }
+
+
+
 }
