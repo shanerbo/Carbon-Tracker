@@ -25,7 +25,6 @@ public class MainMenu extends AppCompatActivity {
             public void onClick(View v) {
                 Intent showActivity = new Intent();
                 switch (id) {
-                    //TODO: Enter the names of the other Activity classes
                     case R.id.btnCreateJourney:
                         showActivity = new Intent(MainMenu.this,CreateNewJourney.class );
                         break;

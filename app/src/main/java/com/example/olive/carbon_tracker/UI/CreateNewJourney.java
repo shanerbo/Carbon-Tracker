@@ -25,7 +25,6 @@ public class CreateNewJourney extends AppCompatActivity {
             public void onClick(View v) {
                 Intent showActivity = new Intent();
                 switch (id) {
-                    //TODO: Enter the names of the other Activity classes
                     case R.id.Select_Transportation_Mode:
                         showActivity = new Intent(CreateNewJourney.this, CarList.class);
                         break;
