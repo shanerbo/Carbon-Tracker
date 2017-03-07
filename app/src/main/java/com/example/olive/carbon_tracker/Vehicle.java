@@ -1,5 +1,8 @@
 package com.example.olive.carbon_tracker;
 
+/**
+ * Created by rdhol on 2017-03-05.
+ */
 
 public class Vehicle {
     private String make;

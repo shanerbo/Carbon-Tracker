@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_edit_or_delete_car"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.olive.carbon_tracker.EditOrDeleteCar">
+
+    <Button
+        android:text="delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/EditButton"
+        android:layout_alignEnd="@+id/EditOrDeleteMessage"
+        android:id="@+id/DeleteButton"
+        android:background="@android:color/holo_red_light" />
+
+    <TextView
+        android:text="Would you like to edit or delete the selected car"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="35dp"
+        android:layout_marginLeft="35dp"
+        android:id="@+id/EditOrDeleteMessage"
+        android:textSize="18sp"
+        android:textAlignment="center"
+        android:layout_above="@+id/EditButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="112dp" />
+
+    <Button
+        android:text="edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="154dp"
+        android:id="@+id/EditButton"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/EditOrDeleteMessage"
+        android:background="@android:color/holo_green_light" />
+</RelativeLayout>
