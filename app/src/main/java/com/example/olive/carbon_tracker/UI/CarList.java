@@ -1,4 +1,4 @@
-package com.example.olive.carbon_tracker;
+package com.example.olive.carbon_tracker.UI;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -10,6 +10,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.example.olive.carbon_tracker.Model.Car;
+import com.example.olive.carbon_tracker.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +49,7 @@ public class CarList extends AppCompatActivity {
             public void onClick(View v) {
                 Toast.makeText(CarList.this, "Enter your new car's info here", Toast.LENGTH_LONG).show();
 
-                Intent gotoAddCar = new Intent(CarList.this, AddCar.class);
+                Intent gotoAddCar = new Intent(CarList.this, com.example.olive.carbon_tracker.UI.AddCar.class);
                 gotoAddCar.putExtra("my parameter name", 42);
                 startActivityForResult(gotoAddCar, ACTIVITY_RESULT_ADD);
 

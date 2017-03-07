@@ -1,9 +1,10 @@
-package com.example.olive.carbon_tracker;
+package com.example.olive.carbon_tracker.UI;
 
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.example.olive.carbon_tracker.R;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;

@@ -1,5 +1,7 @@
-package com.example.olive.carbon_tracker;
+package com.example.olive.carbon_tracker.Model;
 
+
+import com.example.olive.carbon_tracker.R;
 
 public class Route {
     private String Name;

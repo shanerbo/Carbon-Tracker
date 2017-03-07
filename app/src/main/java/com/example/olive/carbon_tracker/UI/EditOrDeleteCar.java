@@ -1,4 +1,4 @@
-package com.example.olive.carbon_tracker;
+package com.example.olive.carbon_tracker.UI;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import com.example.olive.carbon_tracker.R;
 
 public class EditOrDeleteCar extends AppCompatActivity {
     public static final int REQUEST_CODE_EDIT_CAR = 666;

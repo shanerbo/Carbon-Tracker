@@ -1,4 +1,4 @@
-package com.example.olive.carbon_tracker;
+package com.example.olive.carbon_tracker.UI;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -11,6 +11,8 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.example.olive.carbon_tracker.R;
+import com.example.olive.carbon_tracker.Model.Singleton;
 import com.github.mikephil.charting.charts.PieChart;
 
 import java.util.List;

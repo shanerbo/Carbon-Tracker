@@ -1,7 +1,10 @@
-package com.example.olive.carbon_tracker;
+package com.example.olive.carbon_tracker.Model;
 
 import android.content.Context;
 import android.util.Log;
+
+import com.example.olive.carbon_tracker.Model.Vehicle;
+import com.example.olive.carbon_tracker.R;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package com.example.olive.carbon_tracker;
+package com.example.olive.carbon_tracker.Model;
 
 import java.util.ArrayList;
 import java.util.List;

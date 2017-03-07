@@ -1,5 +1,9 @@
 package com.example.olive.carbon_tracker;
 
+import com.example.olive.carbon_tracker.Model.Route;
+import com.example.olive.carbon_tracker.Model.Singleton;
+import com.example.olive.carbon_tracker.Model.Vehicle;
+
 import org.junit.Test;
 
 import static org.junit.Assert.*;

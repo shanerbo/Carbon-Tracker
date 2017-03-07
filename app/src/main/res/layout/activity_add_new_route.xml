@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.olive.carbon_tracker.AddNewRoute">
+    tools:context="com.example.olive.carbon_tracker.UI.AddNewRoute">
 
     <TextView
         android:id="@+id/AddRouteName"

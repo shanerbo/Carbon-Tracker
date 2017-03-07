@@ -1,4 +1,4 @@
-package com.example.olive.carbon_tracker;
+package com.example.olive.carbon_tracker.UI;
 
 import android.app.Activity;
 import android.content.Context;
@@ -9,10 +9,14 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.example.olive.carbon_tracker.R;
+import com.example.olive.carbon_tracker.Model.Route;
+import com.example.olive.carbon_tracker.Model.RouteCollection;
+import com.example.olive.carbon_tracker.Model.Singleton;
 
 import java.util.ArrayList;
 import java.util.List;
