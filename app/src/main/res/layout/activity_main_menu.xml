@@ -21,26 +21,19 @@
         android:id="@+id/btnCreateJourney"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="57dp"
         android:text="@string/new_journey"
-        android:layout_below="@+id/txtMainMenu"
-        android:layout_alignParentStart="true" />
-
-    <Button
-        android:id="@+id/btnSelectJourney"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/btnCreateJourney"
-        android:layout_marginTop="71dp"
-        android:text="@string/select_journey" />
+        android:layout_marginEnd="23dp"
+        android:layout_alignBaseline="@+id/btnCurrentFootprint"
+        android:layout_alignBottom="@+id/btnCurrentFootprint"
+        android:layout_alignParentEnd="true" />
 
     <Button
         android:id="@+id/btnCurrentFootprint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@string/carbon_footprint"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/btnSelectJourney"
-        android:layout_marginTop="70dp"
-        android:text="@string/carbon_footprint" />
+        android:layout_marginStart="17dp"
+        android:layout_marginBottom="16dp" />
 </RelativeLayout>

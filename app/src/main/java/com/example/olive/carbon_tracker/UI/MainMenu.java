@@ -15,7 +15,6 @@ public class MainMenu extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
         setButton(R.id.btnCreateJourney);
-        setButton(R.id.btnSelectJourney);
         setButton(R.id.btnCurrentFootprint);
     }
 
@@ -29,9 +28,6 @@ public class MainMenu extends AppCompatActivity {
                     //TODO: Enter the names of the other Activity classes
                     case R.id.btnCreateJourney:
                         showActivity = new Intent(MainMenu.this,CreateNewJourney.class );
-                        break;
-                    case R.id.btnSelectJourney:
-                        //showActivity = new Intent(MainMenu.this, );
                         break;
                     case R.id.btnCurrentFootprint:
                         showActivity = new Intent(MainMenu.this,DisplayCarbonFootprint.class);
