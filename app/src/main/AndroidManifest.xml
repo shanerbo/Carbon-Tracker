@@ -11,6 +11,7 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -23,6 +24,11 @@
             android:label="@string/title_activity_display_route_list"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".AddNewRoute"></activity>
+        <activity
+            android:name=".CarList"
+            android:exported="true" />
+        <activity android:name=".AddCar" />
+        <activity android:name=".EditOrDeleteCar"></activity>
     </application>
 
 </manifest>
