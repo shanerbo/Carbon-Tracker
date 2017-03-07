@@ -149,17 +149,36 @@ public class VehicleData {
         return found;
     }
 
-    public List<Integer> uniqueVehicleYearArray(){
-        for(int i =0;i<vehicleYearArray.size();i++){
-            Integer currentYear= vehicleYearArray.get(i);
 
-            boolean found = checkForUniqueYearVehicles(currentYear);
+    public  List<Integer> getYearsForAModel(String vehicleModel){
+        List<Integer> getYearsForModelArray = new ArrayList<>();
+        for(int i =0;i<vehicleModelArray.size();i++){
+            String currentModel = vehicleModelArray.get(i);
 
-            if(found == false){
-                uniqueVehicleYearArray.add(currentYear);
+            if(currentModel.equals(vehicleModel)){
+              int year = vehicleYearArray.get(i);
+                boolean found = uniqueVehicleYearArray(year,getYearsForModelArray);
+                if(found == false) {
+                    getYearsForModelArray.add(year);
+                }
+
             }
         }
-        return uniqueVehicleYearArray;
+        return getYearsForModelArray;
+
+    }
+
+
+    public boolean uniqueVehicleYearArray(int year,List<Integer> getYearsForModelArray ){
+
+        boolean found = false;
+        for(int i =0;i<getYearsForModelArray.size();i++){
+            if(year == getYearsForModelArray.get(i)){
+                found= true;
+                break;
+            }
+        }
+        return found;
     }
 
     public boolean checkForUniqueYearVehicles(Integer currentYear){
@@ -172,19 +191,16 @@ public class VehicleData {
         }
         return found;
     }
-    public  List<Integer>  getYearsForAModel(String vehicleModel){
-        List<Integer> getYearsForModelArray = new ArrayList<>();
-        for(int i =0;i<vehicleModelArray.size();i++){
-            String currentModel = vehicleModelArray.get(i);
-            if(currentModel.equals(vehicleModel)){
-                getYearsForModelArray.add(vehicleYearArray.get(i));
 
+    public List<Integer> uniqueVehicleYearArray(){
+        for(int i =0;i<vehicleYearArray.size();i++){
+            Integer currentYear= vehicleYearArray.get(i);
+            boolean found = checkForUniqueYearVehicles(currentYear);
+            if(found == false){
+                uniqueVehicleYearArray.add(currentYear);
             }
         }
-        return getYearsForModelArray;
-
+        return uniqueVehicleYearArray;
     }
-
-
 
 }
