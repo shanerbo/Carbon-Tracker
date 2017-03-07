@@ -18,7 +18,6 @@
         <activity android:name=".UI.MainMenu" />
         <activity android:name=".UI.DisplayCarbonFootprint" />
         <activity android:name=".UI.PieChart" />
-        <activity android:name=".UI.CreateNewJourney" />
         <activity
             android:name=".UI.DisplayRouteList"
             android:label="@string/title_activity_display_route_list"

@@ -1,5 +1,6 @@
 package com.example.olive.carbon_tracker.UI;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -101,6 +102,9 @@ public class DisplayRouteList extends AppCompatActivity {
             RouteTotalDst.setText("Total Distance: " + currentRoute.getTotalDistance()+" KM");
             return itemView;
         }
+    }
+    public static Intent makeIntent(Context context) {
+        return new Intent(context, DisplayRouteList.class);
     }
 }
 

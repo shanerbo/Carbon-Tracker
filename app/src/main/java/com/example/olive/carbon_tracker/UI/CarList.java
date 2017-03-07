@@ -1,5 +1,6 @@
 package com.example.olive.carbon_tracker.UI;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,8 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CarList extends AppCompatActivity {
-    private static final int ACTIVITY_RESULT_ADD = 777;
-    private static final int ACTIVITY_RESULT_EDIT = 321;
     private List<Vehicle> VehicleList = new ArrayList<Vehicle>();
     Singleton singleton = Singleton.getInstance();
 
@@ -34,6 +33,22 @@ public class CarList extends AppCompatActivity {
         showAllCar();
         AddNewCar();
         EditCar();
+        UserChooseCar();
+    }
+
+    private void UserChooseCar() {
+        ListView CarInfo = (ListView) findViewById(R.id.ID_Car_List);
+        CarInfo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent ConfirmCar = DisplayRouteList.makeIntent(CarList.this);
+
+
+                startActivity(ConfirmCar);
+            }
+
+
+        });
     }
 
     private void EditCar() {
@@ -101,5 +116,8 @@ public class CarList extends AppCompatActivity {
             carYear.setText("Car Year: " + currentVehicle.getYear());
             return itemView;
         }
+    }
+    public static Intent makeIntent(Context context) {
+        return new Intent(context, CarList.class);
     }
 }
