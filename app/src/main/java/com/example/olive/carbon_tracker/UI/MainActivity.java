@@ -11,7 +11,7 @@ import com.example.olive.carbon_tracker.Model.Singleton;
 import com.example.olive.carbon_tracker.R;
 
 public class MainActivity extends AppCompatActivity {
-    private static int exist_time = 2500;
+    private static int exist_time = 1;
     Singleton singleton = Singleton.getInstance();
 
     @Override

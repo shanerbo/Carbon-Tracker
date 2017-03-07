@@ -2,6 +2,7 @@ package com.example.olive.carbon_tracker.Model;
 
 
 import android.content.Context;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +50,9 @@ public class Singleton {
     public List<String> getVehicleMakeArray(){
         return vehicleData.getUniqueVehicleMakeArray();
     }
-    public List<String> getVehicleModelArray(){
+    public List<String> getVehicleModelArray()
+
+    {
         return vehicleModelArray;
     }
     public List<Integer> getVehicleYearArray(){
@@ -100,7 +103,12 @@ public class Singleton {
 
 
 
+public  List<String> updateModels(String vehicleMake){
+    List<String> vehicleModelArray = vehicleData.getModelsForAMake(vehicleMake);
 
+    return vehicleModelArray;
+
+}
 
 
 
@@ -113,7 +121,7 @@ public class Singleton {
 
 
     public List<String> getMake(Context context){
-        VehicleData vehicleData = new VehicleData();
+
         vehicleData.ExtractVehicleData(context);
         List<String> make = vehicleData.getUniqueVehicleMakeArray();
         return make;

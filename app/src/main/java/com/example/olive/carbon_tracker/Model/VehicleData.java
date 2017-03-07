@@ -27,7 +27,7 @@ public class VehicleData {
 
     List<String> uniqueVehicleMakeArray = new ArrayList<>();
     List<Integer> uniqueVehicleYearArray = new ArrayList<>();
-    List<String> getModelsForMake = new ArrayList<>();
+
 
     //TODO Find out the information we need and extract from
     // TODO the excel file as needed
@@ -45,7 +45,7 @@ public class VehicleData {
             reader.readLine();
             int skipFirstLine = 0;
             while ((line = reader.readLine()) != null) {
-                Log.d("MyActivity", "Line: " + line);
+             //   Log.d("MyActivity", "Line: " + line);
                 //Split by '@'
                 String[] tokens = line.split("@");
                 //Read data
@@ -64,7 +64,7 @@ public class VehicleData {
 //                    vehicleDataArray.add(vehicle);
                 }
                 skipFirstLine++;
-                Log.d("MyActivity", "just created:" );
+            //    Log.d("MyActivity", "just created:" );
             }
         } catch (IOException e) {
             Log.wtf("MyActivity", "Error reading data file on  line" + line, e);
@@ -141,13 +141,18 @@ public class VehicleData {
 
 
     public  List<String>  getModelsForAMake(String vehicleMake){
+        List<String> getModelsForMakeArray = new ArrayList<>();
         for(int i =0;i<vehicleMakeArray.size();i++){
             String currentVehicle = vehicleMakeArray.get(i);
             if(vehicleMake.equals(currentVehicle)){
-                getModelsForMake.add(vehicleModelArray.get(i));
+                getModelsForMakeArray.add(vehicleModelArray.get(i));
+                Log.d("Make:  " + vehicleMake + " model added: " + vehicleModelArray.get(i) , "just created:" );
             }
         }
-        return getModelsForMake;
+
+        Log.d("make: "+ vehicleMake + " FIRST MODEL: " + getModelsForMakeArray.get(0), "just created:" );
+
+        return getModelsForMakeArray;
 
     }
 
