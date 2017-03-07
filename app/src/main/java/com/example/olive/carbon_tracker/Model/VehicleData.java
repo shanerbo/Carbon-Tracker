@@ -15,6 +15,8 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.media.CamcorderProfile.get;
+
 public class VehicleData {
     public static final int VEHICLE_MAKE_TOKEN = 0;
     public static final int VEHICLE_MODEL_TOKEN = 1;
@@ -153,6 +155,20 @@ public class VehicleData {
         Log.d("make: "+ vehicleMake + " FIRST MODEL: " + getModelsForMakeArray.get(0), "just created:" );
 
         return getModelsForMakeArray;
+
+    }
+
+
+    public  List<Integer>  getYearsForAModel(String vehicleModel){
+        List<Integer> getYearsForModelArray = new ArrayList<>();
+        for(int i =0;i<vehicleModelArray.size();i++){
+            String currentModel = vehicleModelArray.get(i);
+            if(currentModel.equals(vehicleModel)){
+                getYearsForModelArray.add(vehicleYearArray.get(i));
+
+            }
+        }
+        return getYearsForModelArray;
 
     }
 

@@ -110,16 +110,12 @@ public  List<String> updateModels(String vehicleMake){
 
 }
 
+    public  List<Integer> updateYears(String vehicleModel){
+        List<Integer> vehicleYearArray = vehicleData.getYearsForAModel(vehicleModel);
 
+        return vehicleYearArray;
 
-
-
-
-
-
-
-
-
+    }
     public List<String> getMake(Context context){
 
         vehicleData.ExtractVehicleData(context);
