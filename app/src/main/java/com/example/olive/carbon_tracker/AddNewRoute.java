@@ -88,7 +88,7 @@ public class AddNewRoute extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 new AlertDialog.Builder(AddNewRoute.this)
-                        .setTitle("Delete Pot")
+                        .setTitle("Delete Route")
                         .setMessage(R.string.Warning)
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
