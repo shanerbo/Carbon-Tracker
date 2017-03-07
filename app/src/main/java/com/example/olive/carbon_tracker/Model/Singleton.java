@@ -124,9 +124,6 @@ public  List<String> updateModels(String vehicleMake){
     }
 
 
-
-
-
     public void addVehicle(Vehicle vehicle) {
         this.VehiclesList.add(vehicle);
     }

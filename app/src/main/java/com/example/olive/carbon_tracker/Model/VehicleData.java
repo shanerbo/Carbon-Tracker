@@ -117,6 +117,38 @@ public class VehicleData {
         return found;
     }
 
+    public  List<String> getModelsForAMake(String vehicleMake){
+        List<String> getModelsForMakeArray = new ArrayList<>();
+        for(int i =0;i<vehicleMakeArray.size();i++){
+            String currentVehicle = vehicleMakeArray.get(i);
+            if(vehicleMake.equals(currentVehicle)){
+                String currentModel = vehicleModelArray.get(i);
+                boolean found = checkForUniqueModels(currentModel,getModelsForMakeArray);
+                if(found == false) {
+                    getModelsForMakeArray.add(currentModel);
+                }
+                Log.d("Make:  " + vehicleMake + " model added: " + vehicleModelArray.get(i) , "just created:" );
+            }
+        }
+
+        Log.d("make: "+ vehicleMake + " FIRST MODEL: " + getModelsForMakeArray.get(0), "just created:" );
+
+        return getModelsForMakeArray;
+
+    }
+
+    public boolean checkForUniqueModels(String vehicleModel,List<String> getModelsForMakeArray ){
+
+        boolean found = false;
+        for(int i =0;i<getModelsForMakeArray.size();i++){
+            if(vehicleModel.equals(getModelsForMakeArray.get(i))){
+                found= true;
+                break;
+            }
+        }
+        return found;
+    }
+
     public List<Integer> uniqueVehicleYearArray(){
         for(int i =0;i<vehicleYearArray.size();i++){
             Integer currentYear= vehicleYearArray.get(i);
@@ -140,25 +172,6 @@ public class VehicleData {
         }
         return found;
     }
-
-
-    public  List<String>  getModelsForAMake(String vehicleMake){
-        List<String> getModelsForMakeArray = new ArrayList<>();
-        for(int i =0;i<vehicleMakeArray.size();i++){
-            String currentVehicle = vehicleMakeArray.get(i);
-            if(vehicleMake.equals(currentVehicle)){
-                getModelsForMakeArray.add(vehicleModelArray.get(i));
-                Log.d("Make:  " + vehicleMake + " model added: " + vehicleModelArray.get(i) , "just created:" );
-            }
-        }
-
-        Log.d("make: "+ vehicleMake + " FIRST MODEL: " + getModelsForMakeArray.get(0), "just created:" );
-
-        return getModelsForMakeArray;
-
-    }
-
-
     public  List<Integer>  getYearsForAModel(String vehicleModel){
         List<Integer> getYearsForModelArray = new ArrayList<>();
         for(int i =0;i<vehicleModelArray.size();i++){
