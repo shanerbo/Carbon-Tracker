@@ -2,9 +2,6 @@ package com.example.olive.carbon_tracker.Model;
 
 import com.example.olive.carbon_tracker.R;
 
-/**
- * Created by rdhol on 2017-03-05.
- */
 
 public class Vehicle {
     private String Name;
@@ -14,10 +11,10 @@ public class Vehicle {
     private int iconId = R.drawable.routesign;
 
     public Vehicle(String name, String make,String model, int year){
-        Name = name;
-        Make = make;
-        Model = model;
-        Year = year;
+        setName(name);
+        setMake(make);
+        setModel(model);
+        setYear(year);
     }
     public int getIconId(){
         return iconId;
@@ -26,11 +23,22 @@ public class Vehicle {
     public String getName(){
         return Name;
     }
+
+    public void setName(String name) {
+        if (name.length() == 0) {
+            throw new IllegalArgumentException();
+        }
+        this.Name = name;
+    }
+
     public String getMake() {
         return Make;
     }
 
-    public void setMake(String make) {
+    private void setMake(String make) {
+        if (make.length() == 0) {
+            throw new IllegalArgumentException();
+        }
         this.Make = make;
     }
 
@@ -39,6 +47,9 @@ public class Vehicle {
     }
 
     public void setModel(String model) {
+        if (model.length() == 0) {
+            throw new IllegalArgumentException();
+        }
         this.Model = model;
     }
 
@@ -46,7 +57,10 @@ public class Vehicle {
         return Year;
     }
 
-    public void setYear(int year) {
+    private void setYear(int year) {
+        if (year == 0) {
+            throw new IllegalArgumentException();
+        }
         this.Year = year;
     }
 }
