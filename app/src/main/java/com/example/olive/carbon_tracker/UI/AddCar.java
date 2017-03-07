@@ -45,6 +45,7 @@ public class AddCar extends AppCompatActivity {
             position = singleton.getEditPosition_car();
             Vehicle VehicleToBeEdit = VehicleList.get(position);
             String VehicleName = VehicleToBeEdit.getName();
+
             EditText Name = (EditText) findViewById(R.id.ID_Car_Name);
             Name.setText(VehicleName);
         }else{
@@ -152,7 +153,7 @@ public class AddCar extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 new AlertDialog.Builder(AddCar.this)
-                        .setTitle("Delete Route")
+                        .setTitle("Delete Car")
                         .setMessage(R.string.Warning)
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
