@@ -27,8 +27,8 @@
         <activity
             android:name=".UI.CarList"
             android:exported="true" />
-        <activity android:name=".UI.AddCar" />
-        <activity android:name=".UI.EditOrDeleteCar"></activity>
+        <activity android:name=".UI.AddCar"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

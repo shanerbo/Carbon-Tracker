@@ -10,6 +10,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.InterruptedIOException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +26,7 @@ public class VehicleData {
     List<Vehicle> vehicleDataArray = new ArrayList<>();
 
     List<String> uniqueVehicleMakeArray = new ArrayList<>();
+    List<Integer> uniqueVehicleYearArray = new ArrayList<>();
     List<String> getModelsForMake = new ArrayList<>();
 
     //TODO Find out the information we need and extract from
@@ -47,22 +49,22 @@ public class VehicleData {
                 //Split by '@'
                 String[] tokens = line.split("@");
                 //Read data
-                Vehicle vehicle = new Vehicle();
+//                Vehicle vehicle = new Vehicle();
                 if (skipFirstLine > 0) {
 
-                    vehicle.setMake(tokens[VEHICLE_MAKE_TOKEN]);
+//                    vehicle.setMake(tokens[VEHICLE_MAKE_TOKEN]);
                     vehicleMakeArray.add(tokens[VEHICLE_MAKE_TOKEN]);
 
-                    vehicle.setModel(tokens[VEHICLE_MODEL_TOKEN]);
+//                    vehicle.setModel(tokens[VEHICLE_MODEL_TOKEN]);
                     vehicleModelArray.add(tokens[VEHICLE_MODEL_TOKEN]);
 
-                    vehicle.setYear(Integer.parseInt(tokens[VEHICLE_YEAR_TOKEN]));
+//                    vehicle.setYear(Integer.parseInt(tokens[VEHICLE_YEAR_TOKEN]));
                     vehicleYearArray.add(Integer.parseInt(tokens[VEHICLE_YEAR_TOKEN]));
 
-                    vehicleDataArray.add(vehicle);
+//                    vehicleDataArray.add(vehicle);
                 }
                 skipFirstLine++;
-                Log.d("MyActivity", "just created:" + vehicle);
+                Log.d("MyActivity", "just created:" );
             }
         } catch (IOException e) {
             Log.wtf("MyActivity", "Error reading data file on  line" + line, e);
@@ -106,6 +108,30 @@ public class VehicleData {
         boolean found = false;
         for(int i =0;i<uniqueVehicleMakeArray.size();i++){
             if(currentMake.equals(uniqueVehicleMakeArray.get(i))){
+                found= true;
+                break;
+            }
+        }
+        return found;
+    }
+
+    public List<Integer> uniqueVehicleYearArray(){
+        for(int i =0;i<vehicleYearArray.size();i++){
+            Integer currentYear= vehicleYearArray.get(i);
+
+            boolean found = checkForUniqueYearVehicles(currentYear);
+
+            if(found == false){
+                uniqueVehicleYearArray.add(currentYear);
+            }
+        }
+        return uniqueVehicleYearArray;
+    }
+
+    public boolean checkForUniqueYearVehicles(Integer currentYear){
+        boolean found = false;
+        for(int i =0;i<uniqueVehicleYearArray.size();i++){
+            if(currentYear.equals(uniqueVehicleYearArray.get(i))){
                 found= true;
                 break;
             }

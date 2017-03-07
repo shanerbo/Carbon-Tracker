@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AddNewRoute extends AppCompatActivity {
-    private RouteCollection allRoutes = new RouteCollection();
+    //private RouteCollection allRoutes = new RouteCollection();
     private List<Route> RouteList = new ArrayList<Route>();
     private int position;
     Singleton singleton  = Singleton.getInstance();
@@ -31,7 +31,7 @@ public class AddNewRoute extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
         setContentView(R.layout.activity_add_new_route);
-        allRoutes = singleton.getUserRoutes();
+       // allRoutes = singleton.getUserRoutes();
         RouteList = singleton.getRouteList();
         if(singleton.checkEdit() == 1){
             position = singleton.getEditPosition();
@@ -81,15 +81,15 @@ public class AddNewRoute extends AppCompatActivity {
                     }
                     Route userInput = new Route(name,cityDst,highWayDst,totalDst);
                     if (singleton.checkEdit() == 1){
-                        allRoutes.changeRoute(userInput,position);
-                        singleton.setUserRoutes(allRoutes);
+                        //allRoutes.changeRoute(userInput,position);
+                        //singleton.setUserRoutes(allRoutes);
                         //changing Route to Route list
                         RouteList.set(position,userInput);
                         singleton.setRouteList(RouteList);
                         singleton.userFinishEdit();
                     }else{
-                        allRoutes.addRoute(userInput);
-                        singleton.setUserRoutes(allRoutes);
+                        //allRoutes.addRoute(userInput);
+                        //singleton.setUserRoutes(allRoutes);
                         RouteList.add(userInput);
                         singleton.setRouteList(RouteList);
                         singleton.userFinishAdd();
@@ -118,13 +118,13 @@ public class AddNewRoute extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 Intent del_intent = new Intent();
-                                allRoutes.delRoute(position);
-                                singleton.setUserRoutes(allRoutes);
+                                //allRoutes.delRoute(position);
+                                //singleton.setUserRoutes(allRoutes);
                                 //deleting pot form list
                                 RouteList.remove(position);
                                 singleton.setRouteList(RouteList);
                                 setResult(Activity.RESULT_OK,del_intent);
-                                Toast.makeText(AddNewRoute.this,getString(R.string.UserDeletePot),Toast.LENGTH_LONG).show();
+                                Toast.makeText(AddNewRoute.this,getString(R.string.UserDeleteRoute),Toast.LENGTH_LONG).show();
                                 finish();
                             }
                         })

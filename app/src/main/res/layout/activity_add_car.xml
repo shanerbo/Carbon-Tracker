@@ -85,24 +85,29 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="24dp" />
 
-    <Button
+
+    <android.support.design.widget.FloatingActionButton
         android:id="@+id/ID_button_OKAdd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="41dp"
-        android:background="@android:color/holo_green_light"
-        android:text="Add"
-        android:layout_alignParentBottom="true"
-        android:layout_toStartOf="@+id/ID_add_car" />
+        android:clickable="true"
+        app:backgroundTint="@android:color/holo_green_dark"
+        app:fabSize="normal"
+        app:srcCompat="@android:drawable/checkbox_on_background"
+        android:layout_below="@+id/ID_drop_down_year"
+        android:layout_toEndOf="@+id/ID_add_car"
+        android:layout_marginStart="22dp" />
 
-    <Button
-        android:id="@+id/ID_button_cancel_add"
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/ID_button_delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/ID_button_OKAdd"
-        android:layout_toEndOf="@+id/ID_add_car"
-        android:background="@android:color/holo_red_light"
-        android:text="Cancel" />
-
+        android:clickable="true"
+        app:backgroundTint="@android:color/holo_red_light"
+        app:fabSize="normal"
+        app:srcCompat="@android:drawable/btn_dialog"
+        android:layout_below="@+id/ID_drop_down_year"
+        android:layout_toStartOf="@+id/ID_add_car"
+        android:layout_marginEnd="22dp" />
 
 </RelativeLayout>

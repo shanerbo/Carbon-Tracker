@@ -97,23 +97,23 @@
         android:id="@+id/comfirm_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="39dp"
         android:clickable="true"
         app:backgroundTint="@android:color/holo_green_dark"
         app:fabSize="normal"
         app:srcCompat="@android:drawable/checkbox_on_background"
+        android:layout_marginBottom="52dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/TotalDstCal"
-        android:layout_marginBottom="52dp" />
+        android:layout_alignEnd="@+id/TotalDstCal"
+        android:layout_marginEnd="39dp" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/comfirm_delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/comfirm_add"
-        android:layout_alignStart="@+id/AddRouteName"
         android:clickable="true"
         app:backgroundTint="@android:color/holo_red_light"
         app:fabSize="normal"
-        app:srcCompat="@android:drawable/btn_dialog" />
+        app:srcCompat="@android:drawable/btn_dialog"
+        android:layout_alignTop="@+id/comfirm_add"
+        android:layout_alignStart="@+id/TotalDst" />
 </RelativeLayout>

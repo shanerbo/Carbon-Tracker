@@ -8,12 +8,21 @@ import java.util.List;
 
 public class Singleton {
     private static Singleton currInstance = new Singleton();
-    private List<Vehicle> Vehicles = new ArrayList<>();
+//    private String currenMake;
+    private List<Vehicle> VehiclesList = new ArrayList<>();
     private List<Route> RouteList = new ArrayList<>();
-    private RouteCollection Routes = new RouteCollection();
+    private VehicleData vehicleData = new VehicleData();
+    private List<String> vehicleModelArray = new ArrayList<>();
+//    List<Vehicle> vehicleDataArray = new ArrayList<>();
+
+
+    //private RouteCollection Routes = new RouteCollection();
     private static int editRoute ;
+    private static int editVehicle ;
     private static int editPosition ;
+    private static int editPosition_car ;
     private static int addRoute ;
+    private static int addVehicle ;
     private static int deleteRoute ;
     private static Singleton instance = new Singleton();
 
@@ -25,6 +34,82 @@ public class Singleton {
     private Singleton(){
 
     }
+
+
+//    public void setVehicleArray(Context context){
+//        vehicleData.ExtractVehicleData(context);
+//    }
+    public void setVehicleData(Context context){
+        vehicleData.ExtractVehicleData(context);
+    }
+    public VehicleData getVehicleData(){
+        return vehicleData;
+    }
+
+    public List<String> getVehicleMakeArray(){
+        return vehicleData.getUniqueVehicleMakeArray();
+    }
+    public List<String> getVehicleModelArray(){
+        return vehicleModelArray;
+    }
+    public List<Integer> getVehicleYearArray(){
+        return vehicleData.uniqueVehicleYearArray();
+    }
+
+
+    public void setEditPosition_car(int Position){
+        editPosition_car = Position;
+    }
+    public int getEditPosition_car(){
+        return editPosition_car;
+    }
+    public int getAddPosition_car(){
+        int position = VehiclesList.size()-1;
+        return position;
+    }
+    public void userEditRoute_car(){
+        editVehicle = 1;
+    }
+    public int checkEdit_car(){
+        return editVehicle;
+    }
+
+    public int userFinishEdit_car(){
+        editVehicle = 0;
+        return editRoute;
+    }
+    public void userAddVehicle(){
+        addVehicle = 1;
+    }
+    public int userFinishAdd_car(){
+        addVehicle = 0;
+        return addVehicle;
+    }
+    public int checkAdd_car(){
+        return addVehicle;
+    }
+
+    public void setVehiclesList(List<Vehicle> newVehicle){
+        VehiclesList = newVehicle;
+    }
+
+    public List<Vehicle> getVehicleList(){
+        return VehiclesList;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     public List<String> getMake(Context context){
@@ -39,12 +124,12 @@ public class Singleton {
 
 
     public void addVehicle(Vehicle vehicle) {
-        this.Vehicles.add(vehicle);
+        this.VehiclesList.add(vehicle);
     }
 
     public Vehicle getVehicle(int index) {
-        validateIndex(this.Vehicles, index);
-        return this.Vehicles.get(index);
+        validateIndex(this.VehiclesList, index);
+        return this.VehiclesList.get(index);
     }
 
 
@@ -56,12 +141,12 @@ public class Singleton {
     }
 
 //-----------------------------------Route's function-------------------------------------------
-public void setUserRoutes(RouteCollection userRoutes){
-    Routes = userRoutes;
-}
-    public RouteCollection getUserRoutes(){
-        return Routes;
-    }
+//public void setUserRoutes(RouteCollection userRoutes){
+//    Routes = userRoutes;
+//}
+//    public RouteCollection getUserRoutes(){
+//        return Routes;
+//    }
     public List<Route> getRouteList(){
         return RouteList;
     }

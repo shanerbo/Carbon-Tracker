@@ -15,14 +15,13 @@ import android.widget.TextView;
 
 import com.example.olive.carbon_tracker.R;
 import com.example.olive.carbon_tracker.Model.Route;
-import com.example.olive.carbon_tracker.Model.RouteCollection;
 import com.example.olive.carbon_tracker.Model.Singleton;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class DisplayRouteList extends AppCompatActivity {
-    private RouteCollection allRoutes = new RouteCollection();
+//    private RouteCollection allRoutes = new RouteCollection();
     private List<Route> RouteList = new ArrayList<Route>();
     Singleton singleton  = Singleton.getInstance();
     @Override
@@ -31,7 +30,7 @@ public class DisplayRouteList extends AppCompatActivity {
         setContentView(R.layout.activity_display_route_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.ChooseRoute);
         setSupportActionBar(toolbar);
-        allRoutes = singleton.getUserRoutes();
+//        allRoutes = singleton.getUserRoutes();
         RouteList = singleton.getRouteList();
         AddRoute();
         EditRoute();
@@ -92,11 +91,11 @@ public class DisplayRouteList extends AppCompatActivity {
             Route currentRoute = RouteList.get(position);
             ImageView imageView = (ImageView) itemView.findViewById(R.id.RouteImage);
             imageView.setImageResource(currentRoute.getIconId());
-            TextView RouteName = (TextView)itemView.findViewById(R.id.RouteNameWithimage);
+            TextView RouteName = (TextView)itemView.findViewById(R.id.CarNameWithimage);
             RouteName.setText("Name: "+currentRoute.getName());
-            TextView RouteCityDst = (TextView)itemView.findViewById(R.id.cityDistanceWithimage);
+            TextView RouteCityDst = (TextView)itemView.findViewById(R.id.CarMakeWithimage);
             RouteCityDst.setText("Distance in City: " + currentRoute.getCityDistance()+" KM");
-            TextView RouteHwayDst = (TextView)itemView.findViewById(R.id.HwayDistanceWithimage);
+            TextView RouteHwayDst = (TextView)itemView.findViewById(R.id.CarModelWithimage);
             RouteHwayDst.setText("Distance in HighWay: "+ currentRoute.getHighwayDistance()+" KM");
             TextView RouteTotalDst = (TextView)itemView.findViewById(R.id.totalDistanceWImage);
             RouteTotalDst.setText("Total Distance: " + currentRoute.getTotalDistance()+" KM");

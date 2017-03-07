@@ -36,12 +36,12 @@ public class Route {
     public int getTotalDistance(){
         return TotalDistance;
     }
-    public void setName(String name) {
-        if (name.length() == 0) {
-            throw new IllegalArgumentException();
-        }
-        this.Name = name;
-    }
+//    public void setName(String name) {
+//        if (name.length() == 0) {
+//            throw new IllegalArgumentException();
+//        }
+//        this.Name = name;
+//    }
 
     public void setCityDistance(int cityDistance) {
         if (cityDistance == 0) {

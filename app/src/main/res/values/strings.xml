@@ -37,7 +37,8 @@
     <string name="tempCityDst">TextView</string>
     <string name="tempHwatDst">TextView</string>
     <string name="Warning">The Route Will be discarded, Do you still want to delete it?</string>
-    <string name="UserDeletePot">The Route You Select has been deleted</string>
+    <string name="UserDeleteRoute">The Route You Select has been deleted</string>
+    <string name="UserDeleteVehicle">The Car You Select has been deleted</string>
 
     <!--CreateNewJourney-->
 
