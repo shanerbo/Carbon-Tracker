@@ -113,31 +113,28 @@ public class AddCar extends AppCompatActivity {
                 Spinner Model_spinner = (Spinner) findViewById(R.id.ID_drop_down_model);
                 Spinner Year_spinner = (Spinner) findViewById(R.id.ID_drop_down_year);
 
-                if(nickname.length() == 0){
-                    Toast.makeText(AddCar.this, "Adding Car Failed: car name cannot be empty", Toast.LENGTH_LONG).show();
-                    finish();
-                }
+                if(nickname.length() != 0) {
 
-
-                String CarName = nickname.getText().toString();
-                String CarMake = Make_spinner.getSelectedItem().toString();
-                String CarModel = Model_spinner.getSelectedItem().toString();
-                int CarYear = Integer.parseInt(Year_spinner.getSelectedItem().toString());
-                if(!CarName.matches("") && !CarMake.matches("") && !CarModel.matches("") && CarYear>0){
-                    Vehicle userInput = new Vehicle(CarName,CarMake,CarModel,CarYear);
-                    if (singleton.checkEdit_car() ==1){
-                        VehicleList.set(position,userInput);
-                        singleton.setVehiclesList(VehicleList);
-                        singleton.userFinishEdit_car();
-                    }else{
-                        VehicleList.add(userInput);
-                        singleton.setVehiclesList(VehicleList);
-                        singleton.userFinishAdd_car();
+                    String CarName = nickname.getText().toString();
+                    String CarMake = Make_spinner.getSelectedItem().toString();
+                    String CarModel = Model_spinner.getSelectedItem().toString();
+                    int CarYear = Integer.parseInt(Year_spinner.getSelectedItem().toString());
+                    if (!CarName.matches("") && !CarMake.matches("") && !CarModel.matches("") && CarYear > 0) {
+                        Vehicle userInput = new Vehicle(CarName, CarMake, CarModel, CarYear);
+                        if (singleton.checkEdit_car() == 1) {
+                            VehicleList.set(position, userInput);
+                            singleton.setVehiclesList(VehicleList);
+                            singleton.userFinishEdit_car();
+                        } else {
+                            VehicleList.add(userInput);
+                            singleton.setVehiclesList(VehicleList);
+                            singleton.userFinishAdd_car();
+                        }
                     }
+                    finish();
+                }else{
+                    Toast.makeText(AddCar.this, "Please fill the name", Toast.LENGTH_SHORT).show();
                 }
-
-                Toast.makeText(AddCar.this, "Saving your "+ CarName +"'s info... ", Toast.LENGTH_SHORT).show();
-                finish();
             }
         });
 
@@ -163,6 +160,7 @@ public class AddCar extends AppCompatActivity {
                                 Intent del_intent = new Intent();
                                 VehicleList.remove(position);
                                 singleton.setVehiclesList(VehicleList);
+                                singleton.userFinishEdit_car();
                                 setResult(Activity.RESULT_OK,del_intent);
                                 Toast.makeText(AddCar.this,getString(R.string.UserDeleteVehicle),Toast.LENGTH_LONG).show();
                                 finish();
@@ -172,6 +170,7 @@ public class AddCar extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.cancel();
+                                singleton.userFinishEdit_car();
                                 finish();
                             }
                         })
@@ -179,7 +178,11 @@ public class AddCar extends AppCompatActivity {
             }
         });
     }
-
+    public void onBackPressed() {
+        singleton.userFinishEdit_car();
+        singleton.userFinishAdd_car();
+        finish();
+    }
 
     public static Intent makeIntent(Context context) {
         return new Intent(context, AddCar.class);

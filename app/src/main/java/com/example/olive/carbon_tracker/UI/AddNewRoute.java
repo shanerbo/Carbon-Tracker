@@ -64,8 +64,6 @@ public class AddNewRoute extends AppCompatActivity {
                 EditText CityDst = (EditText)findViewById(R.id.CityDstInput);
                 EditText HighWayDst = (EditText)findViewById(R.id.HwayDstInput);
                 EditText TotalDst = (EditText)findViewById(R.id.TotalDstCal);
-
-//                int Route_index = passedInData.getIntExtra("route index",0);
                 String name = Name.getText().toString();
                 String temp_cityDst = CityDst.getText().toString();
                 String temp_highWayDst = HighWayDst.getText().toString();
@@ -96,6 +94,8 @@ public class AddNewRoute extends AppCompatActivity {
                     }
 
                     finish();
+                }else{
+                    Toast.makeText(AddNewRoute.this, "Please fill all blanks", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -123,6 +123,7 @@ public class AddNewRoute extends AppCompatActivity {
                                 //deleting pot form list
                                 RouteList.remove(position);
                                 singleton.setRouteList(RouteList);
+                                singleton.userFinishEdit();
                                 setResult(Activity.RESULT_OK,del_intent);
                                 Toast.makeText(AddNewRoute.this,getString(R.string.UserDeleteRoute),Toast.LENGTH_LONG).show();
                                 finish();
@@ -132,6 +133,7 @@ public class AddNewRoute extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.cancel();
+                                singleton.userFinishEdit();
                                 finish();
                             }
                         })
@@ -140,7 +142,12 @@ public class AddNewRoute extends AppCompatActivity {
         });
     }
 
-
+    @Override
+    public void onBackPressed() {
+        singleton.userFinishEdit();
+        singleton.userFinishAdd();
+        finish();
+    }
 
     public static Intent makeIntent(Context context) {
         return new Intent(context, AddNewRoute.class);

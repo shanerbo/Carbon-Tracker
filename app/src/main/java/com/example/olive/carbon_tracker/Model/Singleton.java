@@ -77,16 +77,14 @@ public class Singleton {
         return editVehicle;
     }
 
-    public int userFinishEdit_car(){
+    public void userFinishEdit_car(){
         editVehicle = 0;
-        return editRoute;
     }
     public void userAddVehicle(){
         addVehicle = 1;
     }
-    public int userFinishAdd_car(){
+    public void userFinishAdd_car(){
         addVehicle = 0;
-        return addVehicle;
     }
     public int checkAdd_car(){
         return addVehicle;
@@ -171,16 +169,14 @@ public  List<String> updateModels(String vehicleMake){
     public void userEditRoute(){
         editRoute = 1;
     }
-    public int userFinishEdit(){
+    public void userFinishEdit(){
         editRoute = 0;
-        return editRoute;
     }
     public void userAddRoute(){
         addRoute = 1;
     }
-    public int userFinishAdd(){
+    public void userFinishAdd(){
         addRoute = 0;
-        return addRoute;
     }
     public int checkAdd(){
         return addRoute;

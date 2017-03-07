@@ -63,7 +63,6 @@ public class CarList extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent AddIntent = com.example.olive.carbon_tracker.UI.AddCar.makeIntent(CarList.this);
-                Toast.makeText(CarList.this, "Enter your new car's info here", Toast.LENGTH_LONG).show();
                 singleton.userAddVehicle();
                 startActivityForResult(AddIntent,1);//case 1 means add route
             }
