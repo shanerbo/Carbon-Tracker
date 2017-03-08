@@ -108,6 +108,13 @@ public  List<String> updateModels(String vehicleMake){
 
 }
 
+public List<Double> updateDispl(String model,int year){
+    List<Double> vehicleDispl = vehicleData.getDisplForVehicle(model,year);
+
+    return vehicleDispl;
+}
+
+
     public  List<Integer> updateYears(String vehicleModel){
         List<Integer> vehicleYearArray = vehicleData.getYearsForAModel(vehicleModel);
 

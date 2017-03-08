@@ -21,14 +21,25 @@ public class VehicleData {
     public static final int VEHICLE_MAKE_TOKEN = 0;
     public static final int VEHICLE_MODEL_TOKEN = 1;
     public static final int VEHICLE_YEAR_TOKEN = 2;
+    public static final int VEHICLE_CITY08_TOKEN = 3;
+    public static final int VEHICLE_HIGHWAY08_TOKEN = 4;
+    public static final int VEHICLE_FUELTYPE_TOKEN = 5;
+    public static final int VEHICLE_DISPL_TOKEN =6;
+    public static final int VEHICLE_TRANY_TOKEN=7;
 
     List<String> vehicleMakeArray = new ArrayList<>();
     List<String> vehicleModelArray = new ArrayList<>();
     List<Integer> vehicleYearArray = new ArrayList<>();
+    List<Integer> vehicleCity08Array = new ArrayList<>();
+    List<Integer> vehicleHighway08 = new ArrayList<>();
+    List<String> vehicleFuelTypeArray = new ArrayList<>();
+    List<Double> vehicleDisplArray = new ArrayList<>();
+    List<String> vehicleTranyArray = new ArrayList<>();
     List<Vehicle> vehicleDataArray = new ArrayList<>();
 
     List<String> uniqueVehicleMakeArray = new ArrayList<>();
     List<Integer> uniqueVehicleYearArray = new ArrayList<>();
+    List<Double> uniqueDisplArray = new ArrayList<>();
 
 
     //TODO Find out the information we need and extract from
@@ -62,6 +73,17 @@ public class VehicleData {
 
 //                    vehicle.setYear(Integer.parseInt(tokens[VEHICLE_YEAR_TOKEN]));
                     vehicleYearArray.add(Integer.parseInt(tokens[VEHICLE_YEAR_TOKEN]));
+
+                    vehicleCity08Array.add(Integer.parseInt(tokens[VEHICLE_CITY08_TOKEN]));
+
+                    vehicleHighway08.add(Integer.parseInt(tokens[VEHICLE_HIGHWAY08_TOKEN]));
+
+                    vehicleFuelTypeArray.add(tokens[VEHICLE_FUELTYPE_TOKEN]);
+
+                    vehicleDisplArray.add(Double.parseDouble(tokens[VEHICLE_DISPL_TOKEN]));
+
+                    vehicleTranyArray.add(tokens[VEHICLE_TRANY_TOKEN]);
+
 
 //                    vehicleDataArray.add(vehicle);
                 }
@@ -201,6 +223,36 @@ public class VehicleData {
             }
         }
         return uniqueVehicleYearArray;
+    }
+
+    public  List<Double> getDisplForVehicle(String vehicleModel,int vehicleYear){
+        List<Double> getDispl = new ArrayList<>();
+        for(int i =0;i<vehicleModelArray.size();i++){
+            String currentModel = vehicleModelArray.get(i);
+
+            if(currentModel.equals(vehicleModel)){
+
+
+                for(int j =0;j<vehicleYearArray.size();i++){
+
+
+
+                    int year = vehicleYearArray.get(i);
+
+                    if(vehicleYear == year){
+                        uniqueDisplArray.add(vehicleDisplArray.get(i));
+                    }
+
+
+
+
+                }
+
+
+            }
+        }
+        return getDispl;
+
     }
 
 }

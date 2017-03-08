@@ -8,6 +8,11 @@ public class Vehicle {
     private String Make;
     private String Model;
     private int Year;
+    private int highway08;
+    private int fuelType;
+    private float displ;
+    private String trany;
+
     private int iconId = R.drawable.routesign;
 
     public Vehicle(String name, String make,String model, int year){
