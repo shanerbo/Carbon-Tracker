@@ -60,32 +60,32 @@ public class AddNewRoute extends AppCompatActivity {
         check.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText Name = (EditText)findViewById(R.id.RouteNameInput);
-                EditText CityDst = (EditText)findViewById(R.id.CityDstInput);
-                EditText HighWayDst = (EditText)findViewById(R.id.HwayDstInput);
-                EditText TotalDst = (EditText)findViewById(R.id.TotalDstCal);
+                EditText Name = (EditText) findViewById(R.id.RouteNameInput);
+                EditText CityDst = (EditText) findViewById(R.id.CityDstInput);
+                EditText HighWayDst = (EditText) findViewById(R.id.HwayDstInput);
+                EditText TotalDst = (EditText) findViewById(R.id.TotalDstCal);
                 String name = Name.getText().toString();
                 String temp_cityDst = CityDst.getText().toString();
                 String temp_highWayDst = HighWayDst.getText().toString();
                 String temp_totalDst = TotalDst.getText().toString();
-                if(!name.matches("") && !temp_cityDst.matches("") && !temp_highWayDst.matches("") && !temp_totalDst.matches("")){
+                if (!name.matches("") && !temp_cityDst.matches("") && !temp_highWayDst.matches("") && !temp_totalDst.matches("")) {
                     int cityDst = Integer.parseInt(temp_cityDst);
                     int highWayDst = Integer.parseInt(temp_highWayDst);
                     int totalDst = Integer.parseInt(temp_totalDst);
-                    if (cityDst <= 0 || highWayDst <=0 || totalDst <=0){
+                    if (cityDst <= 0 || highWayDst <= 0 || totalDst <= 0) {
                         Snackbar.make(v, "The Distance Cannot Be Smaller Than 0", Snackbar.LENGTH_SHORT)
                                 .setAction("Action", null).show();
                         return;
                     }
-                    Route userInput = new Route(name,cityDst,highWayDst,totalDst);
-                    if (singleton.checkEdit() == 1){
+                    Route userInput = new Route(name, cityDst, highWayDst, totalDst);
+                    if (singleton.checkEdit() == 1) {
                         //allRoutes.changeRoute(userInput,position);
                         //singleton.setUserRoutes(allRoutes);
                         //changing Route to Route list
-                        RouteList.set(position,userInput);
+                        RouteList.set(position, userInput);
                         singleton.setRouteList(RouteList);
                         singleton.userFinishEdit();
-                    }else{
+                    } else {
                         //allRoutes.addRoute(userInput);
                         //singleton.setUserRoutes(allRoutes);
                         RouteList.add(userInput);
@@ -100,52 +100,24 @@ public class AddNewRoute extends AppCompatActivity {
                         int HwyConsume = singleton.getVehicle().getHighway08();
                         String fuelType = singleton.getVehicle().getFuelType();
                         double fuelCost;
-                        if (fuelType.toLowerCase() == "diesel"){
+                        if (fuelType.toLowerCase() == "diesel") {
                             fuelCost = 10.16;
-                        }
-                        else if (fuelType.toLowerCase() == "electricity"){
+                        } else if (fuelType.toLowerCase() == "electricity") {
                             fuelCost = 0;
-                        }
-                        else{
+                        } else {
                             fuelCost = 8.89;
                         }
-                        Double totalCO2 = fuelCost*(cityDistance/cityConsume + HwyDistance/HwyConsume);
-                        new AlertDialog.Builder(AddNewRoute.this)
-                                .setTitle("CO2 Emission:"+ totalCO2)
-                                .setMessage(R.string.Warning)
-                                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        Intent del_intent = new Intent();
-                                        //allRoutes.delRoute(position);
-                                        //singleton.setUserRoutes(allRoutes);
-                                        //deleting pot form list
-                                        RouteList.remove(position);
-                                        singleton.setRouteList(RouteList);
-                                        singleton.userFinishEdit();
-                                        setResult(Activity.RESULT_OK,del_intent);
-                                        Toast.makeText(AddNewRoute.this,getString(R.string.UserDeleteRoute),Toast.LENGTH_LONG).show();
-                                        finish();
-                                    }
-                                })
-                                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dialog.cancel();
-                                        singleton.userFinishEdit();
-                                        finish();
-                                    }
-                                })
-                                .setIcon(android.R.drawable.ic_dialog_alert).show();
+                        double  cityGas = (cityDistance*1.00 / cityConsume);
+                        double hwyGas = HwyDistance*1.00  / HwyConsume;
+                        double totalGas = cityGas+hwyGas;
+                        double totalCO2 = fuelCost * totalGas;
+                        Toast.makeText(getApplicationContext(), "" + totalCO2, Toast.LENGTH_LONG).show();
                     }
-
-                    finish();
-                }else{
-                    Toast.makeText(AddNewRoute.this, "Please fill all blanks", Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
+
     //
     private void delButton(final int position) {
         FloatingActionButton delete = (FloatingActionButton) findViewById(R.id.comfirm_delete);
