@@ -45,7 +45,7 @@ public class DisplayCarbonFootprint extends AppCompatActivity {
         Button btn = (Button) findViewById(R.id.btn_PieChart);
         btn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(DisplayCarbonFootprint.this, PieChart.class);
+                Intent intent = new Intent(DisplayCarbonFootprint.this,Chart.class);
                 startActivity(intent);
             }
         });

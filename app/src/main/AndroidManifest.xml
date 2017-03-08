@@ -17,7 +17,6 @@
         </activity>
         <activity android:name=".UI.MainMenu" />
         <activity android:name=".UI.DisplayCarbonFootprint" />
-        <activity android:name=".UI.PieChart" />
         <activity
             android:name=".UI.DisplayRouteList"
             android:label="@string/title_activity_display_route_list"
@@ -29,7 +28,8 @@
         <activity
             android:name=".UI.DisplayCarList"
             android:label="@string/title_activity_display_car_list"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".UI.Chart"></activity>
     </application>
 
 </manifest>

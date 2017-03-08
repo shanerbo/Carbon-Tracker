@@ -113,6 +113,7 @@ public class AddNewRoute extends AppCompatActivity {
                         calculateCO2(userInput);
 
                     }
+
                     finish();
                 }else{
                     Toast.makeText(getApplicationContext(),"Please fill all blanks",Toast.LENGTH_LONG).show();
