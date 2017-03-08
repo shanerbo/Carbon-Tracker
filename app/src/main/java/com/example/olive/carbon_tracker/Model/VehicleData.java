@@ -128,25 +128,25 @@ public class VehicleData {
         for (int i = 0; i < vehicleMakeArray.size(); i++) {
             String currentMake = vehicleMakeArray.get(i);
 
-            boolean found = checkForUniqueVehicles(currentMake);
+            //boolean found = checkForUniqueVehicles(currentMake);
 
-            if (found == false) {
+            if (!uniqueVehicleMakeArray.contains(currentMake)) {
                 uniqueVehicleMakeArray.add(currentMake);
             }
         }
         return uniqueVehicleMakeArray;
     }
 
-    public boolean checkForUniqueVehicles(String currentMake) {
-        boolean found = false;
-        for (int i = 0; i < uniqueVehicleMakeArray.size(); i++) {
-            if (currentMake.equals(uniqueVehicleMakeArray.get(i))) {
-                found = true;
-                break;
-            }
-        }
-        return found;
-    }
+//    public boolean checkForUniqueVehicles(String currentMake) {
+//        boolean found = false;
+//        for (int i = 0; i < uniqueVehicleMakeArray.size(); i++) {
+//            if (currentMake.equals(uniqueVehicleMakeArray.get(i))) {
+//                found = true;
+//                break;
+//            }
+//        }
+//        return found;
+//    }
 
     public List<String> getModelsForAMake(String vehicleMake) {
         List<String> getModelsForMakeArray = new ArrayList<>();
@@ -154,31 +154,29 @@ public class VehicleData {
             String currentVehicle = vehicleMakeArray.get(i);
             if (vehicleMake.equals(currentVehicle)) {
                 String currentModel = vehicleModelArray.get(i);
-                boolean found = checkForUniqueModels(currentModel, getModelsForMakeArray);
-                if (found == false) {
+//                boolean found = checkForUniqueModels(currentModel, getModelsForMakeArray);
+                if (!getModelsForMakeArray.contains(currentModel)) {
                     getModelsForMakeArray.add(currentModel);
                 }
 //                Log.d("Make:  " + vehicleMake + " model added: " + vehicleModelArray.get(i) , "just created:" );
             }
         }
 
-//        Log.d("make: "+ vehicleMake + " FIRST MODEL: " + getModelsForMakeArray.get(0), "just created:" );
-
         return getModelsForMakeArray;
 
     }
 
-    public boolean checkForUniqueModels(String vehicleModel, List<String> getModelsForMakeArray) {
-
-        boolean found = false;
-        for (int i = 0; i < getModelsForMakeArray.size(); i++) {
-            if (vehicleModel.equals(getModelsForMakeArray.get(i))) {
-                found = true;
-                break;
-            }
-        }
-        return found;
-    }
+//    public boolean checkForUniqueModels(String vehicleModel, List<String> getModelsForMakeArray) {
+//
+//        boolean found = false;
+//        for (int i = 0; i < getModelsForMakeArray.size(); i++) {
+//            if (vehicleModel.equals(getModelsForMakeArray.get(i))) {
+//                found = true;
+//                break;
+//            }
+//        }
+//        return found;
+//    }
 
 
     public List<Integer> getYearsForAModel(String vehicleModel) {
