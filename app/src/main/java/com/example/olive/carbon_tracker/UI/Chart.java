@@ -24,8 +24,6 @@ public class Chart extends AppCompatActivity {
         setupPieChart();
     }
 
-
-
     private void setupPieChart(){
         List<Journey> journeyList = singleton.getUsersJourneys();
         //populating a list of PiesEntries:

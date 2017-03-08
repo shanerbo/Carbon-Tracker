@@ -199,8 +199,6 @@ public class AddNewRoute extends AppCompatActivity {
 
         createNewJourney(cityDistance,HwyDistance,totalCO2);
 
-
-
         Intent ConfirmRoute = MainMenu.makeIntent(AddNewRoute.this);
         startActivity(ConfirmRoute);
         finish();

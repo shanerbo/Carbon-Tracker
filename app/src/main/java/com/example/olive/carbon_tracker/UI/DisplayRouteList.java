@@ -16,18 +16,25 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.olive.carbon_tracker.Model.Journey;
 import com.example.olive.carbon_tracker.Model.Vehicle;
 import com.example.olive.carbon_tracker.R;
 import com.example.olive.carbon_tracker.Model.Route;
 import com.example.olive.carbon_tracker.Model.Singleton;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class DisplayRouteList extends AppCompatActivity {
 //    private RouteCollection allRoutes = new RouteCollection();
     private List<Route> RouteList = new ArrayList<Route>();
     Singleton singleton  = Singleton.getInstance();
+    String currentRouteName;
+    Vehicle vehicle = singleton.getVehicle();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,8 +43,7 @@ public class DisplayRouteList extends AppCompatActivity {
         setSupportActionBar(toolbar);
 //        allRoutes =
 
-        Vehicle vehicle = singleton.getVehicle();
-        Toast.makeText(DisplayRouteList.this,"car clicked is " + vehicle.getName()   , Toast.LENGTH_LONG).show();
+
 
         RouteList = singleton.getRouteList();
         AddRoute();
@@ -124,6 +130,7 @@ public class DisplayRouteList extends AppCompatActivity {
             imageView.setImageResource(currentRoute.getIconId());
             TextView RouteName = (TextView)itemView.findViewById(R.id.CarNameWithimage);
             RouteName.setText("Name: "+currentRoute.getName());
+           currentRouteName = currentRoute.getName();
             TextView RouteCityDst = (TextView)itemView.findViewById(R.id.CarMakeWithimage);
             RouteCityDst.setText("Distance in City: " + currentRoute.getCityDistance()+" KM");
             TextView RouteHwayDst = (TextView)itemView.findViewById(R.id.CarModelWithimage);
@@ -157,17 +164,28 @@ public class DisplayRouteList extends AppCompatActivity {
         double totalCO2 = fuelCost * totalGas;
         String TotalCO2 = String.format("%.2f", totalCO2);
         Toast.makeText(getApplicationContext(), "The CO2 you produced: " + TotalCO2, Toast.LENGTH_LONG).show();
+        createNewJourney(cityDistance,HwyDistance,totalCO2);
         Intent ConfirmCar = MainMenu.makeIntent(DisplayRouteList.this);
         startActivity(ConfirmCar);
         finish();
     }
     public void onBackPressed() {
         Intent goBackToDisplayCar = DisplayCarList.makeIntent(DisplayRouteList.this);
+
         startActivity(goBackToDisplayCar);
     }
 
     public static Intent makeIntent(Context context) {
         return new Intent(context, DisplayRouteList.class);
+    }
+
+    private void createNewJourney(int cityDistance,int hwyDistance,double co2){
+
+        DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
+        Date date = new Date();
+
+        Journey journey = new Journey(date.toString(),currentRouteName,(cityDistance+hwyDistance), vehicle.getName(),co2);
+        singleton.addUserJourney(journey);
     }
 }
 

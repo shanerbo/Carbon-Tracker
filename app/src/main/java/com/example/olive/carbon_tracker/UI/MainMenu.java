@@ -40,7 +40,6 @@ public class MainMenu extends AppCompatActivity {
         });
     }
 
-
     public void onBackPressed() {
         Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_HOME);
