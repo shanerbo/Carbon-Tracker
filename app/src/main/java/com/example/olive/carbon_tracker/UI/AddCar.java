@@ -41,6 +41,7 @@ public class AddCar extends AppCompatActivity {
         VehicleList = singleton.getVehicleList();
         make_list = singleton.getVehicleMakeArray();
         year_list = singleton.getVehicleYearArray();
+
         vehicleData = singleton.getVehicleData();
         if (singleton.checkEdit_car() ==1 ){
             position = singleton.getEditPosition_car();
@@ -114,7 +115,7 @@ public class AddCar extends AppCompatActivity {
                 Model_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position_year, long id) {
-                        String Model = parent.getSelectedItem().toString();
+                        final String Model = parent.getSelectedItem().toString();
                         List<Integer> year_list = singleton.updateYears(Model);
                         ArrayAdapter<Integer> year_adapter = new ArrayAdapter<>(
                                 AddCar.this, android.R.layout.simple_dropdown_item_1line, year_list);
@@ -125,6 +126,31 @@ public class AddCar extends AppCompatActivity {
                             int Year = VehicleToBeEdit.getYear();
                             Year_spinner.setSelection(getIndex(Year_spinner,Year));
                         }
+                        Year_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                            @Override
+                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                final Integer Year = Integer.parseInt(parent.getSelectedItem().toString());
+                                List<String> disp_list = singleton.updateDispl(Model,Year);
+                                ArrayAdapter<String> displ_adapter = new ArrayAdapter<>(
+                                        AddCar.this, android.R.layout.simple_dropdown_item_1line, disp_list);
+                                Spinner Displ_spinner = (Spinner) findViewById(R.id.ID_drop_down_dspl);
+                                Displ_spinner.setAdapter(displ_adapter);
+//                                Toast.makeText(AddCar.this,"" +disp_list.get(0),Toast.LENGTH_LONG).show();
+//                                if (VehicleList.size() != 0&&singleton.checkEdit_car() ==1){
+//                                    Vehicle VehicleToBeEdit = VehicleList.get(position);
+//                                    int Displ = VehicleToBeEdit.getYear();
+//                                    Year_spinner.setSelection(getIndex(Year_spinner,Year));
+//                                }
+
+
+                            }
+
+
+                            @Override
+                            public void onNothingSelected(AdapterView<?> parent) {
+
+                            }
+                        });
 
                     }
 
@@ -153,15 +179,24 @@ public class AddCar extends AppCompatActivity {
                 Spinner Make_spinner = (Spinner) findViewById(R.id.ID_drop_down_make);
                 Spinner Model_spinner = (Spinner) findViewById(R.id.ID_drop_down_model);
                 Spinner Year_spinner = (Spinner) findViewById(R.id.ID_drop_down_year);
+                Spinner Displ_spinner = (Spinner) findViewById(R.id.ID_drop_down_dspl);
 
                 if(nickname.length() != 0) {
 
                     String CarName = nickname.getText().toString();
                     String CarMake = Make_spinner.getSelectedItem().toString();
                     String CarModel = Model_spinner.getSelectedItem().toString();
+                    int CityAndHighway = Displ_spinner.getSelectedItemPosition();
+
+                    int city = singleton.getCityData(CityAndHighway);
+                    int highWay = singleton.getHwayData(CityAndHighway);
+                    String fuelType = singleton.getFuelType(CityAndHighway);
+
                     int CarYear = Integer.parseInt(Year_spinner.getSelectedItem().toString());
                     if (!CarName.matches("") && !CarMake.matches("") && !CarModel.matches("") && CarYear > 0) {
-                        Vehicle userInput = new Vehicle(CarName, CarMake, CarModel, CarYear);
+                        Toast.makeText(getApplicationContext(), ""+city + highWay+fuelType, Toast.LENGTH_LONG ).show();
+                        Vehicle userInput = new Vehicle(CarName, CarMake, CarModel, CarYear,city,highWay,fuelType);
+
                         if (singleton.checkEdit_car() == 1) {
                             VehicleList.set(position, userInput);
                             singleton.setVehiclesList(VehicleList);
@@ -169,9 +204,16 @@ public class AddCar extends AppCompatActivity {
                         } else {
                             VehicleList.add(userInput);
                             singleton.setVehiclesList(VehicleList);
+
+                            Vehicle userPickVehicle = userInput;
+                            singleton.setUserPickVehicleItem(userPickVehicle);
+
                             singleton.userFinishAdd_car();
+                            Intent userCreateCar = DisplayRouteList.makeIntent(AddCar.this);
+                            startActivity(userCreateCar);
                         }
                     }
+
                     finish();
                 }else{
                     Toast.makeText(AddCar.this, "Please fill the name", Toast.LENGTH_SHORT).show();

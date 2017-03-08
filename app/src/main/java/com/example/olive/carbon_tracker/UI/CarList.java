@@ -42,7 +42,8 @@ public class CarList extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent ConfirmCar = DisplayRouteList.makeIntent(CarList.this);
-
+                Vehicle userPickVehicle = VehicleList.get(position);
+                singleton.setUserPickVehicleItem(userPickVehicle);
 
                 startActivity(ConfirmCar);
             }

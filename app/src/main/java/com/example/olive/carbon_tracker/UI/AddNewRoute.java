@@ -91,6 +91,52 @@ public class AddNewRoute extends AppCompatActivity {
                         RouteList.add(userInput);
                         singleton.setRouteList(RouteList);
                         singleton.userFinishAdd();
+                        int cityDistance = userInput.getCityDistance();
+                        int HwyDistance = userInput.getHighwayDistance();
+                        singleton.getVehicle().setCityDistance(cityDistance);
+                        singleton.getVehicle().setHwyDistance(HwyDistance);
+
+                        int cityConsume = singleton.getVehicle().getCity08();
+                        int HwyConsume = singleton.getVehicle().getHighway08();
+                        String fuelType = singleton.getVehicle().getFuelType();
+                        double fuelCost;
+                        if (fuelType.toLowerCase() == "diesel"){
+                            fuelCost = 10.16;
+                        }
+                        else if (fuelType.toLowerCase() == "electricity"){
+                            fuelCost = 0;
+                        }
+                        else{
+                            fuelCost = 8.89;
+                        }
+                        Double totalCO2 = fuelCost*(cityDistance/cityConsume + HwyDistance/HwyConsume);
+                        new AlertDialog.Builder(AddNewRoute.this)
+                                .setTitle("CO2 Emission:"+ totalCO2)
+                                .setMessage(R.string.Warning)
+                                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        Intent del_intent = new Intent();
+                                        //allRoutes.delRoute(position);
+                                        //singleton.setUserRoutes(allRoutes);
+                                        //deleting pot form list
+                                        RouteList.remove(position);
+                                        singleton.setRouteList(RouteList);
+                                        singleton.userFinishEdit();
+                                        setResult(Activity.RESULT_OK,del_intent);
+                                        Toast.makeText(AddNewRoute.this,getString(R.string.UserDeleteRoute),Toast.LENGTH_LONG).show();
+                                        finish();
+                                    }
+                                })
+                                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.cancel();
+                                        singleton.userFinishEdit();
+                                        finish();
+                                    }
+                                })
+                                .setIcon(android.R.drawable.ic_dialog_alert).show();
                     }
 
                     finish();

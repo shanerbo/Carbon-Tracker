@@ -13,7 +13,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.olive.carbon_tracker.Model.Vehicle;
 import com.example.olive.carbon_tracker.R;
 import com.example.olive.carbon_tracker.Model.Route;
 import com.example.olive.carbon_tracker.Model.Singleton;
@@ -36,6 +38,7 @@ public class DisplayRouteList extends AppCompatActivity {
         AddRoute();
         EditRoute();
         showAllRoute();
+        UserChooseRoute();
 
     }
 
@@ -59,6 +62,29 @@ public class DisplayRouteList extends AppCompatActivity {
             }
         });
     }
+
+
+
+    private void UserChooseRoute() {
+        ListView CarInfo = (ListView) findViewById(R.id.ROUTES);
+        CarInfo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                int cityDistance = RouteList.get(position).getCityDistance();
+                int HwyDistance = RouteList.get(position).getHighwayDistance();
+                singleton.getVehicle().setCityDistance(cityDistance);
+                singleton.getVehicle().setHwyDistance(HwyDistance);
+                Toast.makeText(getApplicationContext(),"city dst:"+cityDistance +"hwy dst:"+HwyDistance,Toast.LENGTH_LONG ).show();
+                finish();
+            }
+
+
+        });
+    }
+
+
+
+
 
     private void AddRoute() {
         FloatingActionButton addRoute = (FloatingActionButton) findViewById(R.id.AddRoute);

@@ -12,42 +12,46 @@
         android:layout_below="@+id/CarModelWithimage"
         android:layout_toEndOf="@+id/RouteImage"
         android:text="@string/tempTotalDst"
+        android:textAlignment="viewEnd"
         android:textSize="12sp" />
 
     <TextView
         android:id="@+id/CarNameWithimage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/RouteImage"
+        android:layout_toEndOf="@+id/RouteImage"
         android:text="@string/tempRouteName"
-        android:textSize="12sp"
-        android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/RouteImage" />
+        android:textAlignment="viewEnd"
+        android:textSize="12sp" />
 
     <TextView
         android:id="@+id/CarMakeWithimage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/tempCityDst"
-        android:textSize="12sp"
         android:layout_below="@+id/CarNameWithimage"
-        android:layout_toEndOf="@+id/RouteImage" />
+        android:layout_toEndOf="@+id/RouteImage"
+        android:text="@string/tempCityDst"
+        android:textAlignment="viewEnd"
+        android:textSize="12sp" />
 
     <ImageView
         android:id="@+id/RouteImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/routesign"
+        app:srcCompat="@drawable/old_vintage_car"
+        android:contentDescription=""
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:contentDescription="" />
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:id="@+id/CarModelWithimage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/tempHwatDst"
-        android:textSize="12sp"
         android:layout_below="@+id/CarMakeWithimage"
-        android:layout_toEndOf="@+id/RouteImage" />
+        android:layout_toEndOf="@+id/RouteImage"
+        android:text="@string/tempHwatDst"
+        android:textAlignment="viewEnd"
+        android:textSize="12sp" />
 
 </RelativeLayout>

@@ -6,6 +6,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 public class Singleton {
     private static Singleton currInstance = new Singleton();
@@ -26,6 +27,7 @@ public class Singleton {
     private static int addVehicle ;
     private static int deleteRoute ;
     private static Singleton instance = new Singleton();
+    private static Vehicle userPickVehicle;
 
     public static Singleton getInstance(){
         return instance;
@@ -37,9 +39,9 @@ public class Singleton {
     }
 
 
-//    public void setVehicleArray(Context context){
-//        vehicleData.ExtractVehicleData(context);
-//    }
+    public void setVehicleArray(Context context){
+        vehicleData.ExtractVehicleData(context);
+    }
     public void setVehicleData(Context context){
         vehicleData.ExtractVehicleData(context);
     }
@@ -108,11 +110,15 @@ public  List<String> updateModels(String vehicleMake){
 
 }
 
-public List<Double> updateDispl(String model,int year){
-    List<Double> vehicleDispl = vehicleData.getDisplForVehicle(model,year);
+public List<String> updateDispl(String model,int year){
+    List<String> vehicleDispl = vehicleData.getDisplForVehicle(model,year);
 
     return vehicleDispl;
 }
+//public List<String> updateTrans(String model, Integer year, Double displ){
+//    List<String> vehicleTans = vehicleData.getTransForVehicle(model,year,displ);
+//    return vehicleTans;
+//}
 
 
     public  List<Integer> updateYears(String vehicleModel){
@@ -121,6 +127,28 @@ public List<Double> updateDispl(String model,int year){
         return vehicleYearArray;
 
     }
+
+    public int getCityData(int position){
+
+       return vehicleData.getGiveCity(position);
+
+    }
+    public int getHwayData(int position){
+       return vehicleData.getGiveHway(position);
+
+    }
+    public String getFuelType(int position){
+        return vehicleData.getGiveFuel(position);
+    }
+
+    public void setUserPickVehicleItem(Vehicle vehicle){
+        userPickVehicle = vehicle;
+    }
+
+    public Vehicle getVehicle(){
+        return userPickVehicle;
+    }
+
     public List<String> getMake(Context context){
 
         vehicleData.ExtractVehicleData(context);
@@ -145,6 +173,15 @@ public List<Double> updateDispl(String model,int year){
             throw new IllegalArgumentException();
         }
     }
+
+    public void resetCityandHwy(){
+        vehicleData.restCityAndHway();
+    }
+
+
+
+
+
 
 //-----------------------------------Route's function-------------------------------------------
 //public void setUserRoutes(RouteCollection userRoutes){
