@@ -40,7 +40,7 @@ public class AddCar extends AppCompatActivity {
         setContentView(R.layout.activity_add_car);
         VehicleList = singleton.getVehicleList();
         make_list = singleton.getVehicleMakeArray();
-        year_list = singleton.getVehicleYearArray();
+//        year_list = singleton.getVehicleYearArray();
 
         vehicleData = singleton.getVehicleData();
         if (singleton.checkEdit_car() ==1 ){

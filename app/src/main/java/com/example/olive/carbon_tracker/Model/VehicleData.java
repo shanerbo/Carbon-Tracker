@@ -185,83 +185,67 @@ public class VehicleData {
         List<Integer> getYearsForModelArray = new ArrayList<>();
         for (int i = 0; i < vehicleModelArray.size(); i++) {
             String currentModel = vehicleModelArray.get(i);
-
             if (currentModel.equals(vehicleModel)) {
                 int year = vehicleYearArray.get(i);
-                boolean found = uniqueVehicleYearArray(year, getYearsForModelArray);
-                if (found == false) {
+//                boolean found = uniqueVehicleYearArray(year, getYearsForModelArray);
+                if (!getYearsForModelArray.contains(year)) {
                     getYearsForModelArray.add(year);
-
                 }
-
             }
         }
         return getYearsForModelArray;
-
     }
 
 
-    public boolean uniqueVehicleYearArray(int year, List<Integer> getYearsForModelArray) {
-
-        boolean found = false;
-        for (int i = 0; i < getYearsForModelArray.size(); i++) {
-            if (year == getYearsForModelArray.get(i)) {
-                found = true;
-                break;
-            }
-        }
-        return found;
-    }
-
-    public boolean checkForUniqueYearVehicles(Integer currentYear) {
-        boolean found = false;
-        for (int i = 0; i < uniqueVehicleYearArray.size(); i++) {
-            if (currentYear.equals(uniqueVehicleYearArray.get(i))) {
-                found = true;
-                break;
-            }
-        }
-        return found;
-    }
-
-    public List<Integer> uniqueVehicleYearArray() {
-        for (int i = 0; i < vehicleYearArray.size(); i++) {
-            Integer currentYear = vehicleYearArray.get(i);
-            boolean found = checkForUniqueYearVehicles(currentYear);
-            if (found == false) {
-                uniqueVehicleYearArray.add(currentYear);
-            }
-        }
-        return uniqueVehicleYearArray;
-    }
+//    public boolean uniqueVehicleYearArray(int year, List<Integer> getYearsForModelArray) {
+//
+//        boolean found = false;
+//        for (int i = 0; i < getYearsForModelArray.size(); i++) {
+//            if (year == getYearsForModelArray.get(i)) {
+//                found = true;
+//                break;
+//            }
+//        }
+//        return found;
+//    }
+//
+//    public boolean checkForUniqueYearVehicles(Integer currentYear) {
+//        boolean found = false;
+//        for (int i = 0; i < uniqueVehicleYearArray.size(); i++) {
+//            if (currentYear.equals(uniqueVehicleYearArray.get(i))) {
+//                found = true;
+//                break;
+//            }
+//        }
+//        return found;
+//    }
+//
+//    public List<Integer> uniqueVehicleYearArray() {
+//        for (int i = 0; i < vehicleYearArray.size(); i++) {
+//            Integer currentYear = vehicleYearArray.get(i);
+//            boolean found = checkForUniqueYearVehicles(currentYear);
+//            if (found == false) {
+//                uniqueVehicleYearArray.add(currentYear);
+//            }
+//        }
+//        return uniqueVehicleYearArray;
+//    }
 
 
 
     public List<String> getDisplForVehicle(String vehicleModel, int vehicleYear) {
         List<String> getDisplPlusTrans = new ArrayList<>();
         List<Integer> saveIndex = new ArrayList<>();
-
         restCityAndHway();
         int index = 0;
         for (int i = 0; i < vehicleModelArray.size(); i++) {
             String currentModel = vehicleModelArray.get(i);
-
             if (currentModel.equals(vehicleModel)) {
-
-
                 for (int j = 0; j < vehicleYearArray.size(); j++) {
-
-
                     int year = vehicleYearArray.get(j);
-
-                    if (vehicleYear == year && !getDisplPlusTrans.contains(vehicleDisplArray.get(i).toString() + "," +vehicleTranyArray.get(i))
-                            && (vehicleModelArray.get(j)).equals(vehicleModel)
-                            ) {
-                        //Double displ = vehicleDisplArray.get(i);
-                        //boolean found =    checkForUniqueDisplVehicles(vehicleDisplArray,displ);
-                        //if(found == false) {
-
-
+                    if (vehicleYear == year &&
+                            !getDisplPlusTrans.contains(vehicleDisplArray.get(i).toString() + "," +vehicleTranyArray.get(i))
+                            && (vehicleModelArray.get(j)).equals(vehicleModel)) {
                         String displ = vehicleDisplArray.get(i).toString();
                         String trans = vehicleTranyArray.get(i);
 
@@ -270,17 +254,9 @@ public class VehicleData {
                         saveHwy.add(vehicleHighway08.get(i));
                         saveFuelType.add(vehicleFuelTypeArray.get(i));
                     }
-
-                        // }
-
-                    }
-
                 }
-
-
             }
-
-
+        }
         return getDisplPlusTrans;
     }
 
@@ -298,27 +274,6 @@ public class VehicleData {
         saveHwy.clear();
         saveFuelType.clear();
     }
-//
-//    public List<String> getTransForVehicle(String vehicleModel, int vehicleYear, Double vehicleDispl) {
-//        List<String> getTrans = new ArrayList<>();
-//        for (int i = 0; i < vehicleModelArray.size(); i++) {
-//            String currentModel = vehicleModelArray.get(i);
-//            if (currentModel.equals(vehicleModel)) {
-//                for (int j = 0; j < vehicleYearArray.size(); j++) {
-//                    Integer currentYear = vehicleYearArray.get(j);
-//                    if (currentYear==(vehicleYear)){
-//                        for (int k = 0;k < vehicleDisplArray.size();k++){
-//                            if (vehicleDispl == vehicleDisplArray.get(k)){
-//                                getTrans.add(vehicleTranyArray.get(k));
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//        return getTrans;
-//    }
-
 
 }
 

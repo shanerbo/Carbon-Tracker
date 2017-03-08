@@ -61,9 +61,9 @@ public class Singleton {
     {
         return vehicleModelArray;
     }
-    public List<Integer> getVehicleYearArray(){
-        return vehicleData.uniqueVehicleYearArray();
-    }
+//    public List<Integer> getVehicleYearArray(){
+//        return vehicleData.uniqueVehicleYearArray();
+//    }
 
 
     public void setEditPosition_car(int Position){
@@ -117,11 +117,6 @@ public List<String> updateDispl(String model,int year){
 
     return vehicleDispl;
 }
-//public List<String> updateTrans(String model, Integer year, Double displ){
-//    List<String> vehicleTans = vehicleData.getTransForVehicle(model,year,displ);
-//    return vehicleTans;
-//}
-
 
     public  List<Integer> updateYears(String vehicleModel){
         List<Integer> vehicleYearArray = vehicleData.getYearsForAModel(vehicleModel);
