@@ -137,16 +137,6 @@ public class VehicleData {
         return uniqueVehicleMakeArray;
     }
 
-//    public boolean checkForUniqueVehicles(String currentMake) {
-//        boolean found = false;
-//        for (int i = 0; i < uniqueVehicleMakeArray.size(); i++) {
-//            if (currentMake.equals(uniqueVehicleMakeArray.get(i))) {
-//                found = true;
-//                break;
-//            }
-//        }
-//        return found;
-//    }
 
     public List<String> getModelsForAMake(String vehicleMake) {
         List<String> getModelsForMakeArray = new ArrayList<>();
@@ -166,17 +156,7 @@ public class VehicleData {
 
     }
 
-//    public boolean checkForUniqueModels(String vehicleModel, List<String> getModelsForMakeArray) {
-//
-//        boolean found = false;
-//        for (int i = 0; i < getModelsForMakeArray.size(); i++) {
-//            if (vehicleModel.equals(getModelsForMakeArray.get(i))) {
-//                found = true;
-//                break;
-//            }
-//        }
-//        return found;
-//    }
+
 
 
     public List<Integer> getYearsForAModel(String vehicleModel) {
@@ -228,8 +208,28 @@ public class VehicleData {
 //        }
 //        return uniqueVehicleYearArray;
 //    }
+//    public boolean checkForUniqueModels(String vehicleModel, List<String> getModelsForMakeArray) {
+//
+//        boolean found = false;
+//        for (int i = 0; i < getModelsForMakeArray.size(); i++) {
+//            if (vehicleModel.equals(getModelsForMakeArray.get(i))) {
+//                found = true;
+//                break;
+//            }
+//        }
+//        return found;
+//    }
 
-
+//    public boolean checkForUniqueVehicles(String currentMake) {
+//        boolean found = false;
+//        for (int i = 0; i < uniqueVehicleMakeArray.size(); i++) {
+//            if (currentMake.equals(uniqueVehicleMakeArray.get(i))) {
+//                found = true;
+//                break;
+//            }
+//        }
+//        return found;
+//    }
 
     public List<String> getDisplForVehicle(String vehicleModel, int vehicleYear) {
         List<String> getDisplPlusTrans = new ArrayList<>();
