@@ -84,6 +84,8 @@ public class DisplayRouteList extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Route userPickRoute = RouteList.get(position);
+                currentRouteName = userPickRoute.getName();
+
                 calculateCO2(userPickRoute);
 
             }
@@ -130,7 +132,7 @@ public class DisplayRouteList extends AppCompatActivity {
             imageView.setImageResource(currentRoute.getIconId());
             TextView RouteName = (TextView)itemView.findViewById(R.id.CarNameWithimage);
             RouteName.setText("Name: "+currentRoute.getName());
-           currentRouteName = currentRoute.getName();
+          // currentRouteName = currentRoute.getName();
             TextView RouteCityDst = (TextView)itemView.findViewById(R.id.CarMakeWithimage);
             RouteCityDst.setText("Distance in City: " + currentRoute.getCityDistance()+" KM");
             TextView RouteHwayDst = (TextView)itemView.findViewById(R.id.CarModelWithimage);
