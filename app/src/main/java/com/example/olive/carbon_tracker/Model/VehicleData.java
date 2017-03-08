@@ -23,10 +23,6 @@ public class VehicleData {
     List<Integer> saveHwy = new ArrayList<>();
     List<String> saveFuelType = new ArrayList<>();
 
-
-
-
-
     public static final int VEHICLE_MAKE_TOKEN = 0;
     public static final int VEHICLE_MODEL_TOKEN = 1;
     public static final int VEHICLE_YEAR_TOKEN = 2;

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -33,7 +34,11 @@ public class DisplayRouteList extends AppCompatActivity {
         setContentView(R.layout.activity_display_route_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.ChooseRoute);
         setSupportActionBar(toolbar);
-//        allRoutes = singleton.getUserRoutes();
+//        allRoutes =
+
+        Vehicle vehicle = singleton.getVehicle();
+        Toast.makeText(DisplayRouteList.this,"car clicked is " + vehicle.getName()   , Toast.LENGTH_LONG).show();
+
         RouteList = singleton.getRouteList();
         AddRoute();
         EditRoute();

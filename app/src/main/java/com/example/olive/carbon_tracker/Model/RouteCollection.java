@@ -6,8 +6,6 @@ import java.util.List;
 
 public class RouteCollection {
     private List<Route> routes = new ArrayList<>();
-
-
     public void addRoute(Route route) {
         routes.add(route);
     }

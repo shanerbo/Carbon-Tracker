@@ -30,6 +30,7 @@ public class AddCar extends AppCompatActivity {
 
     private List<Vehicle> VehicleList = new ArrayList<>();
     List<String> make_list = new ArrayList<>();
+    List<String> userVehicleNames = new ArrayList<>();
     List<Integer> year_list = new ArrayList<>();
     Singleton singleton = Singleton.getInstance();
     private int position;
@@ -96,8 +97,6 @@ public class AddCar extends AppCompatActivity {
             Make_spinner.setSelection(getIndex(Make_spinner,VehicleToBeEdit.getMake()));
         }
 
-
-
         Make_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position_model, long id) {
@@ -163,8 +162,6 @@ public class AddCar extends AppCompatActivity {
             @Override
             public void onNothingSelected(AdapterView<?> parent) { }
         });
-
-
 
     }
 

@@ -13,7 +13,13 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
+import com.example.olive.carbon_tracker.Model.Journey;
+import com.example.olive.carbon_tracker.Model.Vehicle;
 import com.example.olive.carbon_tracker.R;
 import com.example.olive.carbon_tracker.Model.Route;
 import com.example.olive.carbon_tracker.Model.RouteCollection;
@@ -21,16 +27,26 @@ import com.example.olive.carbon_tracker.Model.Singleton;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.jar.Attributes;
 
 public class AddNewRoute extends AppCompatActivity {
     //private RouteCollection allRoutes = new RouteCollection();
     private List<Route> RouteList = new ArrayList<Route>();
+  //  List<Journey> journeysList = new ArrayList<>();
+
+    String currentRouteName;
     private int position;
     Singleton singleton  = Singleton.getInstance();
+    Vehicle vehicle = singleton.getVehicle();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
+
+
+        Toast.makeText(AddNewRoute.this,"car clicked is " + vehicle.getName()   , Toast.LENGTH_LONG).show();
+
+
         setContentView(R.layout.activity_add_new_route);
        // allRoutes = singleton.getUserRoutes();
         RouteList = singleton.getRouteList();
@@ -67,6 +83,7 @@ public class AddNewRoute extends AppCompatActivity {
 //                String temp_totalDst = TotalDst.getText().toString();
 
                 String name = Name.getText().toString();
+                currentRouteName = name;
                 String temp_cityDst = CityDst.getText().toString();
                 String temp_highWayDst = HighWayDst.getText().toString();
                 if (!name.matches("") && !temp_cityDst.matches("") && !temp_highWayDst.matches("")) {
@@ -178,6 +195,11 @@ public class AddNewRoute extends AppCompatActivity {
         double totalCO2 = fuelCost * totalGas;
         String TotalCO2 = String.format("%.2f", totalCO2);
         Toast.makeText(getApplicationContext(), "The CO2 you produced: " + TotalCO2, Toast.LENGTH_SHORT).show();
+
+        createNewJourney(cityDistance,HwyDistance,totalCO2);
+
+
+
         Intent ConfirmRoute = MainMenu.makeIntent(AddNewRoute.this);
         startActivity(ConfirmRoute);
         finish();
@@ -188,5 +210,17 @@ public class AddNewRoute extends AppCompatActivity {
     }
     public static Intent makeIntent(Context context) {
         return new Intent(context, AddNewRoute.class);
+    }
+
+
+
+    private void createNewJourney(int cityDistance,int hwyDistance,double co2){
+
+
+        DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
+        Date date = new Date();
+
+        Journey journey = new Journey(date.toString(),currentRouteName,(cityDistance+hwyDistance), vehicle.getName(),co2);
+                singleton.addUserJourney(journey);
     }
 }
