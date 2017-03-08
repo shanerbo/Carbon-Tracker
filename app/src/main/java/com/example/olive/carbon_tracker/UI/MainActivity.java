@@ -11,7 +11,7 @@ import com.example.olive.carbon_tracker.Model.Singleton;
 import com.example.olive.carbon_tracker.R;
 
 public class MainActivity extends AppCompatActivity {
-    private static int exist_time = 1;
+    private static int exist_time = 2000;
     Singleton singleton = Singleton.getInstance();
 
     @Override
@@ -28,8 +28,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 Intent MainMenu = new Intent(MainActivity.this, com.example.olive.carbon_tracker.UI.MainMenu.class);
-                startActivity(MainMenu);
                 singleton.setVehicleData(MainActivity.this);
+                singleton.setVehicleMakeArray();
+                startActivity(MainMenu);
                 finish();
             }
         },exist_time);

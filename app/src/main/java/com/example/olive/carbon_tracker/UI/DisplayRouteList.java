@@ -65,23 +65,21 @@ public class DisplayRouteList extends AppCompatActivity {
 
 
 
+
+
     private void UserChooseRoute() {
         ListView CarInfo = (ListView) findViewById(R.id.ROUTES);
         CarInfo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                int cityDistance = RouteList.get(position).getCityDistance();
-                int HwyDistance = RouteList.get(position).getHighwayDistance();
-                singleton.getVehicle().setCityDistance(cityDistance);
-                singleton.getVehicle().setHwyDistance(HwyDistance);
-                Toast.makeText(getApplicationContext(),"city dst:"+cityDistance +"hwy dst:"+HwyDistance,Toast.LENGTH_LONG ).show();
-                finish();
+                Route userPickRoute = RouteList.get(position);
+                calculateCO2(userPickRoute);
+
             }
 
 
         });
     }
-
 
 
 
@@ -94,6 +92,7 @@ public class DisplayRouteList extends AppCompatActivity {
                 Intent AddIntent = AddNewRoute.makeIntent(DisplayRouteList.this);
                 singleton.userAddRoute();
                 startActivityForResult(AddIntent,1);//case 1 means add route
+                finish();
             }
         });
 
@@ -129,6 +128,39 @@ public class DisplayRouteList extends AppCompatActivity {
             return itemView;
         }
     }
+
+    public void calculateCO2(Route userInput){
+        int cityDistance = userInput.getCityDistance();
+        int HwyDistance = userInput.getHighwayDistance();
+        singleton.getVehicle().setCityDistance(cityDistance);
+        singleton.getVehicle().setHwyDistance(HwyDistance);
+
+        int cityConsume = singleton.getVehicle().getCity08();
+        int HwyConsume = singleton.getVehicle().getHighway08();
+        String fuelType = singleton.getVehicle().getFuelType();
+        double fuelCost;
+        if (fuelType.toLowerCase() == "diesel") {
+            fuelCost = 10.16;
+        } else if (fuelType.toLowerCase() == "electricity") {
+            fuelCost = 0;
+        } else {
+            fuelCost = 8.89;
+        }
+        double  cityGas = (cityDistance*1.00 / cityConsume);
+        double hwyGas = HwyDistance*1.00  / HwyConsume;
+        double totalGas = cityGas+hwyGas;
+        double totalCO2 = fuelCost * totalGas;
+        String TotalCO2 = String.format("%.2f", totalCO2);
+        Toast.makeText(getApplicationContext(), "The CO2 you produced: " + TotalCO2, Toast.LENGTH_LONG).show();
+        Intent ConfirmCar = MainMenu.makeIntent(DisplayRouteList.this);
+        startActivity(ConfirmCar);
+        finish();
+    }
+    public void onBackPressed() {
+        Intent goBackToDisplayCar = DisplayCarList.makeIntent(DisplayRouteList.this);
+        startActivity(goBackToDisplayCar);
+    }
+
     public static Intent makeIntent(Context context) {
         return new Intent(context, DisplayRouteList.class);
     }
