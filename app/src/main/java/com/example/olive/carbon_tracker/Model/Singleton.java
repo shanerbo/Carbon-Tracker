@@ -14,6 +14,7 @@ public class Singleton {
     private List<Vehicle> VehiclesList = new ArrayList<>();
     private List<Route> RouteList = new ArrayList<>();
     private VehicleData vehicleData = new VehicleData();
+    private List<String> getVehicleMakeArray = new ArrayList<>();
     private List<String> vehicleModelArray = new ArrayList<>();
 //    List<Vehicle> vehicleDataArray = new ArrayList<>();
 
@@ -49,8 +50,11 @@ public class Singleton {
         return vehicleData;
     }
 
+    public void setVehicleMakeArray(){
+        getVehicleMakeArray = vehicleData.getUniqueVehicleMakeArray();
+    }
     public List<String> getVehicleMakeArray(){
-        return vehicleData.getUniqueVehicleMakeArray();
+        return getVehicleMakeArray;
     }
     public List<String> getVehicleModelArray()
 
@@ -105,9 +109,7 @@ public class Singleton {
 
 public  List<String> updateModels(String vehicleMake){
     List<String> vehicleModelArray = vehicleData.getModelsForAMake(vehicleMake);
-
     return vehicleModelArray;
-
 }
 
 public List<String> updateDispl(String model,int year){

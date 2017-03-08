@@ -62,5 +62,6 @@
         <item>1993</item>
         <item>2007</item>
     </string-array>
+    <string name="title_activity_display_car_list">DisplayCarList</string>
 
 </resources>

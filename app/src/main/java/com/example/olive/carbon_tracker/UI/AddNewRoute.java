@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.olive.carbon_tracker.R;
@@ -39,15 +40,12 @@ public class AddNewRoute extends AppCompatActivity {
             String RouteName = RouteToBeEdited.getName();
             int Route_city_dis = RouteToBeEdited.getCityDistance();
             int Route_hWay_dis = RouteToBeEdited.getHighwayDistance();
-            int Route_total_dis = RouteToBeEdited.getTotalDistance();
             EditText Name = (EditText)findViewById(R.id.RouteNameInput);
             EditText cityDst = (EditText)findViewById(R.id.CityDstInput);
             EditText hWayDst = (EditText)findViewById(R.id.HwayDstInput);
-            EditText totalDst = (EditText)findViewById(R.id.TotalDstCal);
             Name.setText(RouteName);
             cityDst.setText(""+Route_city_dis);
             hWayDst.setText(""+Route_hWay_dis);
-            totalDst.setText(""+Route_total_dis);
         }else{
             position = singleton.getAddPosition();
         }
@@ -63,20 +61,24 @@ public class AddNewRoute extends AppCompatActivity {
                 EditText Name = (EditText) findViewById(R.id.RouteNameInput);
                 EditText CityDst = (EditText) findViewById(R.id.CityDstInput);
                 EditText HighWayDst = (EditText) findViewById(R.id.HwayDstInput);
-                EditText TotalDst = (EditText) findViewById(R.id.TotalDstCal);
+
+
+//                EditText TotalDst = (EditText) findViewById(R.id.TotalDstCal);
+//                String temp_totalDst = TotalDst.getText().toString();
+
                 String name = Name.getText().toString();
                 String temp_cityDst = CityDst.getText().toString();
                 String temp_highWayDst = HighWayDst.getText().toString();
-                String temp_totalDst = TotalDst.getText().toString();
-                if (!name.matches("") && !temp_cityDst.matches("") && !temp_highWayDst.matches("") && !temp_totalDst.matches("")) {
+                if (!name.matches("") && !temp_cityDst.matches("") && !temp_highWayDst.matches("")) {
                     int cityDst = Integer.parseInt(temp_cityDst);
                     int highWayDst = Integer.parseInt(temp_highWayDst);
-                    int totalDst = Integer.parseInt(temp_totalDst);
-                    if (cityDst <= 0 || highWayDst <= 0 || totalDst <= 0) {
+//                    int totalDst = Integer.parseInt(temp_totalDst);
+                    if (cityDst <= 0 || highWayDst <= 0) {
                         Snackbar.make(v, "The Distance Cannot Be Smaller Than 0", Snackbar.LENGTH_SHORT)
                                 .setAction("Action", null).show();
                         return;
                     }
+                    int totalDst = CalculateTotalDistance(cityDst,highWayDst);
                     Route userInput = new Route(name, cityDst, highWayDst, totalDst);
                     if (singleton.checkEdit() == 1) {
                         //allRoutes.changeRoute(userInput,position);
@@ -91,29 +93,14 @@ public class AddNewRoute extends AppCompatActivity {
                         RouteList.add(userInput);
                         singleton.setRouteList(RouteList);
                         singleton.userFinishAdd();
-                        int cityDistance = userInput.getCityDistance();
-                        int HwyDistance = userInput.getHighwayDistance();
-                        singleton.getVehicle().setCityDistance(cityDistance);
-                        singleton.getVehicle().setHwyDistance(HwyDistance);
+                        calculateCO2(userInput);
 
-                        int cityConsume = singleton.getVehicle().getCity08();
-                        int HwyConsume = singleton.getVehicle().getHighway08();
-                        String fuelType = singleton.getVehicle().getFuelType();
-                        double fuelCost;
-                        if (fuelType.toLowerCase() == "diesel") {
-                            fuelCost = 10.16;
-                        } else if (fuelType.toLowerCase() == "electricity") {
-                            fuelCost = 0;
-                        } else {
-                            fuelCost = 8.89;
-                        }
-                        double  cityGas = (cityDistance*1.00 / cityConsume);
-                        double hwyGas = HwyDistance*1.00  / HwyConsume;
-                        double totalGas = cityGas+hwyGas;
-                        double totalCO2 = fuelCost * totalGas;
-                        Toast.makeText(getApplicationContext(), "" + totalCO2, Toast.LENGTH_LONG).show();
                     }
+                    finish();
+                }else{
+                    Toast.makeText(getApplicationContext(),"Please fill all blanks",Toast.LENGTH_LONG).show();
                 }
+
             }
         });
     }
@@ -164,9 +151,41 @@ public class AddNewRoute extends AppCompatActivity {
     public void onBackPressed() {
         singleton.userFinishEdit();
         singleton.userFinishAdd();
-        finish();
+        Intent goBackToDisplayRoute = DisplayRouteList.makeIntent(AddNewRoute.this);
+        startActivity(goBackToDisplayRoute);
     }
 
+    public void calculateCO2(Route userInput){
+        int cityDistance = userInput.getCityDistance();
+        int HwyDistance = userInput.getHighwayDistance();
+        singleton.getVehicle().setCityDistance(cityDistance);
+        singleton.getVehicle().setHwyDistance(HwyDistance);
+
+        int cityConsume = singleton.getVehicle().getCity08();
+        int HwyConsume = singleton.getVehicle().getHighway08();
+        String fuelType = singleton.getVehicle().getFuelType();
+        double fuelCost;
+        if (fuelType.toLowerCase() == "diesel") {
+            fuelCost = 10.16;
+        } else if (fuelType.toLowerCase() == "electricity") {
+            fuelCost = 0;
+        } else {
+            fuelCost = 8.89;
+        }
+        double  cityGas = (cityDistance*1.00 / cityConsume);
+        double hwyGas = HwyDistance*1.00  / HwyConsume;
+        double totalGas = cityGas+hwyGas;
+        double totalCO2 = fuelCost * totalGas;
+        String TotalCO2 = String.format("%.2f", totalCO2);
+        Toast.makeText(getApplicationContext(), "The CO2 you produced: " + TotalCO2, Toast.LENGTH_SHORT).show();
+        Intent ConfirmRoute = MainMenu.makeIntent(AddNewRoute.this);
+        startActivity(ConfirmRoute);
+        finish();
+    }
+    public int CalculateTotalDistance(int cityDst, int hwyDst){
+        int totalDst = cityDst + hwyDst;
+        return totalDst;
+    }
     public static Intent makeIntent(Context context) {
         return new Intent(context, AddNewRoute.class);
     }

@@ -22,12 +22,14 @@
             android:name=".UI.DisplayRouteList"
             android:label="@string/title_activity_display_route_list"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".UI.AddNewRoute"></activity>
+        <activity android:name=".UI.AddNewRoute" />
         <activity
-            android:name=".UI.CarList"
-            android:exported="true" />
-        <activity android:name=".UI.AddCar"
+            android:name=".UI.AddCar"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".UI.DisplayCarList"
+            android:label="@string/title_activity_display_car_list"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

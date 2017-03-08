@@ -2,6 +2,7 @@ package com.example.olive.carbon_tracker.UI;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -21,14 +22,14 @@ import com.example.olive.carbon_tracker.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CarList extends AppCompatActivity {
+public class DisplayCarList extends AppCompatActivity {
     private List<Vehicle> VehicleList = new ArrayList<Vehicle>();
     Singleton singleton = Singleton.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_car_list);
+        setContentView(R.layout.activity_display_car_list);
         VehicleList = singleton.getVehicleList();
         showAllCar();
         AddNewCar();
@@ -41,7 +42,7 @@ public class CarList extends AppCompatActivity {
         CarInfo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent ConfirmCar = DisplayRouteList.makeIntent(CarList.this);
+                Intent ConfirmCar = DisplayRouteList.makeIntent(DisplayCarList.this);
                 Vehicle userPickVehicle = VehicleList.get(position);
                 singleton.setUserPickVehicleItem(userPickVehicle);
 
@@ -57,11 +58,12 @@ public class CarList extends AppCompatActivity {
         CarInfo.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent EditIntent = AddCar.makeIntent(CarList.this);
+                Intent EditIntent = AddCar.makeIntent(DisplayCarList.this);
                 singleton.setEditPosition_car(position);
                 singleton.userEditRoute_car();
                 startActivityForResult(EditIntent,0);//case 1 means add route
                 //case 2 means edit route
+//                finish();
                 return true;
             }
         });
@@ -69,14 +71,15 @@ public class CarList extends AppCompatActivity {
 
 
     private void AddNewCar() {
-        //FloatingActionButton AddCar = (FloatingActionButton) findViewById(R.id.ID_button_OKAdd);
-        final Button AddCar = (Button) findViewById(R.id.ID_add_new_car_button);
+        final FloatingActionButton AddCar = (FloatingActionButton) findViewById(R.id.ID_add_new_car_button);
+        //final Button AddCar = (Button) findViewById(R.id.ID_add_new_car_button);
         AddCar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent AddIntent = com.example.olive.carbon_tracker.UI.AddCar.makeIntent(CarList.this);
+                Intent AddIntent = com.example.olive.carbon_tracker.UI.AddCar.makeIntent(DisplayCarList.this);
                 singleton.userAddVehicle();
                 startActivityForResult(AddIntent,1);//case 1 means add route
+//                finish();
             }
         });
     }
@@ -96,7 +99,7 @@ public class CarList extends AppCompatActivity {
     }
     private class mArrayAdapter extends ArrayAdapter<Vehicle> {
         public mArrayAdapter(){
-            super(CarList.this, R.layout.singe_element_car_list,VehicleList);
+            super(DisplayCarList.this, R.layout.singe_element_car_list,VehicleList);
         }
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
@@ -118,7 +121,11 @@ public class CarList extends AppCompatActivity {
             return itemView;
         }
     }
+    public void onBackPressed() {
+        Intent goBackToMainMenu = MainMenu.makeIntent(DisplayCarList.this);
+        startActivity(goBackToMainMenu);
+    }
     public static Intent makeIntent(Context context) {
-        return new Intent(context, CarList.class);
+        return new Intent(context, DisplayCarList.class);
     }
 }

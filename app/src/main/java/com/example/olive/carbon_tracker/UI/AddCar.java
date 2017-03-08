@@ -194,7 +194,6 @@ public class AddCar extends AppCompatActivity {
 
                     int CarYear = Integer.parseInt(Year_spinner.getSelectedItem().toString());
                     if (!CarName.matches("") && !CarMake.matches("") && !CarModel.matches("") && CarYear > 0) {
-                        Toast.makeText(getApplicationContext(), ""+city + highWay+fuelType, Toast.LENGTH_LONG ).show();
                         Vehicle userInput = new Vehicle(CarName, CarMake, CarModel, CarYear,city,highWay,fuelType);
 
                         if (singleton.checkEdit_car() == 1) {
@@ -264,7 +263,8 @@ public class AddCar extends AppCompatActivity {
     public void onBackPressed() {
         singleton.userFinishEdit_car();
         singleton.userFinishAdd_car();
-        finish();
+        Intent goBackToDisplayCar = DisplayCarList.makeIntent(AddCar.this);
+        startActivity(goBackToDisplayCar);
     }
 
     public static Intent makeIntent(Context context) {
