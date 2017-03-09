@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -23,6 +22,7 @@ import com.example.olive.carbon_tracker.Model.Route;
 import com.example.olive.carbon_tracker.Model.Singleton;
 
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -60,8 +60,7 @@ public class DisplayRouteList extends AppCompatActivity {
                 Intent EditIntent = AddNewRoute.makeIntent(DisplayRouteList.this);
                 singleton.setEditPosition(position);
                 singleton.userEditRoute();
-                startActivityForResult(EditIntent,0);//case 1 means add route
-                //case 2 means edit route
+                startActivityForResult(EditIntent,0);
                 return true;
             }
         });
@@ -88,7 +87,7 @@ public class DisplayRouteList extends AppCompatActivity {
             public void onClick(View v) {
                 Intent AddIntent = AddNewRoute.makeIntent(DisplayRouteList.this);
                 singleton.userAddRoute();
-                startActivityForResult(AddIntent,1);//case 1 means add route
+                startActivityForResult(AddIntent,1);
                 finish();
             }
         });
@@ -115,7 +114,6 @@ public class DisplayRouteList extends AppCompatActivity {
             imageView.setImageResource(currentRoute.getIconId());
             TextView RouteName = (TextView)itemView.findViewById(R.id.CarNameWithimage);
             RouteName.setText("Name: "+currentRoute.getName());
-          // currentRouteName = currentRoute.getName();
             TextView RouteCityDst = (TextView)itemView.findViewById(R.id.CarMakeWithimage);
             RouteCityDst.setText("Distance in City: " + currentRoute.getCityDistance()+" KM");
             TextView RouteHwayDst = (TextView)itemView.findViewById(R.id.CarModelWithimage);
@@ -136,9 +134,9 @@ public class DisplayRouteList extends AppCompatActivity {
         int HwyConsume = singleton.getVehicle().getHighway08();
         String fuelType = singleton.getVehicle().getFuelType();
         double fuelCost;
-        if (fuelType.toLowerCase() == "diesel") {
+        if (fuelType.toLowerCase().matches("diesel")) {
             fuelCost = 10.16;
-        } else if (fuelType.toLowerCase() == "electricity") {
+        } else if (fuelType.toLowerCase().matches("electricity")) {
             fuelCost = 0;
         } else {
             fuelCost = 8.89;
@@ -163,13 +161,12 @@ public class DisplayRouteList extends AppCompatActivity {
     public static Intent makeIntent(Context context) {
         return new Intent(context, DisplayRouteList.class);
     }
-
     private void createNewJourney(int cityDistance,int hwyDistance,double co2){
-
-        DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
+        DateFormat df = new SimpleDateFormat("EEE, MMM d, ''yy");
         Date date = new Date();
-
-        Journey journey = new Journey(date.toString(),currentRouteName,(cityDistance+hwyDistance), vehicle.getName(),co2);
+        DecimalFormat Format = new DecimalFormat("#.##");
+        double CO2 = Double.valueOf(Format.format(co2));
+        Journey journey = new Journey(df.format(date),currentRouteName,(cityDistance+hwyDistance), vehicle.getName(), CO2);
         singleton.addUserJourney(journey);
     }
 }

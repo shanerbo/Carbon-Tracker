@@ -10,23 +10,16 @@ import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.olive.carbon_tracker.Model.Journey;
-import com.example.olive.carbon_tracker.Model.Route;
-import com.example.olive.carbon_tracker.Model.Vehicle;
 import com.example.olive.carbon_tracker.R;
 import com.example.olive.carbon_tracker.Model.Singleton;
-import com.github.mikephil.charting.charts.PieChart;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import static android.media.CamcorderProfile.get;
 
 public class DisplayCarbonFootprint extends AppCompatActivity {
 
-    private static final int NUM_COLS = 2;
 
     Singleton singleton = Singleton.getInstance();
 
@@ -40,7 +33,6 @@ public class DisplayCarbonFootprint extends AppCompatActivity {
 
     }
 
-    //TODO will be used when we set up pie chart class
     private void setupPieChart() {
         Button btn = (Button) findViewById(R.id.btn_PieChart);
         btn.setOnClickListener(new View.OnClickListener() {
@@ -56,8 +48,6 @@ public class DisplayCarbonFootprint extends AppCompatActivity {
         int NUM_ROWS = journeyList.size();   //rows will be dynamic
 
 
-        //  Toast.makeText(DisplayCarbonFootprint.this, " first route name is " + routes. , Toast.LENGTH_SHORT).show();
-        List<String> vehicleNames = singleton.getMake(this);
         TableLayout table = (TableLayout) findViewById(R.id.tableCarbonFootprint);
         TableRow tableRow0 = new TableRow(this);
         makeColumnHeading(" Date of Trip ", tableRow0);
@@ -72,20 +62,19 @@ public class DisplayCarbonFootprint extends AppCompatActivity {
             TextView dateOfTrip = new TextView(this);
             if (!journeyList.isEmpty()) {
                 Journey currentJourney = journeyList.get(i);
-                //Toast.makeText(getApplicationContext(),"" + currentVehicle.get)
-                enterRowInfo(dateOfTrip, tableRow, currentJourney.getDateOfTrip(), i);
+                enterRowInfo(dateOfTrip, tableRow, currentJourney.getDateOfTrip());
 
                 TextView routeName = new TextView(this);
-                enterRowInfo(routeName, tableRow, currentJourney.getRouteName(), i);
+                enterRowInfo(routeName, tableRow, currentJourney.getRouteName());
 
                 TextView distance = new TextView(this);
-                enterRowInfo(distance, tableRow," " +currentJourney.getTotalDistance(),i);
+                enterRowInfo(distance, tableRow," " +currentJourney.getTotalDistance());
 
                 TextView vehicleName = new TextView(this);
-                enterRowInfo(vehicleName, tableRow, currentJourney.getVehicleName(), i);
+                enterRowInfo(vehicleName, tableRow, currentJourney.getVehicleName());
 
                TextView carbonEmission = new TextView(this);
-              enterRowInfo(carbonEmission, tableRow,"" +currentJourney.getCarbonEmitted(),i);
+              enterRowInfo(carbonEmission, tableRow,"" +currentJourney.getCarbonEmitted());
 
                 table.addView(tableRow);
             }
@@ -99,7 +88,7 @@ public class DisplayCarbonFootprint extends AppCompatActivity {
         tableRow0.addView(tableColumn);
     }
 
-    public void enterRowInfo(TextView textView, TableRow tableRow, String vehicle, int i) {
+    public void enterRowInfo(TextView textView, TableRow tableRow, String vehicle) {
         textView.setText("" + vehicle);
         textView.setTextColor(Color.WHITE);
         textView.setGravity(Gravity.CENTER);

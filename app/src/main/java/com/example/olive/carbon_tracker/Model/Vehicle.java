@@ -13,8 +13,7 @@ public class Vehicle {
     private int City08;
 
     private String FuelType;
-    private float displ;
-    private String trany;
+
     private int cityDistance = 0;
     private int hwyDistance = 0;
 
@@ -41,17 +40,13 @@ public class Vehicle {
         return FuelType;
     }
 
-    public int getCityDistance() {
-        return cityDistance;
-    }
+
 
     public void setCityDistance(int cityDistance) {
         this.cityDistance = cityDistance;
     }
 
-    public int getHwyDistance() {
-        return hwyDistance;
-    }
+
 
     public void setHwyDistance(int hwyDistance) {
         this.hwyDistance = hwyDistance;
@@ -78,12 +73,7 @@ public class Vehicle {
         return Make;
     }
 
-    public void setMake(String make) {
-        if (make.length() == 0) {
-            throw new IllegalArgumentException();
-        }
-        this.Make = make;
-    }
+
 
     public String getModel() {
         return Model;
@@ -100,11 +90,6 @@ public class Vehicle {
         return Year;
     }
 
-    public void setYear(int year) {
-        if (year == 0) {
-            throw new IllegalArgumentException();
-        }
-        this.Year = year;
-    }
+
 
 }

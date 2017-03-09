@@ -132,11 +132,11 @@
         android:id="@+id/ID_textview_dspl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/ID_drop_down_dspl"
+        android:layout_toStartOf="@+id/ID_drop_down_year"
         android:text="@string/displacement_and_transmission"
         android:textAlignment="textEnd"
-        android:layout_alignTop="@+id/ID_drop_down_dspl"
-        android:layout_alignParentStart="true"
-        android:layout_alignBottom="@+id/ID_drop_down_dspl"
-        android:layout_toStartOf="@+id/ID_drop_down_year" />
+        android:textSize="12sp" />
 
 </RelativeLayout>

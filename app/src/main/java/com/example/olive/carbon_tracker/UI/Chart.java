@@ -37,7 +37,6 @@ public class Chart extends AppCompatActivity {
             }
         }
         PieDataSet dataSet = new PieDataSet(pieEntries,"carbon emission");
-//        dataSet.setColor(new Color(RCOMPONENT, GCOMPONENT , BCOMPONENT));
         dataSet.setColors(Color.rgb(0,128,255),Color.rgb(96,96,96),Color.rgb(255, 153, 2255),Color.rgb(255, 128, 0),Color.rgb(255, 0, 0));
         PieData data = new PieData(dataSet);
 

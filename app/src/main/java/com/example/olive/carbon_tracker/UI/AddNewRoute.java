@@ -5,20 +5,17 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.DecimalFormat;
 import java.util.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 
 import com.example.olive.carbon_tracker.Model.Journey;
 import com.example.olive.carbon_tracker.Model.Vehicle;
@@ -28,11 +25,9 @@ import com.example.olive.carbon_tracker.Model.Singleton;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.jar.Attributes;
 
 public class AddNewRoute extends AppCompatActivity {
     private List<Route> RouteList = new ArrayList<Route>();
-  //  List<Journey> journeysList = new ArrayList<>();
 
     String currentRouteName;
     private int position;
@@ -43,13 +38,7 @@ public class AddNewRoute extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
-
-
-        Toast.makeText(AddNewRoute.this,"car clicked is " + vehicle.getName()   , Toast.LENGTH_LONG).show();
-
-
         setContentView(R.layout.activity_add_new_route);
-       // allRoutes = singleton.getUserRoutes();
         RouteList = singleton.getRouteList();
         if(singleton.checkEdit() == 1){
             position = singleton.getEditPosition();
@@ -94,6 +83,8 @@ public class AddNewRoute extends AppCompatActivity {
                         singleton.userFinishEdit();
                         String newUserInputRouteName = userInput.getName();
                         singleton.UserEnterNewRouteName(newUserInputRouteName,oldRouteName);
+                        Intent userEditRoute = DisplayRouteList.makeIntent(AddNewRoute.this);
+                        startActivity(userEditRoute);
                     } else {
                         RouteList.add(userInput);
                         singleton.setRouteList(RouteList);
@@ -113,7 +104,6 @@ public class AddNewRoute extends AppCompatActivity {
         FloatingActionButton delete = (FloatingActionButton) findViewById(R.id.comfirm_delete);
         if (singleton.checkAdd() == 1){
             delete.setVisibility(View.INVISIBLE);
-            //hide the delete button
             return;
         }
         delete.setOnClickListener(new View.OnClickListener() {
@@ -126,9 +116,6 @@ public class AddNewRoute extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 Intent del_intent = new Intent();
-                                //allRoutes.delRoute(position);
-                                //singleton.setUserRoutes(allRoutes);
-                                //deleting pot form list
                                 RouteList.remove(position);
                                 singleton.setRouteList(RouteList);
                                 singleton.userFinishEdit();
@@ -168,9 +155,9 @@ public class AddNewRoute extends AppCompatActivity {
         int HwyConsume = singleton.getVehicle().getHighway08();
         String fuelType = singleton.getVehicle().getFuelType();
         double fuelCost;
-        if (fuelType.toLowerCase() == "diesel") {
+        if (fuelType.toLowerCase().matches("diesel") ) {
             fuelCost = 10.16;
-        } else if (fuelType.toLowerCase() == "electricity") {
+        } else if (fuelType.toLowerCase().matches("electricity") ) {
             fuelCost = 0;
         } else {
             fuelCost = 8.89;
@@ -203,7 +190,7 @@ public class AddNewRoute extends AppCompatActivity {
         Date date = new Date();
         DecimalFormat Format = new DecimalFormat("#.##");
         double CO2 = Double.valueOf(Format.format(co2));
-        Journey journey = new Journey(df.format(date).toString(),currentRouteName,(cityDistance+hwyDistance), vehicle.getName(), CO2);
+        Journey journey = new Journey(df.format(date),currentRouteName,(cityDistance+hwyDistance), vehicle.getName(), CO2);
                 singleton.addUserJourney(journey);
     }
 }

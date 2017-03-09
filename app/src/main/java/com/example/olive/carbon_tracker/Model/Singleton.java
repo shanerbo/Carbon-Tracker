@@ -49,17 +49,8 @@ public class Singleton {
         journeyList.add(journey);
     }
 
-    public void editJourney(Journey journey,String dateOfTrip,String routeName, int totalDistance,String vehicleName, double carbonEmitted ){
-        journey.setDateOfTrip(dateOfTrip);
-        journey.setRouteName(routeName);
-        journey.setTotalDistance(totalDistance);
-        journey.setVehicleName(vehicleName);
-        journey.setCarbonEmitted(carbonEmitted);
-    }
 
-    public void setVehicleArray(Context context) {
-        vehicleData.ExtractVehicleData(context);
-    }
+
 
     public void setVehicleData(Context context) {
         vehicleData.ExtractVehicleData(context);
@@ -182,14 +173,7 @@ public class Singleton {
     }
 
 
-    public void addVehicle(Vehicle vehicle) {
-        this.VehiclesList.add(vehicle);
-    }
 
-    public Vehicle getVehicle(int index) {
-        validateIndex(this.VehiclesList, index);
-        return this.VehiclesList.get(index);
-    }
 
 
     private void validateIndex(List list, int index) {
@@ -198,9 +182,6 @@ public class Singleton {
         }
     }
 
-    public void resetCityandHwy() {
-        vehicleData.restCityAndHway();
-    }
 
 
     //-----------------------------------Route's function-------------------------------------------

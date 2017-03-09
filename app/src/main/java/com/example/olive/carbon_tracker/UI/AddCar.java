@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.annotation.IntegerRes;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -12,12 +11,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.olive.carbon_tracker.Model.Route;
 import com.example.olive.carbon_tracker.Model.Singleton;
 import com.example.olive.carbon_tracker.Model.Vehicle;
 import com.example.olive.carbon_tracker.R;
@@ -29,20 +26,17 @@ import java.util.List;
 public class AddCar extends AppCompatActivity {
 
     private List<Vehicle> VehicleList = new ArrayList<>();
-    List<String> make_list = new ArrayList<>();
-    List<String> userVehicleNames = new ArrayList<>();
-    List<Integer> year_list = new ArrayList<>();
-    Singleton singleton = Singleton.getInstance();
+    private List<String> make_list = new ArrayList<>();
+    private Singleton singleton = Singleton.getInstance();
     private int position;
-    VehicleData vehicleData = new VehicleData();
-    String VehicleNameToBeEdit;
+    private VehicleData vehicleData = new VehicleData();
+    private String VehicleNameToBeEdit;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_car);
         VehicleList = singleton.getVehicleList();
         make_list = singleton.getVehicleMakeArray();
-//        year_list = singleton.getVehicleYearArray();
 
         vehicleData = singleton.getVehicleData();
         if (singleton.checkEdit_car() ==1 ){
@@ -135,12 +129,6 @@ public class AddCar extends AppCompatActivity {
                                         AddCar.this, android.R.layout.simple_dropdown_item_1line, disp_list);
                                 Spinner Displ_spinner = (Spinner) findViewById(R.id.ID_drop_down_dspl);
                                 Displ_spinner.setAdapter(displ_adapter);
-//                                Toast.makeText(AddCar.this,"" +disp_list.get(0),Toast.LENGTH_LONG).show();
-//                                if (VehicleList.size() != 0&&singleton.checkEdit_car() ==1){
-//                                    Vehicle VehicleToBeEdit = VehicleList.get(position);
-//                                    int Displ = VehicleToBeEdit.getYear();
-//                                    Year_spinner.setSelection(getIndex(Year_spinner,Year));
-//                                }
 
 
                             }
@@ -200,13 +188,13 @@ public class AddCar extends AppCompatActivity {
                             singleton.userFinishEdit_car();
                             String userInputNewCarName = userInput.getName();
                             singleton.UserEnterNewCarName(userInputNewCarName,VehicleNameToBeEdit);
-
+                            Intent userEditCar = DisplayCarList.makeIntent(AddCar.this);
+                            startActivity(userEditCar);
                         } else {
                             VehicleList.add(userInput);
                             singleton.setVehiclesList(VehicleList);
 
-                            Vehicle userPickVehicle = userInput;
-                            singleton.setUserPickVehicleItem(userPickVehicle);
+                            singleton.setUserPickVehicleItem(userInput);
 
                             singleton.userFinishAdd_car();
                             Intent userCreateCar = DisplayRouteList.makeIntent(AddCar.this);
@@ -228,7 +216,6 @@ public class AddCar extends AppCompatActivity {
 
         if (singleton.checkAdd_car() == 1){
             delete.setVisibility(View.INVISIBLE);
-            //hide the delete button
             return;
         }
         delete.setOnClickListener(new View.OnClickListener() {

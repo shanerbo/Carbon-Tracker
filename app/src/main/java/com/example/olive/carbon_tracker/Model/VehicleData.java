@@ -19,37 +19,35 @@ import java.util.List;
 import static android.media.CamcorderProfile.get;
 
 public class VehicleData {
-    List<Integer> saveCity = new ArrayList<>();
-    List<Integer> saveHwy = new ArrayList<>();
-    List<String> saveFuelType = new ArrayList<>();
+    private List<Integer> saveCity = new ArrayList<>();
+    private List<Integer> saveHwy = new ArrayList<>();
+    private List<String> saveFuelType = new ArrayList<>();
 
-    public static final int VEHICLE_MAKE_TOKEN = 0;
-    public static final int VEHICLE_MODEL_TOKEN = 1;
-    public static final int VEHICLE_YEAR_TOKEN = 2;
-    public static final int VEHICLE_CITY08_TOKEN = 3;
-    public static final int VEHICLE_HIGHWAY08_TOKEN = 4;
-    public static final int VEHICLE_FUELTYPE_TOKEN = 5;
-    public static final int VEHICLE_DISPL_TOKEN = 6;
-    public static final int VEHICLE_TRANY_TOKEN = 7;
+    private  static final int VEHICLE_MAKE_TOKEN = 0;
+    private  static final int VEHICLE_MODEL_TOKEN = 1;
+    private  static final int VEHICLE_YEAR_TOKEN = 2;
+    private  static final int VEHICLE_CITY08_TOKEN = 3;
+    private  static final int VEHICLE_HIGHWAY08_TOKEN = 4;
+    private  static final int VEHICLE_FUELTYPE_TOKEN = 5;
+    private  static final int VEHICLE_DISPL_TOKEN = 6;
+    private  static final int VEHICLE_TRANY_TOKEN = 7;
 
-    List<String> vehicleMakeArray = new ArrayList<>();
-    List<String> vehicleModelArray = new ArrayList<>();
-    List<Integer> vehicleYearArray = new ArrayList<>();
-    List<Integer> vehicleCity08Array = new ArrayList<>();
-    List<Integer> vehicleHighway08 = new ArrayList<>();
-    List<String> vehicleFuelTypeArray = new ArrayList<>();
-    List<Double> vehicleDisplArray = new ArrayList<>();
-    List<String> vehicleTranyArray = new ArrayList<>();
-    List<Vehicle> vehicleDataArray = new ArrayList<>();
+    private List<String> vehicleMakeArray = new ArrayList<>();
+    private List<String> vehicleModelArray = new ArrayList<>();
+    private List<Integer> vehicleYearArray = new ArrayList<>();
+    private List<Integer> vehicleCity08Array = new ArrayList<>();
+    private List<Integer> vehicleHighway08 = new ArrayList<>();
+    private List<String> vehicleFuelTypeArray = new ArrayList<>();
+    private List<Double> vehicleDisplArray = new ArrayList<>();
+    private List<String> vehicleTranyArray = new ArrayList<>();
+    private List<Vehicle> vehicleDataArray = new ArrayList<>();
 
-    List<String> uniqueVehicleMakeArray = new ArrayList<>();
-    List<Double> uniqueVehicleDisplArray = new ArrayList<>();
-    List<Integer> uniqueVehicleYearArray = new ArrayList<>();
-    List<Double> uniqueDisplArray = new ArrayList<>();
+    private List<String> uniqueVehicleMakeArray = new ArrayList<>();
+    private List<Double> uniqueVehicleDisplArray = new ArrayList<>();
+    private List<Integer> uniqueVehicleYearArray = new ArrayList<>();
+    private List<Double> uniqueDisplArray = new ArrayList<>();
 
 
-    //TODO Find out the information we need and extract from
-    // TODO the excel file as needed
     public void ExtractVehicleData(Context context) {
 
         InputStream is = context.getResources().openRawResource(R.raw.vehicledata);
@@ -64,20 +62,15 @@ public class VehicleData {
             reader.readLine();
             int skipFirstLine = 0;
             while ((line = reader.readLine()) != null) {
-                //   Log.d("MyActivity", "Line: " + line);
-                //Split by '@'
                 String[] tokens = line.split("@");
                 //Read data
                 Vehicle vehicle = new Vehicle();
                 if (skipFirstLine > 0) {
 
-//                    vehicle.setMake(tokens[VEHICLE_MAKE_TOKEN]);
                     vehicleMakeArray.add(tokens[VEHICLE_MAKE_TOKEN]);
 
-//                    vehicle.setModel(tokens[VEHICLE_MODEL_TOKEN]);
                     vehicleModelArray.add(tokens[VEHICLE_MODEL_TOKEN]);
 
-//                    vehicle.setYear(Integer.parseInt(tokens[VEHICLE_YEAR_TOKEN]));
                     vehicleYearArray.add(Integer.parseInt(tokens[VEHICLE_YEAR_TOKEN]));
 
                     vehicleCity08Array.add(Integer.parseInt(tokens[VEHICLE_CITY08_TOKEN]));
@@ -91,41 +84,20 @@ public class VehicleData {
                     vehicleTranyArray.add(tokens[VEHICLE_TRANY_TOKEN]);
 
 
-//                    vehicleDataArray.add(vehicle);
                 }
                 skipFirstLine++;
-                //    Log.d("MyActivity", "just created:" );
             }
         } catch (IOException e) {
-            Log.wtf("MyActivity", "Error reading data file on  line" + line, e);
             e.printStackTrace();
         }
 
     }
 
-    public List<String> getVehicleMakeArray() {
-        return vehicleMakeArray;
-    }
-
-    public List<String> getVehicleModelArray() {
-        return vehicleModelArray;
-    }
-
-    public List<Integer> getVehicleYearArray() {
-        return vehicleYearArray;
-    }
-
-    public List<Vehicle> getVehicleDataArray() {
-        return vehicleDataArray;
-    }
 
 
     public List<String> getUniqueVehicleMakeArray() {
         for (int i = 0; i < vehicleMakeArray.size(); i++) {
             String currentMake = vehicleMakeArray.get(i);
-
-            //boolean found = checkForUniqueVehicles(currentMake);
-
             if (!uniqueVehicleMakeArray.contains(currentMake)) {
                 uniqueVehicleMakeArray.add(currentMake);
             }
@@ -140,11 +112,9 @@ public class VehicleData {
             String currentVehicle = vehicleMakeArray.get(i);
             if (vehicleMake.equals(currentVehicle)) {
                 String currentModel = vehicleModelArray.get(i);
-//                boolean found = checkForUniqueModels(currentModel, getModelsForMakeArray);
                 if (!getModelsForMakeArray.contains(currentModel)) {
                     getModelsForMakeArray.add(currentModel);
                 }
-//                Log.d("Make:  " + vehicleMake + " model added: " + vehicleModelArray.get(i) , "just created:" );
             }
         }
 
@@ -161,7 +131,6 @@ public class VehicleData {
             String currentModel = vehicleModelArray.get(i);
             if (currentModel.equals(vehicleModel)) {
                 int year = vehicleYearArray.get(i);
-//                boolean found = uniqueVehicleYearArray(year, getYearsForModelArray);
                 if (!getYearsForModelArray.contains(year)) {
                     getYearsForModelArray.add(year);
                 }
@@ -170,62 +139,6 @@ public class VehicleData {
         return getYearsForModelArray;
     }
 
-
-//    public boolean uniqueVehicleYearArray(int year, List<Integer> getYearsForModelArray) {
-//
-//        boolean found = false;
-//        for (int i = 0; i < getYearsForModelArray.size(); i++) {
-//            if (year == getYearsForModelArray.get(i)) {
-//                found = true;
-//                break;
-//            }
-//        }
-//        return found;
-//    }
-//
-//    public boolean checkForUniqueYearVehicles(Integer currentYear) {
-//        boolean found = false;
-//        for (int i = 0; i < uniqueVehicleYearArray.size(); i++) {
-//            if (currentYear.equals(uniqueVehicleYearArray.get(i))) {
-//                found = true;
-//                break;
-//            }
-//        }
-//        return found;
-//    }
-//
-//    public List<Integer> uniqueVehicleYearArray() {
-//        for (int i = 0; i < vehicleYearArray.size(); i++) {
-//            Integer currentYear = vehicleYearArray.get(i);
-//            boolean found = checkForUniqueYearVehicles(currentYear);
-//            if (found == false) {
-//                uniqueVehicleYearArray.add(currentYear);
-//            }
-//        }
-//        return uniqueVehicleYearArray;
-//    }
-//    public boolean checkForUniqueModels(String vehicleModel, List<String> getModelsForMakeArray) {
-//
-//        boolean found = false;
-//        for (int i = 0; i < getModelsForMakeArray.size(); i++) {
-//            if (vehicleModel.equals(getModelsForMakeArray.get(i))) {
-//                found = true;
-//                break;
-//            }
-//        }
-//        return found;
-//    }
-
-//    public boolean checkForUniqueVehicles(String currentMake) {
-//        boolean found = false;
-//        for (int i = 0; i < uniqueVehicleMakeArray.size(); i++) {
-//            if (currentMake.equals(uniqueVehicleMakeArray.get(i))) {
-//                found = true;
-//                break;
-//            }
-//        }
-//        return found;
-//    }
 
     public List<String> getDisplForVehicle(String vehicleModel, int vehicleYear) {
         List<String> getDisplPlusTrans = new ArrayList<>();
