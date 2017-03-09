@@ -50,6 +50,13 @@ public class Singleton {
         journeyList.add(journey);
     }
 
+    public void editJourney(Journey journey,String dateOfTrip,String routeName, int totalDistance,String vehicleName, double carbonEmitted ){
+        journey.setDateOfTrip(dateOfTrip);
+        journey.setRouteName(routeName);
+        journey.setTotalDistance(totalDistance);
+        journey.setVehicleName(vehicleName);
+        journey.setCarbonEmitted(carbonEmitted);
+    }
 
     public void setVehicleArray(Context context) {
         vehicleData.ExtractVehicleData(context);
