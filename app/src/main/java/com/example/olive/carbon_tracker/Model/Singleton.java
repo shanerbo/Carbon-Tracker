@@ -255,6 +255,24 @@ public class Singleton {
     public int checkAdd() {
         return addRoute;
     }
+
+    public void UserEnterNewCarName(String newCarName,String oldName) {
+        for (int i=0; i<journeyList.size();i++){
+            if(journeyList.get(i).getVehicleName() ==  oldName){
+                journeyList.get(i).setVehicleName(newCarName);
+            }
+        }
+
+    }
+
+    public void UserEnterNewRouteName(String newRouteName, String oldName) {
+        for (int i=0; i<journeyList.size();i++){
+            if(journeyList.get(i).getRouteName() ==  oldName){
+                journeyList.get(i).setRouteName(newRouteName);
+            }
+        }
+    }
+
 //-----------------------------------Route's function-------------------------------------------
 
 

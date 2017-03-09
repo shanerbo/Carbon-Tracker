@@ -37,9 +37,7 @@ public class Route {
     }
 
     private void setCityDistance(int cityDistance) {
-        if (cityDistance == 0) {
-            throw new IllegalArgumentException();
-        }
+
         this.CityDistance = cityDistance;
     }
 
@@ -48,9 +46,7 @@ public class Route {
     }
 
     private void setHighwayDistance(int highwayDistance) {
-        if (highwayDistance == 0) {
-            throw new IllegalArgumentException();
-        }
+
         this.HighwayDistance = highwayDistance;
     }
 
@@ -59,9 +55,7 @@ public class Route {
     }
 
     private void setTotalDistance(int totalDistance) {
-        if (totalDistance == 0) {
-            throw new IllegalArgumentException();
-        }
+
         this.TotalDistance = totalDistance;
     }
 }

@@ -35,6 +35,7 @@ public class AddCar extends AppCompatActivity {
     Singleton singleton = Singleton.getInstance();
     private int position;
     VehicleData vehicleData = new VehicleData();
+    String VehicleNameToBeEdit;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,10 +48,10 @@ public class AddCar extends AppCompatActivity {
         if (singleton.checkEdit_car() ==1 ){
             position = singleton.getEditPosition_car();
             Vehicle VehicleToBeEdit = VehicleList.get(position);
-            String VehicleName = VehicleToBeEdit.getName();
+            VehicleNameToBeEdit = VehicleToBeEdit.getName();
 
             EditText Name = (EditText) findViewById(R.id.ID_Car_Name);
-            Name.setText(VehicleName);
+            Name.setText(VehicleNameToBeEdit);
 
 
 
@@ -197,6 +198,9 @@ public class AddCar extends AppCompatActivity {
                             VehicleList.set(position, userInput);
                             singleton.setVehiclesList(VehicleList);
                             singleton.userFinishEdit_car();
+                            String userInputNewCarName = userInput.getName();
+                            singleton.UserEnterNewCarName(userInputNewCarName,VehicleNameToBeEdit);
+
                         } else {
                             VehicleList.add(userInput);
                             singleton.setVehiclesList(VehicleList);

@@ -13,6 +13,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.text.DecimalFormat;
 import java.util.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -38,6 +40,7 @@ public class AddNewRoute extends AppCompatActivity {
     private int position;
     Singleton singleton  = Singleton.getInstance();
     Vehicle vehicle = singleton.getVehicle();
+    String oldRouteName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,13 +56,13 @@ public class AddNewRoute extends AppCompatActivity {
         if(singleton.checkEdit() == 1){
             position = singleton.getEditPosition();
             Route RouteToBeEdited = RouteList.get(position);
-            String RouteName = RouteToBeEdited.getName();
+            oldRouteName = RouteToBeEdited.getName();
             int Route_city_dis = RouteToBeEdited.getCityDistance();
             int Route_hWay_dis = RouteToBeEdited.getHighwayDistance();
             EditText Name = (EditText)findViewById(R.id.RouteNameInput);
             EditText cityDst = (EditText)findViewById(R.id.CityDstInput);
             EditText hWayDst = (EditText)findViewById(R.id.HwayDstInput);
-            Name.setText(RouteName);
+            Name.setText(oldRouteName);
             cityDst.setText(""+Route_city_dis);
             hWayDst.setText(""+Route_hWay_dis);
         }else{
@@ -77,48 +80,32 @@ public class AddNewRoute extends AppCompatActivity {
                 EditText Name = (EditText) findViewById(R.id.RouteNameInput);
                 EditText CityDst = (EditText) findViewById(R.id.CityDstInput);
                 EditText HighWayDst = (EditText) findViewById(R.id.HwayDstInput);
-
-
-//                EditText TotalDst = (EditText) findViewById(R.id.TotalDstCal);
-//                String temp_totalDst = TotalDst.getText().toString();
-
                 String name = Name.getText().toString();
                 currentRouteName = name;
                 String temp_cityDst = CityDst.getText().toString();
                 String temp_highWayDst = HighWayDst.getText().toString();
                 if (!name.matches("") && !temp_cityDst.matches("") && !temp_highWayDst.matches("")) {
+
                     int cityDst = Integer.parseInt(temp_cityDst);
                     int highWayDst = Integer.parseInt(temp_highWayDst);
-//                    int totalDst = Integer.parseInt(temp_totalDst);
-                    if (cityDst <= 0 || highWayDst <= 0) {
-                        Snackbar.make(v, "The Distance Cannot Be Smaller Than 0", Snackbar.LENGTH_SHORT)
-                                .setAction("Action", null).show();
-                        return;
-                    }
                     int totalDst = CalculateTotalDistance(cityDst,highWayDst);
                     Route userInput = new Route(name, cityDst, highWayDst, totalDst);
                     if (singleton.checkEdit() == 1) {
-                        //allRoutes.changeRoute(userInput,position);
-                        //singleton.setUserRoutes(allRoutes);
-                        //changing Route to Route list
                         RouteList.set(position, userInput);
                         singleton.setRouteList(RouteList);
                         singleton.userFinishEdit();
+                        String newUserInputRouteName = userInput.getName();
+                        singleton.UserEnterNewRouteName(newUserInputRouteName,oldRouteName);
                     } else {
-                        //allRoutes.addRoute(userInput);
-                        //singleton.setUserRoutes(allRoutes);
                         RouteList.add(userInput);
                         singleton.setRouteList(RouteList);
                         singleton.userFinishAdd();
                         calculateCO2(userInput);
-
                     }
-
                     finish();
                 }else{
                     Toast.makeText(getApplicationContext(),"Please fill all blanks",Toast.LENGTH_LONG).show();
                 }
-
             }
         });
     }
@@ -190,8 +177,8 @@ public class AddNewRoute extends AppCompatActivity {
         } else {
             fuelCost = 8.89;
         }
-        double  cityGas = (cityDistance*1.00 / cityConsume);
-        double hwyGas = HwyDistance*1.00  / HwyConsume;
+        double  cityGas = (cityDistance*0.0621371192 / cityConsume);
+        double hwyGas = HwyDistance*0.0621371192  / HwyConsume;
         double totalGas = cityGas+hwyGas;
         double totalCO2 = fuelCost * totalGas;
         String TotalCO2 = String.format("%.2f", totalCO2);
@@ -214,12 +201,11 @@ public class AddNewRoute extends AppCompatActivity {
 
 
     private void createNewJourney(int cityDistance,int hwyDistance,double co2){
-
-
-        DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
+        DateFormat df = new SimpleDateFormat("EEE, MMM d, ''yy");
         Date date = new Date();
-
-        Journey journey = new Journey(date.toString(),currentRouteName,(cityDistance+hwyDistance), vehicle.getName(),co2);
+        DecimalFormat Format = new DecimalFormat("#.##");
+        double CO2 = Double.valueOf(Format.format(co2));
+        Journey journey = new Journey(df.format(date).toString(),currentRouteName,(cityDistance+hwyDistance), vehicle.getName(), CO2);
                 singleton.addUserJourney(journey);
     }
 }

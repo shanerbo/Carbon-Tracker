@@ -61,6 +61,7 @@ public class DisplayCarList extends AppCompatActivity {
                 Intent EditIntent = AddCar.makeIntent(DisplayCarList.this);
                 singleton.setEditPosition_car(position);
                 singleton.userEditRoute_car();
+
                 startActivityForResult(EditIntent,0);//case 1 means add route
                 //case 2 means edit route
 //                finish();
