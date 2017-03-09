@@ -22,7 +22,6 @@ public class Singleton {
     private List<Journey> journeyList = new ArrayList<>();
 
 
-    //private RouteCollection Routes = new RouteCollection();
     private static int editRoute;
     private static int editVehicle;
     private static int editPosition;
@@ -205,12 +204,7 @@ public class Singleton {
 
 
     //-----------------------------------Route's function-------------------------------------------
-//public void setUserRoutes(RouteCollection userRoutes){
-//    Routes = userRoutes;
-//}
-//    public RouteCollection getUserRoutes(){
-//        return Routes;
-//    }
+
     public List<Route> getRouteList() {
         return RouteList;
     }

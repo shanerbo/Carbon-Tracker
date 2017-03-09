@@ -29,7 +29,6 @@ import java.util.Date;
 import java.util.List;
 
 public class DisplayRouteList extends AppCompatActivity {
-//    private RouteCollection allRoutes = new RouteCollection();
     private List<Route> RouteList = new ArrayList<Route>();
     Singleton singleton  = Singleton.getInstance();
     String currentRouteName;
@@ -41,16 +40,11 @@ public class DisplayRouteList extends AppCompatActivity {
         setContentView(R.layout.activity_display_route_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.ChooseRoute);
         setSupportActionBar(toolbar);
-//        allRoutes =
-
-
-
         RouteList = singleton.getRouteList();
         AddRoute();
         EditRoute();
         showAllRoute();
         UserChooseRoute();
-
     }
 
     @Override
@@ -58,7 +52,6 @@ public class DisplayRouteList extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         showAllRoute();
     }
-
     private void EditRoute() {
         ListView RouteInfo = (ListView) findViewById(R.id.ROUTES);
         RouteInfo.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -73,11 +66,6 @@ public class DisplayRouteList extends AppCompatActivity {
             }
         });
     }
-
-
-
-
-
     private void UserChooseRoute() {
         ListView CarInfo = (ListView) findViewById(R.id.ROUTES);
         CarInfo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -93,10 +81,6 @@ public class DisplayRouteList extends AppCompatActivity {
 
         });
     }
-
-
-
-
     private void AddRoute() {
         FloatingActionButton addRoute = (FloatingActionButton) findViewById(R.id.AddRoute);
         addRoute.setOnClickListener(new View.OnClickListener() {
@@ -110,7 +94,6 @@ public class DisplayRouteList extends AppCompatActivity {
         });
 
     }
-
     private void showAllRoute() {
         ArrayAdapter<Route> adapter = new myArrayAdapter();
         ListView RoutesShown = (ListView)findViewById(R.id.ROUTES);

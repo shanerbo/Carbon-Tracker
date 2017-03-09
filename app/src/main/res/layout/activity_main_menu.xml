@@ -10,13 +10,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.olive.carbon_tracker.UI.MainMenu">
 
-    <TextView
-        android:id="@+id/txtMainMenu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/main_menu"
-        android:textSize="18sp" />
-
     <Button
         android:id="@+id/btnCreateJourney"
         android:layout_width="wrap_content"
@@ -36,4 +29,13 @@
         android:layout_alignParentStart="true"
         android:layout_marginStart="17dp"
         android:layout_marginBottom="16dp" />
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/chart"
+        android:layout_height = "495dp"
+        android:layout_width = "368dp"
+        tools:layout_editor_absoluteY="8dp"
+        tools:layout_editor_absoluteX="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="-30dp"
+        android:layout_above="@+id/btnCreateJourney" />
 </RelativeLayout>

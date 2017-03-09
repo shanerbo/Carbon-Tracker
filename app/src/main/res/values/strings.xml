@@ -64,5 +64,10 @@
         <item>2007</item>
     </string-array>
     <string name="title_activity_display_car_list">DisplayCarList</string>
+    <string name="edit_a_car">Edit A Car</string>
+    <string name="displacement_and_transmission">Displacement and Transmission</string>
+    <string name="make">Make</string>
+    <string name="model">Model</string>
+    <string name="year">Year</string>
 
 </resources>

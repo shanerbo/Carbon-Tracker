@@ -24,7 +24,6 @@ import com.example.olive.carbon_tracker.Model.Journey;
 import com.example.olive.carbon_tracker.Model.Vehicle;
 import com.example.olive.carbon_tracker.R;
 import com.example.olive.carbon_tracker.Model.Route;
-import com.example.olive.carbon_tracker.Model.RouteCollection;
 import com.example.olive.carbon_tracker.Model.Singleton;
 
 import java.util.ArrayList;
@@ -32,7 +31,6 @@ import java.util.List;
 import java.util.jar.Attributes;
 
 public class AddNewRoute extends AppCompatActivity {
-    //private RouteCollection allRoutes = new RouteCollection();
     private List<Route> RouteList = new ArrayList<Route>();
   //  List<Journey> journeysList = new ArrayList<>();
 
