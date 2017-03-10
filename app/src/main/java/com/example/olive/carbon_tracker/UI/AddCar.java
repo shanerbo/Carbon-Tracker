@@ -249,13 +249,14 @@ public class AddCar extends AppCompatActivity {
                     String CityAndHighway = Displ_spinner.getSelectedItem().toString();
 
                     List<String> city08_highway_08 = new ArrayList<>();
-                    String CityHighway = null;
+                    String CityHighway = new String();
                     String[] DTDparts = CityAndHighway.split(",");
                     String drive = DTDparts[0];
                     String trany = DTDparts[1];
                     String displ = DTDparts[2];
-                    Cursor cursor = myDataBase.rawQuery("select distinct city08, highway08, fuelType  from DB where model = ? " +
-                                    "and make = ?" +
+                    Cursor cursor = myDataBase.rawQuery("select city08, highway08, fuelType  from DB where " +
+                                    "make = ? " +
+                                    "and model = ?" +
                                     "and year = ?" +
                                     "and drive = ?" +
                                     "and trany = ?" +
@@ -263,12 +264,15 @@ public class AddCar extends AppCompatActivity {
                             new String[]{CarMake,CarModel,CarYear,drive,trany,displ});
                     cursor.moveToFirst();
                     while(!cursor.isAfterLast()){
+                        Toast.makeText(AddCar.this,"first fuelType",Toast.LENGTH_LONG).show();
                         CityHighway = (cursor.getString(0))+","+(cursor.getString(1)+","+(cursor.getString(2)));
                         city08_highway_08.add(CityHighway);
                         cursor.moveToNext();
                     }
+
                     cursor.close();
-                    String[] splitCityHighway = CityHighway.split(",");
+                    String firstCityHighway = city08_highway_08.get(0);
+                    String[] splitCityHighway = firstCityHighway.split(",");
 
                     int city = Integer.parseInt(splitCityHighway[0]);
                     int highWay = Integer.parseInt(splitCityHighway[1]);

@@ -28,8 +28,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 Intent MainMenu = new Intent(MainActivity.this, com.example.olive.carbon_tracker.UI.MainMenu.class);
-                singleton.setVehicleData(MainActivity.this);
-                singleton.setVehicleMakeArray();
+//                singleton.setVehicleData(MainActivity.this);
+//                singleton.setVehicleMakeArray();
                 startActivity(MainMenu);
                 finish();
             }
