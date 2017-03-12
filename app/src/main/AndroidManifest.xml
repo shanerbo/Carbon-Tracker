@@ -30,7 +30,9 @@
             android:label="@string/title_activity_display_car_list"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".UI.Chart" />
-        <activity android:name=".UI.SelectTransportationModeAndDate"></activity>
+        <activity android:name=".UI.SelectTransportationModeAndDate" />
+        <activity android:name=".UI.EditJourney" />
+        <activity android:name=".UI.DisplayJourneyList"></activity>
     </application>
 
 </manifest>
