@@ -28,6 +28,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static com.example.olive.carbon_tracker.R.string.year;
+
 public class DisplayRouteList extends AppCompatActivity {
     private List<Route> RouteList = new ArrayList<Route>();
     Singleton singleton  = Singleton.getInstance();
@@ -163,10 +165,29 @@ public class DisplayRouteList extends AppCompatActivity {
     }
     private void createNewJourney(int cityDistance,int hwyDistance,double co2){
         DateFormat df = new SimpleDateFormat("EEE, MMM d, ''yy");
+        Calendar calendar = new Calendar();
+
+
+     //   Date date = new Date();
         Date date = new Date();
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEEE");
+
+        Toast.makeText(getApplicationContext(),"MONTH "+simpleDateFormat.format(date).toUpperCase(),Toast.LENGTH_SHORT).show();
+       // System.out.println("DAY "+simpleDateFormat.format(date).toUpperCase());
+
+        simpleDateFormat = new SimpleDateFormat("MMMM");
+       // System.out.println("MONTH "+simpleDateFormat.format(date).toUpperCase());
+
+        simpleDateFormat = new SimpleDateFormat("YYYY");
+     //   System.out.println("YEAR "+simpleDateFormat.format(date).toUpperCase());
+
+        String day =   singleton.getUserDay();
+        String month =  singleton.getUserMonth();
+        String year =  singleton.getUserYear();
         DecimalFormat Format = new DecimalFormat("#.##");
         double CO2 = Double.valueOf(Format.format(co2));
-        Journey journey = new Journey(df.format(date),currentRouteName,(cityDistance+hwyDistance), vehicle.getName(), CO2);
+        Journey journey = new Journey(day+"/"+month+"/"+year,currentRouteName,(cityDistance+hwyDistance), vehicle.getName(), CO2);
         singleton.addUserJourney(journey);
     }
 }

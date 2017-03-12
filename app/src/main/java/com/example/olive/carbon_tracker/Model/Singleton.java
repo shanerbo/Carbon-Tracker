@@ -2,11 +2,9 @@ package com.example.olive.carbon_tracker.Model;
 
 
 import android.content.Context;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 public class Singleton {
     private static Singleton currInstance = new Singleton();
@@ -16,6 +14,12 @@ public class Singleton {
     private VehicleData vehicleData = new VehicleData();
     private List<String> getVehicleMakeArray = new ArrayList<>();
     private List<String> vehicleModelArray = new ArrayList<>();
+
+String userDay = null;
+    String userMonth = null;
+    String userYear = null;
+    boolean isDateChanged = false;
+
 
 
     ///////WHAT I NEED FOR MY CARBON CLASS /////////////
@@ -51,7 +55,17 @@ public class Singleton {
     }
 
 
+public boolean getIsDateChanged(){
 
+    return isDateChanged;
+
+}
+
+    public void setIsDateChanged(boolean change){
+
+        isDateChanged = change;
+
+    }
 
     public void setVehicleData(Context context) {
         vehicleData.ExtractVehicleData(context);
@@ -183,7 +197,29 @@ public class Singleton {
         }
     }
 
+    public String getUserDay() {
+        return userDay;
+    }
 
+    public void setUserDay(String userDay) {
+        this.userDay = userDay;
+    }
+
+    public String getUserMonth() {
+        return userMonth;
+    }
+
+    public void setUserMonth(String userMonth) {
+        this.userMonth = userMonth;
+    }
+
+    public String getUserYear() {
+        return userYear;
+    }
+
+    public void setUserYear(String userYear) {
+        this.userYear = userYear;
+    }
 
     //-----------------------------------Route's function-------------------------------------------
 
