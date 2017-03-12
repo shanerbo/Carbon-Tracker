@@ -25,8 +25,7 @@ public class DisplayJourneyList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_journey_list);
         JourneyList = singleton.getUsersJourneys();
-        //TODO: Uncomment function after Journey.class obtains an Image variable
-//        setListView();
+        setListView();
     }
 
     private void setListView() {
@@ -50,8 +49,7 @@ public class DisplayJourneyList extends AppCompatActivity {
 
     private void setImageView(View itemView, Journey journey) {
         ImageView imageView = (ImageView) itemView.findViewById(R.id.imgJourney);
-        //TODO: Uncomment function after Journey.class obtains an Image variable
-//        imageView.setImageResource(journey.getIconID());
+        imageView.setImageResource(journey.getIconID());
     }
 
     private class myArrayAdapter extends ArrayAdapter<Journey> {
