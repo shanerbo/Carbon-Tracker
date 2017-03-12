@@ -1,6 +1,7 @@
 package com.example.olive.carbon_tracker.UI;
 
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -40,16 +41,16 @@ public class SelectTransportationModeAndDate extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String UserMode = parent.getSelectedItem().toString();
                 if(UserMode.matches("Car")){
-
+;
                 }
                 else if(UserMode.matches("Walk/bike")){ //0g of CO2 emissions per km of walked / bike travel.
-
+;
                 }
                 else if(UserMode.matches("Bus")){ //89g of CO2 emissions per km of bus travel.
-
+;
                 }
                 else if(UserMode.matches("Skytrain")){ //unknown CO2 emission
-
+;
                 }
             }
 
@@ -60,20 +61,19 @@ public class SelectTransportationModeAndDate extends AppCompatActivity {
     }
 
     private void setButton(final int id) {
-        Button button = (Button) findViewById(id);
+        FloatingActionButton button = (FloatingActionButton) findViewById(id);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent showActivity = new Intent();
                 switch (id) {
                     case R.id.ID_button_OKmode:
-                        showActivity = new Intent(SelectTransportationModeAndDate.this, DisplayCarList.class);
+                        Intent showActivity = new Intent(SelectTransportationModeAndDate.this, DisplayCarList.class);
+                        startActivity(showActivity);
                         break;
                     case R.id.ID_button_mode_cancel:
                         finish();
                         break;
                 }
-                startActivity(showActivity);
             }
         });
     }
