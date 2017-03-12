@@ -53,7 +53,7 @@ public class SelectTransportationModeAndDate extends AppCompatActivity {
                     UserTransportationMode = 2;
                     singleton.ModeBus();
                 }
-                else if(UserMode.matches("Skytrain")){ //of CO2 emissions per km of skytrain travel.
+                else if(UserMode.matches("Skytrain")){ //33g of CO2 emissions per km of skytrain travel.
                     UserTransportationMode = 3;
                     singleton.ModeSkytrain();
                 }
@@ -72,12 +72,12 @@ public class SelectTransportationModeAndDate extends AppCompatActivity {
             public void onClick(View v) {
                 switch (id) {
                     case R.id.ID_button_OKmode:
-                        if(UserTransportationMode == 0) {
+                        if(UserTransportationMode == 0) { //user selects car
                             Intent showActivity = new Intent(SelectTransportationModeAndDate.this, DisplayCarList.class);
                             startActivity(showActivity);
                             break;
                         }
-                        else {
+                        else { //user selects transportation modes other than cars
                             Intent showActivity = new Intent(SelectTransportationModeAndDate.this, DisplayRouteList.class);
                             startActivity(showActivity);
                             break;

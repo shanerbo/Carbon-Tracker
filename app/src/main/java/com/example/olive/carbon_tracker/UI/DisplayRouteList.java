@@ -150,7 +150,7 @@ public class DisplayRouteList extends AppCompatActivity {
 
         }
         else if(singleton.checkTransportationMode() == 3){ //Skytrain
-            double totalCO2 = (cityDistance+HwyDistance)* 0.01;
+            double totalCO2 = (cityDistance+HwyDistance)*0.033;
             String TotalCO2 = String.format("%.2f", totalCO2);
             Toast.makeText(getApplicationContext(), "You have produced: "+ TotalCO2 +"kg of CO2", Toast.LENGTH_SHORT).show();
 
@@ -201,8 +201,11 @@ public class DisplayRouteList extends AppCompatActivity {
         Date date = new Date();
         DecimalFormat Format = new DecimalFormat("#.##");
         double CO2 = Double.valueOf(Format.format(co2));
-        String VehicleName = vehicle.getName();
+        String VehicleName = "";
         switch(TransMode){
+            case 0:
+                VehicleName = vehicle.getName();
+                break;
             case 1:
                 VehicleName = "Walk/Bike";
                 break;
