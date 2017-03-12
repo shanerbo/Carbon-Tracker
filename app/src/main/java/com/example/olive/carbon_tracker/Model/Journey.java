@@ -10,7 +10,7 @@ public class Journey {
     private int totalDistance;
     private String vehicleName;
     private double carbonEmitted;
-    private int iconID = R.mipmap.ic_launcher;
+    private int iconID = R.drawable.map;
 
 
     public Journey(String dateOfTrip, String routeName, int totalDistance, String vehicleName, double carbonEmitted) {

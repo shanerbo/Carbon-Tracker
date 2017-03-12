@@ -16,6 +16,8 @@ import com.example.olive.carbon_tracker.R;
 import java.util.ArrayList;
 import java.util.List;
 
+// ListView Icon: Icon made by Puppets (http://www.flaticon.com/authors/puppets) from www.flaticon.com
+
 public class DisplayJourneyList extends AppCompatActivity {
     private Singleton singleton = Singleton.getInstance();
     private List<Journey> JourneyList = new ArrayList<Journey>();
