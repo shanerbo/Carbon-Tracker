@@ -29,6 +29,7 @@ public class Singleton {
     private static int addRoute;
     private static int addVehicle;
     private static int deleteRoute;
+    private static int TransportationMode;
     private static Singleton instance = new Singleton();
     private static Vehicle userPickVehicle;
 
@@ -249,6 +250,19 @@ public class Singleton {
     }
 
 //-----------------------------------Route's function-------------------------------------------
+
+    public int checkTransportationMode() {
+        return TransportationMode;
+    }
+
+    public void ModeCar() {
+        TransportationMode = 0;
+    }
+
+    public void ModeWalkBike() {
+        TransportationMode = 1;
+    }
+
 
 
 }

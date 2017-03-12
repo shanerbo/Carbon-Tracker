@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.example.olive.carbon_tracker.UI.SelectTransportationModeAndDate">
+
+    <TextView
+        android:id="@+id/ID_what_mode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="@string/select_a_transportation_mode"
+        android:textSize="18sp"
+        tools:layout_editor_absoluteX="161dp"
+        tools:layout_editor_absoluteY="236dp" />
+
+    <Spinner
+        android:id="@+id/ID_trans_mode_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/ID_what_mode"
+        android:layout_alignStart="@+id/ID_what_mode"
+        android:layout_below="@+id/ID_what_mode"
+        android:layout_marginTop="22dp" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/ID_button_OKmode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        app:backgroundTint="@android:color/holo_green_dark"
+        app:fabSize="normal"
+        app:srcCompat="@android:drawable/checkbox_on_background"
+        android:layout_marginBottom="34dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignEnd="@+id/ID_trans_mode_spinner" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/ID_button_mode_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        app:backgroundTint="@android:color/holo_red_light"
+        app:fabSize="normal"
+        app:srcCompat="@android:drawable/btn_dialog"
+        android:layout_alignTop="@+id/ID_button_OKmode"
+        android:layout_alignStart="@+id/ID_trans_mode_spinner" />
+
+</RelativeLayout>

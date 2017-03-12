@@ -69,5 +69,6 @@
     <string name="make">Make</string>
     <string name="model">Model</string>
     <string name="year">Year</string>
+    <string name="select_a_transportation_mode">Select a transportation mode</string>
 
 </resources>
