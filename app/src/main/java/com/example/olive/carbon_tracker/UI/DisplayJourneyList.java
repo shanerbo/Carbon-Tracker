@@ -24,6 +24,7 @@ public class DisplayJourneyList extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_journey_list);
+        JourneyList = singleton.getUsersJourneys();
         //TODO: Uncomment function after Journey.class obtains an Image variable
 //        setListView();
     }
