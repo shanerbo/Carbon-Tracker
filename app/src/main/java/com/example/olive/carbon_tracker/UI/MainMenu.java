@@ -57,7 +57,8 @@ public class MainMenu extends AppCompatActivity {
                 Intent showActivity = new Intent();
                 switch (id) {
                     case R.id.btnCreateJourney:
-                        showActivity = DisplayCarList.makeIntent(MainMenu.this);
+                        //showActivity = DisplayCarList.makeIntent(MainMenu.this);
+                        showActivity = new Intent(MainMenu.this, SelectTransportationModeAndDate.class);
                         break;
                     case R.id.btnCurrentFootprint:
                         showActivity = new Intent(MainMenu.this,DisplayCarbonFootprint.class);

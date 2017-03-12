@@ -29,7 +29,8 @@
             android:name=".UI.DisplayCarList"
             android:label="@string/title_activity_display_car_list"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".UI.Chart"></activity>
+        <activity android:name=".UI.Chart" />
+        <activity android:name=".UI.SelectTransportationModeAndDate"></activity>
     </application>
 
 </manifest>
