@@ -1,8 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.olive.carbon_tracker.UI.EditJourney">
 
-</android.support.constraint.ConstraintLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/btnDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/btnEditDate"
+        android:layout_alignTop="@+id/btnOkay"
+        android:clickable="true"
+        app:backgroundTint="@android:color/holo_red_light"
+        app:fabSize="normal"
+        app:srcCompat="@android:drawable/btn_dialog" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/btnOkay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:clickable="true"
+        app:backgroundTint="@android:color/holo_green_dark"
+        app:fabSize="normal"
+        app:srcCompat="@android:drawable/checkbox_on_background"
+        android:layout_alignParentBottom="true"
+        android:layout_toEndOf="@+id/txtEditJourney" />
+
+    <TextView
+        android:id="@+id/txtEditJourney"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="12dp"
+        android:text="@string/editing_journey"
+        android:textSize="18sp"
+        tools:layout_editor_absoluteX="150dp"
+        tools:layout_editor_absoluteY="16dp" />
+
+    <Button
+        android:id="@+id/btnEditVehicle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="@string/edit_car"
+        android:layout_below="@+id/txtEditJourney"
+        android:layout_toStartOf="@+id/txtEditJourney" />
+
+    <Button
+        android:id="@+id/btnEditRoute"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="75dp"
+        android:text="@string/edit_route"
+        android:layout_below="@+id/btnEditVehicle"
+        android:layout_alignEnd="@+id/btnEditVehicle" />
+
+    <Button
+        android:id="@+id/btnEditDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="73dp"
+        android:text="@string/edit_date"
+        android:layout_below="@+id/btnEditRoute"
+        android:layout_alignEnd="@+id/btnEditRoute" />
+
+    <TextView
+        android:id="@+id/txtCurrentVehicle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnEditRoute"
+        android:layout_alignEnd="@+id/btnOkay"
+        android:layout_marginBottom="14dp"
+        android:layout_marginEnd="39dp"
+        android:text="@string/textview"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/txtCurrentRoute"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/btnEditRoute"
+        android:layout_alignBottom="@+id/btnEditRoute"
+        android:layout_alignStart="@+id/txtCurrentVehicle"
+        android:text="@string/textview"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/txtCurrentDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/btnEditDate"
+        android:layout_alignBottom="@+id/btnEditDate"
+        android:layout_alignStart="@+id/txtCurrentRoute"
+        android:text="@string/textview"
+        android:textSize="18sp" />
+</RelativeLayout>

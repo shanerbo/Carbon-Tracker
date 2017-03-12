@@ -1,9 +1,11 @@
 package com.example.olive.carbon_tracker.UI;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -34,7 +36,19 @@ public class DisplayJourneyList extends AppCompatActivity {
         ArrayAdapter<Journey> adapter = new myArrayAdapter();
         ListView listView = (ListView) findViewById(R.id.listJourneys);
         listView.setAdapter(adapter);
+        setListClickListener(listView);
     }
+
+    private void setListClickListener(ListView listView) {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent showActivity = new Intent(DisplayJourneyList.this, EditJourney.class);
+                startActivity(showActivity);
+            }
+        });
+    }
+
 
     private void setTextView(int id, Journey journey) {
         TextView textView = (TextView) findViewById(id);
