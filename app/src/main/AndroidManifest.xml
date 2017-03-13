@@ -33,6 +33,8 @@
         <activity android:name=".UI.SelectTransportationModeAndDate" />
         <activity android:name=".UI.EditJourney" />
         <activity android:name=".UI.DisplayJourneyList"></activity>
+        <activity android:name=".UI.SelectTransportationModeAndDate" />
+        <activity android:name=".UI.Calendar"></activity>
     </application>
 
 </manifest>
