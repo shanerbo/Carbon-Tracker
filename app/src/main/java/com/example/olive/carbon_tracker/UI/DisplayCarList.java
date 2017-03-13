@@ -95,10 +95,10 @@ public class DisplayCarList extends AppCompatActivity {
         list.setAdapter(adapter);
     }
 
-    public void onBackPressed() {
-        Intent goBackToMainMenu = MainMenu.makeIntent(DisplayCarList.this);
-        startActivity(goBackToMainMenu);
-    }
+//    public void onBackPressed() {
+//        Intent goBackToMainMenu = MainMenu.makeIntent(DisplayCarList.this);
+//        startActivity(goBackToMainMenu);
+//    }
 
     private class mArrayAdapter extends ArrayAdapter<Vehicle> {
         public mArrayAdapter() {

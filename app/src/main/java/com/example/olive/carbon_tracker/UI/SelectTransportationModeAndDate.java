@@ -21,6 +21,7 @@ import java.util.*;
 public class SelectTransportationModeAndDate extends AppCompatActivity {
 
     Singleton singleton = Singleton.getInstance();
+    private static int UserTransportationMode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,16 +96,20 @@ public class SelectTransportationModeAndDate extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String UserMode = parent.getSelectedItem().toString();
                 if(UserMode.matches("Car")){
-;
+                    UserTransportationMode = 0;
+                    singleton.ModeCar();
                 }
                 else if(UserMode.matches("Walk/bike")){ //0g of CO2 emissions per km of walked / bike travel.
-;
+                    UserTransportationMode = 1;
+                    singleton.ModeWalkBike();
                 }
                 else if(UserMode.matches("Bus")){ //89g of CO2 emissions per km of bus travel.
-;
+                    UserTransportationMode = 2;
+                    singleton.ModeBus();
                 }
-                else if(UserMode.matches("Skytrain")){ //unknown CO2 emission
-;
+                else if(UserMode.matches("Skytrain")){ //33g of CO2 emissions per km of skytrain travel.
+                    UserTransportationMode = 3;
+                    singleton.ModeSkytrain();
                 }
             }
 
@@ -121,9 +126,16 @@ public class SelectTransportationModeAndDate extends AppCompatActivity {
             public void onClick(View v) {
                 switch (id) {
                     case R.id.ID_button_OKmode:
-                        Intent showActivity = new Intent(SelectTransportationModeAndDate.this, DisplayCarList.class);
-                        startActivity(showActivity);
-                        break;
+                        if(UserTransportationMode == 0) { //user selects car
+                            Intent showActivity = new Intent(SelectTransportationModeAndDate.this, DisplayCarList.class);
+                            startActivity(showActivity);
+                            break;
+                        }
+                        else { //user selects transportation modes other than cars
+                            Intent showActivity = new Intent(SelectTransportationModeAndDate.this, DisplayRouteList.class);
+                            startActivity(showActivity);
+                            break;
+                        }
                     case R.id.ID_button_mode_cancel:
                         finish();
                         break;

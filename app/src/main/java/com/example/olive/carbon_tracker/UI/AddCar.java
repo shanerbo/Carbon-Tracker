@@ -251,8 +251,9 @@ public class AddCar extends AppCompatActivity {
     public void onBackPressed() {
         singleton.userFinishEdit_car();
         singleton.userFinishAdd_car();
-        Intent goBackToDisplayCar = DisplayCarList.makeIntent(AddCar.this);
-        startActivity(goBackToDisplayCar);
+//        Intent goBackToDisplayCar = DisplayCarList.makeIntent(AddCar.this);
+//        startActivity(goBackToDisplayCar);
+        finish();
     }
 
     public static Intent makeIntent(Context context) {
