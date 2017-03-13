@@ -27,26 +27,6 @@ public class MainMenu extends AppCompatActivity {
         setContentView(R.layout.activity_main_menu);
         setButton(R.id.btnCreateJourney);
         setButton(R.id.btnCurrentFootprint);
-        setupPieChart();
-    }
-    private void setupPieChart(){
-        List<Journey> journeyList = singleton.getUsersJourneys();
-        List<PieEntry> pieEntries = new ArrayList<>();
-        for(int i =0;i<journeyList.size();i++) {
-            if (!journeyList.isEmpty()) {
-                Journey currentJourney = journeyList.get(i);
-                int co2  = (int) currentJourney.getCarbonEmitted();
-                pieEntries.add(new PieEntry(co2, currentJourney.getRouteName()));
-
-            }
-        }
-        PieDataSet dataSet = new PieDataSet(pieEntries,"carbon emission");
-        dataSet.setColors(Color.rgb(0,128,255),Color.rgb(128,128,128),Color.rgb(255, 153, 2255),Color.rgb(255, 128, 0),Color.rgb(255, 0, 0));
-        PieData data = new PieData(dataSet);
-        com.github.mikephil.charting.charts.PieChart chart = (com.github.mikephil.charting.charts.PieChart) findViewById(R.id.chart);
-        chart.setData(data);
-        chart.animateY(1000);
-        chart.invalidate();
     }
 
     private void setButton(final int id) {
