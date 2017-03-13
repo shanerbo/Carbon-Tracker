@@ -24,51 +24,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public DatabaseHelper(Context context){
         super(context,DB_NAME,null,1);
         this.myContext = context;
-        this.createDataBase();
-        boolean DBexist = checkDataBase();
-        if (DBexist){
-            //openDataBase();
-        }else {
-            System.out.println("DataBase does not exist");
-            createDataBase();
-        }
+        this.getReadableDatabase();
+        copyDataBase();
+        //this.createDataBase();
+//        boolean DBexist = checkDataBase();
+//        if (DBexist){
+//            //openDataBase();
+//        }else {
+//            System.out.println("DataBase does not exist");
+//            createDataBase();
+//        }
 
     }
 
-    public SQLiteDatabase openDataBase() throws SQLException{
-        String myPath = DB_PATH+DB_NAME;
-        myDataBase = SQLiteDatabase.openDatabase(myPath,null,SQLiteDatabase.OPEN_READWRITE);
-        return myDataBase;
-    }
-
-    private boolean checkDataBase() {
-        SQLiteDatabase checkDB = null;
-        try{
-            String myPath = DB_PATH+DB_NAME;
-            checkDB = SQLiteDatabase.openDatabase(myPath,null, SQLiteDatabase.OPEN_READONLY);
-        }catch (SQLiteException e){
-
-        }
-
-        if (checkDB != null){
-            checkDB.close();
-        }
-        return checkDB !=null ? true:false;
-    }
-
-    public void createDataBase() {
-        try{
-            boolean DBexist = checkDataBase();
-            if (DBexist){
-
-            }else{
-                this.getReadableDatabase();
-                copyDataBase();
-            }
-        }catch (Exception e){
-
-        }
-    }
 
     private void copyDataBase() {
         try{
@@ -104,4 +72,41 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
     }
+
+
+
+//    public SQLiteDatabase openDataBase() throws SQLException{
+//        String myPath = DB_PATH+DB_NAME;
+//        myDataBase = SQLiteDatabase.openDatabase(myPath,null,SQLiteDatabase.OPEN_READWRITE);
+//        return myDataBase;
+//    }
+
+//    private boolean checkDataBase() {
+//        SQLiteDatabase checkDB = null;
+//        try{
+//            String myPath = DB_PATH+DB_NAME;
+//            checkDB = SQLiteDatabase.openDatabase(myPath,null, SQLiteDatabase.OPEN_READONLY);
+//        }catch (SQLiteException e){
+//
+//        }
+//
+//        if (checkDB != null){
+//            checkDB.close();
+//        }
+//        return checkDB !=null ? true:false;
+//    }
+
+//    public void createDataBase() {
+//        try{
+//            boolean DBexist = checkDataBase();
+//            if (DBexist){
+//
+//            }else{
+//                this.getReadableDatabase();
+//                copyDataBase();
+//            }
+//        }catch (Exception e){
+//
+//        }
+//    }
 }

@@ -54,7 +54,7 @@ public class AddCar extends AppCompatActivity {
         make_list = singleton.getVehicleMakeArray();
 //------------create a new DatabaseHelper and it will copy external sql to local-------------------
         myHelper = new DatabaseHelper(this);
-        myHelper.openDataBase();
+        //myHelper.openDataBase();
         myHelper.close();
 //------------get local sql which is created by Helper---------------------------------------------
         myDataBase = SQLiteDatabase.openOrCreateDatabase(DatabaseHelper.DB_PATH + DatabaseHelper.DB_NAME,null);
