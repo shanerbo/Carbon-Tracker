@@ -27,7 +27,7 @@ public class Calendar extends AppCompatActivity {
     private void  getUsersDataPick(){
         CalendarView view = new CalendarView(this);
         setContentView(view);
-        Toast.makeText(getApplicationContext(),"is date changed: " + singleton.getIsDateChanged(),Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(),"date has been changed: " + singleton.getIsDateChanged(),Toast.LENGTH_SHORT).show();
         view.setOnDateChangeListener(new OnDateChangeListener() {
 
             @Override
@@ -38,7 +38,7 @@ public class Calendar extends AppCompatActivity {
                 singleton.setUserMonth(getStringMonth(month));
                 singleton.setUserYear("" + year);
                 singleton.setIsDateChanged(true);
-                Toast.makeText(getApplicationContext(),"is date changed: " + singleton.getIsDateChanged(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"date has been changed: " + singleton.getIsDateChanged(),Toast.LENGTH_SHORT).show();
             }
         });
     }

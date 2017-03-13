@@ -297,6 +297,14 @@ public boolean getIsDateChanged(){
         TransportationMode = 1;
     }
 
+    public void ModeBus() {
+        TransportationMode = 2;
+    }
+
+    public void ModeSkytrain() {
+        TransportationMode = 3;
+    }
+
 
 
 }
