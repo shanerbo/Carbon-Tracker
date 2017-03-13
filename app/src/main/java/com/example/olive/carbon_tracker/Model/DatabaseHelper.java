@@ -27,13 +27,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         this.getReadableDatabase();
         copyDataBase();
         //this.createDataBase();
-//        boolean DBexist = checkDataBase();
-//        if (DBexist){
-//            //openDataBase();
-//        }else {
-//            System.out.println("DataBase does not exist");
-//            createDataBase();
-//        }
+        boolean DBexist = checkDataBase();
+        if (DBexist){
+            //openDataBase();
+        }else {
+            System.out.println("DataBase does not exist");
+            createDataBase();
+        }
 
     }
 
@@ -75,38 +75,38 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
 
-//    public SQLiteDatabase openDataBase() throws SQLException{
-//        String myPath = DB_PATH+DB_NAME;
-//        myDataBase = SQLiteDatabase.openDatabase(myPath,null,SQLiteDatabase.OPEN_READWRITE);
-//        return myDataBase;
-//    }
+    public SQLiteDatabase openDataBase() throws SQLException{
+        String myPath = DB_PATH+DB_NAME;
+        myDataBase = SQLiteDatabase.openDatabase(myPath,null,SQLiteDatabase.OPEN_READWRITE);
+        return myDataBase;
+    }
 
-//    private boolean checkDataBase() {
-//        SQLiteDatabase checkDB = null;
-//        try{
-//            String myPath = DB_PATH+DB_NAME;
-//            checkDB = SQLiteDatabase.openDatabase(myPath,null, SQLiteDatabase.OPEN_READONLY);
-//        }catch (SQLiteException e){
-//
-//        }
-//
-//        if (checkDB != null){
-//            checkDB.close();
-//        }
-//        return checkDB !=null ? true:false;
-//    }
+    private boolean checkDataBase() {
+        SQLiteDatabase checkDB = null;
+        try{
+            String myPath = DB_PATH+DB_NAME;
+            checkDB = SQLiteDatabase.openDatabase(myPath,null, SQLiteDatabase.OPEN_READONLY);
+        }catch (SQLiteException e){
 
-//    public void createDataBase() {
-//        try{
-//            boolean DBexist = checkDataBase();
-//            if (DBexist){
-//
-//            }else{
-//                this.getReadableDatabase();
-//                copyDataBase();
-//            }
-//        }catch (Exception e){
-//
-//        }
-//    }
+        }
+
+        if (checkDB != null){
+            checkDB.close();
+        }
+        return checkDB !=null ? true:false;
+    }
+
+    public void createDataBase() {
+        try{
+            boolean DBexist = checkDataBase();
+            if (DBexist){
+
+            }else{
+                this.getReadableDatabase();
+                copyDataBase();
+            }
+        }catch (Exception e){
+
+        }
+    }
 }
