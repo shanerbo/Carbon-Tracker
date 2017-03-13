@@ -198,12 +198,11 @@ public class DisplayRouteList extends AppCompatActivity {
     public static Intent makeIntent(Context context) {
         return new Intent(context, DisplayRouteList.class);
     }
+
     private void createNewJourney(int cityDistance,int hwyDistance,double co2, int TransMode){
         DateFormat df = new SimpleDateFormat("EEE, MMM d, ''yy");
         Calendar calendar = new Calendar();
 
-
-     //   Date date = new Date();
         Date date = new Date();
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEEE");
@@ -222,7 +221,6 @@ public class DisplayRouteList extends AppCompatActivity {
         String year =  singleton.getUserYear();
         DecimalFormat Format = new DecimalFormat("#.##");
         double CO2 = Double.valueOf(Format.format(co2));
-        Journey journey = new Journey(day+"/"+month+"/"+year,currentRouteName,(cityDistance+hwyDistance), vehicle.getName(), CO2);
         String VehicleName = "";
         switch(TransMode){
             case 0:
@@ -238,7 +236,7 @@ public class DisplayRouteList extends AppCompatActivity {
                 VehicleName = "Skytrain";
                 break;
         }
-        Journey journey = new Journey(df.format(date),currentRouteName,(cityDistance+hwyDistance), VehicleName, CO2);
+        Journey journey = new Journey(day+"/"+month+"/"+year,currentRouteName,(cityDistance+hwyDistance), VehicleName, CO2);
         singleton.addUserJourney(journey);
     }
 }

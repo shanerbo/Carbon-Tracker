@@ -26,6 +26,8 @@ import com.example.olive.carbon_tracker.Model.Singleton;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.olive.carbon_tracker.R.string.year;
+
 public class AddNewRoute extends AppCompatActivity {
     private List<Route> RouteList = new ArrayList<Route>();
 
@@ -220,16 +222,15 @@ public class AddNewRoute extends AppCompatActivity {
 
 
 
-    private void createNewJourney(int cityDistance,int hwyDistance,double co2){
+    private void createNewJourney(int cityDistance,int hwyDistance,double co2, int TransMode){
         String day =   singleton.getUserDay();
         String month =  singleton.getUserMonth();
         String year =  singleton.getUserYear();
-    private void createNewJourney(int cityDistance,int hwyDistance,double co2, int TransMode){
         DateFormat df = new SimpleDateFormat("EEE, MMM d, ''yy");
         Date date = new Date();
         DecimalFormat Format = new DecimalFormat("#.##");
         double CO2 = Double.valueOf(Format.format(co2));
-        Journey journey = new Journey(day+"/"+month+"/"+year,currentRouteName,(cityDistance+hwyDistance), vehicle.getName(), CO2);
+
         String VehicleName = "";
         switch(TransMode){
             case 0:
@@ -245,8 +246,7 @@ public class AddNewRoute extends AppCompatActivity {
                 VehicleName = "Skytrain";
                 break;
         }
-
-        Journey journey = new Journey(df.format(date),currentRouteName,(cityDistance+hwyDistance), VehicleName, CO2);
-                singleton.addUserJourney(journey);
+        Journey journey = new Journey(day+"/"+month+"/"+year,currentRouteName,(cityDistance+hwyDistance), VehicleName, CO2);
+        singleton.addUserJourney(journey);
     }
 }
