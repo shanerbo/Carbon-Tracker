@@ -23,6 +23,7 @@ public class MainMenu extends AppCompatActivity {
         setContentView(R.layout.activity_main_menu);
         setButton(R.id.btnCreateJourney);
         setButton(R.id.btnCurrentFootprint);
+        setButton(R.id.btnEditJourney);
     }
 
     private void setButton(final int id) {

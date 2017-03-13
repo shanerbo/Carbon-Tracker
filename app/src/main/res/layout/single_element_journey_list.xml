@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
+        android:contentDescription="@string/image_for_journey"
         app:srcCompat="@drawable/map" />
 
     <TextView
@@ -32,7 +33,7 @@
         android:id="@+id/txtDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@string/textview"
         android:layout_below="@+id/txtRoute"
-        android:layout_toEndOf="@+id/imgJourney"
-        android:text="@string/textview" />
+        android:layout_toEndOf="@+id/imgJourney" />
 </RelativeLayout>

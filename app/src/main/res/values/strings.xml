@@ -75,6 +75,7 @@
     <string name="edit_car">Edit Car</string>
     <string name="edit_route">Edit Route</string>
     <string name="edit_date">Edit Date</string>
-    <string name="edit_journey">Edit Journey</string>
+    <string name="edit_journeys">Edit Journeys</string>
+    <string name="image_for_journey">Image for Journey</string>
 
 </resources>

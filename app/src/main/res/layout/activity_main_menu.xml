@@ -35,5 +35,5 @@
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/btnCurrentFootprint"
         android:layout_centerVertical="true"
-        android:text="@string/edit_journey" />
+        android:text="@string/edit_journeys" />
 </RelativeLayout>

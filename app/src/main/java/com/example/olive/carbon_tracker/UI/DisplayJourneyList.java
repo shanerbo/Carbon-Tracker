@@ -50,18 +50,6 @@ public class DisplayJourneyList extends AppCompatActivity {
         });
     }
 
-    private void setTextView(int id, Journey journey) {
-        TextView textView = (TextView) findViewById(id);
-        String msg;
-        if (id == R.id.txtVehicle) {
-            msg = "Vehicle: " + journey.getVehicleName();
-        } else if (id == R.id.txtRoute) {
-            msg = "Route: " + journey.getRouteName();
-        } else {
-            msg = "Date: " + journey.getDateOfTrip();
-        }
-        textView.setText(msg);
-    }
 
     private void setImageView(View itemView, Journey journey) {
         ImageView imageView = (ImageView) itemView.findViewById(R.id.imgJourney);
@@ -82,9 +70,12 @@ public class DisplayJourneyList extends AppCompatActivity {
 
             Journey currJourney = JourneyList.get(position);
             setImageView(itemView, currJourney);
-            setTextView(R.id.txtVehicle, currJourney);
-            setTextView(R.id.txtRoute, currJourney);
-            setTextView(R.id.txtDate, currJourney);
+            TextView VehicleName = (TextView)itemView.findViewById(R.id.txtVehicle);
+            VehicleName.setText("Vehicle: " + currJourney.getVehicleName());
+            TextView RouteName = (TextView)itemView.findViewById(R.id.txtRoute);
+            RouteName.setText("Route: " + currJourney.getRouteName());
+            TextView DateName = (TextView)itemView.findViewById(R.id.txtDate);
+            DateName.setText("Date: " + currJourney.getDateOfTrip());
             return itemView;
         }
     }
