@@ -22,13 +22,12 @@ import java.util.List;
 
 public class DisplayJourneyList extends AppCompatActivity {
     private Singleton singleton = Singleton.getInstance();
-    private List<Journey> JourneyList = new ArrayList<Journey>();
+    private List<Journey> JourneyList = singleton.getUsersJourneys();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_journey_list);
-        JourneyList = singleton.getUsersJourneys();
         setListView();
     }
 
@@ -43,12 +42,13 @@ public class DisplayJourneyList extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //TODO: Establish a way to access a journey
                 Intent showActivity = new Intent(DisplayJourneyList.this, EditJourney.class);
+                showActivity.putExtra("Position", position);
                 startActivity(showActivity);
             }
         });
     }
-
 
     private void setTextView(int id, Journey journey) {
         TextView textView = (TextView) findViewById(id);

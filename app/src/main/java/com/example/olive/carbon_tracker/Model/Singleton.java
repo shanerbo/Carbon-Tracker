@@ -50,8 +50,9 @@ public class Singleton {
         journeyList.add(journey);
     }
 
-
-
+    public Journey getJourney(int position) {
+        return journeyList.get(position);
+    }
 
     public void setVehicleData(Context context) {
         vehicleData.ExtractVehicleData(context);
@@ -124,7 +125,6 @@ public class Singleton {
         return VehiclesList;
     }
 
-
     public List<String> updateModels(String vehicleMake) {
         List<String> vehicleModelArray = vehicleData.getModelsForAMake(vehicleMake);
         return vehicleModelArray;
@@ -173,17 +173,11 @@ public class Singleton {
         return make;
     }
 
-
-
-
-
     private void validateIndex(List list, int index) {
         if (index < 0 || index >= list.size()) {
             throw new IllegalArgumentException();
         }
     }
-
-
 
     //-----------------------------------Route's function-------------------------------------------
 
