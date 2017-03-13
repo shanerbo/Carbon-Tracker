@@ -38,10 +38,9 @@ public class AddCar extends AppCompatActivity {
     private VehicleData vehicleData = new VehicleData();
     private String VehicleNameToBeEdit;
 
-    //loading data from database
+
     private  List<String> carListDB;
-//    private DatabaseHelper myHelper = new DatabaseHelper(this);
-//    private SQLiteDatabase myDataBase = myHelper.openDataBase();
+
     public DatabaseHelper myHelper;
     private SQLiteDatabase myDataBase;
 
@@ -53,13 +52,13 @@ public class AddCar extends AppCompatActivity {
         setContentView(R.layout.activity_add_car);
         VehicleList = singleton.getVehicleList();
         make_list = singleton.getVehicleMakeArray();
-
+//------------create a new DatabaseHelper and it will copy external sql to local-------------------
         myHelper = new DatabaseHelper(this);
         myHelper.openDataBase();
         myHelper.close();
-
-
+//------------get local sql which is created by Helper---------------------------------------------
         myDataBase = SQLiteDatabase.openOrCreateDatabase(DatabaseHelper.DB_PATH + DatabaseHelper.DB_NAME,null);
+
         vehicleData = singleton.getVehicleData();
         if (singleton.checkEdit_car() ==1 ){
             position = singleton.getEditPosition_car();
