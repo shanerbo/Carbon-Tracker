@@ -40,8 +40,11 @@ public class AddCar extends AppCompatActivity {
 
     //loading data from database
     private  List<String> carListDB;
-    private DatabaseHelper myHelper = new DatabaseHelper(this);
-    private SQLiteDatabase myDataBase = myHelper.openDataBase();
+//    private DatabaseHelper myHelper = new DatabaseHelper(this);
+//    private SQLiteDatabase myDataBase = myHelper.openDataBase();
+    public DatabaseHelper myHelper;
+    private SQLiteDatabase myDataBase;
+
 //    myHelper.close()
 
     @Override
@@ -51,6 +54,12 @@ public class AddCar extends AppCompatActivity {
         VehicleList = singleton.getVehicleList();
         make_list = singleton.getVehicleMakeArray();
 
+        myHelper = new DatabaseHelper(this);
+        myHelper.openDataBase();
+        myHelper.close();
+
+
+        myDataBase = SQLiteDatabase.openOrCreateDatabase(DatabaseHelper.DB_PATH + DatabaseHelper.DB_NAME,null);
         vehicleData = singleton.getVehicleData();
         if (singleton.checkEdit_car() ==1 ){
             position = singleton.getEditPosition_car();

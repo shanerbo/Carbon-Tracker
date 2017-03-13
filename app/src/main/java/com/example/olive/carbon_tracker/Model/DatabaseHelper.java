@@ -17,8 +17,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private SQLiteDatabase myDataBase;
     private final Context myContext;
 
-    private static String DB_PATH = "/data/data/com.example.olive.carbon_tracker/databases/";
-    private static String DB_NAME = "allCarInfo.sqlite";
+    public static String DB_PATH = "/data/data/com.example.olive.carbon_tracker/databases/";
+    public static String DB_NAME = "allCarInfo.sqlite";
 
 
     public DatabaseHelper(Context context){
@@ -27,7 +27,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         this.createDataBase();
         boolean DBexist = checkDataBase();
         if (DBexist){
-            openDataBase();
+            //openDataBase();
         }else {
             System.out.println("DataBase does not exist");
             createDataBase();
