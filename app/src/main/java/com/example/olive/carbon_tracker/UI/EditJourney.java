@@ -108,6 +108,7 @@ public class EditJourney extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         Intent del_intent = new Intent();
                         JourneyList.remove(JourneyPosition);
+                        singleton.setJourneyList(JourneyList);
                         setResult(Activity.RESULT_OK, del_intent);
                         Toast.makeText(EditJourney.this,getString(R.string.UserDeleteVehicle),Toast.LENGTH_LONG).show();
                         finish();

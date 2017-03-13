@@ -50,6 +50,10 @@ String userDay = null;
         return journeyList;
     }
 
+    public void setJourneyList(List<Journey> JourneyList) {
+        this.journeyList = JourneyList;
+    }
+
     public void addUserJourney(Journey journey) {
         journeyList.add(journey);
     }
@@ -58,11 +62,11 @@ String userDay = null;
         return journeyList.get(position);
     }
 
-public boolean getIsDateChanged(){
+    public boolean getIsDateChanged(){
 
-    return isDateChanged;
+       return isDateChanged;
 
-}
+    }
 
     public void setIsDateChanged(boolean change){
 
