@@ -42,7 +42,6 @@ public class DisplayJourneyList extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //TODO: Establish a way to access a journey
                 Intent showActivity = new Intent(DisplayJourneyList.this, EditJourney.class);
                 showActivity.putExtra("Position", position);
                 startActivityForResult(showActivity, 0);

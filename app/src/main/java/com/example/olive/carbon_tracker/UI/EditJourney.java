@@ -31,17 +31,17 @@ public class EditJourney extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_journey);
-        setButton(R.id.btnEditVehicle);
-        setButton(R.id.btnEditRoute);
-        setButton(R.id.btnEditDate);
-        setFloatingActionButton(R.id.btnOkay);
-        setFloatingActionButton(R.id.btnDelete);
-        input = getIntent();
-        JourneyPosition = input.getIntExtra("Position", -1);
-        currJourney = singleton.getJourney(JourneyPosition);
-        setTextView(R.id.txtCurrentVehicle);
-        setTextView(R.id.txtCurrentRoute);
-        setTextView(R.id.txtCurrentDate);
+//        setButton(R.id.btnEditVehicle);
+//        setButton(R.id.btnEditRoute);
+//        setButton(R.id.btnEditDate);
+//        setFloatingActionButton(R.id.btnOkay);
+//        setFloatingActionButton(R.id.btnDelete);
+//        input = getIntent();
+//        JourneyPosition = input.getIntExtra("Position", -1);
+//        currJourney = singleton.getJourney(JourneyPosition);
+//        setTextView(R.id.txtCurrentVehicle);
+//        setTextView(R.id.txtCurrentRoute);
+//        setTextView(R.id.txtCurrentDate);
     }
 
     private void setButton(final int id) {
