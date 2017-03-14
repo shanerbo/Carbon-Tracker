@@ -26,16 +26,14 @@ import com.example.olive.carbon_tracker.Model.Singleton;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.olive.carbon_tracker.R.string.year;
-
 public class AddNewRoute extends AppCompatActivity {
     private List<Route> RouteList = new ArrayList<Route>();
-
     String currentRouteName;
     private int position;
     Singleton singleton  = Singleton.getInstance();
     Vehicle vehicle = singleton.getVehicle();
     String oldRouteName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,11 +52,29 @@ public class AddNewRoute extends AppCompatActivity {
             Name.setText(oldRouteName);
             cityDst.setText(""+Route_city_dis);
             hWayDst.setText(""+Route_hWay_dis);
-        }else{
+        } else if (singleton.checkEdit() == 2) {
+            editJourneyMode();
+        } else{
             position = singleton.getAddPosition();
         }
         checkButton(position);
         delButton(position);
+    }
+
+    private void editJourneyMode() {
+        position = singleton.getEditPosition();
+        Route RouteToBeEdited = RouteList.get(position);
+        oldRouteName = RouteToBeEdited.getName();
+        int Route_city_dis = RouteToBeEdited.getCityDistance();
+        int Route_hWay_dis = RouteToBeEdited.getHighwayDistance();
+        EditText Name = (EditText)findViewById(R.id.RouteNameInput);
+        EditText cityDst = (EditText)findViewById(R.id.CityDstInput);
+        EditText hWayDst = (EditText)findViewById(R.id.HwayDstInput);
+        Name.setText(oldRouteName);
+        cityDst.setText("" + Route_city_dis);
+        hWayDst.setText("" + Route_hWay_dis);
+        FloatingActionButton delete = (FloatingActionButton) findViewById(R.id.comfirm_delete);
+        delete.setVisibility(View.INVISIBLE);
     }
 
     private void checkButton(final int position) {
@@ -87,6 +103,10 @@ public class AddNewRoute extends AppCompatActivity {
                         singleton.UserEnterNewRouteName(newUserInputRouteName,oldRouteName);
                         Intent userEditRoute = DisplayRouteList.makeIntent(AddNewRoute.this);
                         startActivity(userEditRoute);
+                    } else if (singleton.checkEdit() == 2) {
+                        singleton.userFinishEdit();
+                        singleton.changeJourney(userInput);
+//                        calculateCO2(userInput);
                     } else {
                         RouteList.add(userInput);
                         singleton.setRouteList(RouteList);
@@ -101,7 +121,6 @@ public class AddNewRoute extends AppCompatActivity {
         });
     }
 
-    //
     private void delButton(final int position) {
         FloatingActionButton delete = (FloatingActionButton) findViewById(R.id.comfirm_delete);
         if (singleton.checkAdd() == 1){
@@ -212,15 +231,15 @@ public class AddNewRoute extends AppCompatActivity {
             finish();
         }
     }
+
     public int CalculateTotalDistance(int cityDst, int hwyDst){
         int totalDst = cityDst + hwyDst;
         return totalDst;
     }
+
     public static Intent makeIntent(Context context) {
         return new Intent(context, AddNewRoute.class);
     }
-
-
 
     private void createNewJourney(int cityDistance,int hwyDistance,double co2, int TransMode){
         String day =   singleton.getUserDay();

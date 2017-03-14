@@ -30,6 +30,7 @@ String userDay = null;
     private static int editVehicle;
     private static int editPosition;
     private static int editPosition_car;
+    private static int editJourneyPosition;
     private static int addRoute;
     private static int addVehicle;
     private static int deleteRoute;
@@ -44,22 +45,6 @@ String userDay = null;
 
     private Singleton() {
 
-    }
-
-    public List<Journey> getUsersJourneys() {
-        return journeyList;
-    }
-
-    public void setJourneyList(List<Journey> JourneyList) {
-        this.journeyList = JourneyList;
-    }
-
-    public void addUserJourney(Journey journey) {
-        journeyList.add(journey);
-    }
-
-    public Journey getJourney(int position) {
-        return journeyList.get(position);
     }
 
     public boolean getIsDateChanged(){
@@ -309,6 +294,53 @@ String userDay = null;
         TransportationMode = 3;
     }
 
+//-----------------------------------Journey functions-------------------------------------------
+    public List<Journey> getUsersJourneys() {
+        return journeyList;
+    }
 
+    public void setJourneyList(List<Journey> JourneyList) {
+        journeyList = JourneyList;
+    }
 
+    public void addUserJourney(Journey journey) {
+        journeyList.add(journey);
+    }
+
+    public Journey getJourney(int position) {
+        return journeyList.get(position);
+    }
+
+    public int getEditJourneyPosition() {
+        return editJourneyPosition;
+    }
+
+    public void setEditJourneyPosition(int position) {
+        editJourneyPosition = position;
+    }
+
+    public void userEditRouteFromJourney() {
+        editRoute = 2;
+    }
+
+    public void changeJourney(Vehicle newVehicle) {
+
+    }
+
+    public void changeJourney(Route newRoute) {
+        Journey oldJourney = getJourney(editJourneyPosition);
+        Journey newJourney = new Journey(
+                oldJourney.getDateOfTrip(),
+                newRoute.getName(),
+                newRoute.getTotalDistance(),
+                oldJourney.getVehicleName(),
+                oldJourney.getCarbonEmitted()
+        );
+        journeyList.remove(editJourneyPosition);
+        journeyList.add(editJourneyPosition, newJourney);
+    }
+
+    public void changeJourney(String newDateOfTrip) {
+
+    }
 }

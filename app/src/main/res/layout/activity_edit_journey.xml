@@ -11,12 +11,12 @@
         android:id="@+id/btnDelete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/btnEditDate"
-        android:layout_alignTop="@+id/btnOkay"
         android:clickable="true"
         app:backgroundTint="@android:color/holo_red_light"
         app:fabSize="normal"
-        app:srcCompat="@android:drawable/btn_dialog" />
+        app:srcCompat="@android:drawable/btn_dialog"
+        android:layout_alignTop="@+id/btnOkay"
+        android:layout_toStartOf="@+id/txtEditJourney" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/btnOkay"
@@ -47,9 +47,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:text="@string/edit_car"
+        android:text="@string/edit_vehicle"
         android:layout_below="@+id/txtEditJourney"
-        android:layout_toStartOf="@+id/txtEditJourney" />
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="21dp" />
 
     <Button
         android:id="@+id/btnEditRoute"
@@ -73,12 +74,12 @@
         android:id="@+id/txtCurrentVehicle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/btnEditRoute"
-        android:layout_alignEnd="@+id/btnOkay"
-        android:layout_marginBottom="14dp"
-        android:layout_marginEnd="39dp"
+        android:layout_marginEnd="16dp"
         android:text="@string/textview"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:layout_alignBaseline="@+id/btnEditVehicle"
+        android:layout_alignBottom="@+id/btnEditVehicle"
+        android:layout_alignEnd="@+id/btnOkay" />
 
     <TextView
         android:id="@+id/txtCurrentRoute"

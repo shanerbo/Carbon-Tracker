@@ -25,23 +25,21 @@ public class EditJourney extends AppCompatActivity {
     private List<Journey> JourneyList = singleton.getUsersJourneys();
     private Journey currJourney;
     private int JourneyPosition;
-    private Intent input;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_journey);
-//        setButton(R.id.btnEditVehicle);
-//        setButton(R.id.btnEditRoute);
-//        setButton(R.id.btnEditDate);
-//        setFloatingActionButton(R.id.btnOkay);
-//        setFloatingActionButton(R.id.btnDelete);
-//        input = getIntent();
-//        JourneyPosition = input.getIntExtra("Position", -1);
-//        currJourney = singleton.getJourney(JourneyPosition);
-//        setTextView(R.id.txtCurrentVehicle);
-//        setTextView(R.id.txtCurrentRoute);
-//        setTextView(R.id.txtCurrentDate);
+        setButton(R.id.btnEditVehicle);
+        setButton(R.id.btnEditRoute);
+        setButton(R.id.btnEditDate);
+        setFloatingActionButton(R.id.btnOkay);
+        setFloatingActionButton(R.id.btnDelete);
+        JourneyPosition = singleton.getEditJourneyPosition();
+        currJourney = singleton.getJourney(JourneyPosition);
+        setTextView(R.id.txtCurrentVehicle);
+        setTextView(R.id.txtCurrentRoute);
+        setTextView(R.id.txtCurrentDate);
     }
 
     private void setButton(final int id) {
@@ -51,10 +49,11 @@ public class EditJourney extends AppCompatActivity {
             public void onClick(View v) {
                 Intent showActivity = new Intent();
                 if (id == R.id.btnEditVehicle) {
-                    showActivity = AddCar.makeIntent(EditJourney.this);
+//                    showActivity = AddCar.makeIntent(EditJourney.this);
 
                 } else if (id == R.id.btnEditRoute) {
                     showActivity = AddNewRoute.makeIntent(EditJourney.this);
+                    singleton.userEditRouteFromJourney();
                 } else {
                     //TODO: Intent opens up the Calender Activity to change date
 //                    showActivity = ;
@@ -91,6 +90,7 @@ public class EditJourney extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (id == R.id.btnOkay) {
+                    singleton.setJourneyList(JourneyList);
                     finish();
                 } else {
                     setAlertDialog();
@@ -110,7 +110,7 @@ public class EditJourney extends AppCompatActivity {
                         JourneyList.remove(JourneyPosition);
                         singleton.setJourneyList(JourneyList);
                         setResult(Activity.RESULT_OK, del_intent);
-                        Toast.makeText(EditJourney.this,getString(R.string.UserDeleteVehicle),Toast.LENGTH_LONG).show();
+                        Toast.makeText(EditJourney.this, getString(R.string.UserDeleteVehicle), Toast.LENGTH_LONG).show();
                         finish();
                     }
                 })
