@@ -64,11 +64,8 @@ public class AddCar extends AppCompatActivity {
             position = singleton.getEditPosition_car();
             Vehicle VehicleToBeEdit = VehicleList.get(position);
             VehicleNameToBeEdit = VehicleToBeEdit.getName();
-
             EditText Name = (EditText) findViewById(R.id.ID_Car_Name);
             Name.setText(VehicleNameToBeEdit);
-
-
 
         }else{
             position = singleton.getAddPosition_car();
@@ -130,8 +127,6 @@ public class AddCar extends AppCompatActivity {
                 final String Make = parent.getSelectedItem().toString();
 
                 //List<String> model_list = singleton.updateModels(Make);
-
-
                 List<String> model_list = new ArrayList<>();
                 String model;
                 Cursor cursor = myDataBase.rawQuery("select distinct model from DB where make = ?order by model asc", new String[]{Make});

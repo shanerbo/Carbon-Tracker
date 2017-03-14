@@ -1,13 +1,11 @@
 package com.example.olive.carbon_tracker.Model;
 ////for reading database---mData.sqlite
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.provider.Settings;
 
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -18,7 +16,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private final Context myContext;
 
     public static String DB_PATH = "/data/data/com.example.olive.carbon_tracker/databases/";
-    public static String DB_NAME = "allCarInfo.sqlite";
+    public static String DB_NAME = "CarInfo.sqlite";
 
 
     public DatabaseHelper(Context context){
@@ -27,13 +25,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         this.getReadableDatabase();
         copyDataBase();
         //this.createDataBase();
-//        boolean DBexist = checkDataBase();
-//        if (DBexist){
-//            //openDataBase();
-//        }else {
-//            System.out.println("DataBase does not exist");
-//            createDataBase();
-//        }
+        boolean DBexist = checkDataBase();
+        if (DBexist){
+            //openDataBase();
+        }else {
+            System.out.println("DataBase does not exist");
+            createDataBase();
+        }
 
     }
 
@@ -75,38 +73,38 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
 
-//    public SQLiteDatabase openDataBase() throws SQLException{
-//        String myPath = DB_PATH+DB_NAME;
-//        myDataBase = SQLiteDatabase.openDatabase(myPath,null,SQLiteDatabase.OPEN_READWRITE);
-//        return myDataBase;
-//    }
+    public SQLiteDatabase openDataBase() throws SQLException{
+        String myPath = DB_PATH+DB_NAME;
+        myDataBase = SQLiteDatabase.openDatabase(myPath,null,SQLiteDatabase.OPEN_READWRITE);
+        return myDataBase;
+    }
 
-//    private boolean checkDataBase() {
-//        SQLiteDatabase checkDB = null;
-//        try{
-//            String myPath = DB_PATH+DB_NAME;
-//            checkDB = SQLiteDatabase.openDatabase(myPath,null, SQLiteDatabase.OPEN_READONLY);
-//        }catch (SQLiteException e){
-//
-//        }
-//
-//        if (checkDB != null){
-//            checkDB.close();
-//        }
-//        return checkDB !=null ? true:false;
-//    }
+    private boolean checkDataBase() {
+        SQLiteDatabase checkDB = null;
+        try{
+            String myPath = DB_PATH+DB_NAME;
+            checkDB = SQLiteDatabase.openDatabase(myPath,null, SQLiteDatabase.OPEN_READONLY);
+        }catch (SQLiteException e){
 
-//    public void createDataBase() {
-//        try{
-//            boolean DBexist = checkDataBase();
-//            if (DBexist){
-//
-//            }else{
-//                this.getReadableDatabase();
-//                copyDataBase();
-//            }
-//        }catch (Exception e){
-//
-//        }
-//    }
+        }
+
+        if (checkDB != null){
+            checkDB.close();
+        }
+        return checkDB !=null ? true:false;
+    }
+
+    public void createDataBase() {
+        try{
+            boolean DBexist = checkDataBase();
+            if (DBexist){
+
+            }else{
+                this.getReadableDatabase();
+                copyDataBase();
+            }
+        }catch (Exception e){
+
+        }
+    }
 }
