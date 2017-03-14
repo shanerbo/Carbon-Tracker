@@ -27,18 +27,15 @@ public class Calendar extends AppCompatActivity {
     private void  getUsersDataPick(){
         CalendarView view = new CalendarView(this);
         setContentView(view);
-        Toast.makeText(getApplicationContext(),"date has been changed: " + singleton.getIsDateChanged(),Toast.LENGTH_SHORT).show();
         view.setOnDateChangeListener(new OnDateChangeListener() {
 
             @Override
             public void onSelectedDayChange(CalendarView arg0, int year, int month,
                                             int date) {
-
                 singleton.setUserDay("" +date);
                 singleton.setUserMonth(getStringMonth(month));
                 singleton.setUserYear("" + year);
                 singleton.setIsDateChanged(true);
-                Toast.makeText(getApplicationContext(),"date has been changed: " + singleton.getIsDateChanged(),Toast.LENGTH_SHORT).show();
             }
         });
     }

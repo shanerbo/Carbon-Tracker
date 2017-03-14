@@ -32,8 +32,10 @@
         <activity android:name=".UI.Chart" />
         <activity android:name=".UI.SelectTransportationModeAndDate" />
         <activity android:name=".UI.EditJourney" />
-        <activity android:name=".UI.DisplayJourneyList"></activity>
-        <activity android:name=".UI.Calendar"></activity>
+        <activity android:name=".UI.DisplayJourneyList" />
+        <activity android:name=".UI.Calendar" />
+        <activity android:name=".UI.GraphPicker" />
+        <activity android:name=".UI.SingleDayGraph"></activity>
     </application>
 
 </manifest>

@@ -77,5 +77,6 @@
     <string name="edit_date">Edit Date</string>
     <string name="edit_journeys">Edit Journeys</string>
     <string name="image_for_journey">Image for Journey</string>
+    <string name="graphs">Graphs</string>
 
 </resources>
