@@ -105,7 +105,7 @@ public class AddNewRoute extends AppCompatActivity {
                         Intent userEditRoute = DisplayRouteList.makeIntent(AddNewRoute.this);
                         startActivity(userEditRoute);
                     } else if (singleton.checkEdit() == 2) {
-                        singleton.userFinishEdit();
+                        //TODO: correctly update information
                         calculateCO2(userInput);
                         singleton.changeJourney(userInput, totalCO2);
                     } else {
