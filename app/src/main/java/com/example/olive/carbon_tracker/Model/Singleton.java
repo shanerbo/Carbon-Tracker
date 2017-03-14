@@ -327,14 +327,14 @@ String userDay = null;
 
     }
 
-    public void changeJourney(Route newRoute) {
+    public void changeJourney(Route newRoute, double newCarbonEmissions) {
         Journey oldJourney = getJourney(editJourneyPosition);
         Journey newJourney = new Journey(
                 oldJourney.getDateOfTrip(),
                 newRoute.getName(),
                 newRoute.getTotalDistance(),
                 oldJourney.getVehicleName(),
-                oldJourney.getCarbonEmitted()
+                newCarbonEmissions
         );
         journeyList.remove(editJourneyPosition);
         journeyList.add(editJourneyPosition, newJourney);

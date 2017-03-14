@@ -54,6 +54,7 @@ public class EditJourney extends AppCompatActivity {
                 } else if (id == R.id.btnEditRoute) {
                     showActivity = AddNewRoute.makeIntent(EditJourney.this);
                     singleton.userEditRouteFromJourney();
+                    setTransportMode();
                 } else {
                     //TODO: Intent opens up the Calender Activity to change date
 //                    showActivity = ;
@@ -61,6 +62,10 @@ public class EditJourney extends AppCompatActivity {
                 startActivityForResult(showActivity, 0);
             }
         });
+    }
+
+    private void setTransportMode() {
+
     }
 
     @Override

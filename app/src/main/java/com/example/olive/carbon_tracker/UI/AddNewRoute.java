@@ -33,6 +33,7 @@ public class AddNewRoute extends AppCompatActivity {
     Singleton singleton  = Singleton.getInstance();
     Vehicle vehicle = singleton.getVehicle();
     String oldRouteName;
+    private double totalCO2 = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,8 +106,8 @@ public class AddNewRoute extends AppCompatActivity {
                         startActivity(userEditRoute);
                     } else if (singleton.checkEdit() == 2) {
                         singleton.userFinishEdit();
-                        singleton.changeJourney(userInput);
-//                        calculateCO2(userInput);
+                        calculateCO2(userInput);
+                        singleton.changeJourney(userInput, totalCO2);
                     } else {
                         RouteList.add(userInput);
                         singleton.setRouteList(RouteList);
@@ -170,39 +171,20 @@ public class AddNewRoute extends AppCompatActivity {
     public void calculateCO2(Route userInput){
         int cityDistance = userInput.getCityDistance();
         int HwyDistance = userInput.getHighwayDistance();
+        int TransportMode = singleton.checkTransportationMode();
 
-        if(singleton.checkTransportationMode() == 1) { // Walk/Bike
-            double totalCO2 = 0;
+        if(TransportMode == 1) { // Walk/Bike
             String TotalCO2 = String.format("%.2f", totalCO2);
             Toast.makeText(getApplicationContext(), "You have produced: "+ TotalCO2 +"kg of CO2", Toast.LENGTH_SHORT).show();
-
-            createNewJourney(cityDistance,HwyDistance,totalCO2, 1);
-            Intent ConfirmRoute = MainMenu.makeIntent(AddNewRoute.this);
-            startActivity(ConfirmRoute);
-            finish();
-        }
-        else if(singleton.checkTransportationMode() == 2){ //Bus
-            double totalCO2 = (cityDistance+HwyDistance)*0.089;
+        } else if(TransportMode == 2){ //Bus
+            totalCO2 = (cityDistance+HwyDistance)*0.089;
             String TotalCO2 = String.format("%.2f", totalCO2);
             Toast.makeText(getApplicationContext(), "You have produced: "+ TotalCO2 +"kg of CO2", Toast.LENGTH_SHORT).show();
-
-            createNewJourney(cityDistance,HwyDistance,totalCO2, 2);
-            Intent ConfirmRoute = MainMenu.makeIntent(AddNewRoute.this);
-            startActivity(ConfirmRoute);
-            finish();
-        }
-        else if(singleton.checkTransportationMode() == 3){ //Skytrain
-            double totalCO2 = (cityDistance+HwyDistance)*0.033;
+        } else if(TransportMode == 3){ //Skytrain
+            totalCO2 = (cityDistance+HwyDistance)*0.033;
             String TotalCO2 = String.format("%.2f", totalCO2);
             Toast.makeText(getApplicationContext(), "You have produced: "+ TotalCO2 +"kg of CO2", Toast.LENGTH_SHORT).show();
-
-            createNewJourney(cityDistance,HwyDistance,totalCO2, 3);
-            Intent ConfirmRoute = MainMenu.makeIntent(AddNewRoute.this);
-            startActivity(ConfirmRoute);
-            finish();
-        }
-
-        else {
+        } else {
             singleton.getVehicle().setCityDistance(cityDistance);
             singleton.getVehicle().setHwyDistance(HwyDistance);
 
@@ -220,15 +202,15 @@ public class AddNewRoute extends AppCompatActivity {
             double cityGas = (cityDistance * 0.621371192 / cityConsume);
             double hwyGas = HwyDistance * 0.621371192 / HwyConsume;
             double totalGas = cityGas + hwyGas;
-            double totalCO2 = fuelCost * totalGas;
+            totalCO2 = fuelCost * totalGas;
             String TotalCO2 = String.format("%.2f", totalCO2);
             Toast.makeText(getApplicationContext(), "The CO2 you produced: " + TotalCO2, Toast.LENGTH_SHORT).show();
+        }
 
-            createNewJourney(cityDistance, HwyDistance, totalCO2, 0);
-
+        if (singleton.checkEdit() != 2) {
+            createNewJourney(cityDistance,HwyDistance,totalCO2, TransportMode);
             Intent ConfirmRoute = MainMenu.makeIntent(AddNewRoute.this);
             startActivity(ConfirmRoute);
-            finish();
         }
     }
 
