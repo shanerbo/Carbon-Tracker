@@ -1,6 +1,8 @@
 package com.example.olive.carbon_tracker.Model;
 
 
+import com.example.olive.carbon_tracker.R;
+
 public class Journey {
 
     private String dateOfTrip;
@@ -8,6 +10,7 @@ public class Journey {
     private int totalDistance;
     private String vehicleName;
     private double carbonEmitted;
+    private int iconID = R.drawable.map;
 
 
     public Journey(String dateOfTrip, String routeName, int totalDistance, String vehicleName, double carbonEmitted) {
@@ -56,5 +59,9 @@ public class Journey {
 
     public void setCarbonEmitted(double carbonEmitted) {
         this.carbonEmitted = carbonEmitted;
+    }
+
+    public int getIconID() {
+        return iconID;
     }
 }

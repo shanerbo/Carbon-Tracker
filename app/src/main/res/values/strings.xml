@@ -70,5 +70,12 @@
     <string name="model">Model</string>
     <string name="year">Year</string>
     <string name="select_a_transportation_mode">Select a transportation mode</string>
+    <string name="textview">TextView</string>
+    <string name="editing_journey">Editing Journey</string>
+    <string name="edit_car">Edit Car</string>
+    <string name="edit_route">Edit Route</string>
+    <string name="edit_date">Edit Date</string>
+    <string name="edit_journeys">Edit Journeys</string>
+    <string name="image_for_journey">Image for Journey</string>
 
 </resources>

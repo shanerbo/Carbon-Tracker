@@ -50,16 +50,23 @@ String userDay = null;
         return journeyList;
     }
 
+    public void setJourneyList(List<Journey> JourneyList) {
+        this.journeyList = JourneyList;
+    }
+
     public void addUserJourney(Journey journey) {
         journeyList.add(journey);
     }
 
+    public Journey getJourney(int position) {
+        return journeyList.get(position);
+    }
 
-public boolean getIsDateChanged(){
+    public boolean getIsDateChanged(){
 
-    return isDateChanged;
+       return isDateChanged;
 
-}
+    }
 
     public void setIsDateChanged(boolean change){
 
@@ -138,7 +145,6 @@ public boolean getIsDateChanged(){
         return VehiclesList;
     }
 
-
     public List<String> updateModels(String vehicleMake) {
         List<String> vehicleModelArray = vehicleData.getModelsForAMake(vehicleMake);
         return vehicleModelArray;
@@ -187,11 +193,7 @@ public boolean getIsDateChanged(){
         return make;
     }
 
-
-
-
-
-    private void validateIndex(List list, int index) {
+   private void validateIndex(List list, int index) {
         if (index < 0 || index >= list.size()) {
             throw new IllegalArgumentException();
         }
