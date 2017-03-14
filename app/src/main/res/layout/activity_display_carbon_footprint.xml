@@ -12,17 +12,17 @@
     tools:context="com.example.olive.carbon_tracker.UI.DisplayCarbonFootprint">
 
 
-
     <Button
-        android:text="@string/pie_chart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/btn_PieChart"
         style="@style/Widget.AppCompat.Button.Borderless"
-        android:textStyle="normal|bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:layout_weight="1"
+        android:text="@string/graphs"
         android:textSize="10sp"
-        android:layout_alignParentTop="true" />
+        android:textStyle="normal|bold" />
 
     <ScrollView
         android:id="@+id/scrollView"
