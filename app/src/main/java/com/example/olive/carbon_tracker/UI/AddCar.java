@@ -317,6 +317,9 @@ public class AddCar extends AppCompatActivity {
                             cv.put(SuperUltraInfoDataBaseHelper.Car_City_08,city);
                             cv.put(SuperUltraInfoDataBaseHelper.Car_Hwy_08,highWay);
                             cv.put(SuperUltraInfoDataBaseHelper.Car_FuelType,fuelType);
+                            cv.put(SuperUltraInfoDataBaseHelper.Car_displ,Double.parseDouble(displ));
+                            cv.put(SuperUltraInfoDataBaseHelper.Car_Trany,trany);
+                            cv.put(SuperUltraInfoDataBaseHelper.Car_Drive,drive);
 
                             long idPassedBack = CarDB.insert(SuperUltraInfoDataBaseHelper.Car_Table,null,cv);
                             CarDB.close();

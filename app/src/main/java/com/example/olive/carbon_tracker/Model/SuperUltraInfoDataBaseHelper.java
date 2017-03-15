@@ -1,5 +1,6 @@
 package com.example.olive.carbon_tracker.Model;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -18,7 +19,9 @@ public class SuperUltraInfoDataBaseHelper extends SQLiteOpenHelper {
     public static String Car_City_08 = "CarCity08";
     public static String Car_Hwy_08 = "CarHwy08";
     public static String Car_FuelType = "CarFuelType";
-
+    public static String Car_displ = "CarDispl";
+    public static String Car_Trany = "CarTrany";
+    public static String Car_Drive = "CarDrive";
 
 
 
@@ -46,12 +49,15 @@ public class SuperUltraInfoDataBaseHelper extends SQLiteOpenHelper {
                 + Car_Year + " integer,"
                 + Car_City_08 + " real,"
                 + Car_Hwy_08 + " real,"
-                + Car_FuelType + " text"
+                + Car_FuelType + " text,"
+                + Car_displ + " real,"
+                + Car_Trany + " text,"
+                + Car_Drive + " text"
                 + ");";
 
         CarDB.execSQL(createCarDB);
 
-        String createRouteDB = "create table if not exists" + Route_Table
+        String createRouteDB = "create table if not exists " + Route_Table
                 + "("
                 + Route_Id + " integer primary key autoincrement not null,"
                 + Route_Name + " text not null,"
@@ -62,6 +68,8 @@ public class SuperUltraInfoDataBaseHelper extends SQLiteOpenHelper {
 
         CarDB.execSQL(createRouteDB);
     }
+
+
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
