@@ -1,9 +1,11 @@
 package com.example.olive.carbon_tracker.UI;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +20,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 import com.example.olive.carbon_tracker.Model.Journey;
+import com.example.olive.carbon_tracker.Model.SuperUltraInfoDataBaseHelper;
 import com.example.olive.carbon_tracker.Model.Vehicle;
 import com.example.olive.carbon_tracker.R;
 import com.example.olive.carbon_tracker.Model.Route;
@@ -25,8 +28,6 @@ import com.example.olive.carbon_tracker.Model.Singleton;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.example.olive.carbon_tracker.R.string.year;
 
 public class AddNewRoute extends AppCompatActivity {
     private List<Route> RouteList = new ArrayList<Route>();
@@ -36,9 +37,14 @@ public class AddNewRoute extends AppCompatActivity {
     Singleton singleton  = Singleton.getInstance();
     Vehicle vehicle = singleton.getVehicle();
     String oldRouteName;
+    private SQLiteDatabase RouteDB;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        SuperUltraInfoDataBaseHelper RouteDBhelper = new SuperUltraInfoDataBaseHelper(this);
+        RouteDB = RouteDBhelper.getWritableDatabase();
+
         getSupportActionBar().hide();
         setContentView(R.layout.activity_add_new_route);
         RouteList = singleton.getRouteList();
@@ -59,6 +65,13 @@ public class AddNewRoute extends AppCompatActivity {
         }
         checkButton(position);
         delButton(position);
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        RouteDB.close();
     }
 
     private void checkButton(final int position) {
@@ -89,6 +102,14 @@ public class AddNewRoute extends AppCompatActivity {
                         startActivity(userEditRoute);
                     } else {
                         RouteList.add(userInput);
+
+                        ContentValues cv = new ContentValues();
+                        cv.put(SuperUltraInfoDataBaseHelper.Route_Name,name);
+                        cv.put(SuperUltraInfoDataBaseHelper.Route_City_Dst,cityDst);
+                        cv.put(SuperUltraInfoDataBaseHelper.Route_HWY_Dst,highWayDst);
+                        cv.put(SuperUltraInfoDataBaseHelper.Route_total_Dst,totalDst);
+                        long idPassedBack = RouteDB.insert(SuperUltraInfoDataBaseHelper.Route_Table,null,cv);
+                        RouteDB.close();
                         singleton.setRouteList(RouteList);
                         singleton.userFinishAdd();
                         calculateCO2(userInput);
@@ -187,8 +208,8 @@ public class AddNewRoute extends AppCompatActivity {
             singleton.getVehicle().setCityDistance(cityDistance);
             singleton.getVehicle().setHwyDistance(HwyDistance);
 
-            int cityConsume = singleton.getVehicle().getCity08();
-            int HwyConsume = singleton.getVehicle().getHighway08();
+            double cityConsume = singleton.getVehicle().getCity08();
+            double HwyConsume = singleton.getVehicle().getHighway08();
             String fuelType = singleton.getVehicle().getFuelType();
             double fuelCost;
             if (fuelType.toLowerCase().matches("diesel")) {

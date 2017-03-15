@@ -14,7 +14,6 @@ import java.io.OutputStream;
 public class DatabaseHelper extends SQLiteOpenHelper {
     private SQLiteDatabase myDataBase;
     private final Context myContext;
-
     public static String DB_PATH = "/data/data/com.example.olive.carbon_tracker/databases/";
     public static String DB_NAME = "CarInfo.sqlite";
 
@@ -22,9 +21,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public DatabaseHelper(Context context){
         super(context,DB_NAME,null,1);
         this.myContext = context;
-        this.getReadableDatabase();
-        copyDataBase();
-        //this.createDataBase();
         boolean DBexist = checkDataBase();
         if (DBexist){
             //openDataBase();
@@ -73,10 +69,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
 
-    public SQLiteDatabase openDataBase() throws SQLException{
+    public void openDataBase() throws SQLException{
         String myPath = DB_PATH+DB_NAME;
         myDataBase = SQLiteDatabase.openDatabase(myPath,null,SQLiteDatabase.OPEN_READWRITE);
-        return myDataBase;
+//        return myDataBase;
     }
 
     private boolean checkDataBase() {

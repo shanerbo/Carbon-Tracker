@@ -28,14 +28,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static com.example.olive.carbon_tracker.R.string.year;
-
 public class DisplayRouteList extends AppCompatActivity {
     private List<Route> RouteList = new ArrayList<Route>();
     Singleton singleton  = Singleton.getInstance();
     String currentRouteName;
     Vehicle vehicle = singleton.getVehicle();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -166,8 +163,8 @@ public class DisplayRouteList extends AppCompatActivity {
             singleton.getVehicle().setCityDistance(cityDistance);
             singleton.getVehicle().setHwyDistance(HwyDistance);
 
-            int cityConsume = singleton.getVehicle().getCity08();
-            int HwyConsume = singleton.getVehicle().getHighway08();
+            double cityConsume = singleton.getVehicle().getCity08();
+            double HwyConsume = singleton.getVehicle().getHighway08();
             String fuelType = singleton.getVehicle().getFuelType();
             double fuelCost;
             if (fuelType.toLowerCase().matches("diesel")) {
@@ -213,7 +210,7 @@ public class DisplayRouteList extends AppCompatActivity {
         simpleDateFormat = new SimpleDateFormat("MMMM");
        // System.out.println("MONTH "+simpleDateFormat.format(date).toUpperCase());
 
-        simpleDateFormat = new SimpleDateFormat("YYYY");
+        simpleDateFormat = new SimpleDateFormat("yyyy");
      //   System.out.println("YEAR "+simpleDateFormat.format(date).toUpperCase());
 
         String day =   singleton.getUserDay();

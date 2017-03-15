@@ -57,7 +57,7 @@ public class SelectTransportationModeAndDate extends AppCompatActivity {
             simpleDateFormat = new SimpleDateFormat("MMMM");
             String month = simpleDateFormat.format(date);
 
-            simpleDateFormat = new SimpleDateFormat("YYYY");
+            simpleDateFormat = new SimpleDateFormat("yyyy");
             String year = simpleDateFormat.format(date);
             singleton.setUserDay(day);
             singleton.setUserMonth(month);
