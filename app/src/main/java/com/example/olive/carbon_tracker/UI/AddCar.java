@@ -1,13 +1,12 @@
 package com.example.olive.carbon_tracker.UI;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.provider.ContactsContract;
-import android.support.annotation.IntegerRes;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -19,12 +18,13 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+
 import com.example.olive.carbon_tracker.Model.DatabaseHelper;
 import com.example.olive.carbon_tracker.Model.Singleton;
+import com.example.olive.carbon_tracker.Model.SuperUltraInfoDataBaseHelper;
 import com.example.olive.carbon_tracker.Model.Vehicle;
 import com.example.olive.carbon_tracker.R;
 import com.example.olive.carbon_tracker.Model.VehicleData;
-import com.github.mikephil.charting.exception.DrawingDataSetNotCreatedException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +43,7 @@ public class AddCar extends AppCompatActivity {
 
     public DatabaseHelper myHelper;
     private SQLiteDatabase myDataBase;
+    private SQLiteDatabase CarDB;
 
 //    myHelper.close()
 
@@ -58,6 +59,10 @@ public class AddCar extends AppCompatActivity {
         myHelper.close();
 //------------get local sql which is created by Helper---------------------------------------------
         myDataBase = SQLiteDatabase.openOrCreateDatabase(DatabaseHelper.DB_PATH + DatabaseHelper.DB_NAME,null);
+
+        SuperUltraInfoDataBaseHelper CarDBhelper = new SuperUltraInfoDataBaseHelper(this);
+        CarDB = CarDBhelper.getWritableDatabase();
+
 
         vehicleData = singleton.getVehicleData();
         if (singleton.checkEdit_car() ==1 ){
@@ -274,11 +279,12 @@ public class AddCar extends AppCompatActivity {
                     }
 
                     cursor.close();
+                    myDataBase.close();
                     String firstCityHighway = city08_highway_08.get(0);
                     String[] splitCityHighway = firstCityHighway.split(",");
 
-                    int city = Integer.parseInt(splitCityHighway[0]);
-                    int highWay = Integer.parseInt(splitCityHighway[1]);
+                    double city = Double.parseDouble(splitCityHighway[0]);
+                    double highWay = Double.parseDouble(splitCityHighway[1]);
                     String fuelType = splitCityHighway[2];
                     int CarYearFromString = Integer.parseInt(CarYear);
 //                    int city = singleton.getCityData(CityAndHighway);
@@ -303,6 +309,20 @@ public class AddCar extends AppCompatActivity {
 
                             singleton.setUserPickVehicleItem(userInput);
 
+                            ContentValues cv = new ContentValues();
+                            cv.put(SuperUltraInfoDataBaseHelper.Car_Name,CarName);
+                            cv.put(SuperUltraInfoDataBaseHelper.Car_Make,CarMake);
+                            cv.put(SuperUltraInfoDataBaseHelper.Car_Model,CarModel);
+                            cv.put(SuperUltraInfoDataBaseHelper.Car_Year,CarYear);
+                            cv.put(SuperUltraInfoDataBaseHelper.Car_City_08,city);
+                            cv.put(SuperUltraInfoDataBaseHelper.Car_Hwy_08,highWay);
+                            cv.put(SuperUltraInfoDataBaseHelper.Car_FuelType,fuelType);
+                            cv.put(SuperUltraInfoDataBaseHelper.Car_displ,Double.parseDouble(displ));
+                            cv.put(SuperUltraInfoDataBaseHelper.Car_Trany,trany);
+                            cv.put(SuperUltraInfoDataBaseHelper.Car_Drive,drive);
+
+                            long idPassedBack = CarDB.insert(SuperUltraInfoDataBaseHelper.Car_Table,null,cv);
+                            CarDB.close();
                             singleton.userFinishAdd_car();
                             Intent userCreateCar = DisplayRouteList.makeIntent(AddCar.this);
                             startActivity(userCreateCar);

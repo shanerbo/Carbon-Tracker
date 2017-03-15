@@ -2,6 +2,7 @@ package com.example.olive.carbon_tracker.Model;
 
 
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,10 +16,12 @@ public class Singleton {
     private List<String> getVehicleMakeArray = new ArrayList<>();
     private List<String> vehicleModelArray = new ArrayList<>();
 
-String userDay = null;
+    String userDay = null;
     String userMonth = null;
     String userYear = null;
     boolean isDateChanged = false;
+
+    SQLiteDatabase CarInfoDB;
 
 
 
@@ -310,5 +313,11 @@ String userDay = null;
     }
 
 
+    public void setCarInfoDb(SQLiteDatabase db) {
+        CarInfoDB = db;
+    }
 
+    public SQLiteDatabase getCarInfoDb() {
+        return CarInfoDB;
+    }
 }
