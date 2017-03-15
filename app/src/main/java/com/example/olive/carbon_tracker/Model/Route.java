@@ -10,11 +10,23 @@ public class Route {
     private int TotalDistance;
     private int iconId = R.drawable.routesign;
 
-    public Route(String name, int cityDistance, int highwayDistance, int totalDistance) {
+    public void setRouteDBId(long routeDBId) {
+        RouteDBId = routeDBId;
+    }
+
+    public long getRouteDBId() {
+        return RouteDBId;
+    }
+
+    private long RouteDBId;
+
+    public Route(String name, int cityDistance, int highwayDistance, int totalDistance,long routeDBId) {
         setName(name);
         setCityDistance(cityDistance);
         setHighwayDistance(highwayDistance);
         setTotalDistance(totalDistance);
+        setRouteDBId(routeDBId);
+
     }
 
     public String getName() {

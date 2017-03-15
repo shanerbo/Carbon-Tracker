@@ -31,8 +31,8 @@ public class Singleton {
 
     private static int editRoute;
     private static int editVehicle;
-    private static int editPosition;
-    private static int editPosition_car;
+    private static Long editPosition_Route;
+    private static long editPosition_car;
     private static int addRoute;
     private static int addVehicle;
     private static int deleteRoute;
@@ -103,11 +103,11 @@ public class Singleton {
 //    }
 
 
-    public void setEditPosition_car(int Position) {
+    public void setEditPosition_car(long Position) {
         editPosition_car = Position;
     }
 
-    public int getEditPosition_car() {
+    public long getEditPosition_car() {
         return editPosition_car;
     }
 
@@ -240,8 +240,8 @@ public class Singleton {
         return editRoute;
     }
 
-    public void setEditPosition(int Position) {
-        editPosition = Position;
+    public void setEditPosition_Route(long Position) {
+        editPosition_Route = Position;
     }
 
     public int getAddPosition() {
@@ -249,8 +249,8 @@ public class Singleton {
         return position;
     }
 
-    public int getEditPosition() {
-        return editPosition;
+    public long getEditPosition_Route() {
+        return editPosition_Route;
     }
 
     public void userEditRoute() {
