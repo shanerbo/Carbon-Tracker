@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -27,6 +28,8 @@ public class DisplayJourneyList extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_display_journey_list);
         setListView();
     }
@@ -75,7 +78,7 @@ public class DisplayJourneyList extends AppCompatActivity {
     }
 
     private class myArrayAdapter extends ArrayAdapter<Journey> {
-        public myArrayAdapter(){
+        private myArrayAdapter(){
             super(DisplayJourneyList.this, R.layout.single_element_journey_list, JourneyList);
         }
 

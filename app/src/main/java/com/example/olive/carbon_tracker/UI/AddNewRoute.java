@@ -12,6 +12,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -43,6 +44,8 @@ public class AddNewRoute extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
 
         SuperUltraInfoDataBaseHelper RouteDBhelper = new SuperUltraInfoDataBaseHelper(this);
         RouteDB = RouteDBhelper.getWritableDatabase();
@@ -71,6 +74,7 @@ public class AddNewRoute extends AppCompatActivity {
                 cursor.moveToNext();
             }
             cursor.close();
+            RouteDB.close();
             Route RouteToBeEdit = new Route(RouteName,CityDistance,HwyDistance,TotalDistance,_id);
             _RouteToBeEdit = RouteToBeEdit;
 
@@ -176,6 +180,7 @@ public class AddNewRoute extends AppCompatActivity {
                                         "_id"+"="+position,null);
                                 //RouteList.remove(position);
                                 //singleton.setRouteList(RouteList);
+                                RouteDB.close();
                                 singleton.userFinishEdit();
                                 setResult(Activity.RESULT_OK,del_intent);
                                 Toast.makeText(AddNewRoute.this,getString(R.string.UserDeleteRoute),Toast.LENGTH_LONG).show();
@@ -199,8 +204,8 @@ public class AddNewRoute extends AppCompatActivity {
     public void onBackPressed() {
         singleton.userFinishEdit();
         singleton.userFinishAdd();
-//        Intent goBackToDisplayRoute = DisplayRouteList.makeIntent(AddNewRoute.this);
-//        startActivity(goBackToDisplayRoute);
+        Intent goBackToDisplayRoute = DisplayRouteList.makeIntent(AddNewRoute.this);
+        startActivity(goBackToDisplayRoute);
         finish();
     }
 

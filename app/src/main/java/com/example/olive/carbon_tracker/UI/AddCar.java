@@ -12,6 +12,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -51,6 +52,8 @@ public class AddCar extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_add_car);
 //        VehicleList = singleton.getVehicleList();
 //        make_list = singleton.getVehicleMakeArray();
@@ -344,7 +347,7 @@ public class AddCar extends AppCompatActivity {
                             cv.put(SuperUltraInfoDataBaseHelper.Car_Drive,drive);
 
                             long idPassBack = CarDB.update(SuperUltraInfoDataBaseHelper.Car_Table, cv, "_id="+DBID, null);
-
+                            CarDB.close();
 //                            singleton.setVehiclesList(VehicleList);
                             singleton.userFinishEdit_car();
                             //String userInputNewCarName = userInput.getName();
@@ -406,11 +409,14 @@ public class AddCar extends AppCompatActivity {
                                 Intent del_intent = new Intent();
                                 CarDB.delete(SuperUltraInfoDataBaseHelper.Car_Table,
                                         "  _id" + "="+position,null);
+                                CarDB.close();
                                 //VehicleList.remove(position);
                                 //singleton.setVehiclesList(VehicleList);
                                 singleton.userFinishEdit_car();
                                 setResult(Activity.RESULT_OK,del_intent);
                                 Toast.makeText(AddCar.this,getString(R.string.UserDeleteVehicle),Toast.LENGTH_LONG).show();
+                                Intent goBackToDisplayCar = DisplayCarList.makeIntent(AddCar.this);
+                                startActivity(goBackToDisplayCar);
                                 finish();
                             }
                         })
@@ -419,6 +425,8 @@ public class AddCar extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.cancel();
                                 singleton.userFinishEdit_car();
+                                Intent goBackToDisplayCar = DisplayCarList.makeIntent(AddCar.this);
+                                startActivity(goBackToDisplayCar);
                                 finish();
                             }
                         })
@@ -429,8 +437,8 @@ public class AddCar extends AppCompatActivity {
     public void onBackPressed() {
         singleton.userFinishEdit_car();
         singleton.userFinishAdd_car();
-//        Intent goBackToDisplayCar = DisplayCarList.makeIntent(AddCar.this);
-//        startActivity(goBackToDisplayCar);
+        Intent goBackToDisplayCar = DisplayCarList.makeIntent(AddCar.this);
+        startActivity(goBackToDisplayCar);
         finish();
     }
 

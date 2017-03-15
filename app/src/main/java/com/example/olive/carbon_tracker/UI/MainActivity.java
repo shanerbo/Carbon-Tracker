@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
         setContentView(R.layout.activity_main);
-
+//------DataBase starup-----------------------
         myHelper = new DatabaseHelper(this);
         SQLiteDatabase myDataBase = SQLiteDatabase.openOrCreateDatabase(DatabaseHelper.DB_PATH + DatabaseHelper.DB_NAME,null);
         myDataBase.close();
@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         SQLiteDatabase createTable =TableHelper.getWritableDatabase();
         createTable.close();
         TableHelper.close();
-
+//------database done-------------------------
 
         new Handler().postDelayed(new Runnable() {
             @Override

@@ -15,8 +15,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".UI.MainMenu" />
-        <activity android:name=".UI.DisplayCarbonFootprint" />
+        <activity android:name=".UI.MainMenu"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".UI.DisplayCarbonFootprint"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".UI.DisplayRouteList"
             android:label="@string/title_activity_display_route_list"
@@ -30,11 +32,16 @@
             android:label="@string/title_activity_display_car_list"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".UI.Chart" />
-        <activity android:name=".UI.SelectTransportationModeAndDate" />
-        <activity android:name=".UI.EditJourney" />
-        <activity android:name=".UI.DisplayJourneyList" />
-        <activity android:name=".UI.Calendar" />
-        <activity android:name=".UI.GraphPicker" />
+        <activity android:name=".UI.SelectTransportationModeAndDate"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".UI.EditJourney"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".UI.DisplayJourneyList"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".UI.Calendar"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".UI.GraphPicker"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".UI.SingleDayGraph"></activity>
     </application>
 

@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -41,6 +42,8 @@ public class DisplayRouteList extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_display_route_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.ChooseRoute);
         setSupportActionBar(toolbar);
@@ -66,6 +69,7 @@ public class DisplayRouteList extends AppCompatActivity {
                 singleton.setEditPosition_Route(DB_id);
                 singleton.userEditRoute();
                 startActivityForResult(EditIntent,0);
+                finish();
                 return true;
             }
         });
@@ -215,10 +219,10 @@ public class DisplayRouteList extends AppCompatActivity {
         }
     }
 
-//    public void onBackPressed() {
-//        Intent goBackToDisplayCar = DisplayCarList.makeIntent(DisplayRouteList.this);
-//        startActivity(goBackToDisplayCar);
-//    }
+    public void onBackPressed() {
+        Intent goBackToDisplayCar = DisplayCarList.makeIntent(DisplayRouteList.this);
+        startActivity(goBackToDisplayCar);
+    }
 
     public static Intent makeIntent(Context context) {
         return new Intent(context, DisplayRouteList.class);

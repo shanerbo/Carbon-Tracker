@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -26,7 +27,7 @@ import java.util.List;
 
 public class DisplayCarList extends AppCompatActivity {
     Singleton singleton = Singleton.getInstance();
-    private List<Vehicle> VehicleList = new ArrayList<Vehicle>();
+    private List<Vehicle> VehicleList = new ArrayList<>();
 
     private SQLiteDatabase myDataBase;
 
@@ -37,6 +38,8 @@ public class DisplayCarList extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_display_car_list);
 
 
@@ -59,6 +62,7 @@ public class DisplayCarList extends AppCompatActivity {
                 singleton.setUserPickVehicleItem(userPickVehicle);
 
                 startActivity(ConfirmCar);
+                finish();
             }
 
 
@@ -77,7 +81,7 @@ public class DisplayCarList extends AppCompatActivity {
                 singleton.userEditRoute_car();
 
                 startActivityForResult(EditIntent,0);
-
+                finish();
                 return true;
             }
         });
@@ -91,6 +95,7 @@ public class DisplayCarList extends AppCompatActivity {
                 Intent AddIntent = com.example.olive.carbon_tracker.UI.AddCar.makeIntent(DisplayCarList.this);
                 singleton.userAddVehicle();
                 startActivityForResult(AddIntent,1);
+                finish();
             }
         });
     }
@@ -102,7 +107,7 @@ public class DisplayCarList extends AppCompatActivity {
     }
 
     private void showAllCar() {
-        List<Vehicle> VehicleListFromDB = new ArrayList<Vehicle>();
+        List<Vehicle> VehicleListFromDB = new ArrayList<>();
         myDataBase = SQLiteDatabase.openOrCreateDatabase(DatabaseHelper.DB_PATH + DatabaseHelper.DB_NAME,null);
         Cursor cursor = myDataBase.rawQuery("select CarName," +
                 "CarMake," +
@@ -128,6 +133,7 @@ public class DisplayCarList extends AppCompatActivity {
             cursor.moveToNext();
         }
         cursor.close();
+        myDataBase.close();
         VehicleList = VehicleListFromDB;
         ArrayAdapter<Vehicle> adapter = new mArrayAdapter();
         ListView list = (ListView) findViewById(R.id.ID_Car_List);
@@ -142,7 +148,7 @@ public class DisplayCarList extends AppCompatActivity {
 //    }
 
     private class mArrayAdapter extends ArrayAdapter<Vehicle> {
-        public mArrayAdapter() {
+        private mArrayAdapter() {
             super(DisplayCarList.this, R.layout.singe_element_car_list, VehicleList);
         }
 
