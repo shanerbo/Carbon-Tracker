@@ -363,21 +363,16 @@ public class AddNewRoute extends AppCompatActivity {
     }
 
     private void addJourneyToDBNotCar(String date, Route route, SQLiteDatabase DB, String Mode,double CO2) {
-
         ContentValues cv = new ContentValues();
         cv.put(SuperUltraInfoDataBaseHelper.Journey_Date,date);
-
         cv.put(SuperUltraInfoDataBaseHelper.Journey_CarName,Mode);
         cv.put(SuperUltraInfoDataBaseHelper.Journey_CarMode,Mode);
-
         cv.put(SuperUltraInfoDataBaseHelper.Journey_RouteId, route.getRouteDBId());
         cv.put(SuperUltraInfoDataBaseHelper.Journey_RouteName, route.getName());
         cv.put(SuperUltraInfoDataBaseHelper.Journey_RouteCityDist, route.getCityDistance());
         cv.put(SuperUltraInfoDataBaseHelper.Journey_RouteHwyDist, route.getHighwayDistance());
         cv.put(SuperUltraInfoDataBaseHelper.Journey_RouteTotalDist, route.getTotalDistance());
-
         cv.put(SuperUltraInfoDataBaseHelper.Journey_CO2Emitted, CO2);
-
         long idPassBack = DB.insert(SuperUltraInfoDataBaseHelper.Journey_Table,null,cv);
         DB.close();
     }
