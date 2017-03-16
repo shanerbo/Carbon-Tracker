@@ -41,6 +41,10 @@ public class AddNewRoute extends AppCompatActivity {
     private String oldRouteName;
     private Route _RouteToBeEdit;
     private SQLiteDatabase RouteDB;
+    private String _day =   singleton.getUserDay();
+    private String _month =  singleton.getUserMonth();
+    private String _year =  singleton.getUserYear();
+    private String _date = _day+"/"+_month+"/"+_year;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -218,27 +222,23 @@ public class AddNewRoute extends AppCompatActivity {
             String TotalCO2 = String.format("%.2f", totalCO2);
             Toast.makeText(getApplicationContext(), "You have produced: "+ TotalCO2 +"kg of CO2", Toast.LENGTH_SHORT).show();
 
-            String day =   singleton.getUserDay();
-            String month =  singleton.getUserMonth();
-            String year =  singleton.getUserYear();
-            String date = day+"/"+month+"/"+year;
-
-            ContentValues cv = new ContentValues();
-            cv.put(SuperUltraInfoDataBaseHelper.Journey_Date,date);
-
-            cv.put(SuperUltraInfoDataBaseHelper.Journey_CarName,"Walk/Bike");
-            cv.put(SuperUltraInfoDataBaseHelper.Journey_CarMode,"Walk/Bike");
-
-            cv.put(SuperUltraInfoDataBaseHelper.Journey_RouteId, userInput.getRouteDBId());
-            cv.put(SuperUltraInfoDataBaseHelper.Journey_RouteName, userInput.getName());
-            cv.put(SuperUltraInfoDataBaseHelper.Journey_RouteCityDist, userInput.getCityDistance());
-            cv.put(SuperUltraInfoDataBaseHelper.Journey_RouteHwyDist, userInput.getHighwayDistance());
-            cv.put(SuperUltraInfoDataBaseHelper.Journey_RouteTotalDist, userInput.getTotalDistance());
-
-            cv.put(SuperUltraInfoDataBaseHelper.Journey_CO2Emitted, totalCO2);
-
-            long idPassBack = RouteDB.insert(SuperUltraInfoDataBaseHelper.Journey_Table,null,cv);
-            RouteDB.close();
+            addJourneyToDBNotCar(_date,userInput,RouteDB,"Walk/Bike",totalCO2);
+//            ContentValues cv = new ContentValues();
+//            cv.put(SuperUltraInfoDataBaseHelper.Journey_Date,date);
+//
+//            cv.put(SuperUltraInfoDataBaseHelper.Journey_CarName,"Walk/Bike");
+//            cv.put(SuperUltraInfoDataBaseHelper.Journey_CarMode,"Walk/Bike");
+//
+//            cv.put(SuperUltraInfoDataBaseHelper.Journey_RouteId, userInput.getRouteDBId());
+//            cv.put(SuperUltraInfoDataBaseHelper.Journey_RouteName, userInput.getName());
+//            cv.put(SuperUltraInfoDataBaseHelper.Journey_RouteCityDist, userInput.getCityDistance());
+//            cv.put(SuperUltraInfoDataBaseHelper.Journey_RouteHwyDist, userInput.getHighwayDistance());
+//            cv.put(SuperUltraInfoDataBaseHelper.Journey_RouteTotalDist, userInput.getTotalDistance());
+//
+//            cv.put(SuperUltraInfoDataBaseHelper.Journey_CO2Emitted, totalCO2);
+//
+//            long idPassBack = RouteDB.insert(SuperUltraInfoDataBaseHelper.Journey_Table,null,cv);
+//            RouteDB.close();
 
 
             createNewJourney(cityDistance,HwyDistance,totalCO2, 1);
@@ -251,29 +251,23 @@ public class AddNewRoute extends AppCompatActivity {
             String TotalCO2 = String.format("%.2f", totalCO2);
             Toast.makeText(getApplicationContext(), "You have produced: "+ TotalCO2 +"kg of CO2", Toast.LENGTH_SHORT).show();
 
-
-
-            String day =   singleton.getUserDay();
-            String month =  singleton.getUserMonth();
-            String year =  singleton.getUserYear();
-            String date = day+"/"+month+"/"+year;
-
-            ContentValues cv = new ContentValues();
-            cv.put(SuperUltraInfoDataBaseHelper.Journey_Date,date);
-
-            cv.put(SuperUltraInfoDataBaseHelper.Journey_CarName,"Bus");
-            cv.put(SuperUltraInfoDataBaseHelper.Journey_CarMode,"Bus");
-
-            cv.put(SuperUltraInfoDataBaseHelper.Journey_RouteId, userInput.getRouteDBId());
-            cv.put(SuperUltraInfoDataBaseHelper.Journey_RouteName, userInput.getName());
-            cv.put(SuperUltraInfoDataBaseHelper.Journey_RouteCityDist, userInput.getCityDistance());
-            cv.put(SuperUltraInfoDataBaseHelper.Journey_RouteHwyDist, userInput.getHighwayDistance());
-            cv.put(SuperUltraInfoDataBaseHelper.Journey_RouteTotalDist, userInput.getTotalDistance());
-
-            cv.put(SuperUltraInfoDataBaseHelper.Journey_CO2Emitted, totalCO2);
-
-            long idPassBack = RouteDB.insert(SuperUltraInfoDataBaseHelper.Journey_Table,null,cv);
-            RouteDB.close();
+            addJourneyToDBNotCar(_date,userInput,RouteDB,"Bus",totalCO2);
+//            ContentValues cv = new ContentValues();
+//            cv.put(SuperUltraInfoDataBaseHelper.Journey_Date,date);
+//
+//            cv.put(SuperUltraInfoDataBaseHelper.Journey_CarName,"Bus");
+//            cv.put(SuperUltraInfoDataBaseHelper.Journey_CarMode,"Bus");
+//
+//            cv.put(SuperUltraInfoDataBaseHelper.Journey_RouteId, userInput.getRouteDBId());
+//            cv.put(SuperUltraInfoDataBaseHelper.Journey_RouteName, userInput.getName());
+//            cv.put(SuperUltraInfoDataBaseHelper.Journey_RouteCityDist, userInput.getCityDistance());
+//            cv.put(SuperUltraInfoDataBaseHelper.Journey_RouteHwyDist, userInput.getHighwayDistance());
+//            cv.put(SuperUltraInfoDataBaseHelper.Journey_RouteTotalDist, userInput.getTotalDistance());
+//
+//            cv.put(SuperUltraInfoDataBaseHelper.Journey_CO2Emitted, totalCO2);
+//
+//            long idPassBack = RouteDB.insert(SuperUltraInfoDataBaseHelper.Journey_Table,null,cv);
+//            RouteDB.close();
 
 
             createNewJourney(cityDistance,HwyDistance,totalCO2, 2);
@@ -286,29 +280,23 @@ public class AddNewRoute extends AppCompatActivity {
             String TotalCO2 = String.format("%.2f", totalCO2);
             Toast.makeText(getApplicationContext(), "You have produced: "+ TotalCO2 +"kg of CO2", Toast.LENGTH_SHORT).show();
 
-
-
-            String day =   singleton.getUserDay();
-            String month =  singleton.getUserMonth();
-            String year =  singleton.getUserYear();
-            String date = day+"/"+month+"/"+year;
-
-            ContentValues cv = new ContentValues();
-            cv.put(SuperUltraInfoDataBaseHelper.Journey_Date,date);
-
-            cv.put(SuperUltraInfoDataBaseHelper.Journey_CarName,"Skytrain");
-            cv.put(SuperUltraInfoDataBaseHelper.Journey_CarMode,"Skytrain");
-
-            cv.put(SuperUltraInfoDataBaseHelper.Journey_RouteId, userInput.getRouteDBId());
-            cv.put(SuperUltraInfoDataBaseHelper.Journey_RouteName, userInput.getName());
-            cv.put(SuperUltraInfoDataBaseHelper.Journey_RouteCityDist, userInput.getCityDistance());
-            cv.put(SuperUltraInfoDataBaseHelper.Journey_RouteHwyDist, userInput.getHighwayDistance());
-            cv.put(SuperUltraInfoDataBaseHelper.Journey_RouteTotalDist, userInput.getTotalDistance());
-
-            cv.put(SuperUltraInfoDataBaseHelper.Journey_CO2Emitted, totalCO2);
-
-            long idPassBack = RouteDB.insert(SuperUltraInfoDataBaseHelper.Journey_Table,null,cv);
-            RouteDB.close();
+            addJourneyToDBNotCar(_date,userInput,RouteDB,"Skytrain",totalCO2);
+//            ContentValues cv = new ContentValues();
+//            cv.put(SuperUltraInfoDataBaseHelper.Journey_Date,date);
+//
+//            cv.put(SuperUltraInfoDataBaseHelper.Journey_CarName,"Skytrain");
+//            cv.put(SuperUltraInfoDataBaseHelper.Journey_CarMode,"Skytrain");
+//
+//            cv.put(SuperUltraInfoDataBaseHelper.Journey_RouteId, userInput.getRouteDBId());
+//            cv.put(SuperUltraInfoDataBaseHelper.Journey_RouteName, userInput.getName());
+//            cv.put(SuperUltraInfoDataBaseHelper.Journey_RouteCityDist, userInput.getCityDistance());
+//            cv.put(SuperUltraInfoDataBaseHelper.Journey_RouteHwyDist, userInput.getHighwayDistance());
+//            cv.put(SuperUltraInfoDataBaseHelper.Journey_RouteTotalDist, userInput.getTotalDistance());
+//
+//            cv.put(SuperUltraInfoDataBaseHelper.Journey_CO2Emitted, totalCO2);
+//
+//            long idPassBack = RouteDB.insert(SuperUltraInfoDataBaseHelper.Journey_Table,null,cv);
+//            RouteDB.close();
 
 
 
@@ -340,15 +328,8 @@ public class AddNewRoute extends AppCompatActivity {
             String TotalCO2 = String.format("%.2f", totalCO2);
             Toast.makeText(getApplicationContext(), "The CO2 you produced: " + TotalCO2, Toast.LENGTH_SHORT).show();
 
-
-
-            String day =   singleton.getUserDay();
-            String month =  singleton.getUserMonth();
-            String year =  singleton.getUserYear();
-            String date = day+"/"+month+"/"+year;
-
             ContentValues cv = new ContentValues();
-            cv.put(SuperUltraInfoDataBaseHelper.Journey_Date,date);
+            cv.put(SuperUltraInfoDataBaseHelper.Journey_Date,_date);
 
             cv.put(SuperUltraInfoDataBaseHelper.Journey_CarId,_vehicle.getCarDBId());
             cv.put(SuperUltraInfoDataBaseHelper.Journey_CarName, _vehicle.getName());
@@ -380,6 +361,29 @@ public class AddNewRoute extends AppCompatActivity {
             finish();
         }
     }
+
+    private void addJourneyToDBNotCar(String date, Route route, SQLiteDatabase DB, String Mode,double CO2) {
+
+        ContentValues cv = new ContentValues();
+        cv.put(SuperUltraInfoDataBaseHelper.Journey_Date,date);
+
+        cv.put(SuperUltraInfoDataBaseHelper.Journey_CarName,Mode);
+        cv.put(SuperUltraInfoDataBaseHelper.Journey_CarMode,Mode);
+
+        cv.put(SuperUltraInfoDataBaseHelper.Journey_RouteId, route.getRouteDBId());
+        cv.put(SuperUltraInfoDataBaseHelper.Journey_RouteName, route.getName());
+        cv.put(SuperUltraInfoDataBaseHelper.Journey_RouteCityDist, route.getCityDistance());
+        cv.put(SuperUltraInfoDataBaseHelper.Journey_RouteHwyDist, route.getHighwayDistance());
+        cv.put(SuperUltraInfoDataBaseHelper.Journey_RouteTotalDist, route.getTotalDistance());
+
+        cv.put(SuperUltraInfoDataBaseHelper.Journey_CO2Emitted, CO2);
+
+        long idPassBack = DB.insert(SuperUltraInfoDataBaseHelper.Journey_Table,null,cv);
+        DB.close();
+    }
+
+
+
     public int CalculateTotalDistance(int cityDst, int hwyDst){
         int totalDst = cityDst + hwyDst;
         return totalDst;
@@ -391,11 +395,11 @@ public class AddNewRoute extends AppCompatActivity {
 
 
     private void createNewJourney(int cityDistance,int hwyDistance,double co2, int TransMode){
-        String day =   singleton.getUserDay();
-        String month =  singleton.getUserMonth();
-        String year =  singleton.getUserYear();
-        DateFormat df = new SimpleDateFormat("EEE, MMM d, ''yy");
-        Date date = new Date();
+//        String day =   singleton.getUserDay();
+//        String month =  singleton.getUserMonth();
+//        String year =  singleton.getUserYear();
+//        DateFormat df = new SimpleDateFormat("EEE, MMM d, ''yy");
+//        Date date = new Date();
         DecimalFormat Format = new DecimalFormat("#.##");
         double CO2 = Double.valueOf(Format.format(co2));
 
@@ -415,7 +419,7 @@ public class AddNewRoute extends AppCompatActivity {
                 break;
         }
         long temp = 9999;
-        Journey journey = new Journey(day+"/"+month+"/"+year, VehicleName, _currentRouteName,(cityDistance+hwyDistance), VehicleName, CO2,temp);
+        Journey journey = new Journey(_date, VehicleName, _currentRouteName,(cityDistance+hwyDistance), VehicleName, CO2,temp);
         singleton.addUserJourney(journey);
     }
 }
