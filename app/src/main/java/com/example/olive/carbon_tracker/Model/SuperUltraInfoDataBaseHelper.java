@@ -33,6 +33,30 @@ public class SuperUltraInfoDataBaseHelper extends SQLiteOpenHelper {
     public static String Route_total_Dst = "RouteTotalDistance";
 
 
+    public static String Journey_Table = "JourneyInfoTable";
+    public static String Journey_Id = "_id";
+    public static String Journey_Date = "JourneyDate";
+    public static String Journey_CarId = "JourneyCarId";
+    public static String Journey_CarMode = "JourneyMode";
+    public static String Journey_CarName = "JourneyCarName";
+    public static String Journey_CarMake = "JourneyCarMake";
+    public static String Journey_CarModel = "JourneyCarModel";
+    public static String Journey_CarYear = "JourneyCarYear";
+    public static String Journey_CarCity = "JourneyCarCity";
+    public static String Journey_CarHwy = "JourneyCarHwy";
+    public static String Journey_CarFuelType = "JourneyCarFuelType";
+    public static String Journey_CarDispl = "JourneyCarDispl";
+    public static String Journey_CarTrany = "JourneyCarTrany";
+    public static String Journey_CarDrive = "JourneyCarDrive";
+    public static String Journey_RouteId = "JourneyRouteId";
+    public static String Journey_RouteName = "JourneyRouteName";
+    public static String Journey_RouteCityDist = "JourneyRouteCity";
+    public static String Journey_RouteHwyDist = "JourneyRouteHwy";
+    public static String Journey_RouteTotalDist = "JourneyRouteTotal";
+    public static String Journey_CO2Emitted = "JourneyCO2Emitted";
+
+
+
     public SuperUltraInfoDataBaseHelper(Context context) {
         super(context, DB_Name,
                 null, DB_Version);
@@ -67,6 +91,33 @@ public class SuperUltraInfoDataBaseHelper extends SQLiteOpenHelper {
                 + ");";
 
         CarDB.execSQL(createRouteDB);
+
+        String createJourneyDB = "create table if not exists " + Journey_Table
+                + "("
+                + Journey_Id + " integer primary key autoincrement not null,"
+                + Journey_Date + " Text,"
+                + Journey_CarId + " integer ,"
+                + Journey_CarMode + " text ,"
+                + Journey_CarName +" text ,"
+                + Journey_CarMake + " text,"
+                + Journey_CarModel + " text,"
+                + Journey_CarYear + " integer,"
+                + Journey_CarCity + " real,"
+                + Journey_CarHwy + " real,"
+                + Journey_CarFuelType + " text,"
+                //+ Journey_CarDispl + " real,"
+                //+ Journey_CarTrany + " text,"
+                //+ Journey_CarDrive + " text,"
+
+                + Journey_RouteId + " integer,"
+                + Journey_RouteName + " text,"
+                + Journey_RouteCityDist + " integer,"
+                + Journey_RouteHwyDist  + " integer,"
+                + Journey_RouteTotalDist+ " integer,"
+                + Journey_CO2Emitted+ " real"
+                + ");";
+        CarDB.execSQL(createJourneyDB);
+
     }
 
 
