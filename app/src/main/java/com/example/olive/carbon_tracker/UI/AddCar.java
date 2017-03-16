@@ -12,6 +12,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -34,14 +35,15 @@ public class AddCar extends AppCompatActivity {
     private List<Vehicle> VehicleList = new ArrayList<>();
     private List<String> make_list = new ArrayList<>();
     private Singleton singleton = Singleton.getInstance();
-    private int position;
+    private long position;
     private VehicleData vehicleData = new VehicleData();
     private String VehicleNameToBeEdit;
+    private Vehicle _VehicleToBeEdit;
 
 
     private  List<String> carListDB;
 
-    public DatabaseHelper myHelper;
+//    public DatabaseHelper myHelper;
     private SQLiteDatabase myDataBase;
     private SQLiteDatabase CarDB;
 
@@ -50,13 +52,15 @@ public class AddCar extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_add_car);
-        VehicleList = singleton.getVehicleList();
-        make_list = singleton.getVehicleMakeArray();
+//        VehicleList = singleton.getVehicleList();
+//        make_list = singleton.getVehicleMakeArray();
 //------------create a new DatabaseHelper and it will copy external sql to local-------------------
-        myHelper = new DatabaseHelper(this);
-        //myHelper.openDataBase();
-        myHelper.close();
+//        myHelper = new DatabaseHelper(this);
+//        //myHelper.openDataBase();
+//        myHelper.close();
 //------------get local sql which is created by Helper---------------------------------------------
         myDataBase = SQLiteDatabase.openOrCreateDatabase(DatabaseHelper.DB_PATH + DatabaseHelper.DB_NAME,null);
 
@@ -67,8 +71,36 @@ public class AddCar extends AppCompatActivity {
         vehicleData = singleton.getVehicleData();
         if (singleton.checkEdit_car() ==1 ){
             position = singleton.getEditPosition_car();
-            Vehicle VehicleToBeEdit = VehicleList.get(position);
-            VehicleNameToBeEdit = VehicleToBeEdit.getName();
+            //Vehicle VehicleToBeEdit = VehicleList.get(position);
+            String CarName = new String();
+            String CarMake = new String();
+            String CarModel = new String();
+            int CarYear = 0;
+            double city08 = 0;
+            double hwy08 = 0;
+            String fuelType = new String();
+            long _id = 0;
+            Cursor cursor = CarDB.rawQuery("select * from CarInfoTable " +
+                            "where _id = "+position
+                    ,null);
+            cursor.moveToFirst();
+            while(!cursor.isAfterLast()){
+                CarName = cursor.getString(1);
+                CarMake = cursor.getString(2);
+                CarModel = cursor.getString(3);
+                CarYear = cursor.getInt(4);
+                city08 = cursor.getDouble(5);
+                hwy08 = cursor.getDouble(6);
+                fuelType = cursor.getString(7);
+                _id = cursor.getLong(0);
+                cursor.moveToNext();
+            }
+
+            cursor.close();
+
+            Vehicle VehicleToBeEdit = new Vehicle(CarName,CarMake,CarModel,CarYear,city08,hwy08,fuelType,_id);
+            _VehicleToBeEdit = VehicleToBeEdit;
+            VehicleNameToBeEdit = _VehicleToBeEdit.getName();
             EditText Name = (EditText) findViewById(R.id.ID_Car_Name);
             Name.setText(VehicleNameToBeEdit);
 
@@ -121,9 +153,11 @@ public class AddCar extends AppCompatActivity {
         Spinner Make_spinner = (Spinner) findViewById(R.id.ID_drop_down_make);
 
         Make_spinner.setAdapter(make_adapter);
-        if (VehicleList.size() != 0&&singleton.checkEdit_car() ==1){
-            Vehicle VehicleToBeEdit = VehicleList.get(position);
-            Make_spinner.setSelection(getIndex(Make_spinner,VehicleToBeEdit.getMake()));
+        if (singleton.checkEdit_car() ==1){
+//            Vehicle VehicleToBeEdit = VehicleList.get(position);
+
+            Make_spinner.setSelection(getIndex(Make_spinner,_VehicleToBeEdit.getMake()));
+            Toast.makeText(this, ""+_VehicleToBeEdit.getMake(),Toast.LENGTH_LONG).show();
         }
 
         Make_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -149,9 +183,9 @@ public class AddCar extends AppCompatActivity {
                         AddCar.this, android.R.layout.simple_dropdown_item_1line, model_list);
                 Spinner Model_spinner = (Spinner) findViewById(R.id.ID_drop_down_model);
                 Model_spinner.setAdapter(model_adapter);
-                if (VehicleList.size() != 0&&singleton.checkEdit_car() ==1){
-                    Vehicle VehicleToBeEdit = VehicleList.get(position);
-                    Model_spinner.setSelection(getIndex(Model_spinner,VehicleToBeEdit.getModel()));
+                if (singleton.checkEdit_car() ==1){
+//                    Vehicle VehicleToBeEdit = VehicleList.get(position);
+                    Model_spinner.setSelection(getIndex(Model_spinner,_VehicleToBeEdit.getModel()));
                 }
 
                 Model_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -180,9 +214,9 @@ public class AddCar extends AppCompatActivity {
                                 AddCar.this, android.R.layout.simple_dropdown_item_1line, year_list);
                         Spinner Year_spinner = (Spinner) findViewById(R.id.ID_drop_down_year);
                         Year_spinner.setAdapter(year_adapter);
-                        if (VehicleList.size() != 0&&singleton.checkEdit_car() ==1){
-                            Vehicle VehicleToBeEdit = VehicleList.get(position);
-                            int Year = VehicleToBeEdit.getYear();
+                        if (singleton.checkEdit_car() ==1){
+//                            Vehicle VehicleToBeEdit = VehicleList.get(position);
+                            int Year = _VehicleToBeEdit.getYear();
                             Year_spinner.setSelection(getIndex(Year_spinner,Year));
                         }
                         Year_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -235,7 +269,7 @@ public class AddCar extends AppCompatActivity {
 
     }
 
-    private void setupAddCarButton(final int position) {
+    private void setupAddCarButton(final long position) {
         FloatingActionButton check = (FloatingActionButton) findViewById(R.id.ID_button_OKAdd);
 
         check.setOnClickListener(new View.OnClickListener() {
@@ -292,28 +326,42 @@ public class AddCar extends AppCompatActivity {
 //                    String fuelType = singleton.getFuelType(CityAndHighway);
 //
 //                    int CarYear = Integer.parseInt(Year_spinner.getSelectedItem().toString());
+
                     if (!CarName.matches("") && !CarMake.matches("") && !CarModel.matches("") && CarYearFromString > 0) {
-                        Vehicle userInput = new Vehicle(CarName, CarMake, CarModel, CarYearFromString,city,highWay,fuelType);
 
                         if (singleton.checkEdit_car() == 1) {
-                            VehicleList.set(position, userInput);
-                            singleton.setVehiclesList(VehicleList);
-                            singleton.userFinishEdit_car();
-                            String userInputNewCarName = userInput.getName();
-                            singleton.UserEnterNewCarName(userInputNewCarName,VehicleNameToBeEdit);
-                            Intent userEditCar = DisplayCarList.makeIntent(AddCar.this);
-                            startActivity(userEditCar);
-                        } else {
-                            VehicleList.add(userInput);
-                            singleton.setVehiclesList(VehicleList);
+                            //VehicleList.set(position, userInput);
+                            long DBID = _VehicleToBeEdit.getCarDBId();
 
-                            singleton.setUserPickVehicleItem(userInput);
 
                             ContentValues cv = new ContentValues();
                             cv.put(SuperUltraInfoDataBaseHelper.Car_Name,CarName);
                             cv.put(SuperUltraInfoDataBaseHelper.Car_Make,CarMake);
                             cv.put(SuperUltraInfoDataBaseHelper.Car_Model,CarModel);
-                            cv.put(SuperUltraInfoDataBaseHelper.Car_Year,CarYear);
+                            cv.put(SuperUltraInfoDataBaseHelper.Car_Year,CarYearFromString);
+                            cv.put(SuperUltraInfoDataBaseHelper.Car_City_08,city);
+                            cv.put(SuperUltraInfoDataBaseHelper.Car_Hwy_08,highWay);
+                            cv.put(SuperUltraInfoDataBaseHelper.Car_FuelType,fuelType);
+                            cv.put(SuperUltraInfoDataBaseHelper.Car_displ,Double.parseDouble(displ));
+                            cv.put(SuperUltraInfoDataBaseHelper.Car_Trany,trany);
+                            cv.put(SuperUltraInfoDataBaseHelper.Car_Drive,drive);
+
+                            long idPassBack = CarDB.update(SuperUltraInfoDataBaseHelper.Car_Table, cv, "_id="+DBID, null);
+                            CarDB.close();
+//                            singleton.setVehiclesList(VehicleList);
+                            singleton.userFinishEdit_car();
+                            //String userInputNewCarName = userInput.getName();
+                            //singleton.UserEnterNewCarName(userInputNewCarName,VehicleNameToBeEdit);
+                            Intent userEditCar = DisplayCarList.makeIntent(AddCar.this);
+                            startActivity(userEditCar);
+                        } else {
+                            //VehicleList.add(userInput);
+                            //singleton.setVehiclesList(VehicleList);
+                            ContentValues cv = new ContentValues();
+                            cv.put(SuperUltraInfoDataBaseHelper.Car_Name,CarName);
+                            cv.put(SuperUltraInfoDataBaseHelper.Car_Make,CarMake);
+                            cv.put(SuperUltraInfoDataBaseHelper.Car_Model,CarModel);
+                            cv.put(SuperUltraInfoDataBaseHelper.Car_Year,CarYearFromString);
                             cv.put(SuperUltraInfoDataBaseHelper.Car_City_08,city);
                             cv.put(SuperUltraInfoDataBaseHelper.Car_Hwy_08,highWay);
                             cv.put(SuperUltraInfoDataBaseHelper.Car_FuelType,fuelType);
@@ -322,7 +370,11 @@ public class AddCar extends AppCompatActivity {
                             cv.put(SuperUltraInfoDataBaseHelper.Car_Drive,drive);
 
                             long idPassedBack = CarDB.insert(SuperUltraInfoDataBaseHelper.Car_Table,null,cv);
+                            Vehicle userInput = new Vehicle(CarName, CarMake, CarModel, CarYearFromString,city,highWay,fuelType,idPassedBack);
+                            singleton.setUserPickVehicleItem(userInput);
+
                             CarDB.close();
+
                             singleton.userFinishAdd_car();
                             Intent userCreateCar = DisplayRouteList.makeIntent(AddCar.this);
                             startActivity(userCreateCar);
@@ -338,7 +390,7 @@ public class AddCar extends AppCompatActivity {
 
     }
 
-    private void delButton(final int position) {
+    private void delButton(final long position) {
         FloatingActionButton delete = (FloatingActionButton) findViewById(R.id.ID_button_delete);
 
         if (singleton.checkAdd_car() == 1){
@@ -355,11 +407,16 @@ public class AddCar extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 Intent del_intent = new Intent();
-                                VehicleList.remove(position);
-                                singleton.setVehiclesList(VehicleList);
+                                CarDB.delete(SuperUltraInfoDataBaseHelper.Car_Table,
+                                        "  _id" + "="+position,null);
+                                CarDB.close();
+                                //VehicleList.remove(position);
+                                //singleton.setVehiclesList(VehicleList);
                                 singleton.userFinishEdit_car();
                                 setResult(Activity.RESULT_OK,del_intent);
                                 Toast.makeText(AddCar.this,getString(R.string.UserDeleteVehicle),Toast.LENGTH_LONG).show();
+                                Intent goBackToDisplayCar = DisplayCarList.makeIntent(AddCar.this);
+                                startActivity(goBackToDisplayCar);
                                 finish();
                             }
                         })
@@ -368,6 +425,8 @@ public class AddCar extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.cancel();
                                 singleton.userFinishEdit_car();
+                                Intent goBackToDisplayCar = DisplayCarList.makeIntent(AddCar.this);
+                                startActivity(goBackToDisplayCar);
                                 finish();
                             }
                         })
@@ -378,8 +437,8 @@ public class AddCar extends AppCompatActivity {
     public void onBackPressed() {
         singleton.userFinishEdit_car();
         singleton.userFinishAdd_car();
-//        Intent goBackToDisplayCar = DisplayCarList.makeIntent(AddCar.this);
-//        startActivity(goBackToDisplayCar);
+        Intent goBackToDisplayCar = DisplayCarList.makeIntent(AddCar.this);
+        startActivity(goBackToDisplayCar);
         finish();
     }
 

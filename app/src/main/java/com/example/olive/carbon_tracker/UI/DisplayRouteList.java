@@ -2,12 +2,15 @@ package com.example.olive.carbon_tracker.UI;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -15,6 +18,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.olive.carbon_tracker.Model.DatabaseHelper;
 import com.example.olive.carbon_tracker.Model.Journey;
 import com.example.olive.carbon_tracker.Model.Vehicle;
 import com.example.olive.carbon_tracker.R;
@@ -33,13 +37,17 @@ public class DisplayRouteList extends AppCompatActivity {
     Singleton singleton  = Singleton.getInstance();
     String currentRouteName;
     Vehicle vehicle = singleton.getVehicle();
+    private SQLiteDatabase myDataBase;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_display_route_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.ChooseRoute);
         setSupportActionBar(toolbar);
-        RouteList = singleton.getRouteList();
+        //RouteList = singleton.getRouteList();
         AddRoute();
         EditRoute();
         showAllRoute();
@@ -57,9 +65,11 @@ public class DisplayRouteList extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent EditIntent = AddNewRoute.makeIntent(DisplayRouteList.this);
-                singleton.setEditPosition(position);
+                long DB_id = RouteList.get(position).getRouteDBId();
+                singleton.setEditPosition_Route(DB_id);
                 singleton.userEditRoute();
                 startActivityForResult(EditIntent,0);
+                finish();
                 return true;
             }
         });
@@ -93,6 +103,28 @@ public class DisplayRouteList extends AppCompatActivity {
 
     }
     private void showAllRoute() {
+        List<Route> RouteListFromDB = new ArrayList<Route>();
+        myDataBase = SQLiteDatabase.openOrCreateDatabase(DatabaseHelper.DB_PATH + DatabaseHelper.DB_NAME,null);
+        Cursor cursor = myDataBase.rawQuery("select " +
+                "RouteName," +
+                "RouteCityDistance," +
+                "RouteHwyDistance," +
+                "RouteTotalDistance, " +
+                "_id " +
+                "from RouteInfoTable",null);
+        cursor.moveToFirst();
+        while(!cursor.isAfterLast()){
+            String RouteName = cursor.getString(0);
+            int RouteCityDistance = cursor.getInt(1);
+            int RouteHwyDistance = cursor.getInt(2);
+            int RouteToatalDistance = cursor.getInt(3);
+            long routeDBId = cursor.getLong(cursor.getColumnIndex("_id"));
+            Route tempRoute = new Route(RouteName,RouteCityDistance,RouteHwyDistance,RouteToatalDistance,routeDBId);
+            RouteListFromDB.add(tempRoute);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        RouteList = RouteListFromDB;
         ArrayAdapter<Route> adapter = new myArrayAdapter();
         ListView RoutesShown = (ListView)findViewById(R.id.ROUTES);
         RoutesShown.setAdapter(adapter);
@@ -187,10 +219,10 @@ public class DisplayRouteList extends AppCompatActivity {
         }
     }
 
-//    public void onBackPressed() {
-//        Intent goBackToDisplayCar = DisplayCarList.makeIntent(DisplayRouteList.this);
-//        startActivity(goBackToDisplayCar);
-//    }
+    public void onBackPressed() {
+        Intent goBackToDisplayCar = DisplayCarList.makeIntent(DisplayRouteList.this);
+        startActivity(goBackToDisplayCar);
+    }
 
     public static Intent makeIntent(Context context) {
         return new Intent(context, DisplayRouteList.class);

@@ -70,6 +70,25 @@ public class SuperUltraInfoDataBaseHelper extends SQLiteOpenHelper {
     }
 
 
+//    public void editCar(long DBID, String CarName, String CarMake,
+//                        String CarModel, int CarYearFromString, double city,double highWay,
+//                        String fuelType, String displ,
+//                        String trany,String drive){
+//        ContentValues cv = new ContentValues();
+//        cv.put(SuperUltraInfoDataBaseHelper.Car_Name,CarName);
+//        cv.put(SuperUltraInfoDataBaseHelper.Car_Make,CarMake);
+//        cv.put(SuperUltraInfoDataBaseHelper.Car_Model,CarModel);
+//        cv.put(SuperUltraInfoDataBaseHelper.Car_Year,CarYearFromString);
+//        cv.put(SuperUltraInfoDataBaseHelper.Car_City_08,city);
+//        cv.put(SuperUltraInfoDataBaseHelper.Car_Hwy_08,highWay);
+//        cv.put(SuperUltraInfoDataBaseHelper.Car_FuelType,fuelType);
+//        cv.put(SuperUltraInfoDataBaseHelper.Car_displ,Double.parseDouble(displ));
+//        cv.put(SuperUltraInfoDataBaseHelper.Car_Trany,trany);
+//        cv.put(SuperUltraInfoDataBaseHelper.Car_Drive,drive);
+//
+//        long idPassBack = CarDB.update(SuperUltraInfoDataBaseHelper.Car_Table, cv, "_id="+DBID, null);
+//
+//    }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {

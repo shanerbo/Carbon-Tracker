@@ -14,10 +14,16 @@ public class Vehicle {
 
     private String FuelType;
 
+    public long getCarDBId() {
+        return CarDBId;
+    }
+
+    private long CarDBId;
     private int cityDistance = 0;
     private int hwyDistance = 0;
 
-    public Vehicle(String name, String make,String model, int year,double city08, double highway08, String fuelType ){
+    public Vehicle(String name, String make,String model, int year,
+                   double city08, double highway08, String fuelType, long carDBId ){
         this.Name = name;
         this.Make = make;
         this.Model = model;
@@ -25,6 +31,7 @@ public class Vehicle {
         this.City08 = city08;
         this.Highway08 = highway08;
         this.FuelType = fuelType;
+        this.CarDBId = carDBId;
 
     }
 
