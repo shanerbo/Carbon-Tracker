@@ -1,6 +1,8 @@
 package com.example.olive.carbon_tracker.UI;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -12,10 +14,13 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.olive.carbon_tracker.Model.DatabaseHelper;
 import com.example.olive.carbon_tracker.Model.Journey;
 import com.example.olive.carbon_tracker.Model.Singleton;
+import com.example.olive.carbon_tracker.Model.Vehicle;
 import com.example.olive.carbon_tracker.R;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +29,7 @@ import java.util.List;
 public class DisplayJourneyList extends AppCompatActivity {
     private Singleton singleton = Singleton.getInstance();
     private List<Journey> JourneyList = singleton.getUsersJourneys();
+    private SQLiteDatabase myDataBase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +41,32 @@ public class DisplayJourneyList extends AppCompatActivity {
     }
 
     private void setListView() {
+        List<Journey> JourneyListFromDB = new ArrayList<>();
+        myDataBase = SQLiteDatabase.openOrCreateDatabase(DatabaseHelper.DB_PATH + DatabaseHelper.DB_NAME,null);
+        Cursor cursor = myDataBase.rawQuery("select JourneyDate," +
+                "JourneyMode," +
+                "JourneyCarName," +
+                "JourneyRouteName, " +
+                "JourneyRouteTotal, " +
+                "JourneyCO2Emitted," +
+                "_id from JourneyInfoTable",null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()){
+            String date = cursor.getString(0);
+            String mode = cursor.getString(1);
+            String routeName = cursor.getString(3);
+            int totalDst = cursor.getInt(4);
+            String vehicleName = cursor.getString(2);
+            double co2 = cursor.getDouble(5);
+            long JourneyDBId = cursor.getLong(cursor.getColumnIndex("_id"));
+            Journey tempJourney = new Journey(date,mode,routeName,
+                    totalDst,vehicleName,co2,JourneyDBId);
+            JourneyListFromDB.add(tempJourney);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        myDataBase.close();
+        JourneyList = JourneyListFromDB;
         ArrayAdapter<Journey> adapter = new myArrayAdapter();
         ListView listView = (ListView) findViewById(R.id.listJourneys);
         listView.setAdapter(adapter);
@@ -67,9 +99,9 @@ public class DisplayJourneyList extends AppCompatActivity {
     private void setTextView(View itemView, Journey journey, int id) {
         TextView textView = (TextView) itemView.findViewById(id);
         String msg;
-        if (id == R.id.txtVehicle) {
+        if (id == R.id.txtMode) {
             msg = "Vehicle: " + journey.getVehicleName();
-        } else if (id == R.id.txtRoute) {
+        } else if (id == R.id.txtCarName) {
             msg = "Route: " + journey.getRouteName();
         } else {
             msg = "Date: " + journey.getDateOfTrip();
@@ -90,10 +122,27 @@ public class DisplayJourneyList extends AppCompatActivity {
             }
 
             Journey currJourney = JourneyList.get(position);
-            setImageView(itemView, currJourney);
-            setTextView(itemView, currJourney, R.id.txtVehicle);
-            setTextView(itemView, currJourney, R.id.txtRoute);
-            setTextView(itemView, currJourney, R.id.txtDate);
+
+            TextView JourneyDate = (TextView)itemView.findViewById(R.id.txtDate);
+            JourneyDate.setText("Date: "+currJourney.getDateOfTrip());
+
+            TextView CarName = (TextView)itemView.findViewById(R.id.txtCarName);
+            CarName.setText("Vehicle Name: " + currJourney.getVehicleName());
+
+            TextView RouteName = (TextView)itemView.findViewById(R.id.textRouteName);
+            RouteName.setText("Route Name: "+ currJourney.getRouteName());
+
+            TextView mode = (TextView)itemView.findViewById(R.id.txtMode);
+            mode.setText("Mode: " + currJourney.getMode());
+
+            TextView TotalDst = (TextView)itemView.findViewById(R.id.textTotal);
+            TotalDst.setText("Total Distance: " + currJourney.getTotalDistance());
+
+            TextView CO2 = (TextView)itemView.findViewById(R.id.textCO2);
+            double CO2Emitted = currJourney.getCarbonEmitted();
+            DecimalFormat df = new DecimalFormat("#.##");
+            CO2Emitted = Double.valueOf(df.format(CO2Emitted));
+            CO2.setText("CO2 Emitted: " + CO2Emitted);
             return itemView;
         }
     }
