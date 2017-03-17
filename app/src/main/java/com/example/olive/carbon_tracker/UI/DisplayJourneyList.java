@@ -2,20 +2,25 @@ package com.example.olive.carbon_tracker.UI;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.olive.carbon_tracker.Model.DatabaseHelper;
 import com.example.olive.carbon_tracker.Model.Journey;
 import com.example.olive.carbon_tracker.Model.Singleton;
 import com.example.olive.carbon_tracker.R;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,15 +29,44 @@ import java.util.List;
 public class DisplayJourneyList extends AppCompatActivity {
     Singleton singleton = Singleton.getInstance();
     private List<Journey> JourneyList = singleton.getUsersJourneys();
+    private SQLiteDatabase myDataBase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_display_journey_list);
         setListView();
     }
 
     private void setListView() {
+        List<Journey> JourneyListFromDB = new ArrayList<>();
+        myDataBase = SQLiteDatabase.openOrCreateDatabase(DatabaseHelper.DB_PATH + DatabaseHelper.DB_NAME,null);
+        Cursor cursor = myDataBase.rawQuery("select JourneyDate," +
+                "JourneyMode," +
+                "JourneyCarName," +
+                "JourneyRouteName, " +
+                "JourneyRouteTotal, " +
+                "JourneyCO2Emitted," +
+                "_id from JourneyInfoTable",null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()){
+            String date = cursor.getString(0);
+            String mode = cursor.getString(1);
+            String routeName = cursor.getString(3);
+            int totalDst = cursor.getInt(4);
+            String vehicleName = cursor.getString(2);
+            double co2 = cursor.getDouble(5);
+            long JourneyDBId = cursor.getLong(cursor.getColumnIndex("_id"));
+            Journey tempJourney = new Journey(date,mode,routeName,
+                    totalDst,vehicleName,co2,JourneyDBId);
+            JourneyListFromDB.add(tempJourney);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        myDataBase.close();
+        JourneyList = JourneyListFromDB;
         ArrayAdapter<Journey> adapter = new myArrayAdapter();
         ListView listView = (ListView) findViewById(R.id.listJourneys);
         listView.setAdapter(adapter);
@@ -60,18 +94,27 @@ public class DisplayJourneyList extends AppCompatActivity {
     private void setTextView(View itemView, Journey journey, int id) {
         TextView textView = (TextView) itemView.findViewById(id);
         String msg;
-        if (id == R.id.txtVehicle) {
-            msg = "Vehicle: " + journey.getVehicleName();
-        } else if (id == R.id.txtRoute) {
-            msg = "Route: " + journey.getRouteName();
-        } else {
+        if (id == R.id.txtMode) {
+            msg = "Mode: " + journey.getMode();
+        } else if (id == R.id.txtCarName) {
+            msg = "Vehicle Name: " + journey.getVehicleName();
+        } else if (id == R.id.textRouteName) {
+            msg = "Route Name: " + journey.getRouteName();
+        } else if (id == R.id.txtDate) {
             msg = "Date: " + journey.getDateOfTrip();
+        } else if (id == R.id.textTotal) {
+            msg = "Total Distance: " + journey.getTotalDistance();
+        } else {
+            double CO2Emitted = journey.getCarbonEmitted();
+            DecimalFormat df = new DecimalFormat("#.##");
+            CO2Emitted = Double.valueOf(df.format(CO2Emitted));
+            msg = "CO2 Emitted: " + CO2Emitted;
         }
         textView.setText(msg);
     }
 
     private class myArrayAdapter extends ArrayAdapter<Journey> {
-        public myArrayAdapter(){
+        private myArrayAdapter(){
             super(DisplayJourneyList.this, R.layout.single_element_journey_list, JourneyList);
         }
 
@@ -83,10 +126,13 @@ public class DisplayJourneyList extends AppCompatActivity {
             }
 
             Journey currJourney = JourneyList.get(position);
-            setImageView(itemView, currJourney);
-            setTextView(itemView, currJourney, R.id.txtVehicle);
-            setTextView(itemView, currJourney, R.id.txtRoute);
+            setTextView(itemView, currJourney, R.id.txtMode);
+            setTextView(itemView, currJourney, R.id.txtCarName);
+            setTextView(itemView, currJourney, R.id.textRouteName);
             setTextView(itemView, currJourney, R.id.txtDate);
+            setTextView(itemView, currJourney, R.id.textTotal);
+            setTextView(itemView, currJourney, R.id.textCO2);
+
             return itemView;
         }
     }

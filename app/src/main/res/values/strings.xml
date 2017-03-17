@@ -74,5 +74,6 @@
     <string name="edit_journeys">Edit Journeys</string>
     <string name="image_for_journey">Image for Journey</string>
     <string name="UserDeleteJourney">The Journey you selected has been deleted</string>
+    <string name="graphs">Graphs</string>
 
 </resources>

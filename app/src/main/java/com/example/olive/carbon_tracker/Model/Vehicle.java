@@ -9,15 +9,21 @@ public class Vehicle {
     private String Model;
     private int Year;
     private int iconId = R.drawable.old_vintage_car;
-    private int Highway08;
-    private int City08;
+    private double Highway08;
+    private double City08;
 
     private String FuelType;
 
+    public long getCarDBId() {
+        return CarDBId;
+    }
+
+    private long CarDBId;
     private int cityDistance = 0;
     private int hwyDistance = 0;
 
-    public Vehicle(String name, String make,String model, int year,int city08, int highway08, String fuelType ){
+    public Vehicle(String name, String make,String model, int year,
+                   double city08, double highway08, String fuelType, long carDBId ){
         this.Name = name;
         this.Make = make;
         this.Model = model;
@@ -25,14 +31,15 @@ public class Vehicle {
         this.City08 = city08;
         this.Highway08 = highway08;
         this.FuelType = fuelType;
+        this.CarDBId = carDBId;
 
     }
 
-    public int getHighway08() {
+    public double getHighway08() {
         return Highway08;
     }
 
-    public int getCity08() {
+    public double getCity08() {
         return City08;
     }
 

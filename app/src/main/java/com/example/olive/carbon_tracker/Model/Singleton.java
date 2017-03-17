@@ -2,6 +2,7 @@ package com.example.olive.carbon_tracker.Model;
 
 
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,10 +16,12 @@ public class Singleton {
     private List<String> getVehicleMakeArray = new ArrayList<>();
     private List<String> vehicleModelArray = new ArrayList<>();
 
-String userDay = null;
+    String userDay = null;
     String userMonth = null;
     String userYear = null;
     boolean isDateChanged = false;
+
+    SQLiteDatabase CarInfoDB;
 
 
 
@@ -28,8 +31,8 @@ String userDay = null;
 
     private static int editRoute;
     private static int editVehicle;
-    private static int editPosition;
-    private static int editPosition_car;
+    private static long editPosition_Route;
+    private static long editPosition_car;
     private boolean editJourney = false;
     private int editJourneyPosition;
     private static int addRoute;
@@ -86,11 +89,11 @@ String userDay = null;
 //    }
 
 
-    public void setEditPosition_car(int Position) {
+    public void setEditPosition_car(long Position) {
         editPosition_car = Position;
     }
 
-    public int getEditPosition_car() {
+    public long getEditPosition_car() {
         return editPosition_car;
     }
 
@@ -223,8 +226,8 @@ String userDay = null;
         return editRoute;
     }
 
-    public void setEditPosition(int Position) {
-        editPosition = Position;
+    public void setEditPosition_Route(long Position) {
+        editPosition_Route = Position;
     }
 
     public int getAddPosition() {
@@ -232,8 +235,8 @@ String userDay = null;
         return position;
     }
 
-    public int getEditPosition() {
-        return editPosition;
+    public long getEditPosition_Route() {
+        return editPosition_Route;
     }
 
     public void userEditRoute() {
@@ -295,7 +298,15 @@ String userDay = null;
         TransportationMode = 3;
     }
 
-//-----------------------------------Journey functions-------------------------------------------
+    public void setCarInfoDb(SQLiteDatabase db) {
+        CarInfoDB = db;
+    }
+
+    public SQLiteDatabase getCarInfoDb() {
+        return CarInfoDB;
+    }
+
+    //-----------------------------------Journey functions-------------------------------------------
     public List<Journey> getUsersJourneys() {
         return journeyList;
     }

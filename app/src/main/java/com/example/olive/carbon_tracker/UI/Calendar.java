@@ -2,6 +2,7 @@ package com.example.olive.carbon_tracker.UI;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.WindowManager;
 import android.widget.CalendarView;
 import android.widget.CalendarView.OnDateChangeListener;
 import android.widget.Toast;
@@ -19,6 +20,8 @@ public class Calendar extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_calendar);
         getUsersDataPick();
 
@@ -27,18 +30,15 @@ public class Calendar extends AppCompatActivity {
     private void  getUsersDataPick(){
         CalendarView view = new CalendarView(this);
         setContentView(view);
-        Toast.makeText(getApplicationContext(),"date has been changed: " + singleton.getIsDateChanged(),Toast.LENGTH_SHORT).show();
         view.setOnDateChangeListener(new OnDateChangeListener() {
 
             @Override
             public void onSelectedDayChange(CalendarView arg0, int year, int month,
                                             int date) {
-
                 singleton.setUserDay("" +date);
                 singleton.setUserMonth(getStringMonth(month));
                 singleton.setUserYear("" + year);
                 singleton.setIsDateChanged(true);
-                Toast.makeText(getApplicationContext(),"date has been changed: " + singleton.getIsDateChanged(),Toast.LENGTH_SHORT).show();
             }
         });
     }

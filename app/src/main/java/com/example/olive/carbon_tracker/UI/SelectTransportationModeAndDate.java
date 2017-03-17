@@ -5,6 +5,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -26,6 +27,8 @@ public class SelectTransportationModeAndDate extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_select_transportation_mode_and_date);
 
         populateTransportationSpinner();
@@ -57,7 +60,7 @@ public class SelectTransportationModeAndDate extends AppCompatActivity {
             simpleDateFormat = new SimpleDateFormat("MMMM");
             String month = simpleDateFormat.format(date);
 
-            simpleDateFormat = new SimpleDateFormat("YYYY");
+            simpleDateFormat = new SimpleDateFormat("yyyy");
             String year = simpleDateFormat.format(date);
             singleton.setUserDay(day);
             singleton.setUserMonth(month);
