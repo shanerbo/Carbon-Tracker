@@ -1,5 +1,6 @@
 package com.example.olive.carbon_tracker.UI;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,7 +22,7 @@ import java.util.List;
 // ListView Icon: Icon made by Puppets (http://www.flaticon.com/authors/puppets) from www.flaticon.com
 
 public class DisplayJourneyList extends AppCompatActivity {
-    private Singleton singleton = Singleton.getInstance();
+    Singleton singleton = Singleton.getInstance();
     private List<Journey> JourneyList = singleton.getUsersJourneys();
 
     @Override
@@ -44,17 +45,12 @@ public class DisplayJourneyList extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent showActivity = new Intent(DisplayJourneyList.this, SelectTransportationModeAndDate.class);
                 singleton.setEditJourneyPosition(position);
-                startActivityForResult(showActivity, 0);
+                singleton.userEditJourney();
+                startActivity(showActivity);
+                finish();
             }
         });
     }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        setListView();
-    }
-
 
     private void setImageView(View itemView, Journey journey) {
         ImageView imageView = (ImageView) itemView.findViewById(R.id.imgJourney);
@@ -93,5 +89,9 @@ public class DisplayJourneyList extends AppCompatActivity {
             setTextView(itemView, currJourney, R.id.txtDate);
             return itemView;
         }
+    }
+
+     public static Intent makeIntent (Context context) {
+        return new Intent(context, DisplayJourneyList.class);
     }
 }

@@ -129,40 +129,23 @@ public class DisplayRouteList extends AppCompatActivity {
     public void calculateCO2(Route userInput){
         int cityDistance = userInput.getCityDistance();
         int HwyDistance = userInput.getHighwayDistance();
+        double totalCO2 = 0;
 
         if(singleton.checkTransportationMode() == 1) { // Walk/Bike
-            double totalCO2 = 0;
             String TotalCO2 = String.format("%.2f", totalCO2);
             Toast.makeText(getApplicationContext(), "You have produced: "+ TotalCO2 +"kg of CO2", Toast.LENGTH_SHORT).show();
-
             createNewJourney(cityDistance,HwyDistance,totalCO2, 1);
-            Intent ConfirmCar = MainMenu.makeIntent(DisplayRouteList.this);
-            startActivity(ConfirmCar);
-            finish();
-        }
-        else if(singleton.checkTransportationMode() == 2){ //Bus
-            double totalCO2 = (cityDistance+HwyDistance)*0.089;
+        } else if(singleton.checkTransportationMode() == 2){ //Bus
+            totalCO2 = (cityDistance+HwyDistance)*0.089;
             String TotalCO2 = String.format("%.2f", totalCO2);
             Toast.makeText(getApplicationContext(), "You have produced: "+ TotalCO2 +"kg of CO2", Toast.LENGTH_SHORT).show();
-
             createNewJourney(cityDistance,HwyDistance,totalCO2, 2);
-            Intent ConfirmCar = MainMenu.makeIntent(DisplayRouteList.this);
-            startActivity(ConfirmCar);
-            finish();
-
-        }
-        else if(singleton.checkTransportationMode() == 3){ //Skytrain
-            double totalCO2 = (cityDistance+HwyDistance)*0.033;
+        } else if(singleton.checkTransportationMode() == 3){ //Skytrain
+            totalCO2 = (cityDistance+HwyDistance)*0.033;
             String TotalCO2 = String.format("%.2f", totalCO2);
             Toast.makeText(getApplicationContext(), "You have produced: "+ TotalCO2 +"kg of CO2", Toast.LENGTH_SHORT).show();
-
             createNewJourney(cityDistance,HwyDistance,totalCO2, 3);
-            Intent ConfirmCar = MainMenu.makeIntent(DisplayRouteList.this);
-            startActivity(ConfirmCar);
-            finish();
-        }
-
-        else {
+        } else {
             singleton.getVehicle().setCityDistance(cityDistance);
             singleton.getVehicle().setHwyDistance(HwyDistance);
 
@@ -180,14 +163,21 @@ public class DisplayRouteList extends AppCompatActivity {
             double cityGas = (cityDistance * 0.621371192 / cityConsume);
             double hwyGas = HwyDistance * 0.621371192 / HwyConsume;
             double totalGas = cityGas + hwyGas;
-            double totalCO2 = fuelCost * totalGas;
+            totalCO2 = fuelCost * totalGas;
             String TotalCO2 = String.format("%.2f", totalCO2);
             Toast.makeText(getApplicationContext(), "The CO2 you produced: " + TotalCO2, Toast.LENGTH_LONG).show();
             createNewJourney(cityDistance, HwyDistance, totalCO2, 0);
+        }
+
+        if (singleton.isEditingJourney()) {
+            singleton.userFinishEditJourney();
+            Intent userEditJourney = DisplayJourneyList.makeIntent(DisplayRouteList.this);
+            startActivity(userEditJourney);
+        } else {
             Intent ConfirmCar = MainMenu.makeIntent(DisplayRouteList.this);
             startActivity(ConfirmCar);
-            finish();
         }
+        finish();
     }
 
 //    public void onBackPressed() {
@@ -237,7 +227,12 @@ public class DisplayRouteList extends AppCompatActivity {
                 break;
         }
         Journey journey = new Journey(day+"/"+month+"/"+year,currentRouteName,(cityDistance+hwyDistance), VehicleName, CO2);
-        singleton.addUserJourney(journey);
+
+        if (singleton.isEditingJourney()) {
+            singleton.changeJourney(journey);
+        } else {
+            singleton.addUserJourney(journey);
+        }
     }
 }
 

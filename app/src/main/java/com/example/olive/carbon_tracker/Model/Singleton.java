@@ -30,7 +30,8 @@ String userDay = null;
     private static int editVehicle;
     private static int editPosition;
     private static int editPosition_car;
-    private static int editJourneyPosition;
+    private boolean editJourney = false;
+    private int editJourneyPosition;
     private static int addRoute;
     private static int addVehicle;
     private static int deleteRoute;
@@ -311,36 +312,24 @@ String userDay = null;
         return journeyList.get(position);
     }
 
-    public int getEditJourneyPosition() {
-        return editJourneyPosition;
-    }
-
     public void setEditJourneyPosition(int position) {
         editJourneyPosition = position;
     }
 
-    public void userEditRouteFromJourney() {
-        editRoute = 2;
+    public boolean isEditingJourney() {
+        return editJourney;
     }
 
-    public void changeJourney(Vehicle newVehicle) {
-
+    public void userEditJourney() {
+        editJourney = true;
     }
 
-    public void changeJourney(Route newRoute, double newCarbonEmissions) {
-        Journey oldJourney = getJourney(editJourneyPosition);
-        Journey newJourney = new Journey(
-                oldJourney.getDateOfTrip(),
-                newRoute.getName(),
-                newRoute.getTotalDistance(),
-                oldJourney.getVehicleName(),
-                newCarbonEmissions
-        );
+    public void userFinishEditJourney() {
+        editJourney = false;
+    }
+
+    public void changeJourney(Journey newJourney) {
         journeyList.remove(editJourneyPosition);
         journeyList.add(editJourneyPosition, newJourney);
-    }
-
-    public void changeJourney(String newDateOfTrip) {
-
     }
 }

@@ -33,7 +33,6 @@ public class AddNewRoute extends AppCompatActivity {
     Singleton singleton  = Singleton.getInstance();
     Vehicle vehicle = singleton.getVehicle();
     String oldRouteName;
-    private double totalCO2 = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,29 +52,11 @@ public class AddNewRoute extends AppCompatActivity {
             Name.setText(oldRouteName);
             cityDst.setText(""+Route_city_dis);
             hWayDst.setText(""+Route_hWay_dis);
-        } else if (singleton.checkEdit() == 2) {
-            editJourneyMode();
         } else{
             position = singleton.getAddPosition();
         }
         checkButton(position);
         delButton(position);
-    }
-
-    private void editJourneyMode() {
-        position = singleton.getEditPosition();
-        Route RouteToBeEdited = RouteList.get(position);
-        oldRouteName = RouteToBeEdited.getName();
-        int Route_city_dis = RouteToBeEdited.getCityDistance();
-        int Route_hWay_dis = RouteToBeEdited.getHighwayDistance();
-        EditText Name = (EditText)findViewById(R.id.RouteNameInput);
-        EditText cityDst = (EditText)findViewById(R.id.CityDstInput);
-        EditText hWayDst = (EditText)findViewById(R.id.HwayDstInput);
-        Name.setText(oldRouteName);
-        cityDst.setText("" + Route_city_dis);
-        hWayDst.setText("" + Route_hWay_dis);
-        FloatingActionButton delete = (FloatingActionButton) findViewById(R.id.comfirm_delete);
-        delete.setVisibility(View.INVISIBLE);
     }
 
     private void checkButton(final int position) {
@@ -101,18 +82,21 @@ public class AddNewRoute extends AppCompatActivity {
                         singleton.setRouteList(RouteList);
                         singleton.userFinishEdit();
                         String newUserInputRouteName = userInput.getName();
-                        singleton.UserEnterNewRouteName(newUserInputRouteName,oldRouteName);
+                        singleton.UserEnterNewRouteName(newUserInputRouteName, oldRouteName);
                         Intent userEditRoute = DisplayRouteList.makeIntent(AddNewRoute.this);
                         startActivity(userEditRoute);
-                    } else if (singleton.checkEdit() == 2) {
-                        //TODO: correctly update information
+                    } else if (singleton.isEditingJourney()) {
                         calculateCO2(userInput);
-                        singleton.changeJourney(userInput, totalCO2);
+                        singleton.userFinishEditJourney();
+                        Intent userEditJourney = DisplayJourneyList.makeIntent(AddNewRoute.this);
+                        startActivity(userEditJourney);
                     } else {
                         RouteList.add(userInput);
                         singleton.setRouteList(RouteList);
                         singleton.userFinishAdd();
                         calculateCO2(userInput);
+                        Intent ConfirmRoute = MainMenu.makeIntent(AddNewRoute.this);
+                        startActivity(ConfirmRoute);
                     }
                     finish();
                 }else{
@@ -172,6 +156,7 @@ public class AddNewRoute extends AppCompatActivity {
         int cityDistance = userInput.getCityDistance();
         int HwyDistance = userInput.getHighwayDistance();
         int TransportMode = singleton.checkTransportationMode();
+        double totalCO2 = 0;
 
         if(TransportMode == 1) { // Walk/Bike
             String TotalCO2 = String.format("%.2f", totalCO2);
@@ -207,11 +192,7 @@ public class AddNewRoute extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "The CO2 you produced: " + TotalCO2, Toast.LENGTH_SHORT).show();
         }
 
-        if (singleton.checkEdit() != 2) {
-            createNewJourney(cityDistance,HwyDistance,totalCO2, TransportMode);
-            Intent ConfirmRoute = MainMenu.makeIntent(AddNewRoute.this);
-            startActivity(ConfirmRoute);
-        }
+        createNewJourney(cityDistance,HwyDistance,totalCO2, TransportMode);
     }
 
     public int CalculateTotalDistance(int cityDst, int hwyDst){
@@ -248,6 +229,11 @@ public class AddNewRoute extends AppCompatActivity {
                 break;
         }
         Journey journey = new Journey(day+"/"+month+"/"+year,currentRouteName,(cityDistance+hwyDistance), VehicleName, CO2);
-        singleton.addUserJourney(journey);
+
+        if (singleton.isEditingJourney()) {
+            singleton.changeJourney(journey);
+        } else {
+            singleton.addUserJourney(journey);
+        }
     }
 }
