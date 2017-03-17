@@ -42,7 +42,7 @@ public class DisplayJourneyList extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent showActivity = new Intent(DisplayJourneyList.this, EditJourney.class);
+                Intent showActivity = new Intent(DisplayJourneyList.this, SelectTransportationModeAndDate.class);
                 singleton.setEditJourneyPosition(position);
                 startActivityForResult(showActivity, 0);
             }
