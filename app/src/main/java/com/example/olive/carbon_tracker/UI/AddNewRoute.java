@@ -92,7 +92,7 @@ public class AddNewRoute extends AppCompatActivity {
             Name.setText(oldRouteName);
             cityDst.setText(""+Route_city_dis);
             hWayDst.setText(""+Route_hWay_dis);
-        }else{
+        } else {
             position = singleton.getAddPosition();
         }
         checkButton(position);
@@ -123,14 +123,15 @@ public class AddNewRoute extends AppCompatActivity {
                     int cityDst = Integer.parseInt(temp_cityDst);
                     int highWayDst = Integer.parseInt(temp_highWayDst);
                     int totalDst = CalculateTotalDistance(cityDst,highWayDst);
+
+                    ContentValues cv = new ContentValues();
+                    cv.put(SuperUltraInfoDataBaseHelper.Route_Name, name);
+                    cv.put(SuperUltraInfoDataBaseHelper.Route_City_Dst, cityDst);
+                    cv.put(SuperUltraInfoDataBaseHelper.Route_HWY_Dst, highWayDst);
+                    cv.put(SuperUltraInfoDataBaseHelper.Route_total_Dst,totalDst);
                     if (singleton.checkEdit() == 1) {
                         long DBID = _RouteToBeEdit.getRouteDBId();
                         //RouteList.set(position, userInput);
-                        ContentValues cv = new ContentValues();
-                        cv.put(SuperUltraInfoDataBaseHelper.Route_Name, name);
-                        cv.put(SuperUltraInfoDataBaseHelper.Route_City_Dst, cityDst);
-                        cv.put(SuperUltraInfoDataBaseHelper.Route_HWY_Dst, highWayDst);
-                        cv.put(SuperUltraInfoDataBaseHelper.Route_total_Dst,totalDst);
                         long idPassBack = RouteDB.update(SuperUltraInfoDataBaseHelper.Route_Table,cv,"_id="+DBID, null);
                         RouteDB.close();
                         //singleton.setRouteList(RouteList);
@@ -139,14 +140,15 @@ public class AddNewRoute extends AppCompatActivity {
                         //singleton.UserEnterNewRouteName(newUserInputRouteName,oldRouteName);
                         Intent userEditRoute = DisplayRouteList.makeIntent(AddNewRoute.this);
                         startActivity(userEditRoute);
+                    } else if (singleton.isEditingJourney()) {
+                        long idPassedBack = RouteDB.insert(SuperUltraInfoDataBaseHelper.Route_Table,null,cv);
+                        Route userInput = new Route(name, cityDst, highWayDst, totalDst,idPassedBack);
+                        calculateCO2(userInput);
+                        singleton.userFinishEditJourney();
+                        Intent userEditJourney = DisplayJourneyList.makeIntent(AddNewRoute.this);
+                        startActivity(userEditJourney);
                     } else {
                         //RouteList.add(userInput);
-
-                        ContentValues cv = new ContentValues();
-                        cv.put(SuperUltraInfoDataBaseHelper.Route_Name,name);
-                        cv.put(SuperUltraInfoDataBaseHelper.Route_City_Dst,cityDst);
-                        cv.put(SuperUltraInfoDataBaseHelper.Route_HWY_Dst,highWayDst);
-                        cv.put(SuperUltraInfoDataBaseHelper.Route_total_Dst,totalDst);
                         long idPassedBack = RouteDB.insert(SuperUltraInfoDataBaseHelper.Route_Table,null,cv);
                         Route userInput = new Route(name, cityDst, highWayDst, totalDst,idPassedBack);
 
@@ -154,6 +156,8 @@ public class AddNewRoute extends AppCompatActivity {
                         //singleton.setRouteList(RouteList);
                         singleton.userFinishAdd();
                         calculateCO2(userInput);
+                        Intent ConfirmRoute = MainMenu.makeIntent(AddNewRoute.this);
+                        startActivity(ConfirmRoute);
                     }
                     finish();
                 }else{
@@ -163,7 +167,6 @@ public class AddNewRoute extends AppCompatActivity {
         });
     }
 
-    //
     private void delButton(final long position) {
         FloatingActionButton delete = (FloatingActionButton) findViewById(R.id.comfirm_delete);
         if (singleton.checkAdd() == 1){
@@ -216,9 +219,10 @@ public class AddNewRoute extends AppCompatActivity {
     public void calculateCO2(Route userInput){
         int cityDistance = userInput.getCityDistance();
         int HwyDistance = userInput.getHighwayDistance();
+        int TransportMode = singleton.checkTransportationMode();
+        double totalCO2 = 0;
 
-        if(singleton.checkTransportationMode() == 1) { // Walk/Bike
-            double totalCO2 = 0;
+        if (TransportMode == 1) { // Walk/Bike
             String TotalCO2 = String.format("%.2f", totalCO2);
             Toast.makeText(getApplicationContext(), "You have produced: "+ TotalCO2 +"kg of CO2", Toast.LENGTH_SHORT).show();
 
@@ -242,12 +246,9 @@ public class AddNewRoute extends AppCompatActivity {
 
 
             createNewJourney(cityDistance,HwyDistance,totalCO2, 1);
-            Intent ConfirmRoute = MainMenu.makeIntent(AddNewRoute.this);
-            startActivity(ConfirmRoute);
-            finish();
         }
-        else if(singleton.checkTransportationMode() == 2){ //Bus
-            double totalCO2 = (cityDistance+HwyDistance)*0.089;
+        else if (singleton.checkTransportationMode() == 2){ //Bus
+            totalCO2 = (cityDistance+HwyDistance)*0.089;
             String TotalCO2 = String.format("%.2f", totalCO2);
             Toast.makeText(getApplicationContext(), "You have produced: "+ TotalCO2 +"kg of CO2", Toast.LENGTH_SHORT).show();
 
@@ -271,12 +272,9 @@ public class AddNewRoute extends AppCompatActivity {
 
 
             createNewJourney(cityDistance,HwyDistance,totalCO2, 2);
-            Intent ConfirmRoute = MainMenu.makeIntent(AddNewRoute.this);
-            startActivity(ConfirmRoute);
-            finish();
         }
-        else if(singleton.checkTransportationMode() == 3){ //Skytrain
-            double totalCO2 = (cityDistance+HwyDistance)*0.033;
+        else if (singleton.checkTransportationMode() == 3){ //Skytrain
+            totalCO2 = (cityDistance+HwyDistance)*0.033;
             String TotalCO2 = String.format("%.2f", totalCO2);
             Toast.makeText(getApplicationContext(), "You have produced: "+ TotalCO2 +"kg of CO2", Toast.LENGTH_SHORT).show();
 
@@ -301,11 +299,7 @@ public class AddNewRoute extends AppCompatActivity {
 
 
             createNewJourney(cityDistance,HwyDistance,totalCO2, 3);
-            Intent ConfirmRoute = MainMenu.makeIntent(AddNewRoute.this);
-            startActivity(ConfirmRoute);
-            finish();
         }
-
         else {
             singleton.getVehicle().setCityDistance(cityDistance);
             singleton.getVehicle().setHwyDistance(HwyDistance);
@@ -324,7 +318,7 @@ public class AddNewRoute extends AppCompatActivity {
             double cityGas = (cityDistance * 0.621371192 / cityConsume);
             double hwyGas = HwyDistance * 0.621371192 / HwyConsume;
             double totalGas = cityGas + hwyGas;
-            double totalCO2 = fuelCost * totalGas;
+            totalCO2 = fuelCost * totalGas;
             String TotalCO2 = String.format("%.2f", totalCO2);
             Toast.makeText(getApplicationContext(), "The CO2 you produced: " + TotalCO2, Toast.LENGTH_SHORT).show();
 
@@ -355,11 +349,15 @@ public class AddNewRoute extends AppCompatActivity {
 
 
             createNewJourney(cityDistance, HwyDistance, totalCO2, 0);
-
+        }
+        
+        if (singleton.isEditingJourney()) {
+            
+        } else {
             Intent ConfirmRoute = MainMenu.makeIntent(AddNewRoute.this);
             startActivity(ConfirmRoute);
-            finish();
         }
+        finish();
     }
 
     private void addJourneyToDBNotCar(String date, Route route, SQLiteDatabase DB, String Mode,double CO2) {
@@ -376,18 +374,15 @@ public class AddNewRoute extends AppCompatActivity {
         long idPassBack = DB.insert(SuperUltraInfoDataBaseHelper.Journey_Table,null,cv);
         DB.close();
     }
-
-
-
+    
     public int CalculateTotalDistance(int cityDst, int hwyDst){
         int totalDst = cityDst + hwyDst;
         return totalDst;
     }
+
     public static Intent makeIntent(Context context) {
         return new Intent(context, AddNewRoute.class);
     }
-
-
 
     private void createNewJourney(int cityDistance,int hwyDistance,double co2, int TransMode){
 //        String day =   singleton.getUserDay();
@@ -413,8 +408,13 @@ public class AddNewRoute extends AppCompatActivity {
                 VehicleName = "Skytrain";
                 break;
         }
+        
         long temp = 9999;
-        Journey journey = new Journey(_date, VehicleName, _currentRouteName,(cityDistance+hwyDistance), VehicleName, CO2,temp);
-        singleton.addUserJourney(journey);
+        Journey journey = new Journey(_date, VehicleName, _currentRouteName,(cityDistance+hwyDistance), VehicleName, CO2, temp);
+        if (singleton.isEditingJourney()) {
+            singleton.changeJourney(journey);
+        } else {
+            singleton.addUserJourney(journey);
+        }
     }
 }

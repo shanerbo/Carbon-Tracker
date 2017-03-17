@@ -31,8 +31,10 @@ public class Singleton {
 
     private static int editRoute;
     private static int editVehicle;
-    private static Long editPosition_Route;
+    private static long editPosition_Route;
     private static long editPosition_car;
+    private boolean editJourney = false;
+    private int editJourneyPosition;
     private static int addRoute;
     private static int addVehicle;
     private static int deleteRoute;
@@ -47,22 +49,6 @@ public class Singleton {
 
     private Singleton() {
 
-    }
-
-    public List<Journey> getUsersJourneys() {
-        return journeyList;
-    }
-
-    public void setJourneyList(List<Journey> JourneyList) {
-        this.journeyList = JourneyList;
-    }
-
-    public void addUserJourney(Journey journey) {
-        journeyList.add(journey);
-    }
-
-    public Journey getJourney(int position) {
-        return journeyList.get(position);
     }
 
     public boolean getIsDateChanged(){
@@ -312,12 +298,49 @@ public class Singleton {
         TransportationMode = 3;
     }
 
-
     public void setCarInfoDb(SQLiteDatabase db) {
         CarInfoDB = db;
     }
 
     public SQLiteDatabase getCarInfoDb() {
         return CarInfoDB;
+    }
+
+    //-----------------------------------Journey functions-------------------------------------------
+    public List<Journey> getUsersJourneys() {
+        return journeyList;
+    }
+
+    public void setJourneyList(List<Journey> JourneyList) {
+        journeyList = JourneyList;
+    }
+
+    public void addUserJourney(Journey journey) {
+        journeyList.add(journey);
+    }
+
+    public Journey getJourney(int position) {
+        return journeyList.get(position);
+    }
+
+    public void setEditJourneyPosition(int position) {
+        editJourneyPosition = position;
+    }
+
+    public boolean isEditingJourney() {
+        return editJourney;
+    }
+
+    public void userEditJourney() {
+        editJourney = true;
+    }
+
+    public void userFinishEditJourney() {
+        editJourney = false;
+    }
+
+    public void changeJourney(Journey newJourney) {
+        journeyList.remove(editJourneyPosition);
+        journeyList.add(editJourneyPosition, newJourney);
     }
 }

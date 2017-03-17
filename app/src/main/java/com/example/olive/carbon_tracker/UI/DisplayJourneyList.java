@@ -1,5 +1,6 @@
 package com.example.olive.carbon_tracker.UI;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -17,7 +18,6 @@ import android.widget.TextView;
 import com.example.olive.carbon_tracker.Model.DatabaseHelper;
 import com.example.olive.carbon_tracker.Model.Journey;
 import com.example.olive.carbon_tracker.Model.Singleton;
-import com.example.olive.carbon_tracker.Model.Vehicle;
 import com.example.olive.carbon_tracker.R;
 
 import java.text.DecimalFormat;
@@ -27,7 +27,7 @@ import java.util.List;
 // ListView Icon: Icon made by Puppets (http://www.flaticon.com/authors/puppets) from www.flaticon.com
 
 public class DisplayJourneyList extends AppCompatActivity {
-    private Singleton singleton = Singleton.getInstance();
+    Singleton singleton = Singleton.getInstance();
     private List<Journey> JourneyList = singleton.getUsersJourneys();
     private SQLiteDatabase myDataBase;
 
@@ -77,19 +77,14 @@ public class DisplayJourneyList extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent showActivity = new Intent(DisplayJourneyList.this, EditJourney.class);
-                showActivity.putExtra("Position", position);
-                startActivityForResult(showActivity, 0);
+                Intent showActivity = new Intent(DisplayJourneyList.this, SelectTransportationModeAndDate.class);
+                singleton.setEditJourneyPosition(position);
+                singleton.userEditJourney();
+                startActivity(showActivity);
+                finish();
             }
         });
     }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        setListView();
-    }
-
 
     private void setImageView(View itemView, Journey journey) {
         ImageView imageView = (ImageView) itemView.findViewById(R.id.imgJourney);
@@ -100,11 +95,20 @@ public class DisplayJourneyList extends AppCompatActivity {
         TextView textView = (TextView) itemView.findViewById(id);
         String msg;
         if (id == R.id.txtMode) {
-            msg = "Vehicle: " + journey.getVehicleName();
+            msg = "Mode: " + journey.getMode();
         } else if (id == R.id.txtCarName) {
-            msg = "Route: " + journey.getRouteName();
-        } else {
+            msg = "Vehicle Name: " + journey.getVehicleName();
+        } else if (id == R.id.textRouteName) {
+            msg = "Route Name: " + journey.getRouteName();
+        } else if (id == R.id.txtDate) {
             msg = "Date: " + journey.getDateOfTrip();
+        } else if (id == R.id.textTotal) {
+            msg = "Total Distance: " + journey.getTotalDistance();
+        } else {
+            double CO2Emitted = journey.getCarbonEmitted();
+            DecimalFormat df = new DecimalFormat("#.##");
+            CO2Emitted = Double.valueOf(df.format(CO2Emitted));
+            msg = "CO2 Emitted: " + CO2Emitted;
         }
         textView.setText(msg);
     }
@@ -122,28 +126,18 @@ public class DisplayJourneyList extends AppCompatActivity {
             }
 
             Journey currJourney = JourneyList.get(position);
+            setTextView(itemView, currJourney, R.id.txtMode);
+            setTextView(itemView, currJourney, R.id.txtCarName);
+            setTextView(itemView, currJourney, R.id.textRouteName);
+            setTextView(itemView, currJourney, R.id.txtDate);
+            setTextView(itemView, currJourney, R.id.textTotal);
+            setTextView(itemView, currJourney, R.id.textCO2);
 
-            TextView JourneyDate = (TextView)itemView.findViewById(R.id.txtDate);
-            JourneyDate.setText("Date: "+currJourney.getDateOfTrip());
-
-            TextView CarName = (TextView)itemView.findViewById(R.id.txtCarName);
-            CarName.setText("Vehicle Name: " + currJourney.getVehicleName());
-
-            TextView RouteName = (TextView)itemView.findViewById(R.id.textRouteName);
-            RouteName.setText("Route Name: "+ currJourney.getRouteName());
-
-            TextView mode = (TextView)itemView.findViewById(R.id.txtMode);
-            mode.setText("Mode: " + currJourney.getMode());
-
-            TextView TotalDst = (TextView)itemView.findViewById(R.id.textTotal);
-            TotalDst.setText("Total Distance: " + currJourney.getTotalDistance());
-
-            TextView CO2 = (TextView)itemView.findViewById(R.id.textCO2);
-            double CO2Emitted = currJourney.getCarbonEmitted();
-            DecimalFormat df = new DecimalFormat("#.##");
-            CO2Emitted = Double.valueOf(df.format(CO2Emitted));
-            CO2.setText("CO2 Emitted: " + CO2Emitted);
             return itemView;
         }
+    }
+
+     public static Intent makeIntent (Context context) {
+        return new Intent(context, DisplayJourneyList.class);
     }
 }

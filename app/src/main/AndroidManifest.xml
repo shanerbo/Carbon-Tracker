@@ -34,8 +34,6 @@
         <activity android:name=".UI.Chart" />
         <activity android:name=".UI.SelectTransportationModeAndDate"
             android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".UI.EditJourney"
-            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".UI.DisplayJourneyList"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".UI.Calendar"

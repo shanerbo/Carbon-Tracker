@@ -65,6 +65,7 @@ public class DisplayRouteList extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         showAllRoute();
     }
+
     private void EditRoute() {
         ListView RouteInfo = (ListView) findViewById(R.id.ROUTES);
         RouteInfo.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -80,6 +81,7 @@ public class DisplayRouteList extends AppCompatActivity {
             }
         });
     }
+
     private void UserChooseRoute() {
         ListView CarInfo = (ListView) findViewById(R.id.ROUTES);
         CarInfo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -95,6 +97,7 @@ public class DisplayRouteList extends AppCompatActivity {
 
         });
     }
+
     private void AddRoute() {
         FloatingActionButton addRoute = (FloatingActionButton) findViewById(R.id.AddRoute);
         addRoute.setOnClickListener(new View.OnClickListener() {
@@ -108,6 +111,7 @@ public class DisplayRouteList extends AppCompatActivity {
         });
 
     }
+
     private void showAllRoute() {
         List<Route> RouteListFromDB = new ArrayList<Route>();
         myDataBase = SQLiteDatabase.openOrCreateDatabase(DatabaseHelper.DB_PATH + DatabaseHelper.DB_NAME,null);
@@ -164,9 +168,9 @@ public class DisplayRouteList extends AppCompatActivity {
     public void calculateCO2(Route userInput){
         int cityDistance = userInput.getCityDistance();
         int HwyDistance = userInput.getHighwayDistance();
+        double totalCO2 = 0;
 
-        if(singleton.checkTransportationMode() == 1) { // Walk/Bike
-            double totalCO2 = 0;
+        if (singleton.checkTransportationMode() == 1) { // Walk/Bike
             String TotalCO2 = String.format("%.2f", totalCO2);
             Toast.makeText(getApplicationContext(), "You have produced: "+ TotalCO2 +"kg of CO2", Toast.LENGTH_SHORT).show();
 
@@ -193,12 +197,9 @@ public class DisplayRouteList extends AppCompatActivity {
             RouteDB.close();
 
             createNewJourney(cityDistance,HwyDistance,totalCO2, 1);
-            Intent ConfirmCar = MainMenu.makeIntent(DisplayRouteList.this);
-            startActivity(ConfirmCar);
-            finish();
         }
-        else if(singleton.checkTransportationMode() == 2){ //Bus
-            double totalCO2 = (cityDistance+HwyDistance)*0.089;
+        else if (singleton.checkTransportationMode() == 2){ //Bus
+            totalCO2 = (cityDistance+HwyDistance)*0.089;
             String TotalCO2 = String.format("%.2f", totalCO2);
             Toast.makeText(getApplicationContext(), "You have produced: "+ TotalCO2 +"kg of CO2", Toast.LENGTH_SHORT).show();
 
@@ -226,16 +227,11 @@ public class DisplayRouteList extends AppCompatActivity {
             RouteDB.close();
 
             createNewJourney(cityDistance,HwyDistance,totalCO2, 2);
-            Intent ConfirmCar = MainMenu.makeIntent(DisplayRouteList.this);
-            startActivity(ConfirmCar);
-            finish();
-
         }
-        else if(singleton.checkTransportationMode() == 3){ //Skytrain
-            double totalCO2 = (cityDistance+HwyDistance)*0.033;
+        else if (singleton.checkTransportationMode() == 3){ //Skytrain
+            totalCO2 = (cityDistance+HwyDistance)*0.033;
             String TotalCO2 = String.format("%.2f", totalCO2);
             Toast.makeText(getApplicationContext(), "You have produced: "+ TotalCO2 +"kg of CO2", Toast.LENGTH_SHORT).show();
-
 
             String day =   singleton.getUserDay();
             String month =  singleton.getUserMonth();
@@ -260,11 +256,7 @@ public class DisplayRouteList extends AppCompatActivity {
             RouteDB.close();
 
             createNewJourney(cityDistance,HwyDistance,totalCO2, 3);
-            Intent ConfirmCar = MainMenu.makeIntent(DisplayRouteList.this);
-            startActivity(ConfirmCar);
-            finish();
         }
-
         else {
             singleton.getVehicle().setCityDistance(cityDistance);
             singleton.getVehicle().setHwyDistance(HwyDistance);
@@ -283,7 +275,7 @@ public class DisplayRouteList extends AppCompatActivity {
             double cityGas = (cityDistance * 0.621371192 / cityConsume);
             double hwyGas = HwyDistance * 0.621371192 / HwyConsume;
             double totalGas = cityGas + hwyGas;
-            double totalCO2 = fuelCost * totalGas;
+            totalCO2 = fuelCost * totalGas;
             String TotalCO2 = String.format("%.2f", totalCO2);
             Toast.makeText(getApplicationContext(), "The CO2 you produced: " + TotalCO2, Toast.LENGTH_LONG).show();
 
@@ -317,12 +309,18 @@ public class DisplayRouteList extends AppCompatActivity {
             long idPassBack = RouteDB.insert(SuperUltraInfoDataBaseHelper.Journey_Table,null,cv);
             RouteDB.close();
 
-
             createNewJourney(cityDistance, HwyDistance, totalCO2, 0);
+        }
+
+        if (singleton.isEditingJourney()) {
+            singleton.userFinishEditJourney();
+            Intent userEditJourney = DisplayJourneyList.makeIntent(DisplayRouteList.this);
+            startActivity(userEditJourney);
+        } else {
             Intent ConfirmCar = MainMenu.makeIntent(DisplayRouteList.this);
             startActivity(ConfirmCar);
-            finish();
         }
+        finish();
     }
 
     public void onBackPressed() {
@@ -337,11 +335,8 @@ public class DisplayRouteList extends AppCompatActivity {
     private void createNewJourney(int cityDistance,int hwyDistance,double co2, int TransMode){
         DateFormat df = new SimpleDateFormat("EEE, MMM d, ''yy");
         Calendar calendar = new Calendar();
-
         Date date = new Date();
-
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEEE");
-
         Toast.makeText(getApplicationContext(),"MONTH "+simpleDateFormat.format(date).toUpperCase(),Toast.LENGTH_SHORT).show();
 
         String day =   singleton.getUserDay();
@@ -363,9 +358,15 @@ public class DisplayRouteList extends AppCompatActivity {
             case 3:
                 VehicleName = "Skytrain";
                 break;
-        }long temp = 9999;
+        }
+
+        long temp = 9999;
         Journey journey = new Journey(day+"/"+month+"/"+year,VehicleName,currentRouteName,(cityDistance+hwyDistance), VehicleName, CO2, temp);
-        singleton.addUserJourney(journey);
+        if (singleton.isEditingJourney()) {
+            singleton.changeJourney(journey);
+        } else {
+            singleton.addUserJourney(journey);
+        }
     }
 }
 
