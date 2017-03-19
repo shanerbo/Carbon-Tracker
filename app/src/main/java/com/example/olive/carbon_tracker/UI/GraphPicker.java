@@ -15,6 +15,8 @@ public class GraphPicker extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph_picker);
         setButton(R.id.btnSingleDay);
+        setButton(R.id.btnMonthGraph);
+        setButton(R.id.btnYearGraph);
     }
 
 
@@ -29,12 +31,13 @@ public class GraphPicker extends AppCompatActivity {
                         //showActivity = DisplayCarList.makeIntent(MainMenu.this);
                         showActivity = new Intent(GraphPicker.this, SingleDayGraph.class);
                         break;
-              /*      case R.id.btnCurrentFootprint:
-                        showActivity = new Intent(MainMenu.this,DisplayCarbonFootprint.class);
+                    case R.id.btnMonthGraph:
+                        showActivity = new Intent(GraphPicker.this,MonthGraph.class);
                         break;
-                    case R.id.btnEditJourney:
-                        showActivity = new Intent(MainMenu.this, DisplayJourneyList.class);
-                        break;*/
+                    case R.id.btnYearGraph:
+                        showActivity = new Intent(GraphPicker.this,YearGraph.class);
+                        break;
+
                 }
                 startActivity(showActivity);
             }

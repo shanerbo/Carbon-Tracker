@@ -14,7 +14,7 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Calendar extends AppCompatActivity {
+public class DisplayCalendar extends AppCompatActivity {
     private Singleton singleton = Singleton.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {

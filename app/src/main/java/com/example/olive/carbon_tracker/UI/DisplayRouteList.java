@@ -28,8 +28,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static com.example.olive.carbon_tracker.R.string.year;
-
 public class DisplayRouteList extends AppCompatActivity {
     private List<Route> RouteList = new ArrayList<Route>();
     Singleton singleton  = Singleton.getInstance();
@@ -201,7 +199,7 @@ public class DisplayRouteList extends AppCompatActivity {
 
     private void createNewJourney(int cityDistance,int hwyDistance,double co2, int TransMode){
         DateFormat df = new SimpleDateFormat("EEE, MMM d, ''yy");
-        Calendar calendar = new Calendar();
+        DisplayCalendar calendar = new DisplayCalendar();
 
         Date date = new Date();
 

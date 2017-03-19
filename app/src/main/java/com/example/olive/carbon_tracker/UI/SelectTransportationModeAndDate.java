@@ -10,7 +10,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.olive.carbon_tracker.Model.Singleton;
 import com.example.olive.carbon_tracker.R;
@@ -78,7 +77,7 @@ public class SelectTransportationModeAndDate extends AppCompatActivity {
             Button btn = (Button) findViewById(R.id.btnChangeDate);
             btn.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    Intent intent = new Intent(SelectTransportationModeAndDate.this,Calendar.class);
+                    Intent intent = new Intent(SelectTransportationModeAndDate.this,DisplayCalendar.class);
                     startActivity(intent);
                 }
             });
