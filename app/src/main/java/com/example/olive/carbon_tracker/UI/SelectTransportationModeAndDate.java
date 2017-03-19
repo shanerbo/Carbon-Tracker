@@ -1,7 +1,12 @@
 package com.example.olive.carbon_tracker.UI;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -14,8 +19,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.olive.carbon_tracker.Model.Singleton;
+import com.example.olive.carbon_tracker.Model.SuperUltraInfoDataBaseHelper;
 import com.example.olive.carbon_tracker.R;
 
+import java.nio.channels.SelectionKey;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -23,12 +30,16 @@ public class SelectTransportationModeAndDate extends AppCompatActivity {
 
     Singleton singleton = Singleton.getInstance();
     private static int UserTransportationMode;
+    private SQLiteDatabase RouteDB;
+    private long JourneyPosition = singleton.getEditPostion_Journey();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
+        SuperUltraInfoDataBaseHelper RouteDBhelper = new SuperUltraInfoDataBaseHelper(this);
+        RouteDB = RouteDBhelper.getWritableDatabase();
         setContentView(R.layout.activity_select_transportation_mode_and_date);
 
         populateTransportationSpinner();
@@ -45,6 +56,8 @@ public class SelectTransportationModeAndDate extends AppCompatActivity {
         String month = singleton.getUserMonth();
         String year = singleton.getUserYear();
         currentDate.setText(day + "/" + month + "/" + year);
+        //TODO fix the problem that if i want to edit a journey like march 8th 2016,
+        // the text shows is 08/March 2016 but the calender is pointing to the current date
         singleton.setIsDateChanged(true);
     }
     private void viewCurrentDate(){
@@ -124,6 +137,7 @@ public class SelectTransportationModeAndDate extends AppCompatActivity {
 
     private void setButton(final int id) {
         FloatingActionButton button = (FloatingActionButton) findViewById(id);
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -140,11 +154,47 @@ public class SelectTransportationModeAndDate extends AppCompatActivity {
                             break;
                         }
                     case R.id.ID_button_mode_cancel:
-                        finish();
+                        new AlertDialog.Builder(SelectTransportationModeAndDate.this)
+                                .setTitle("Delete Journey")
+                                .setMessage(R.string.DeleteJourneyWarning)
+                                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        Intent del_intent = new Intent();
+                                        RouteDB.delete(SuperUltraInfoDataBaseHelper.Journey_Table,
+                                                "_id"+"="+JourneyPosition,null);
+                                        RouteDB.close();
+                                        singleton.userFinishEdit();
+                                        setResult(Activity.RESULT_OK,del_intent);
+                                        Toast.makeText(SelectTransportationModeAndDate.this,getString(R.string.UserDeleteJourney),Toast.LENGTH_LONG).show();
+                                        finish();
+                                    }
+                                })
+                                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.cancel();
+                                        singleton.userFinishEdit();
+                                    }
+                                })
+                                .setIcon(android.R.drawable.ic_dialog_alert).show();
                         break;
                 }
             }
         });
+    }
+    public void onBackPressed() {
+        if (singleton.isEditingJourney()){
+            singleton.userFinishEditJourney();
+            Intent goBackToJourneyList = DisplayJourneyList.makeIntent(SelectTransportationModeAndDate.this);
+            startActivity(goBackToJourneyList);
+        }else {
+            Intent goBackToMainMenu = MainMenu.makeIntent(SelectTransportationModeAndDate.this);
+            startActivity(goBackToMainMenu);
+        }
+    }
+    public static Intent makeIntent (Context context) {
+        return new Intent(context, SelectTransportationModeAndDate.class);
     }
 
 }

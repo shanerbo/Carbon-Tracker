@@ -39,8 +39,13 @@ public class DisplayRouteList extends AppCompatActivity {
     Singleton singleton  = Singleton.getInstance();
     String currentRouteName;
     Vehicle _vehicle = singleton.getVehicle();
+    private long _EditedJourneyID = singleton.getEditPostion_Journey();
     private SQLiteDatabase myDataBase;
     private SQLiteDatabase RouteDB;
+    private String _day =   singleton.getUserDay();
+    private String _month =  singleton.getUserMonth();
+    private String _year =  singleton.getUserYear();
+    private String _date = _day+"/"+_month+"/"+_year;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +81,7 @@ public class DisplayRouteList extends AppCompatActivity {
                 singleton.setEditPosition_Route(DB_id);
                 singleton.userEditRoute();
                 startActivityForResult(EditIntent,0);
-                finish();
+                //finish();
                 return true;
             }
         });
@@ -87,15 +92,105 @@ public class DisplayRouteList extends AppCompatActivity {
         CarInfo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Route userPickRoute = RouteList.get(position);
-                currentRouteName = userPickRoute.getName();
+                if (singleton.isEditingJourney()){
+                    Route RouteOnClicker = RouteList.get(position);
+                    long idPassedBack = RouteOnClicker.getRouteDBId();
+                    String name = RouteOnClicker.getName();
+                    int cityDst = RouteOnClicker.getHighwayDistance();
+                    int highWayDst = RouteOnClicker.getHighwayDistance();
+                    int totalDst = RouteOnClicker.getTotalDistance();
+                    ContentValues cv = new ContentValues();
+                    String mode;
+                    if (singleton.checkTransportationMode() == 1){
+                        mode = "Walk/bike";
+                        double co2 = 0;
+                        editJoutneyDB(_date,0,mode,mode,"N/A","N/A",0,0,0,"N/A",idPassedBack,name,cityDst,
+                                highWayDst,totalDst,_EditedJourneyID,co2);
+                    }
+                    else if (singleton.checkTransportationMode() == 2){
+                        mode = "Bus";
+                        double co2 = (cityDst + highWayDst)*0.089;
+                        editJoutneyDB(_date,0,mode,mode,"N/A","N/A",0,0,0,"N/A",idPassedBack,name,cityDst,
+                                highWayDst,totalDst,_EditedJourneyID,co2);
+                    }
+                    else if (singleton.checkTransportationMode() == 3){
+                        mode = "Skytrain";
+                        double co2 = (cityDst + highWayDst)*0.033;
+                        editJoutneyDB(_date,0,mode,mode,"N/A","N/A",0,0,0,"N/A",idPassedBack,name,cityDst,
+                                highWayDst,totalDst,_EditedJourneyID,co2);
+                    }
+                    else{
+                        mode = "Car";
+                        double fuelCost;
+                        if (_vehicle.getFuelType().toLowerCase().matches("diesel")) {
+                            fuelCost = 10.16;
+                        } else if (_vehicle.getFuelType().toLowerCase().matches("electricity")) {
+                            fuelCost = 0;
+                        } else {
+                            fuelCost = 8.89;
+                        }
+                        double cityGas = (cityDst * 0.621371192 / _vehicle.getCity08());
+                        double hwyGas = highWayDst * 0.621371192 / _vehicle.getHighway08();
+                        double totalGas = cityGas + hwyGas;
+                        double co2 = fuelCost * totalGas;
+                        editJoutneyDB(_date,_vehicle.getCarDBId(),_vehicle.getName(),mode,_vehicle.getMake()
+                                ,_vehicle.getModel(),_vehicle.getYear(),_vehicle.getCity08(),
+                                _vehicle.getHighway08(),_vehicle.getFuelType(),idPassedBack,name,cityDst,
+                                highWayDst,totalDst,_EditedJourneyID,co2);
+                    }
 
-                calculateCO2(userPickRoute);
 
+
+//                        long idPassedBack = RouteDB.insert(SuperUltraInfoDataBaseHelper.Route_Table,null,cv);
+//                        Route userInput = new Route(name, cityDst, highWayDst, totalDst,idPassedBack);
+//                        calculateCO2(userInput);
+                    singleton.userFinishEditJourney();
+                    Intent userEditJourney = DisplayJourneyList.makeIntent(DisplayRouteList.this);
+                    startActivity(userEditJourney);
+                    singleton.userFinishAdd();
+                    finish();
+                }
+                else {
+                    Route userPickRoute = RouteList.get(position);
+                    currentRouteName = userPickRoute.getName();
+                    calculateCO2(userPickRoute);
+                }
             }
 
 
         });
+    }
+
+    private void editJoutneyDB(String date, long CarId,String CarName, String Mode, String CarMake,
+                               String CarModel, int CarYear, double CarCity08, double CarHwy08,
+                               String CarFuelType,
+                               long RouteId, String RouteName, int RouteCityDst,
+                               int RouteHwyDst, int TotalDst, long JourneyID,double totalCO2) {
+        ContentValues cv = new ContentValues();
+        cv.put(SuperUltraInfoDataBaseHelper.Journey_Date,date);
+
+        cv.put(SuperUltraInfoDataBaseHelper.Journey_CarId,CarId);
+        cv.put(SuperUltraInfoDataBaseHelper.Journey_CarName, CarName);
+        cv.put(SuperUltraInfoDataBaseHelper.Journey_CarMode, Mode);
+        cv.put(SuperUltraInfoDataBaseHelper.Journey_CarMake,CarMake);
+        cv.put(SuperUltraInfoDataBaseHelper.Journey_CarModel,CarModel);
+        cv.put(SuperUltraInfoDataBaseHelper.Journey_CarYear,CarYear);
+        cv.put(SuperUltraInfoDataBaseHelper.Journey_CarCity,CarCity08);
+        cv.put(SuperUltraInfoDataBaseHelper.Journey_CarHwy,CarHwy08);
+        cv.put(SuperUltraInfoDataBaseHelper.Journey_CarFuelType,CarFuelType);
+
+        cv.put(SuperUltraInfoDataBaseHelper.Journey_RouteId, RouteId);
+        cv.put(SuperUltraInfoDataBaseHelper.Journey_RouteName, RouteName);
+        cv.put(SuperUltraInfoDataBaseHelper.Journey_RouteCityDist, RouteCityDst);
+        cv.put(SuperUltraInfoDataBaseHelper.Journey_RouteHwyDist, RouteHwyDst);
+        cv.put(SuperUltraInfoDataBaseHelper.Journey_RouteTotalDist, TotalDst);
+
+        cv.put(SuperUltraInfoDataBaseHelper.Journey_CO2Emitted, totalCO2);
+
+
+        long idPassBack = RouteDB.update(SuperUltraInfoDataBaseHelper.Journey_Table,cv,"_id="+JourneyID, null);
+        RouteDB.close();
+
     }
 
     private void AddRoute() {

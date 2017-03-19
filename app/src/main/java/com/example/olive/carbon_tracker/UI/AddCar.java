@@ -427,7 +427,6 @@ public class AddCar extends AppCompatActivity {
                                 singleton.userFinishEdit_car();
                                 Intent goBackToDisplayCar = DisplayCarList.makeIntent(AddCar.this);
                                 startActivity(goBackToDisplayCar);
-                                finish();
                             }
                         })
                         .setIcon(android.R.drawable.ic_dialog_alert).show();

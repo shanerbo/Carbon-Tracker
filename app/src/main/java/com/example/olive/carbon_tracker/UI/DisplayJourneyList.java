@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.olive.carbon_tracker.Model.DatabaseHelper;
 import com.example.olive.carbon_tracker.Model.Journey;
@@ -64,6 +65,7 @@ public class DisplayJourneyList extends AppCompatActivity {
             JourneyListFromDB.add(tempJourney);
             cursor.moveToNext();
         }
+
         cursor.close();
         myDataBase.close();
         JourneyList = JourneyListFromDB;
@@ -79,9 +81,10 @@ public class DisplayJourneyList extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent showActivity = new Intent(DisplayJourneyList.this, SelectTransportationModeAndDate.class);
                 singleton.setEditJourneyPosition(position);
+                singleton.setEditPostion_Journey(JourneyList.get(position).getJourneyID());
                 singleton.userEditJourney();
                 startActivity(showActivity);
-                finish();
+                //finish();
             }
         });
     }
@@ -136,7 +139,10 @@ public class DisplayJourneyList extends AppCompatActivity {
             return itemView;
         }
     }
-
+    public void onBackPressed() {
+        Intent goBackToMainMenu = MainMenu.makeIntent(DisplayJourneyList.this);
+        startActivity(goBackToMainMenu);
+    }
      public static Intent makeIntent (Context context) {
         return new Intent(context, DisplayJourneyList.class);
     }
