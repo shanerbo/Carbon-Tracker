@@ -33,7 +33,17 @@
         android:id="@+id/btnEditJourney"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@string/edit_journeys"
+        android:layout_above="@+id/btnMonthlyUti"
+        android:layout_alignStart="@+id/btnMonthlyUti"
+        android:layout_marginBottom="71dp" />
+
+    <Button
+        android:id="@+id/btnMonthlyUti"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnCurrentFootprint"
         android:layout_alignStart="@+id/btnCurrentFootprint"
-        android:layout_centerVertical="true"
-        android:text="@string/edit_journeys" />
+        android:layout_marginBottom="64dp"
+        android:text="Monthly Utilities" />
 </RelativeLayout>
