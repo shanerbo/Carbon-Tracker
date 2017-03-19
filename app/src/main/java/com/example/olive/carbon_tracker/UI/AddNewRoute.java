@@ -274,7 +274,7 @@ public class AddNewRoute extends AppCompatActivity {
             createNewJourney(cityDistance,HwyDistance,totalCO2, 2);
         }
         else if (singleton.checkTransportationMode() == 3){ //Skytrain
-            totalCO2 = (cityDistance+HwyDistance)*0.033;
+            totalCO2 = (cityDistance+HwyDistance)*0.02348;
             String TotalCO2 = String.format("%.2f", totalCO2);
             Toast.makeText(getApplicationContext(), "You have produced: "+ TotalCO2 +"kg of CO2", Toast.LENGTH_SHORT).show();
 

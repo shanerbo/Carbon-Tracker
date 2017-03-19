@@ -110,7 +110,7 @@ public class SelectTransportationModeAndDate extends AppCompatActivity {
                     UserTransportationMode = 2;
                     singleton.ModeBus();
                 }
-                else if(UserMode.matches("Skytrain")){ //33g of CO2 emissions per km of skytrain travel.
+                else if(UserMode.matches("Skytrain")){ //23.48g of CO2 emissions per km of skytrain travel.
                     UserTransportationMode = 3;
                     singleton.ModeSkytrain();
                 }
