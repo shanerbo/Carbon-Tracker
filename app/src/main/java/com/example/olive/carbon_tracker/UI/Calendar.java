@@ -28,19 +28,51 @@ public class Calendar extends AppCompatActivity {
     }
 
     private void  getUsersDataPick(){
-        CalendarView view = new CalendarView(this);
-        setContentView(view);
-        view.setOnDateChangeListener(new OnDateChangeListener() {
+        if(getIntent().getIntExtra("MonthlyUtilities", 0) == 10) {
+            CalendarView view = new CalendarView(this);
+            setContentView(view);
+            view.setOnDateChangeListener(new OnDateChangeListener() {
 
-            @Override
-            public void onSelectedDayChange(CalendarView arg0, int year, int month,
-                                            int date) {
-                singleton.setUserDay("" +date);
-                singleton.setUserMonth(getStringMonth(month));
-                singleton.setUserYear("" + year);
-                singleton.setIsDateChanged(true);
-            }
-        });
+                @Override
+                public void onSelectedDayChange(CalendarView arg0, int year, int month,
+                                                int date) {
+                    singleton.setStartDay("" +date);
+                    singleton.setStartMonth(getStringMonth(month));
+                    singleton.setStartYear("" + year);
+                    singleton.setStartDateChanged(true);
+                }
+            });
+        }
+        else if(getIntent().getIntExtra("MonthlyUtilities", 0) == 20) {
+            CalendarView view = new CalendarView(this);
+            setContentView(view);
+            view.setOnDateChangeListener(new OnDateChangeListener() {
+
+                @Override
+                public void onSelectedDayChange(CalendarView arg0, int year, int month,
+                                                int date) {
+                    singleton.setEndDay("" +date);
+                    singleton.setEndMonth(getStringMonth(month));
+                    singleton.setEndYear("" + year);
+                    singleton.setEndDateChanged(true);
+                }
+            });
+        }
+        else {
+            CalendarView view = new CalendarView(this);
+            setContentView(view);
+            view.setOnDateChangeListener(new OnDateChangeListener() {
+
+                @Override
+                public void onSelectedDayChange(CalendarView arg0, int year, int month,
+                                                int date) {
+                    singleton.setUserDay("" + date);
+                    singleton.setUserMonth(getStringMonth(month));
+                    singleton.setUserYear("" + year);
+                    singleton.setIsDateChanged(true);
+                }
+            });
+        }
     }
 
     public String  getStringMonth(int month){

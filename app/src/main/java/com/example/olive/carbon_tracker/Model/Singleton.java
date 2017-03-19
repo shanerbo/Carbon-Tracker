@@ -21,6 +21,15 @@ public class Singleton {
     String userYear = null;
     boolean isDateChanged = false;
 
+    String startDay = null;
+    String startMonth = null;
+    String startYear = null;
+    boolean isStartDateChanged = false;
+    String endDay = null;
+    String endMonth = null;
+    String endYear = null;
+    boolean isEndDateChanged = false;
+
     SQLiteDatabase CarInfoDB;
 
 
@@ -188,6 +197,8 @@ public class Singleton {
         }
     }
 
+    //--------------------------------Vehicle Date----------------------------------------------//
+
     public String getUserDay() {
         return userDay;
     }
@@ -211,6 +222,42 @@ public class Singleton {
     public void setUserYear(String userYear) {
         this.userYear = userYear;
     }
+
+    //-------------------------------Monthly Utilities Dates------------------------------------//
+
+    public String getStartDay() { return startDay;  }
+
+    public void setStartDay(String startDay) { this.startDay = startDay; }
+
+    public String getStartMonth() { return startMonth;  }
+
+    public void setStartMonth(String startMonth) { this.startMonth = startMonth; }
+
+    public String getStartYear() { return startYear; }
+
+    public void setStartYear(String startYear) { this.startYear = startYear; }
+
+    public String getEndDay() { return endDay; }
+
+    public void setEndDay(String endDay) { this.endDay = endDay; }
+
+    public String getEndMonth() { return endMonth; }
+
+    public void setEndMonth(String endMonth) { this.endMonth = endMonth; }
+
+    public String getEndYear() { return endYear; }
+
+    public void setEndYear(String endYear) { this.endYear = endYear; }
+
+    public boolean isStartDateChanged() { return isStartDateChanged; }
+
+    public void setStartDateChanged(boolean startDateChanged) { isStartDateChanged = startDateChanged; }
+
+    public boolean isEndDateChanged() { return isEndDateChanged; }
+
+    public void setEndDateChanged(boolean endDateChanged) { isEndDateChanged = endDateChanged; }
+
+
 
     //-----------------------------------Route's function-------------------------------------------
 
