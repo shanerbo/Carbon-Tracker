@@ -7,25 +7,35 @@
     tools:context="com.example.olive.carbon_tracker.UI.MonthlyUtilities">
 
     <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/TVNaturalGasUsage"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="35dp"
+        android:text="kW.h"
+        android:textSize="14sp" />
+
+    <TextView
         android:id="@+id/ID_Billing_Date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="26dp"
+        android:layout_marginTop="27dp"
         android:text="Billing Date"
+        android:textSize="18sp"
         tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="16dp" />
+        tools:layout_editor_absoluteY="16dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:id="@+id/ID_startDate_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="37dp"
         android:text="Start Date"
         android:layout_below="@+id/ID_Billing_Date"
-        android:layout_toStartOf="@+id/ID_Billing_Date"
-        android:layout_marginEnd="24dp" />
+        android:layout_toStartOf="@+id/ID_Billing_Date" />
 
     <Button
         android:id="@+id/ID_endDate_button"
@@ -40,20 +50,20 @@
         android:id="@+id/displayStartDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:text="TextView"
         android:layout_alignBaseline="@+id/ID_startDate_button"
         android:layout_alignBottom="@+id/ID_startDate_button"
-        android:layout_toEndOf="@+id/TVNaturalGasUsage" />
+        android:layout_marginStart="16dp"
+        android:layout_toEndOf="@+id/TVNaturalGasUsage"
+        android:text="dd/mm/yyyy" />
 
     <TextView
         android:id="@+id/DisplayEndDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
         android:layout_alignBaseline="@+id/ID_endDate_button"
         android:layout_alignBottom="@+id/ID_endDate_button"
-        android:layout_alignStart="@+id/displayStartDate" />
+        android:layout_alignStart="@+id/displayStartDate"
+        android:text="dd/mm/yyyy" />
 
     <TextView
         android:id="@+id/TVelecUsage"
@@ -80,9 +90,11 @@
         android:layout_alignStart="@+id/DisplayEndDate"
         android:layout_below="@+id/ID_endDate_button"
         android:layout_marginTop="35dp"
+        android:layout_toStartOf="@+id/inGJ"
         android:ems="10"
+        android:hint="0.0"
         android:inputType="numberDecimal"
-        android:layout_marginRight="35dp"/>
+        android:textAlignment="center" />
 
     <EditText
         android:id="@+id/editNaturalGasUsage"
@@ -91,8 +103,43 @@
         android:layout_alignStart="@+id/editElecUsage"
         android:layout_below="@+id/editElecUsage"
         android:layout_marginTop="40dp"
+        android:layout_toStartOf="@+id/inGJ"
         android:ems="10"
+        android:hint="0.0"
         android:inputType="numberDecimal"
-        android:layout_marginRight="35dp"/>
+        android:textAlignment="center" />
+
+    <TextView
+        android:id="@+id/inGJ"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/TVNaturalGasUsage"
+        android:layout_alignStart="@+id/textView8"
+        android:text="GJ"
+        android:textSize="14sp" />
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/ok_billing_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        app:backgroundTint="@android:color/holo_green_dark"
+        app:fabSize="normal"
+        app:srcCompat="@android:drawable/checkbox_on_background"
+        android:layout_below="@+id/editNaturalGasUsage"
+        android:layout_toEndOf="@+id/ID_Billing_Date"
+        android:layout_marginTop="25dp" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/cancel_billing_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        app:backgroundTint="@android:color/holo_red_light"
+        app:fabSize="normal"
+        app:srcCompat="@android:drawable/btn_dialog"
+        android:layout_alignTop="@+id/ok_billing_btn"
+        android:layout_alignEnd="@+id/ID_startDate_button" />
 
 </RelativeLayout>

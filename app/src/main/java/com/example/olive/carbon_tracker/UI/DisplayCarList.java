@@ -15,7 +15,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.olive.carbon_tracker.Model.DatabaseHelper;
 import com.example.olive.carbon_tracker.Model.Singleton;
@@ -161,11 +160,11 @@ public class DisplayCarList extends AppCompatActivity {
             Vehicle currentVehicle = VehicleList.get(position);
             ImageView imageView = (ImageView) itemView.findViewById(R.id.RouteImage);
             imageView.setImageResource(currentVehicle.getIconId());
-            TextView carName = (TextView) itemView.findViewById(R.id.CarNameWithimage);
+            TextView carName = (TextView) itemView.findViewById(R.id.StartingDate);
             carName.setText("Car Name: " + currentVehicle.getName());
-            TextView carMake = (TextView) itemView.findViewById(R.id.CarMakeWithimage);
+            TextView carMake = (TextView) itemView.findViewById(R.id.EndingDate);
             carMake.setText("Car Make: " + currentVehicle.getMake());
-            TextView carModel = (TextView) itemView.findViewById(R.id.CarModelWithimage);
+            TextView carModel = (TextView) itemView.findViewById(R.id.IndElecUsage);
             carModel.setText("Car Model: " + currentVehicle.getModel());
             TextView carYear = (TextView) itemView.findViewById(R.id.CarYearWImage);
             carYear.setText("Car Year: " + currentVehicle.getYear());

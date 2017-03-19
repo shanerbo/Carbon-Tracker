@@ -11,11 +11,11 @@
         android:layout_height="wrap_content"
         android:text="@string/tempTotalDst"
         android:textSize="12sp"
-        android:layout_below="@+id/CarModelWithimage"
+        android:layout_below="@+id/IndElecUsage"
         android:layout_toEndOf="@+id/RouteImage" />
 
     <TextView
-        android:id="@+id/CarNameWithimage"
+        android:id="@+id/StartingDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/tempRouteName"
@@ -24,12 +24,12 @@
         android:layout_toEndOf="@+id/RouteImage" />
 
     <TextView
-        android:id="@+id/CarMakeWithimage"
+        android:id="@+id/EndingDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/tempCityDst"
         android:textSize="12sp"
-        android:layout_below="@+id/CarNameWithimage"
+        android:layout_below="@+id/StartingDate"
         android:layout_toEndOf="@+id/RouteImage" />
 
     <ImageView
@@ -42,12 +42,12 @@
         android:contentDescription="" />
 
     <TextView
-        android:id="@+id/CarModelWithimage"
+        android:id="@+id/IndElecUsage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/tempHwatDst"
         android:textSize="12sp"
-        android:layout_below="@+id/CarMakeWithimage"
+        android:layout_below="@+id/EndingDate"
         android:layout_toEndOf="@+id/RouteImage" />
 
 </RelativeLayout>

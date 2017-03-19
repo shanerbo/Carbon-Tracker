@@ -25,6 +25,7 @@ public class Singleton {
     String startMonth = null;
     String startYear = null;
     boolean isStartDateChanged = false;
+
     String endDay = null;
     String endMonth = null;
     String endYear = null;
@@ -40,12 +41,14 @@ public class Singleton {
 
     private static int editRoute;
     private static int editVehicle;
+    private static int editMonthlyUtilities;
     private static long editPosition_Route;
     private static long editPosition_car;
     private boolean editJourney = false;
     private int editJourneyPosition;
     private static int addRoute;
     private static int addVehicle;
+    private static int addMonthlyUtilities;
     private static int deleteRoute;
     private static int TransportationMode;
     private static Singleton instance = new Singleton();
@@ -111,17 +114,13 @@ public class Singleton {
         return position;
     }
 
-    public void userEditRoute_car() {
-        editVehicle = 1;
-    }
+    public void userEditRoute_car() { editVehicle = 1;  }
 
     public int checkEdit_car() {
         return editVehicle;
     }
 
-    public void userFinishEdit_car() {
-        editVehicle = 0;
-    }
+    public void userFinishEdit_car() { editVehicle = 0;  }
 
     public void userAddVehicle() {
         addVehicle = 1;
@@ -257,6 +256,26 @@ public class Singleton {
 
     public void setEndDateChanged(boolean endDateChanged) { isEndDateChanged = endDateChanged; }
 
+
+    public void userAddMonthlyUtilities() {
+        addMonthlyUtilities = 1;
+    }
+
+    public void userFinishAdd_MonthlyUtilities() {
+        addMonthlyUtilities = 0;
+    }
+
+    public int checkAdd_MonthlyUtilities() {
+        return addMonthlyUtilities;
+    }
+
+    public void userEditMonthlyUtilities() { editMonthlyUtilities = 1;  }
+
+    public int checkEditMonthlyUtilities() {
+        return editMonthlyUtilities;
+    }
+
+    public void userFinishEditMonthlyUtilities() { editMonthlyUtilities = 0;  }
 
 
     //-----------------------------------Route's function-------------------------------------------

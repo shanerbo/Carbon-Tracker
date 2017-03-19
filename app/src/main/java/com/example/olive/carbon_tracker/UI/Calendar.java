@@ -28,7 +28,7 @@ public class Calendar extends AppCompatActivity {
     }
 
     private void  getUsersDataPick(){
-        if(getIntent().getIntExtra("MonthlyUtilities", 0) == 10) {
+        if(getIntent().getIntExtra("MonthlyUtilities", 0) == 10) { //User sets starting date for monthly utilities
             CalendarView view = new CalendarView(this);
             setContentView(view);
             view.setOnDateChangeListener(new OnDateChangeListener() {
@@ -43,7 +43,7 @@ public class Calendar extends AppCompatActivity {
                 }
             });
         }
-        else if(getIntent().getIntExtra("MonthlyUtilities", 0) == 20) {
+        else if(getIntent().getIntExtra("MonthlyUtilities", 0) == 20) { //User sets ending date for monthly utilities
             CalendarView view = new CalendarView(this);
             setContentView(view);
             view.setOnDateChangeListener(new OnDateChangeListener() {

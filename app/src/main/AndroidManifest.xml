@@ -49,7 +49,8 @@
             android:name=".UI.GraphPicker"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".UI.SingleDayGraph" />
-        <activity android:name=".UI.MonthlyUtilities"></activity>
+        <activity android:name=".UI.MonthlyUtilities" />
+        <activity android:name=".UI.DisplayMonthlyUtilities"></activity>
     </application>
 
 </manifest>

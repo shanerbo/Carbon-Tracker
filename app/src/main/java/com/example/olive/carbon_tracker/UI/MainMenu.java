@@ -48,7 +48,7 @@ public class MainMenu extends AppCompatActivity {
                         showActivity = new Intent(MainMenu.this, DisplayJourneyList.class);
                         break;
                     case R.id.btnMonthlyUti:
-                        showActivity = new Intent(MainMenu.this, MonthlyUtilities.class);
+                        showActivity = new Intent(MainMenu.this, DisplayMonthlyUtilities.class);
                         break;
                 }
                 startActivity(showActivity);

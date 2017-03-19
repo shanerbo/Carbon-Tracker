@@ -402,7 +402,7 @@ public class AddCar extends AppCompatActivity {
             public void onClick(View v) {
                 new AlertDialog.Builder(AddCar.this)
                         .setTitle("Delete Car")
-                        .setMessage(R.string.Warning)
+                        .setMessage(R.string.CarWarning)
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {

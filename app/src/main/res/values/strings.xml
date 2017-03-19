@@ -36,7 +36,9 @@
     <string name="tempTotalDst">TextView</string>
     <string name="tempCityDst">TextView</string>
     <string name="tempHwatDst">TextView</string>
-    <string name="Warning">The Route Will be discarded, Do you still want to delete it?</string>
+    <string name="Warning">The selected route will be discarded. Do you still want to delete it?</string>
+    <string name="CarWarning">The selected car will be discarded. Do you still want to delete it?</string>
+    <string name="BillWarning">The selected bill will be discarded. Do you still want to delete it?</string>
     <string name="CO2Emission">The CO2 Emission is: </string>
     <string name="UserDeleteRoute">The Route You Select has been deleted</string>
     <string name="UserDeleteVehicle">The Car You Select has been deleted</string>

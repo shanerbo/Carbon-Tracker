@@ -4,13 +4,12 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-
     <TextView
-        android:id="@+id/CarYearWImage"
+        android:id="@+id/IndGasUsage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/IndElecUsage"
-        android:layout_toEndOf="@+id/RouteImage"
+        android:layout_toEndOf="@+id/BillImage"
         android:text="@string/tempTotalDst"
         android:textAlignment="viewEnd"
         android:textSize="12sp" />
@@ -19,8 +18,8 @@
         android:id="@+id/StartingDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/RouteImage"
-        android:layout_toEndOf="@+id/RouteImage"
+        android:layout_alignTop="@+id/BillImage"
+        android:layout_toEndOf="@+id/BillImage"
         android:text="@string/tempRouteName"
         android:textAlignment="viewEnd"
         android:textSize="12sp" />
@@ -30,13 +29,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/StartingDate"
-        android:layout_toEndOf="@+id/RouteImage"
+        android:layout_toEndOf="@+id/BillImage"
         android:text="@string/tempCityDst"
         android:textAlignment="viewEnd"
         android:textSize="12sp" />
 
     <ImageView
-        android:id="@+id/RouteImage"
+        android:id="@+id/BillImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/old_vintage_car"
@@ -49,9 +48,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/EndingDate"
-        android:layout_toEndOf="@+id/RouteImage"
+        android:layout_toEndOf="@+id/BillImage"
         android:text="@string/tempHwatDst"
         android:textAlignment="viewEnd"
         android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/IndCO2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:layout_below="@+id/BillImage"
+        android:layout_toEndOf="@+id/BillImage" />
+
 
 </RelativeLayout>
