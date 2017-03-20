@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.LauncherApps;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
@@ -168,6 +169,8 @@ public class SelectTransportationModeAndDate extends AppCompatActivity {
                                         setResult(Activity.RESULT_OK,del_intent);
                                         Toast.makeText(SelectTransportationModeAndDate.this,getString(R.string.UserDeleteJourney),Toast.LENGTH_LONG).show();
                                         finish();
+                                        Intent ShowNewJourneyList = DisplayJourneyList.makeIntent(SelectTransportationModeAndDate.this);
+                                        startActivity(ShowNewJourneyList);
                                     }
                                 })
                                 .setNegativeButton("No", new DialogInterface.OnClickListener() {

@@ -84,7 +84,7 @@ public class DisplayJourneyList extends AppCompatActivity {
                 singleton.setEditPostion_Journey(JourneyList.get(position).getJourneyID());
                 singleton.userEditJourney();
                 startActivity(showActivity);
-                //finish();
+                finish();
             }
         });
     }
