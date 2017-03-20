@@ -29,10 +29,7 @@ import static android.media.CamcorderProfile.get;
 import static com.example.olive.carbon_tracker.R.id.chart;
 
 public class SingleDayGraph extends AppCompatActivity {
-    public static final int DAY_TOKEN = 0;
-    public static final int MONTH_TOKEN = 1;
-    public static final int YEAR_TOKEN = 2;
-    public static final int TRANSPORTATION_MODES = 3;
+
     Singleton singleton = Singleton.getInstance();
     List<Double> todaysCO2 = new ArrayList<>();
     List<Double> carCO2 = new ArrayList<>();
@@ -47,52 +44,41 @@ public class SingleDayGraph extends AppCompatActivity {
         setupPieChart();
         onRestart();
         setupCalendarButton();
-
     }
 
     private void setupPieChart() {
 
         getSingleDayCO2();
-        //populating a list of PiesEntries:
+
         List<PieEntry> pieEntries = new ArrayList<>();
 
-
-        if(carCO2.get(0) != 0.0)
+        if (carCO2.get(0) != 0.0) {
             pieEntries.add(new PieEntry(carCO2.get(0).floatValue(), "CAR"));
-        if(busCO2.get(0) != 0.0)
+        }
+        if (busCO2.get(0) != 0.0) {
             pieEntries.add(new PieEntry(busCO2.get(0).floatValue(), "BUS"));
-        if(skytrainCO2.get(0) != 0.0)
+        }
+        if (skytrainCO2.get(0) != 0.0) {
             pieEntries.add(new PieEntry(skytrainCO2.get(0).floatValue(), "SKYTRAIN"));
+        }
 
 
         PieDataSet dataSet = new PieDataSet(pieEntries, "");
-       dataSet.setColors(Color.rgb(0, 128, 255), Color.rgb(96, 96, 96), Color.rgb(255, 153, 2255), Color.rgb(255, 128, 0), Color.rgb(255, 0, 0));
+        dataSet.setColors(Color.rgb(0, 128, 255), Color.rgb(96, 96, 96), Color.rgb(255, 153, 2255), Color.rgb(255, 128, 0), Color.rgb(255, 0, 0));
         PieData data = new PieData(dataSet);
 
-        //get the chart:
-
-
         data.setValueTextSize(11f);
-        data.setValueTextColor(Color.GRAY);
-
-
+        data.setValueTextColor(Color.BLACK);
 
         com.github.mikephil.charting.charts.PieChart chart = (com.github.mikephil.charting.charts.PieChart) findViewById(R.id.chart);
         chart.setUsePercentValues(false);
 
         Legend l = chart.getLegend();
         chart.getLegend().setEnabled(false);
-       // l.setXEntrySpace(7);
-        //l.setYEntrySpace(5);
-
-
 
         chart.setData(data);
-      //  chart.setUsePercentValues(true);
         chart.animateY(1000);
         chart.invalidate();
-
-
     }
 
     public void onRestart() {
@@ -145,8 +131,6 @@ public class SingleDayGraph extends AppCompatActivity {
         });
     }
 
-
-    //TODO if we want i can add the route name as well for the legened
     public void getSingleDayCO2() {
         todaysCO2.clear();
         List<Journey> journeyList = singleton.getUsersJourneys();
@@ -166,7 +150,6 @@ public class SingleDayGraph extends AppCompatActivity {
             String currentDate = currentJourney.getDateOfTrip();
             if (userDate.equals(currentDate)) {
                 switch (transportationMode) {
-                    //TODO initialize the first 28 indicies to 0 of the arrays
                     case "Skytrain":
                         currentJourneyCO2 += skytrainCO2.remove(0);
                         skytrainCO2.add(0, currentJourneyCO2);
@@ -185,5 +168,4 @@ public class SingleDayGraph extends AppCompatActivity {
         }
 
     }
-
 }

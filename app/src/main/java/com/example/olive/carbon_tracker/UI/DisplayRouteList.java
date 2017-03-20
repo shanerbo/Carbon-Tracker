@@ -205,14 +205,14 @@ public class DisplayRouteList extends AppCompatActivity {
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEEE");
 
-        Toast.makeText(getApplicationContext(),"MONTH "+simpleDateFormat.format(date).toUpperCase(),Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(),"MONTHS "+simpleDateFormat.format(date).toUpperCase(),Toast.LENGTH_SHORT).show();
        // System.out.println("DAY "+simpleDateFormat.format(date).toUpperCase());
 
         simpleDateFormat = new SimpleDateFormat("MMMM");
-       // System.out.println("MONTH "+simpleDateFormat.format(date).toUpperCase());
+       // System.out.println("MONTHS "+simpleDateFormat.format(date).toUpperCase());
 
         simpleDateFormat = new SimpleDateFormat("YYYY");
-     //   System.out.println("YEAR "+simpleDateFormat.format(date).toUpperCase());
+     //   System.out.println("MONTHS "+simpleDateFormat.format(date).toUpperCase());
 
         String day =   singleton.getUserDay();
         String month =  singleton.getUserMonth();

@@ -29,6 +29,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import static com.example.olive.carbon_tracker.R.id.chart;
@@ -39,14 +40,18 @@ public class MonthGraph extends AppCompatActivity {
     public static final int MONTH_TOKEN = 1;
     public static final int YEAR_TOKEN = 2;
     public static final int MONTH = 28;
+    int chosenYear;
+    int chosenMonth;
+    int chosenDay;
     Singleton singleton = Singleton.getInstance();
-    List<Double> monthCO2 = new ArrayList<>(); //TODO NEED TO BREAK THIS UP
     List<Double> carCO2 = new ArrayList<>();
     List<Double> busCO2 = new ArrayList<>();
     List<Double> skytrainCO2 = new ArrayList<>();
     List<Journey> journeyList = singleton.getUsersJourneys();
-    List<String> previousDates = new ArrayList<>();
-boolean isChartEmpty = true;
+
+    private List<String> previousDates = new ArrayList<>();
+    boolean isChartEmpty = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +60,6 @@ boolean isChartEmpty = true;
         setupBarChart();
         onRestart();
         setupCalendarButton();
-
     }
 
 
@@ -69,13 +73,11 @@ boolean isChartEmpty = true;
         });
     }
 
-    //TODO make sure to make date shorter, like 01/01/17
     private void setupBarChart() {
 
         getMonthCO2();
 
         BarChart chart = (BarChart) findViewById(R.id.chart2);
-
 
         IAxisValueFormatter formatter = new IAxisValueFormatter() {
 
@@ -84,48 +86,42 @@ boolean isChartEmpty = true;
                 return previousDates.get((int) value);
             }
 
-            // we don't draw numbers, so no decimal digits needed
-            // @Override
-            public int getDecimalDigits() {
-                return 0;
-            }
         };
 
-       XAxis xAxis = chart.getXAxis();
-        xAxis.setGranularity(1f); // minimum axis-step (interval) is 1
+        XAxis xAxis = chart.getXAxis();
+        xAxis.setGranularity(1f);
         xAxis.setValueFormatter(formatter);
 
-
-        ArrayList<BarEntry> yVals1 = new ArrayList<BarEntry>();
+        ArrayList<BarEntry> transportationEntries = new ArrayList<BarEntry>();
 
         if (isChartEmpty) {
-            Toast.makeText(getApplicationContext(),"NO DATA AVAILABLE",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "NO DATA AVAILABLE", Toast.LENGTH_SHORT).show();
 
         } else {
-            for (int i = 0; i < 28; i++) {
-                yVals1.add(new BarEntry(
-                        i, new float[]{busCO2.get(i).floatValue(), carCO2.get(i).floatValue(), skytrainCO2.get(i).floatValue()}));
+            for (int i = 0; i < MONTH; i++) {
+                transportationEntries.add(new BarEntry(
+                        i, new float[]{busCO2.get(i).floatValue(),
+                        carCO2.get(i).floatValue(),
+                        skytrainCO2.get(i).floatValue()}));
 
             }
 
+            BarDataSet set1;
+            set1 = new BarDataSet(transportationEntries, "");
+            set1.setColors(getColors());
+            set1.setStackLabels(new String[]{"Bus", "Car", "Sky Train"});
 
-        BarDataSet set1;
-        set1 = new BarDataSet(yVals1, "");
-        //   set1.setDrawIcons(false);
-        set1.setColors(getColors());
-        set1.setStackLabels(new String[]{"bus", "car", "sktrain"});
+            ArrayList<IBarDataSet> dataSets = new ArrayList<IBarDataSet>();
+            dataSets.add(set1);
 
-        ArrayList<IBarDataSet> dataSets = new ArrayList<IBarDataSet>();
-        dataSets.add(set1);
-
-        BarData data = new BarData(dataSets);
-        // data.setValueFormatter(formatter);
+            BarData data = new BarData(dataSets);
             data.setValueTextSize(0f);
 
-
-        chart.setData(data);
-        chart.setFitBars(true);
-        chart.invalidate();
+            chart.setData(data);
+            chart.setFitBars(true);
+            chart.animateX(1200);
+            chart.animateY(1200);
+            chart.invalidate();
         }
     }
 
@@ -172,53 +168,41 @@ boolean isChartEmpty = true;
         }
     }
 
-
-    //TODO if we want i can add the route name as well for the legened
     public void getMonthCO2() {
-        monthCO2.clear();
-        previousDates.clear();
+
         busCO2.clear();
         skytrainCO2.clear();
         carCO2.clear();
+
         getPrevious28Days();
-        //what the user has picked as a date
-        String day = singleton.getUserDay();
-        String month = singleton.getUserMonth();
-        String year = singleton.getUserYear();
+
         for (int i = 0; i < MONTH; i++) {
             busCO2.add(i, 0.0);
             carCO2.add(i, 0.0);
             skytrainCO2.add(i, 0.0);
         }
 
-
-        int monthCounter = 28;
-        //need to see if the dates match the journey dates
         for (int i = 0; i < journeyList.size(); i++) {
             isChartEmpty = false;
             Journey currentJourney = journeyList.get(i);
-            Log.i("    ", " ");
-            String[] monthJourney = currentJourney.getDateOfTrip().split("/");
+
             String transportationMode = currentJourney.getVehicleName();
-            Log.i("current journ mode = " + transportationMode, " ");
+
             double currentJourneyCO2 = currentJourney.getCarbonEmitted();
-            Log.i("current journ co2 = " + currentJourneyCO2, " ");
-            String currentJourneyDate = currentJourney.getDateOfTrip();
-            Log.i("current journ date = " + currentJourneyDate, " ");
-            Log.i("checking prev dates", " ");
+
+            String[] date = currentJourney.getDateOfTrip().split("/");
+            int monthNumber = getMonthNumber(date[MONTH_TOKEN]);
+            String currentJourneyDate = date[DAY_TOKEN] + "/" + monthNumber + "/" + date[YEAR_TOKEN];
+
             for (int j = 0; j < previousDates.size(); j++) {
-                Log.i("   " + previousDates.get(j) + "==", currentJourneyDate);
-                if (previousDates.get(j).equals(currentJourney.getDateOfTrip())) {
+                if (previousDates.get(j).equals(currentJourneyDate)) {
                     switch (transportationMode) {
-                        //TODO initialize the first 28 indicies to 0 of the arrays
                         case "Skytrain":
                             currentJourneyCO2 += skytrainCO2.remove(j);
                             skytrainCO2.add(j, currentJourneyCO2);
                             break;
                         case "Bus":
                             currentJourneyCO2 += busCO2.remove(j);
-                            Log.i("FOUND MATCHING BUS ", " ");
-                            Log.i("has co2: " + currentJourneyCO2, " ");
                             busCO2.add(j, currentJourneyCO2);
                             break;
                         default:
@@ -229,137 +213,132 @@ boolean isChartEmpty = true;
                 }
             }
         }
-
-
     }
+
 
     private void getPrevious28Days() {
         //what the user has picked as a date
-        String day = singleton.getUserDay();
-        String month = singleton.getUserMonth();
-        String year = singleton.getUserYear();
-        int currentDay = Integer.parseInt(day);
-        int subtract = 0;
+        chosenDay = Integer.parseInt(singleton.getUserDay());
+        monthNumber(singleton.getUserMonth());
+        chosenYear = Integer.parseInt(singleton.getUserYear());
+        int currentDay = chosenDay;
+
         previousDates.clear();
+        int subtract  = 0; //to include the current day
         //getting the dates for the past 28 days
         for (int i = 0; i < MONTH; i++) {
             currentDay = currentDay - subtract;
             if (currentDay > 0) {
-                previousDates.add(currentDay + "/" + month + "/" + year);
+                previousDates.add(currentDay + "/" + chosenMonth + "/" + chosenYear);
             } else {
                 getPreviousMonthDetails();
                 String date = previousDates.get(i);
                 String[] lastMonth = date.split("/");
                 currentDay = Integer.parseInt(lastMonth[0]);
-                month = lastMonth[1];
-                year = lastMonth[2];
             }
             subtract = 1;
         }
-        //shortenDate();
     }
 
     private void getPreviousMonthDetails() {
-        Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.DATE, 1);
-        cal.add(Calendar.DAY_OF_MONTH, -1);
-        Date lastDateOfPreviousMonth = cal.getTime();
-        String[] lastMonth = (lastDateOfPreviousMonth.toString()).split(" ");
-        int day = Integer.parseInt(lastMonth[2]);
-        String month = getStringMonth(lastMonth[1]);
-        String year = lastMonth[5];
-        previousDates.add(day + "/" + month + "/" + year);
+        GregorianCalendar cal = new GregorianCalendar();
+        if (chosenMonth == 1) {
+            chosenYear--;
+            chosenMonth = 12;
+            chosenDay = 31;
+            previousDates.add(chosenDay + "/" + chosenMonth + "/" + chosenYear);
+        } else {
+            int month = chosenMonth - 2;
+            cal.set(chosenYear, month, 1);
+            chosenDay = cal.getActualMaximum(GregorianCalendar.DAY_OF_MONTH);
+            previousDates.add(chosenDay + "/" + (--chosenMonth) + "/" + chosenYear);
+        }
     }
 
-    public void addCarbonToDate() {
 
-    }
-
-
-    public String getStringMonth(String month) {
+    public void monthNumber(String month) {
         switch (month) {
-            case "Jan":
-                return "January ";
-            case "Feb":
-                return "February";
-            case "Mar":
-                return "March";
-            case "Apr":
-                return "April";
+            case "January":
+                chosenMonth = 1;
+                break;
+            case "February":
+                chosenMonth = 2;
+                break;
+            case "March":
+                chosenMonth = 3;
+                break;
+            case "April":
+                chosenMonth = 4;
+                break;
             case "May":
-                return "May";
-            case "Jun":
-                return "June";
-            case "Jul":
-                return "July";
-            case "Aug":
-                return "August";
-            case "Sept":
-                return "September";
-            case "Oct":
-                return "October";
-            case "Nov":
-                return "November";
-            case "Dec":
-                return "December";
+                chosenMonth = 5;
+                break;
+            case "June":
+                chosenMonth = 6;
+                break;
+            case "July":
+                chosenMonth = 7;
+                break;
+            case "August":
+                chosenMonth = 8;
+                break;
+            case "September":
+                chosenMonth = 9;
+                break;
+            case "October":
+                chosenMonth = 10;
+                break;
+            case "November":
+                chosenMonth = 11;
+                break;
+            case "December":
+                chosenMonth = 12;
+                break;
         }
 
-        return null;
     }
 
-    public void shortenDate() {
-        Log.i("   ", " ");
-        Log.i("SHORTEN DATE ", " ");
-        for (int i = 0; i < previousDates.size(); i++) {
-            String[] currentDate = previousDates.remove(i).split("/");
-            String day = currentDate[DAY_TOKEN];
-            String month = currentDate[MONTH_TOKEN];
-            //TODO make year shorter
-            String year = currentDate[YEAR_TOKEN];
-            switch (month) {
-                case "January":
-                    month = "1";
-                    break;
-                case "February":
-                    month = "2";
-                    break;
-                case "March":
-                    month = "3";
-                    break;
-                case "April":
-                    month = "4";
-                    break;
-                case "May":
-                    month = "5";
-                    break;
-                case "June":
-                    month = "6";
-                    break;
-                case "July":
-                    month = "7";
-                    break;
-                case "August":
-                    month = "8";
-                    break;
-                case "September":
-                    month = "9";
-                    break;
-                case "October":
-                    month = "10";
-                    break;
-                case "November":
-                    month = "11";
-                    break;
-                case "December":
-                    month = "12";
-                    break;
-            }
-            previousDates.add(i, day + "/" + month + "/" + year);
+    public int getMonthNumber(String month) {
+
+        switch (month) {
+            case "January":
+                return 1;
+
+            case "February":
+                return 2;
+
+            case "March":
+                return 3;
+
+            case "April":
+                return 4;
+
+            case "May":
+                return 5;
+
+            case "June":
+                return 6;
+
+            case "July":
+                return 7;
+
+            case "August":
+                return 8;
+
+            case "September":
+                return 9;
+
+            case "October":
+                return 10;
+
+            case "November":
+                return 11;
+
+            case "December":
+                return 12;
+
         }
-        for (String date : previousDates) {
-            Log.i("date----" + date, "");
-            //   Toast.makeText(getApplicationContext(),date,Toast.LENGTH_SHORT).show();
-        }
+        return -1;
     }
 
     private int[] getColors() {
@@ -376,75 +355,3 @@ boolean isChartEmpty = true;
         return colors;
     }
 }
-/*
-
-
-BarData data = new BarData(dataSets);
-        data.setValueFormatter(formatter);
-        data.setValueTextColor(Color.WHITE);
-
-        chart.setData(data);
-
-        List<BarEntry> busEntries = new ArrayList<>();
-        for (int i = 0; i < busCO2.size(); i++) {
-            int co2 = busCO2.get(i).intValue();
-            busEntries.add(new BarEntry(i, co2));
-        }
-        BarDataSet busSet = new BarDataSet(busEntries, "BUS");
-        busSet.setColor(Color.BLUE);
-        busSet.setValueTextColor(Color.BLUE);
-        busSet.setBarShadowColor(Color.BLUE);
-        busSet.setBarBorderColor(Color.BLUE);
-        busSet.setHighLightColor(Color.BLUE);
-
-
-        List<BarEntry> skytrainEntries = new ArrayList<>();
-        for (int i = 0; i < skytrainCO2.size(); i++) {
-            int co2 = skytrainCO2.get(i).intValue();
-            skytrainEntries.add(new BarEntry(i, co2));
-        }
-        BarDataSet skytrainSet = new BarDataSet(skytrainEntries, "SKYTRAIN");
-        skytrainSet.setColor(Color.RED);
-        skytrainSet.setValueTextColor(Color.RED);
-
-        List<BarEntry> carEntries = new ArrayList<>();
-        for (int i = 0; i < carCO2.size(); i++) {
-            int co2 = carCO2.get(i).intValue();
-            carEntries.add(new BarEntry(i, co2));
-        }
-        BarDataSet set1;
-      //  BarDataSet carSet = new BarDataSet(carEntries, "CAR");
-
-        set1 = new BarDataSet(yVals1, "Statistics Vienna 2014");
-       // set1.setDrawIcons(false);
-        set1.setColors(getColors());
-        set1.setStackLabels(new String[]{"bus", "skytrain", "car"});
-
-        ArrayList<IBarDataSet> dataSets = new ArrayList<IBarDataSet>();
-        dataSets.add(set1);
-
-        BarData data = new BarData(dataSets);
-        data.setValueFormatter(new MyValueFormatter());
-        data.setValueTextColor(Color.WHITE);
-
-        mChart.setData(data)
-
-
-
-
-
-        carSet.setColor(Color.GREEN);
-        carSet.setValueTextColor(Color.GREEN);
-        // dataSet.setColors(Color.rgb(0, 128, 255), Color.rgb(96, 96, 96), Color.rgb(255, 153, 2255), Color.rgb(255, 128, 0), Color.rgb(255, 0, 0));
-        //get the chart:
-        // data.setBarWidth(0.9f);
-
-
-
-// set a custom value formatter
-        BarData data = new BarData(busSet,carSet,skytrainSet);
-        data.setBarWidth(0.9f); // set custom bar width
-        chart.setData(data);
-        chart.setFitBars(true); // make the x-axis fit exactly all bars
-        chart.invalidate(); // ref
- */

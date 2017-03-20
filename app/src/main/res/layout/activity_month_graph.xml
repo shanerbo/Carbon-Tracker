@@ -52,4 +52,13 @@
         android:text="co2 emitted"
         android:textColor="@android:color/background_dark"
         android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="click date to change"
+        android:textSize="8sp"
+        android:layout_above="@+id/textView"
+        android:layout_toEndOf="@+id/textView" />
 </RelativeLayout>
