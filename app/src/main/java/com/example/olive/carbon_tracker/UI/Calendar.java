@@ -37,7 +37,7 @@ public class Calendar extends AppCompatActivity {
                 public void onSelectedDayChange(CalendarView arg0, int year, int month,
                                                 int date) {
                     singleton.setStartDay("" +date);
-                    singleton.setStartMonth(getStringMonth(month));
+                    singleton.setStartMonth(""+(month+1));
                     singleton.setStartYear("" + year);
                     singleton.setStartDateChanged(true);
                 }
@@ -52,7 +52,7 @@ public class Calendar extends AppCompatActivity {
                 public void onSelectedDayChange(CalendarView arg0, int year, int month,
                                                 int date) {
                     singleton.setEndDay("" +date);
-                    singleton.setEndMonth(getStringMonth(month));
+                    singleton.setEndMonth(""+(month+1));
                     singleton.setEndYear("" + year);
                     singleton.setEndDateChanged(true);
                 }

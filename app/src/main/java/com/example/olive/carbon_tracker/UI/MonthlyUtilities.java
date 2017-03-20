@@ -3,24 +3,32 @@ package com.example.olive.carbon_tracker.UI;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.icu.util.DateInterval;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.olive.carbon_tracker.Model.MonthlyUtilitiesData;
 import com.example.olive.carbon_tracker.Model.Singleton;
 import com.example.olive.carbon_tracker.R;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
+import static java.lang.Integer.parseInt;
 
 public class MonthlyUtilities extends AppCompatActivity {
 
     Singleton singleton = Singleton.getInstance();
+    private List<MonthlyUtilitiesData> MonthlyUtilitiesList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,7 +146,47 @@ public class MonthlyUtilities extends AppCompatActivity {
         check.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+
+                String startDay = singleton.getStartDay();
+                String startMonth = singleton.getStartMonth();
+                String startYear = singleton.getStartYear();
+
+                String EndDay = singleton.getEndDay();
+                String EndMonth = singleton.getEndMonth();
+                String EndYear = singleton.getEndYear();
+
+                EditText ETelectricUsage = (EditText) findViewById(R.id.editElecUsage);
+                EditText ETnaturalGasUsage = (EditText) findViewById(R.id.editNaturalGasUsage);
+                String electricUsage = ETelectricUsage.getText().toString();
+                String natrualGasUsage = ETnaturalGasUsage.getText().toString();
+
+                SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+                    try {
+                        Date start = sdf.parse(startMonth+"/"+startDay+"/"+startYear);
+                        Date end = sdf.parse(EndMonth+"/"+EndDay+"/"+EndYear);
+                        long dateDifference = end.getTime() - start.getTime();
+                        dateDifference = dateDifference / 1000 / 60 / 60 / 24;
+                        Toast.makeText(MonthlyUtilities.this,""+dateDifference,Toast.LENGTH_LONG).show();
+                        if(dateDifference > 0 && (!electricUsage.matches("") || !natrualGasUsage.matches(""))){
+                            startActivity(new Intent(MonthlyUtilities.this, DisplayMonthlyUtilities.class));
+                            finish();
+                        }
+                        else if(dateDifference <= 0){
+                            Toast.makeText(MonthlyUtilities.this,"Ending date cannot be equal to or earlier than starting date",Toast.LENGTH_LONG).show();
+                        }
+                        else if(electricUsage.matches("") || natrualGasUsage.matches("")){
+                            Toast.makeText(MonthlyUtilities.this,"Please fill in at least one of the usage data",Toast.LENGTH_LONG).show();
+                        }
+
+                    }
+                    catch(Exception  e){
+                        Toast.makeText(MonthlyUtilities.this, "ERROR: date conversion failed", Toast.LENGTH_LONG).show();
+                    }
+
+
+
+
+
             }
         });
     }
