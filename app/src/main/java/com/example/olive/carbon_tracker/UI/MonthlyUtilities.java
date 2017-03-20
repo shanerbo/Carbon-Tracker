@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static java.lang.Double.parseDouble;
 import static java.lang.Integer.parseInt;
 import static java.lang.Long.parseLong;
 
@@ -31,13 +32,32 @@ public class MonthlyUtilities extends AppCompatActivity {
     Singleton singleton = Singleton.getInstance();
     private List<MonthlyUtilitiesData> MonthlyUtilitiesList = new ArrayList<>();
 
-    private long position;
+    private int position;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_monthly_utilities);
         MonthlyUtilitiesList = singleton.getBillList();
+
+        if(singleton.checkEditMonthlyUtilities() == 1){
+            position = singleton.getEditPosition_bill();
+            MonthlyUtilitiesData billToBeEdit = MonthlyUtilitiesList.get(position);
+
+            TextView StartDate = (TextView) findViewById(R.id.displayStartDate);
+            TextView EndDate = (TextView) findViewById(R.id.DisplayEndDate);
+            StartDate.setText(billToBeEdit.getStartDate());
+            EndDate.setText(billToBeEdit.getEndDate());
+
+            EditText elec = (EditText) findViewById(R.id.editElecUsage);
+            EditText gas = (EditText) findViewById(R.id.editNaturalGasUsage);
+            EditText people = (EditText) findViewById(R.id.editNum_people);
+            String roundElec = String.format("%.2f", billToBeEdit.getIndElecUsage() * billToBeEdit.getNumOfPeople());
+            String roundGas = String.format("%.2f", billToBeEdit.getIndGasUsage() * billToBeEdit.getNumOfPeople());
+            elec.setText(roundElec);
+            gas.setText(roundGas);
+            people.setText(""+billToBeEdit.getNumOfPeople()+"");
+        }
 
 
         setupCalendarButton(R.id.ID_startDate_button);
@@ -145,7 +165,7 @@ public class MonthlyUtilities extends AppCompatActivity {
     }
 
 
-    private void setupAddButton(final long position) {
+    private void setupAddButton(final int position) {
         FloatingActionButton check = (FloatingActionButton) findViewById(R.id.ok_billing_btn);
 
         check.setOnClickListener(new View.OnClickListener() {
@@ -167,6 +187,7 @@ public class MonthlyUtilities extends AppCompatActivity {
                 String naturalGasUsage = ETnaturalGasUsage.getText().toString();
                 String numOfPeople = ETnumOfPeople.getText().toString();
 
+
                 SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
                     try {
                         Date start = sdf.parse(startMonth+"/"+startDay+"/"+startYear);
@@ -178,45 +199,64 @@ public class MonthlyUtilities extends AppCompatActivity {
                         if(dateDifference > 0 && (!electricUsage.matches("") || !naturalGasUsage.matches(""))
                                 && !numOfPeople.matches("") && parseInt(numOfPeople)!= 0){
 
-                            if(singleton.checkEditMonthlyUtilities() == 1){ //editing
-                                singleton.userFinishEditMonthlyUtilities();
-                            }
-
-                            //else{
                                 if(!electricUsage.matches("") && naturalGasUsage.matches("")) {
-                                    long indElecUsage = parseLong(electricUsage) * (long) 0.000001 / parseLong(numOfPeople);
-                                    long indGasUsage = 0;
-                                    long indCO2 = indElecUsage*9000 + indGasUsage*(long)56.1;
+                                    double indElecUsage = parseDouble(electricUsage) / parseDouble(numOfPeople);
+                                    double indGasUsage = 0;
+                                    double indCO2 = indElecUsage*0.009 + indGasUsage*56.1;
                                     MonthlyUtilitiesData userInput = new MonthlyUtilitiesData(
                                             startDay+"/"+startMonth+"/"+startYear, EndDay+"/"+EndMonth+"/"+EndYear,
-                                            dateDifference, indElecUsage, indGasUsage, indCO2);
-                                    MonthlyUtilitiesList.add(userInput);
-                                    singleton.userFinishAdd_MonthlyUtilities();
+                                            dateDifference, indElecUsage, indGasUsage, parseLong(numOfPeople), indCO2);
+
+                                    if(singleton.checkEditMonthlyUtilities() == 1){ //editing
+                                        //TODO edit with database
+                                        MonthlyUtilitiesList.set(position, userInput);
+                                        singleton.setBillList(MonthlyUtilitiesList);
+                                        singleton.userFinishEditMonthlyUtilities();
+                                    }
+                                    else {
+                                        MonthlyUtilitiesList.add(userInput);
+                                        singleton.userFinishAdd_MonthlyUtilities();
+                                    }
                                 }
                                 else if(!naturalGasUsage.matches("") && electricUsage.matches("")) {
-                                    long indElecUsage = 0;
-                                    long indGasUsage = parseLong(naturalGasUsage) / parseLong(numOfPeople);
-                                    long indCO2 = indElecUsage * 9000 + indGasUsage * (long) 56.1;
+                                    double indElecUsage = 0;
+                                    double indGasUsage = parseDouble(naturalGasUsage) / parseDouble(numOfPeople);
+                                    double indCO2 = indElecUsage*0.009 + indGasUsage*56.1;
                                     MonthlyUtilitiesData userInput = new MonthlyUtilitiesData(
                                             startDay + "/" + startMonth + "/" + startYear, EndDay + "/" + EndMonth + "/" + EndYear,
-                                            dateDifference, indElecUsage, indGasUsage, indCO2);
-                                    MonthlyUtilitiesList.add(userInput);
-                                    singleton.userFinishAdd_MonthlyUtilities();
+                                            dateDifference, indElecUsage, indGasUsage, parseLong(numOfPeople),indCO2);
+
+                                    if(singleton.checkEditMonthlyUtilities() == 1){ //editing
+                                        //TODO edit with database
+                                        MonthlyUtilitiesList.set(position, userInput);
+                                        singleton.setBillList(MonthlyUtilitiesList);
+                                        singleton.userFinishEditMonthlyUtilities();
+                                    }
+                                    else {
+                                        MonthlyUtilitiesList.add(userInput);
+                                        singleton.userFinishAdd_MonthlyUtilities();
+                                    }
                                 }
                                 else{
-                                    long indElecUsage = parseLong(electricUsage) * (long) 0.000001 / parseLong(numOfPeople);
-                                    long indGasUsage = parseLong(naturalGasUsage) / parseLong(numOfPeople);
-                                    long indCO2 = indElecUsage*9000 + indGasUsage*(long)56.1;
+                                    double indElecUsage = parseDouble(electricUsage) / parseDouble(numOfPeople);
+                                    double indGasUsage = parseDouble(naturalGasUsage) / parseDouble(numOfPeople);
+                                    double indCO2 = indElecUsage*0.009 + indGasUsage*56.1;
                                     MonthlyUtilitiesData userInput = new MonthlyUtilitiesData(
                                             startDay+"/"+startMonth+"/"+startYear, EndDay+"/"+EndMonth+"/"+EndYear,
-                                            dateDifference, indElecUsage, indGasUsage, indCO2);
-                                    //Toast.makeText(MonthlyUtilities.this,""+indElecUsage+"-"+indGasUsage+"-"+indCO2,Toast.LENGTH_LONG).show();
-                                    //Toast.makeText(MonthlyUtilities.this,startDay+"-"+EndDay+"-"+dateDifference,Toast.LENGTH_LONG).show();
-                                    MonthlyUtilitiesList.add(userInput);
-                                    singleton.userFinishAdd_MonthlyUtilities();
+                                            dateDifference, indElecUsage, indGasUsage, parseLong(numOfPeople), indCO2);
+                                    //Toast.makeText(MonthlyUtilities.this, decimalElec+"-"+decimalGas,Toast.LENGTH_LONG).show();
+                                    if(singleton.checkEditMonthlyUtilities() == 1){ //editing
+                                        //TODO edit with database
+                                        MonthlyUtilitiesList.set(position, userInput);
+                                        singleton.setBillList(MonthlyUtilitiesList);
+                                        singleton.userFinishEditMonthlyUtilities();
+                                    }
+                                    else {
+                                        MonthlyUtilitiesList.add(userInput);
+                                        singleton.userFinishAdd_MonthlyUtilities();
+                                    }
                                 }
-//
-                           // }
+
 
                             startActivity(new Intent(MonthlyUtilities.this, DisplayMonthlyUtilities.class));
                             finish();
@@ -243,7 +283,7 @@ public class MonthlyUtilities extends AppCompatActivity {
 
 
 
-    private void setupDeleteButton(final long position){
+    private void setupDeleteButton(final int position){
         FloatingActionButton delete = (FloatingActionButton) findViewById(R.id.cancel_billing_btn);
         if(singleton.checkAdd_MonthlyUtilities() == 1){
             delete.setVisibility(View.INVISIBLE);
@@ -260,6 +300,8 @@ public class MonthlyUtilities extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 Intent del_intent = new Intent();
                                 //TODO delete bill from database
+                                MonthlyUtilitiesList.remove(position);
+                                singleton.setBillList(MonthlyUtilitiesList);
                                 singleton.userFinishEditMonthlyUtilities();
                                 setResult(Activity.RESULT_OK, del_intent);
                                 Toast.makeText(MonthlyUtilities.this, "The selected bill has been deleted", Toast.LENGTH_LONG).show();

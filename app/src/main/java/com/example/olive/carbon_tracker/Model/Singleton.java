@@ -17,20 +17,20 @@ public class Singleton {
     private List<String> getVehicleMakeArray = new ArrayList<>();
     private List<String> vehicleModelArray = new ArrayList<>();
 
-    String userDay = null;
-    String userMonth = null;
-    String userYear = null;
-    boolean isDateChanged = false;
+    private String userDay = null;
+    private String userMonth = null;
+    private String userYear = null;
+    private boolean isDateChanged = false;
 
-    String startDay = null;
-    String startMonth = null;
-    String startYear = null;
-    boolean isStartDateChanged = false;
+    private String startDay = null;
+    private String startMonth = null;
+    private String startYear = null;
+    private boolean isStartDateChanged = false;
 
-    String endDay = null;
-    String endMonth = null;
-    String endYear = null;
-    boolean isEndDateChanged = false;
+    private String endDay = null;
+    private String endMonth = null;
+    private String endYear = null;
+    private boolean isEndDateChanged = false;
 
     SQLiteDatabase CarInfoDB;
 
@@ -45,6 +45,7 @@ public class Singleton {
     private static int editMonthlyUtilities;
     private static long editPosition_Route;
     private static long editPosition_car;
+    private static int editPosition_bill;
     private boolean editJourney = false;
     private int editJourneyPosition;
     private static int addRoute;
@@ -284,6 +285,18 @@ public class Singleton {
 
     public void userFinishEditMonthlyUtilities() { editMonthlyUtilities = 0;  }
 
+
+    public void setEditPosition_bill(int Position) {
+        editPosition_bill = Position;
+    }
+
+    public int getEditPosition_bill() {
+        return editPosition_bill;
+    }
+
+    public void setBillList(List<MonthlyUtilitiesData> newBill) {
+        BillList = newBill;
+    }
 
     //-----------------------------------Route's function-------------------------------------------
 

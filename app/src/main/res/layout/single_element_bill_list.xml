@@ -8,11 +8,11 @@
         android:id="@+id/IndGasUsage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/IndElecUsage"
-        android:layout_toEndOf="@+id/BillImage"
         android:text="@string/tempTotalDst"
         android:textAlignment="viewEnd"
-        android:textSize="12sp" />
+        android:textSize="12sp"
+        android:layout_alignBottom="@+id/BillImage"
+        android:layout_toEndOf="@+id/BillImage" />
 
     <TextView
         android:id="@+id/StartingDate"
@@ -47,18 +47,18 @@
         android:id="@+id/IndElecUsage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/EndingDate"
-        android:layout_toEndOf="@+id/BillImage"
         android:text="@string/tempHwatDst"
         android:textAlignment="viewEnd"
-        android:textSize="12sp" />
+        android:textSize="12sp"
+        android:layout_below="@+id/EndingDate"
+        android:layout_toEndOf="@+id/BillImage" />
 
     <TextView
         android:id="@+id/IndCO2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
-        android:layout_below="@+id/BillImage"
+        android:layout_below="@+id/IndGasUsage"
         android:layout_toEndOf="@+id/BillImage" />
 
 

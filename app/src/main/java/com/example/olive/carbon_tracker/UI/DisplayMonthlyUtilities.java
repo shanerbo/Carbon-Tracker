@@ -63,6 +63,7 @@ public class DisplayMonthlyUtilities extends AppCompatActivity {
         BillList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                singleton.setEditPosition_bill(position);
                 singleton.userEditMonthlyUtilities();
                 startActivityForResult(new Intent(DisplayMonthlyUtilities.this, MonthlyUtilities.class), 0);
                 finish();
@@ -76,9 +77,6 @@ public class DisplayMonthlyUtilities extends AppCompatActivity {
 
     private void showAllBills() {
         //TODO show all bills using database
-        //String[] my_items = {"hi"};
-        //ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.single_element_bill_list, my_items);
-
         ArrayAdapter<MonthlyUtilitiesData> adapter = new myArrayAdapter();
         ListView list = (ListView) findViewById(R.id.ID_Bill_List);
         list.setAdapter(adapter);
@@ -98,15 +96,18 @@ public class DisplayMonthlyUtilities extends AppCompatActivity {
             ImageView imageView = (ImageView) itemView.findViewById(R.id.BillImage);
             imageView.setImageResource(currentBill.getIconID());
             TextView startDate = (TextView) itemView.findViewById(R.id.StartingDate);
-            startDate.setText("Starting date: " + currentBill.getStartDate());
+            startDate.setText("Starting date: " + currentBill.getStartDate() +"");
             TextView endDate = (TextView) itemView.findViewById(R.id.EndingDate);
-            endDate.setText("Ending date: " + currentBill.getEndDate());
+            endDate.setText("Ending date: " + currentBill.getEndDate() +"");
             TextView indElec = (TextView) itemView.findViewById(R.id.IndElecUsage);
-            indElec.setText("Individual electricity usage: " + currentBill.getIndElecUsage());
+            String roundElec = String.format("%.2f", currentBill.getIndElecUsage());
+            indElec.setText("Ind. electricity usage: " + roundElec +"kWh");
             TextView indGas = (TextView) itemView.findViewById(R.id.IndGasUsage);
-            indGas.setText("Individual natural gas usage: " + currentBill.getIndGasUsage());
+            String roundGas = String.format("%.2f", currentBill.getIndGasUsage());
+            indGas.setText("Ind. natural gas usage: " + roundGas +"GJ");
             TextView indCO2 = (TextView) itemView.findViewById(R.id.IndCO2);
-            indCO2.setText("Individual CO2 emission(kg): " + currentBill.getIndCO2());
+            String roundCO2 = String.format("%.2f", currentBill.getIndCO2());
+            indCO2.setText("Ind. CO2 emission: " + roundCO2 +"kg");
 
             return itemView;
 
