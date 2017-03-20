@@ -142,8 +142,8 @@ public class DisplayCarList extends AppCompatActivity {
     }
 
     public void onBackPressed() {
-        Intent goBackToMainMenu = MainMenu.makeIntent(DisplayCarList.this);
-        startActivity(goBackToMainMenu);
+        Intent goBackToModeSelect = SelectTransportationModeAndDate.makeIntent(DisplayCarList.this);
+        startActivity(goBackToModeSelect);
     }
 
     private class mArrayAdapter extends ArrayAdapter<Vehicle> {

@@ -17,7 +17,15 @@ public class Journey {
     private long JourneyID;
 
 
-    public Journey(String dateOfTrip,String mode, String routeName, int totalDistance,
+    public long getJourneyID() {
+        return JourneyID;
+    }
+
+    public void setJourneyID(long journeyID) {
+        JourneyID = journeyID;
+    }
+
+    public Journey(String dateOfTrip, String mode, String routeName, int totalDistance,
                    String vehicleName, double carbonEmitted, long journeyID) {
         this.dateOfTrip = dateOfTrip;
         this.routeName = routeName;

@@ -44,7 +44,17 @@ public class Singleton {
     private static int editVehicle;
     private static int editMonthlyUtilities;
     private static long editPosition_Route;
-    private static long editPosition_car;
+    private static long editPosition_Car;
+
+    public long getEditPostion_Journey() {
+        return editPostion_Journey;
+    }
+
+    public void setEditPostion_Journey(long editPostion_Journey) {
+        Singleton.editPostion_Journey = editPostion_Journey;
+    }
+
+    private static long editPostion_Journey;
     private static int editPosition_bill;
     private boolean editJourney = false;
     private int editJourneyPosition;
@@ -104,11 +114,11 @@ public class Singleton {
 
 
     public void setEditPosition_car(long Position) {
-        editPosition_car = Position;
+        editPosition_Car = Position;
     }
 
     public long getEditPosition_car() {
-        return editPosition_car;
+        return editPosition_Car;
     }
 
     public int getAddPosition_car() {
