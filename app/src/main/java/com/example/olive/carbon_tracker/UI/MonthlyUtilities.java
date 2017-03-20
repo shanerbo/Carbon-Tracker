@@ -52,8 +52,8 @@ public class MonthlyUtilities extends AppCompatActivity {
             EditText elec = (EditText) findViewById(R.id.editElecUsage);
             EditText gas = (EditText) findViewById(R.id.editNaturalGasUsage);
             EditText people = (EditText) findViewById(R.id.editNum_people);
-            String roundElec = String.format("%.2f", billToBeEdit.getIndElecUsage() * billToBeEdit.getNumOfPeople());
-            String roundGas = String.format("%.2f", billToBeEdit.getIndGasUsage() * billToBeEdit.getNumOfPeople());
+            String roundElec = String.format("%.2f", billToBeEdit.getIndElecUsage() * billToBeEdit.getNumOfPeople() * billToBeEdit.getTotalDays());
+            String roundGas = String.format("%.2f", billToBeEdit.getIndGasUsage() * billToBeEdit.getNumOfPeople() * billToBeEdit.getTotalDays());
             elec.setText(roundElec);
             gas.setText(roundGas);
             people.setText(""+billToBeEdit.getNumOfPeople()+"");
@@ -205,7 +205,8 @@ public class MonthlyUtilities extends AppCompatActivity {
                                     double indCO2 = indElecUsage*0.009 + indGasUsage*56.1;
                                     MonthlyUtilitiesData userInput = new MonthlyUtilitiesData(
                                             startDay+"/"+startMonth+"/"+startYear, EndDay+"/"+EndMonth+"/"+EndYear,
-                                            dateDifference, indElecUsage, indGasUsage, parseLong(numOfPeople), indCO2);
+                                            dateDifference, indElecUsage/dateDifference, indGasUsage/dateDifference,
+                                            parseLong(numOfPeople), indCO2/dateDifference);
 
                                     if(singleton.checkEditMonthlyUtilities() == 1){ //editing
                                         //TODO edit with database
@@ -224,7 +225,8 @@ public class MonthlyUtilities extends AppCompatActivity {
                                     double indCO2 = indElecUsage*0.009 + indGasUsage*56.1;
                                     MonthlyUtilitiesData userInput = new MonthlyUtilitiesData(
                                             startDay + "/" + startMonth + "/" + startYear, EndDay + "/" + EndMonth + "/" + EndYear,
-                                            dateDifference, indElecUsage, indGasUsage, parseLong(numOfPeople),indCO2);
+                                            dateDifference, indElecUsage/dateDifference, indGasUsage/dateDifference,
+                                            parseLong(numOfPeople),indCO2/dateDifference);
 
                                     if(singleton.checkEditMonthlyUtilities() == 1){ //editing
                                         //TODO edit with database
@@ -243,7 +245,8 @@ public class MonthlyUtilities extends AppCompatActivity {
                                     double indCO2 = indElecUsage*0.009 + indGasUsage*56.1;
                                     MonthlyUtilitiesData userInput = new MonthlyUtilitiesData(
                                             startDay+"/"+startMonth+"/"+startYear, EndDay+"/"+EndMonth+"/"+EndYear,
-                                            dateDifference, indElecUsage, indGasUsage, parseLong(numOfPeople), indCO2);
+                                            dateDifference, indElecUsage/dateDifference, indGasUsage/dateDifference,
+                                            parseLong(numOfPeople), indCO2/dateDifference);
                                     //Toast.makeText(MonthlyUtilities.this, decimalElec+"-"+decimalGas,Toast.LENGTH_LONG).show();
                                     if(singleton.checkEditMonthlyUtilities() == 1){ //editing
                                         //TODO edit with database
