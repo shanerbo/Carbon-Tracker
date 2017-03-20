@@ -248,6 +248,7 @@ public class Singleton {
 
     public void setEndYear(String endYear) { this.endYear = endYear; }
 
+
     public boolean isStartDateChanged() { return isStartDateChanged; }
 
     public void setStartDateChanged(boolean startDateChanged) { isStartDateChanged = startDateChanged; }

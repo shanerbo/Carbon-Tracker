@@ -77,5 +77,15 @@
     <string name="image_for_journey">Image for Journey</string>
     <string name="UserDeleteJourney">The Journey you selected has been deleted</string>
     <string name="graphs">Graphs</string>
+    <string name="_0_0">0.0</string>
+    <string name="total_natural_gas_usage">Total Natural Gas Usage</string>
+    <string name="gj">GJ</string>
+    <string name="number_of_people_living_in_the_house">Number of people living in the house</string>
+    <string name="kw_h">kW.h</string>
+    <string name="billing_date">Add a monthly utilities bill</string>
+    <string name="start_date">Start Date</string>
+    <string name="end_date">End Date</string>
+    <string name="dd_mm_yyyy">dd/mm/yyyy</string>
+    <string name="total_electricity_usage">Total Electricity Usage</string>
 
 </resources>

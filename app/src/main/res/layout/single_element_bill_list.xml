@@ -18,11 +18,11 @@
         android:id="@+id/StartingDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/BillImage"
-        android:layout_toEndOf="@+id/BillImage"
         android:text="@string/tempRouteName"
         android:textAlignment="viewEnd"
-        android:textSize="12sp" />
+        android:textSize="12sp"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/BillImage" />
 
     <TextView
         android:id="@+id/EndingDate"

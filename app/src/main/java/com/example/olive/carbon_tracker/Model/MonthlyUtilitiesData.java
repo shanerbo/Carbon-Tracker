@@ -3,56 +3,43 @@ package com.example.olive.carbon_tracker.Model;
 import com.example.olive.carbon_tracker.R;
 
 public class MonthlyUtilitiesData {
-    private String Name;
-    private int CityDistance;
-    private int HighwayDistance;
-    private int TotalDistance;
+    private String startDate;
+    private String endDate;
+    private long totalDays;
+    private long IndElecUsage;
+    private long IndGasUsage;
+    private long IndCO2;
 
-    public MonthlyUtilitiesData(String name, int cityDistance, int highwayDistance, int totalDistance) {
-        setName(name);
-        setCityDistance(cityDistance);
-        setHighwayDistance(highwayDistance);
-        setTotalDistance(totalDistance);
-
-
+    public MonthlyUtilitiesData(String startDate, String endDate, long totalDays, long indElecUsage, long indGasUsage, long indCO2) {
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.totalDays = totalDays;
+        this.IndElecUsage = indElecUsage;
+        this.IndGasUsage = indGasUsage;
+        this.IndCO2 = indCO2;
     }
 
-    public String getName() {
-        return Name;
-    }
+    public String getStartDate() { return startDate; }
 
-    private void setName(String name) {
-        if (name.length() == 0) {
-            throw new IllegalArgumentException();
-        }
-        this.Name = name;
-    }
+    public void setStartDate(String startDate) { this.startDate = startDate; }
 
+    public String getEndDate() { return endDate; }
 
-    public int getCityDistance() {
-        return CityDistance;
-    }
+    public void setEndDate(String endDate) { this.endDate = endDate; }
 
-    private void setCityDistance(int cityDistance) {
+    public long getTotalDays() { return totalDays; }
 
-        this.CityDistance = cityDistance;
-    }
+    public void setTotalDays(long totalDays) { this.totalDays = totalDays; }
 
-    public int getHighwayDistance() {
-        return HighwayDistance;
-    }
+    public long getIndElecUsage() { return IndElecUsage; }
 
-    private void setHighwayDistance(int highwayDistance) {
+    public void setIndElecUsage(long indElecUsage) { IndElecUsage = indElecUsage; }
 
-        this.HighwayDistance = highwayDistance;
-    }
+    public long getIndGasUsage() { return IndGasUsage; }
 
-    public int getTotalDistance(){
-        return TotalDistance;
-    }
+    public void setIndGasUsage(long indGasUsage) { IndGasUsage = indGasUsage; }
 
-    private void setTotalDistance(int totalDistance) {
+    public long getIndCO2() { return IndCO2; }
 
-        this.TotalDistance = totalDistance;
-    }
+    public void setIndCO2(long indCO2) { IndCO2 = indCO2; }
 }
