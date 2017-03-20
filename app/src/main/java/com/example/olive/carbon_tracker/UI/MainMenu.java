@@ -27,6 +27,7 @@ public class MainMenu extends AppCompatActivity {
         setButton(R.id.btnCreateJourney);
         setButton(R.id.btnCurrentFootprint);
         setButton(R.id.btnEditJourney);
+        setButton(R.id.btnMonthlyUti);
     }
 
     private void setButton(final int id) {
@@ -45,6 +46,9 @@ public class MainMenu extends AppCompatActivity {
                         break;
                     case R.id.btnEditJourney:
                         showActivity = new Intent(MainMenu.this, DisplayJourneyList.class);
+                        break;
+                    case R.id.btnMonthlyUti:
+                        showActivity = new Intent(MainMenu.this, DisplayMonthlyUtilities.class);
                         break;
                 }
                 startActivity(showActivity);

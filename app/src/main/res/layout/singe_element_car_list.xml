@@ -9,14 +9,14 @@
         android:id="@+id/CarYearWImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/CarModelWithimage"
+        android:layout_below="@+id/IndElecUsage"
         android:layout_toEndOf="@+id/RouteImage"
         android:text="@string/tempTotalDst"
         android:textAlignment="viewEnd"
         android:textSize="12sp" />
 
     <TextView
-        android:id="@+id/CarNameWithimage"
+        android:id="@+id/StartingDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/RouteImage"
@@ -26,10 +26,10 @@
         android:textSize="12sp" />
 
     <TextView
-        android:id="@+id/CarMakeWithimage"
+        android:id="@+id/EndingDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/CarNameWithimage"
+        android:layout_below="@+id/StartingDate"
         android:layout_toEndOf="@+id/RouteImage"
         android:text="@string/tempCityDst"
         android:textAlignment="viewEnd"
@@ -45,10 +45,10 @@
         android:layout_alignParentStart="true" />
 
     <TextView
-        android:id="@+id/CarModelWithimage"
+        android:id="@+id/IndElecUsage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/CarMakeWithimage"
+        android:layout_below="@+id/EndingDate"
         android:layout_toEndOf="@+id/RouteImage"
         android:text="@string/tempHwatDst"
         android:textAlignment="viewEnd"

@@ -248,11 +248,11 @@ public class DisplayRouteList extends AppCompatActivity {
             Route currentRoute = RouteList.get(position);
             ImageView imageView = (ImageView) itemView.findViewById(R.id.RouteImage);
             imageView.setImageResource(currentRoute.getIconId());
-            TextView RouteName = (TextView)itemView.findViewById(R.id.CarNameWithimage);
+            TextView RouteName = (TextView)itemView.findViewById(R.id.StartingDate);
             RouteName.setText("Name: "+currentRoute.getName());
-            TextView RouteCityDst = (TextView)itemView.findViewById(R.id.CarMakeWithimage);
+            TextView RouteCityDst = (TextView)itemView.findViewById(R.id.EndingDate);
             RouteCityDst.setText("Distance in City: " + currentRoute.getCityDistance()+" KM");
-            TextView RouteHwayDst = (TextView)itemView.findViewById(R.id.CarModelWithimage);
+            TextView RouteHwayDst = (TextView)itemView.findViewById(R.id.IndElecUsage);
             RouteHwayDst.setText("Distance in HighWay: "+ currentRoute.getHighwayDistance()+" KM");
             TextView RouteTotalDst = (TextView)itemView.findViewById(R.id.totalDistanceWImage);
             RouteTotalDst.setText("Total Distance: " + currentRoute.getTotalDistance()+" KM");
@@ -324,7 +324,7 @@ public class DisplayRouteList extends AppCompatActivity {
             createNewJourney(cityDistance,HwyDistance,totalCO2, 2);
         }
         else if (singleton.checkTransportationMode() == 3){ //Skytrain
-            totalCO2 = (cityDistance+HwyDistance)*0.033;
+            totalCO2 = (cityDistance+HwyDistance)*0.02348;
             String TotalCO2 = String.format("%.2f", totalCO2);
             Toast.makeText(getApplicationContext(), "You have produced: "+ TotalCO2 +"kg of CO2", Toast.LENGTH_SHORT).show();
 

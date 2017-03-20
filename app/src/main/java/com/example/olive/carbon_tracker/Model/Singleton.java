@@ -12,14 +12,25 @@ public class Singleton {
     //    private String currenMake;
     private List<Vehicle> VehiclesList = new ArrayList<>();
     private List<Route> RouteList = new ArrayList<>();
+    private List<MonthlyUtilitiesData> BillList = new ArrayList<>();
     private VehicleData vehicleData = new VehicleData();
     private List<String> getVehicleMakeArray = new ArrayList<>();
     private List<String> vehicleModelArray = new ArrayList<>();
 
-    String userDay = null;
-    String userMonth = null;
-    String userYear = null;
-    boolean isDateChanged = false;
+    private String userDay = null;
+    private String userMonth = null;
+    private String userYear = null;
+    private boolean isDateChanged = false;
+
+    private String startDay = null;
+    private String startMonth = null;
+    private String startYear = null;
+    private boolean isStartDateChanged = false;
+
+    private String endDay = null;
+    private String endMonth = null;
+    private String endYear = null;
+    private boolean isEndDateChanged = false;
 
     SQLiteDatabase CarInfoDB;
 
@@ -31,6 +42,7 @@ public class Singleton {
 
     private static int editRoute;
     private static int editVehicle;
+    private static int editMonthlyUtilities;
     private static long editPosition_Route;
     private static long editPosition_Car;
 
@@ -43,10 +55,12 @@ public class Singleton {
     }
 
     private static long editPostion_Journey;
+    private static int editPosition_bill;
     private boolean editJourney = false;
     private int editJourneyPosition;
     private static int addRoute;
     private static int addVehicle;
+    private static int addMonthlyUtilities;
     private static int deleteRoute;
     private static int TransportationMode;
     private static Singleton instance = new Singleton();
@@ -112,17 +126,13 @@ public class Singleton {
         return position;
     }
 
-    public void userEditRoute_car() {
-        editVehicle = 1;
-    }
+    public void userEditRoute_car() { editVehicle = 1;  }
 
     public int checkEdit_car() {
         return editVehicle;
     }
 
-    public void userFinishEdit_car() {
-        editVehicle = 0;
-    }
+    public void userFinishEdit_car() { editVehicle = 0;  }
 
     public void userAddVehicle() {
         addVehicle = 1;
@@ -198,6 +208,8 @@ public class Singleton {
         }
     }
 
+    //--------------------------------Vehicle Date----------------------------------------------//
+
     public String getUserDay() {
         return userDay;
     }
@@ -220,6 +232,80 @@ public class Singleton {
 
     public void setUserYear(String userYear) {
         this.userYear = userYear;
+    }
+
+    //-------------------------------Monthly Utilities Dates------------------------------------//
+
+    public List<MonthlyUtilitiesData> getBillList() {
+        return BillList;
+    }
+
+
+    public String getStartDay() { return startDay;  }
+
+    public void setStartDay(String startDay) { this.startDay = startDay; }
+
+    public String getStartMonth() { return startMonth;  }
+
+    public void setStartMonth(String startMonth) { this.startMonth = startMonth; }
+
+    public String getStartYear() { return startYear; }
+
+    public void setStartYear(String startYear) { this.startYear = startYear; }
+
+    public String getEndDay() { return endDay; }
+
+    public void setEndDay(String endDay) { this.endDay = endDay; }
+
+    public String getEndMonth() { return endMonth; }
+
+    public void setEndMonth(String endMonth) { this.endMonth = endMonth; }
+
+    public String getEndYear() { return endYear; }
+
+    public void setEndYear(String endYear) { this.endYear = endYear; }
+
+
+    public boolean isStartDateChanged() { return isStartDateChanged; }
+
+    public void setStartDateChanged(boolean startDateChanged) { isStartDateChanged = startDateChanged; }
+
+    public boolean isEndDateChanged() { return isEndDateChanged; }
+
+    public void setEndDateChanged(boolean endDateChanged) { isEndDateChanged = endDateChanged; }
+
+
+    public void userAddMonthlyUtilities() {
+        addMonthlyUtilities = 1;
+    }
+
+    public void userFinishAdd_MonthlyUtilities() {
+        addMonthlyUtilities = 0;
+    }
+
+    public int checkAdd_MonthlyUtilities() {
+        return addMonthlyUtilities;
+    }
+
+    public void userEditMonthlyUtilities() { editMonthlyUtilities = 1;  }
+
+    public int checkEditMonthlyUtilities() {
+        return editMonthlyUtilities;
+    }
+
+    public void userFinishEditMonthlyUtilities() { editMonthlyUtilities = 0;  }
+
+
+    public void setEditPosition_bill(int Position) {
+        editPosition_bill = Position;
+    }
+
+    public int getEditPosition_bill() {
+        return editPosition_bill;
+    }
+
+    public void setBillList(List<MonthlyUtilitiesData> newBill) {
+        BillList = newBill;
     }
 
     //-----------------------------------Route's function-------------------------------------------
