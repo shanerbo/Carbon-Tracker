@@ -32,7 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AddNewRoute extends AppCompatActivity {
-    private List<Route> RouteList = new ArrayList<Route>();
+    private List<Route> RouteList = new ArrayList<>();
 
     private String _currentRouteName;
     private long position;
@@ -89,8 +89,8 @@ public class AddNewRoute extends AppCompatActivity {
             EditText cityDst = (EditText)findViewById(R.id.CityDstInput);
             EditText hWayDst = (EditText)findViewById(R.id.HwayDstInput);
             Name.setText(oldRouteName);
-            cityDst.setText(""+Route_city_dis);
-            hWayDst.setText(""+Route_hWay_dis);
+            cityDst.setText(""+Route_city_dis+"");
+            hWayDst.setText(""+Route_hWay_dis+"");
         } else {
             position = singleton.getAddPosition();
         }
@@ -157,7 +157,7 @@ public class AddNewRoute extends AppCompatActivity {
                             }
                             else if (singleton.checkTransportationMode() == 3){
                                 mode = "Skytrain";
-                                double co2 = (cityDst + highWayDst)*0.033;
+                                double co2 = (cityDst + highWayDst)*0.02348;
                                 editJoutneyDB(_date,0,mode,mode,"N/A","N/A",0,0,0,"N/A",idPassedBack,name,cityDst,
                                         highWayDst,totalDst,_EditedJourneyID,co2);
                             }

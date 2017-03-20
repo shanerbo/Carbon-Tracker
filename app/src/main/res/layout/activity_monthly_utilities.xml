@@ -164,6 +164,7 @@
         android:layout_alignTop="@+id/TVnum_people"
         android:ems="10"
         android:inputType="number"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        tools:ignore="LabelFor" />
 
 </RelativeLayout>
