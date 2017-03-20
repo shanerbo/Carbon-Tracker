@@ -12,6 +12,7 @@ public class Singleton {
     //    private String currenMake;
     private List<Vehicle> VehiclesList = new ArrayList<>();
     private List<Route> RouteList = new ArrayList<>();
+    private List<MonthlyUtilitiesData> BillList = new ArrayList<>();
     private VehicleData vehicleData = new VehicleData();
     private List<String> getVehicleMakeArray = new ArrayList<>();
     private List<String> vehicleModelArray = new ArrayList<>();
@@ -223,6 +224,11 @@ public class Singleton {
     }
 
     //-------------------------------Monthly Utilities Dates------------------------------------//
+
+    public List<MonthlyUtilitiesData> getBillList() {
+        return BillList;
+    }
+
 
     public String getStartDay() { return startDay;  }
 

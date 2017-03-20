@@ -37,6 +37,7 @@ public class MonthlyUtilities extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_monthly_utilities);
+        MonthlyUtilitiesList = singleton.getBillList();
 
 
         setupCalendarButton(R.id.ID_startDate_button);
@@ -181,34 +182,41 @@ public class MonthlyUtilities extends AppCompatActivity {
                                 singleton.userFinishEditMonthlyUtilities();
                             }
 
-                            else{
+                            //else{
                                 if(!electricUsage.matches("") && naturalGasUsage.matches("")) {
                                     long indElecUsage = parseLong(electricUsage) * (long) 0.000001 / parseLong(numOfPeople);
                                     long indGasUsage = 0;
                                     long indCO2 = indElecUsage*9000 + indGasUsage*(long)56.1;
-                                    new MonthlyUtilitiesData(
+                                    MonthlyUtilitiesData userInput = new MonthlyUtilitiesData(
                                             startDay+"/"+startMonth+"/"+startYear, EndDay+"/"+EndMonth+"/"+EndYear,
                                             dateDifference, indElecUsage, indGasUsage, indCO2);
+                                    MonthlyUtilitiesList.add(userInput);
+                                    singleton.userFinishAdd_MonthlyUtilities();
                                 }
                                 else if(!naturalGasUsage.matches("") && electricUsage.matches("")) {
                                     long indElecUsage = 0;
                                     long indGasUsage = parseLong(naturalGasUsage) / parseLong(numOfPeople);
                                     long indCO2 = indElecUsage * 9000 + indGasUsage * (long) 56.1;
-                                    new MonthlyUtilitiesData(
+                                    MonthlyUtilitiesData userInput = new MonthlyUtilitiesData(
                                             startDay + "/" + startMonth + "/" + startYear, EndDay + "/" + EndMonth + "/" + EndYear,
                                             dateDifference, indElecUsage, indGasUsage, indCO2);
+                                    MonthlyUtilitiesList.add(userInput);
+                                    singleton.userFinishAdd_MonthlyUtilities();
                                 }
                                 else{
                                     long indElecUsage = parseLong(electricUsage) * (long) 0.000001 / parseLong(numOfPeople);
                                     long indGasUsage = parseLong(naturalGasUsage) / parseLong(numOfPeople);
                                     long indCO2 = indElecUsage*9000 + indGasUsage*(long)56.1;
-                                    new MonthlyUtilitiesData(
+                                    MonthlyUtilitiesData userInput = new MonthlyUtilitiesData(
                                             startDay+"/"+startMonth+"/"+startYear, EndDay+"/"+EndMonth+"/"+EndYear,
                                             dateDifference, indElecUsage, indGasUsage, indCO2);
+                                    //Toast.makeText(MonthlyUtilities.this,""+indElecUsage+"-"+indGasUsage+"-"+indCO2,Toast.LENGTH_LONG).show();
+                                    //Toast.makeText(MonthlyUtilities.this,startDay+"-"+EndDay+"-"+dateDifference,Toast.LENGTH_LONG).show();
+                                    MonthlyUtilitiesList.add(userInput);
+                                    singleton.userFinishAdd_MonthlyUtilities();
                                 }
 //
-                            }
-
+                           // }
 
                             startActivity(new Intent(MonthlyUtilities.this, DisplayMonthlyUtilities.class));
                             finish();
@@ -228,10 +236,6 @@ public class MonthlyUtilities extends AppCompatActivity {
                     catch(Exception  e){
                         Toast.makeText(MonthlyUtilities.this, "Please pick a date", Toast.LENGTH_LONG).show();
                     }
-
-
-
-
 
             }
         });

@@ -31,6 +31,7 @@ public class DisplayMonthlyUtilities extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_monthly_utilities);
+        MonthlyUtilitiesList = singleton.getBillList();
 
         SetupAddBtn();
         EditBill();
@@ -58,7 +59,7 @@ public class DisplayMonthlyUtilities extends AppCompatActivity {
     }
 
     private void EditBill(){
-        ListView BillList = (ListView) findViewById(R.id.ID_bill_list);
+        ListView BillList = (ListView) findViewById(R.id.ID_Bill_List);
         BillList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
@@ -75,31 +76,36 @@ public class DisplayMonthlyUtilities extends AppCompatActivity {
 
     private void showAllBills() {
         //TODO show all bills using database
+        //String[] my_items = {"hi"};
+        //ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.single_element_bill_list, my_items);
+
         ArrayAdapter<MonthlyUtilitiesData> adapter = new myArrayAdapter();
-        ListView list = (ListView) findViewById(R.id.ID_bill_list);
+        ListView list = (ListView) findViewById(R.id.ID_Bill_List);
         list.setAdapter(adapter);
     }
 
     private class myArrayAdapter extends ArrayAdapter<MonthlyUtilitiesData>{
         public myArrayAdapter(){
-            super(DisplayMonthlyUtilities.this, R.layout.single_element_bill_list);
+            super(DisplayMonthlyUtilities.this, R.layout.single_element_bill_list, MonthlyUtilitiesList);
         }
         @Override
         public View getView(int position, View convertView, ViewGroup parent){
             View itemView = convertView;
-            if(itemView == null)
+            if(itemView == null) {
                 itemView = getLayoutInflater().inflate(R.layout.single_element_bill_list, parent, false);
+            }
             MonthlyUtilitiesData currentBill = MonthlyUtilitiesList.get(position);
-
-            TextView startDate = (TextView) findViewById(R.id.StartingDate);
+            ImageView imageView = (ImageView) itemView.findViewById(R.id.BillImage);
+            imageView.setImageResource(currentBill.getIconID());
+            TextView startDate = (TextView) itemView.findViewById(R.id.StartingDate);
             startDate.setText("Starting date: " + currentBill.getStartDate());
-            TextView endDate = (TextView) findViewById(R.id.EndingDate);
+            TextView endDate = (TextView) itemView.findViewById(R.id.EndingDate);
             endDate.setText("Ending date: " + currentBill.getEndDate());
-            TextView indElec = (TextView) findViewById(R.id.IndElecUsage);
+            TextView indElec = (TextView) itemView.findViewById(R.id.IndElecUsage);
             indElec.setText("Individual electricity usage: " + currentBill.getIndElecUsage());
-            TextView indGas = (TextView) findViewById(R.id.IndGasUsage);
+            TextView indGas = (TextView) itemView.findViewById(R.id.IndGasUsage);
             indGas.setText("Individual natural gas usage: " + currentBill.getIndGasUsage());
-            TextView indCO2 = (TextView) findViewById(R.id.IndCO2);
+            TextView indCO2 = (TextView) itemView.findViewById(R.id.IndCO2);
             indCO2.setText("Individual CO2 emission(kg): " + currentBill.getIndCO2());
 
             return itemView;
