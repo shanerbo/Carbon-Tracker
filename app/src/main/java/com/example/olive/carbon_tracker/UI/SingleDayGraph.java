@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.olive.carbon_tracker.Model.Journey;
+import com.example.olive.carbon_tracker.Model.MonthlyUtilitiesData;
 import com.example.olive.carbon_tracker.Model.Singleton;
 import com.example.olive.carbon_tracker.R;
 import com.github.mikephil.charting.components.Legend;
@@ -36,7 +37,10 @@ public class SingleDayGraph extends AppCompatActivity {
     List<Double> carCO2 = new ArrayList<>();
     List<Double> busCO2 = new ArrayList<>();
     List<Double> skytrainCO2 = new ArrayList<>();
-
+    List<Double> utilityCO2 = new ArrayList<>();
+    public static final int DAY_TOKEN = 0;
+    public static final int MONTH_TOKEN = 1;
+    public static final int YEAR_TOKEN = 2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,7 +68,9 @@ public class SingleDayGraph extends AppCompatActivity {
         if (skytrainCO2.get(0) != 0.0) {
             pieEntries.add(new PieEntry(skytrainCO2.get(0).floatValue(), "SKYTRAIN"));
         }
-
+        if (utilityCO2.get(0) != 0.0) {
+            pieEntries.add(new PieEntry(utilityCO2.get(0).floatValue(), "UTILITY"));
+        }
 
         PieDataSet dataSet = new PieDataSet(pieEntries, "");
         dataSet.setColors(Color.rgb(0, 128, 255), Color.rgb(96, 96, 96), Color.rgb(255, 153, 2255), Color.rgb(255, 128, 0), Color.rgb(255, 0, 0));
@@ -137,9 +143,12 @@ public class SingleDayGraph extends AppCompatActivity {
     public void getSingleDayCO2() {
         todaysCO2.clear();
         List<Journey> journeyList = singleton.getUsersJourneys();
+        List<MonthlyUtilitiesData> utilitiesList = singleton.getBillList();
+        utilityCO2.clear();
         skytrainCO2.add(0, 0.0);
         busCO2.add(0, 0.0);
         carCO2.add(0, 0.0);
+        utilityCO2.add(0,0.0);
         String day = singleton.getUserDay();
         String month = singleton.getUserMonth();
         String year = singleton.getUserYear();
@@ -170,5 +179,105 @@ public class SingleDayGraph extends AppCompatActivity {
             }
         }
 
+        boolean insideRange = false;
+        long smallestDateDifference = 99999999;
+        String mostRecentDate;
+        double mostRecentCO2 = 0;
+        for (int i = 0; i < utilitiesList.size(); i++) {
+
+            MonthlyUtilitiesData currentUtility= utilitiesList.get(i);
+            double currentUtilityIndCO2 =  currentUtility.getIndCO2();
+            Toast.makeText(getApplicationContext(),"" + currentUtilityIndCO2,Toast.LENGTH_LONG).show();
+            String currentUtilityStartDate = currentUtility.getStartDate();
+            String currentUtilityEndDate = currentUtility.getEndDate();
+
+
+            String[] date = userDate.split("/");
+            int monthNumber = getMonthNumber(date[MONTH_TOKEN]);
+            String currentDate = date[DAY_TOKEN] + "/" + monthNumber + "/" + date[YEAR_TOKEN];
+
+            if(getDateDifference(currentUtilityStartDate, currentDate)>=0 &&
+                    getDateDifference(currentDate, currentUtilityEndDate)>=0){
+
+                currentUtilityIndCO2 += utilityCO2.remove(0);
+                utilityCO2.add(currentUtilityIndCO2);
+                insideRange = true;
+
+            }
+            else {
+                long currentDateDifference = getDateDifference(currentUtilityEndDate, currentDate);
+                if (currentDateDifference < smallestDateDifference && currentDateDifference > 0) {
+                    mostRecentCO2 = currentUtilityIndCO2;
+                    smallestDateDifference = currentDateDifference;
+                }
+            }
+
+        }
+        if(insideRange == false){
+            mostRecentCO2 += utilityCO2.remove(0);
+            utilityCO2.add(mostRecentCO2);
+        }
+
+        //if utility co2 is 0
+
+    }
+
+    private long getDateDifference(String StartDate, String EndDate) {
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        try {
+            Date start = sdf.parse(StartDate);
+            Date end = sdf.parse(EndDate);
+            long dateDifference = end.getTime() - start.getTime();
+            return dateDifference / 1000 / 60 / 60 / 24;
+        }
+        catch(Exception  e){
+            Toast.makeText(SingleDayGraph.this, "ERROR: SingleDayGraph" +
+                    " dateDifference calculation failed", Toast.LENGTH_LONG).show();
+        }
+        return -1;
+    }
+
+    public int getMonthNumber(String month) {
+
+        switch (month) {
+            case "January":
+                return 1;
+
+            case "February":
+                return 2;
+
+            case "March":
+                return 3;
+
+            case "April":
+                return 4;
+
+            case "May":
+                return 5;
+
+            case "June":
+                return 6;
+
+            case "July":
+                return 7;
+
+            case "August":
+                return 8;
+
+            case "September":
+                return 9;
+
+            case "October":
+                return 10;
+
+            case "November":
+                return 11;
+
+            case "December":
+                return 12;
+
+        }
+        return -1;
     }
 }

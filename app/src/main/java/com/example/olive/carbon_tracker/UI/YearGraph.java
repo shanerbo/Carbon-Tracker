@@ -34,7 +34,7 @@ public class YearGraph extends AppCompatActivity {
     int chosenDay;
     public static final int MONTH_TOKEN = 1;
     public static final int YEAR_TOKEN = 2;
-
+    List<Double> utilityCO2 = new ArrayList<>();
     List<Double> carCO2 = new ArrayList<>();
     List<Double> busCO2 = new ArrayList<>();
     List<Double> skytrainCO2 = new ArrayList<>();

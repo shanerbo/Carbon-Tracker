@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.olive.carbon_tracker.Model.Journey;
+import com.example.olive.carbon_tracker.Model.MonthlyUtilitiesData;
 import com.example.olive.carbon_tracker.Model.Singleton;
 import com.example.olive.carbon_tracker.R;
 import com.github.mikephil.charting.charts.BarChart;
@@ -47,6 +48,7 @@ public class MonthGraph extends AppCompatActivity {
     List<Double> carCO2 = new ArrayList<>();
     List<Double> busCO2 = new ArrayList<>();
     List<Double> skytrainCO2 = new ArrayList<>();
+    List<Double> utilityCO2 = new ArrayList<>();
     List<Journey> journeyList = singleton.getUsersJourneys();
 
     private List<String> previousDates = new ArrayList<>();
@@ -102,14 +104,15 @@ public class MonthGraph extends AppCompatActivity {
                 transportationEntries.add(new BarEntry(
                         i, new float[]{busCO2.get(i).floatValue(),
                         carCO2.get(i).floatValue(),
-                        skytrainCO2.get(i).floatValue()}));
-
+                        skytrainCO2.get(i).floatValue(),
+                        utilityCO2.get(i).floatValue()}));
+                Toast.makeText(getApplicationContext(), "currUtCo2,: "+utilityCO2.get(i).floatValue() , Toast.LENGTH_SHORT).show();
             }
 
             BarDataSet set1;
             set1 = new BarDataSet(transportationEntries, "");
             set1.setColors(getColors());
-            set1.setStackLabels(new String[]{"Bus", "Car", "Sky Train"});
+            set1.setStackLabels(new String[]{"Bus", "Car", "Sky Train","Utility"});
 
             ArrayList<IBarDataSet> dataSets = new ArrayList<IBarDataSet>();
             dataSets.add(set1);
@@ -173,13 +176,14 @@ public class MonthGraph extends AppCompatActivity {
         busCO2.clear();
         skytrainCO2.clear();
         carCO2.clear();
-
+        utilityCO2.clear();
         getPrevious28Days();
-
+        List<MonthlyUtilitiesData> utilitiesList = singleton.getBillList();
         for (int i = 0; i < MONTH; i++) {
             busCO2.add(i, 0.0);
             carCO2.add(i, 0.0);
             skytrainCO2.add(i, 0.0);
+            utilityCO2.add(i, 0.0);
         }
 
         for (int i = 0; i < journeyList.size(); i++) {
@@ -212,9 +216,81 @@ public class MonthGraph extends AppCompatActivity {
                     }
                 }
             }
-        }
-    }
 
+
+        }
+
+
+        boolean insideRange = false;
+        long smallestDateDifference = 99999999;
+        String mostRecentDate;
+        double mostRecentCO2 = 0;
+        for (int i = 0; i < utilitiesList.size(); i++) {
+            isChartEmpty = false;
+            MonthlyUtilitiesData currentUtility = utilitiesList.get(i);
+            double currentUtilityIndCO2 = currentUtility.getIndCO2();
+          // Toast.makeText(getApplicationContext(), "" + currentUtilityIndCO2, Toast.LENGTH_LONG).show();
+            String currentUtilityStartDate = currentUtility.getStartDate();
+            String currentUtilityEndDate = currentUtility.getEndDate();
+
+            String currentDate = chosenDay + "/" + chosenMonth + "/" + chosenYear;
+
+            for (int j = 0; j < previousDates.size(); j++) {
+                String prevDate = previousDates.get(j);
+              // Toast.makeText(getApplicationContext(), "prevDate " + prevDate, Toast.LENGTH_LONG).show();
+              if (getDateDifference(currentUtilityStartDate, prevDate) >= 0 &&
+                       getDateDifference(prevDate ,currentUtilityEndDate) >= 0) {
+
+                    currentUtilityIndCO2 += utilityCO2.remove(j);
+                    utilityCO2.add(j,currentUtilityIndCO2);
+
+                    insideRange = true;
+
+                } else {
+                    long currentDateDifference = getDateDifference(currentUtilityEndDate, prevDate);
+                    if (currentDateDifference < smallestDateDifference && currentDateDifference > 0) {
+                        mostRecentCO2 = currentUtilityIndCO2;
+                        smallestDateDifference = currentDateDifference;
+                    }
+                }
+                if (insideRange == false) {
+                    mostRecentCO2 += utilityCO2.remove(j);
+                    utilityCO2.add(j,mostRecentCO2);
+                }
+
+
+            }
+      //  Toast.makeText(getApplicationContext(), "size " + utilityCO2.size(), Toast.LENGTH_LONG).show();
+        Log.i("size  " + utilityCO2.size(),"");
+            for(double c02: utilityCO2){
+           //     Toast.makeText(getApplicationContext(), "co2: " + c02, Toast.LENGTH_SHORT).show();
+            }
+        }
+
+
+//        if (insideRange == false) {
+//            mostRecentCO2 += utilityCO2.remove(0);
+//            utilityCO2.add(mostRecentCO2);
+//        }
+     }
+
+
+
+
+    private long getDateDifference(String StartDate, String EndDate) {
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        try {
+            Date start = sdf.parse(StartDate);
+            Date end = sdf.parse(EndDate);
+            long dateDifference = end.getTime() - start.getTime();
+            return dateDifference / 1000 / 60 / 60 / 24;
+        } catch (Exception e) {
+            Toast.makeText(MonthGraph.this, "ERROR: SingleDayGraph" +
+                    " dateDifference calculation failed", Toast.LENGTH_LONG).show();
+        }
+        return -1;
+    }
 
     private void getPrevious28Days() {
         //what the user has picked as a date
@@ -224,7 +300,7 @@ public class MonthGraph extends AppCompatActivity {
         int currentDay = chosenDay;
 
         previousDates.clear();
-        int subtract  = 0; //to include the current day
+        int subtract = 0; //to include the current day
         //getting the dates for the past 28 days
         for (int i = 0; i < MONTH; i++) {
             currentDay = currentDay - subtract;
@@ -343,7 +419,7 @@ public class MonthGraph extends AppCompatActivity {
 
     private int[] getColors() {
 
-        int stacksize = 3;
+        int stacksize = 4;
 
         // have as many colors as stack-values per entry
         int[] colors = new int[stacksize];
