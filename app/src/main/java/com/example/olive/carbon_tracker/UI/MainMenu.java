@@ -49,7 +49,7 @@ public class MainMenu extends AppCompatActivity {
             String[] tempDate = (cursor.getString(0)).split("-");
             String tempYear = tempDate[0];
             String tempMonth = ChangMonthInString(tempDate[1]);
-            String tempDay = tempDate[2];
+            String tempDay = ChangDayInString(tempDate[2]) ;
             String date = tempDay + "/" + tempMonth + "/" + tempYear;
             String mode = cursor.getString(1);
             String routeName = cursor.getString(3);
@@ -62,12 +62,41 @@ public class MainMenu extends AppCompatActivity {
             JourneyListFromDB.add(tempJourney);
             cursor.moveToNext();
         }
-
         cursor.close();
         myDataBase.close();
         singleton.setJourneyList(JourneyListFromDB);
     }
 
+    private String ChangDayInString(String tempDay) {
+        if (tempDay.matches("01")){
+            return "1";
+        }
+        if (tempDay.matches("02")){
+            return "2";
+        }
+        if (tempDay.matches("03")){
+            return "3";
+        }
+        if (tempDay.matches("04")){
+            return "4";
+        }
+        if (tempDay.matches("05")){
+            return "5";
+        }
+        if (tempDay.matches("06")){
+            return "6";
+        }
+        if (tempDay.matches("07")){
+            return "7";
+        }
+        if (tempDay.matches("08")){
+            return "8";
+        }
+        else{
+            return "9";
+        }
+
+    }
     private String ChangMonthInString(String tempMonth) {
         if (tempMonth.matches("01")){
             return "January";

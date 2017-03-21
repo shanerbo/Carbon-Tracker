@@ -1,6 +1,8 @@
 package com.example.olive.carbon_tracker.UI;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.olive.carbon_tracker.Model.DatabaseHelper;
 import com.example.olive.carbon_tracker.Model.MonthlyUtilitiesData;
 import com.example.olive.carbon_tracker.Model.Singleton;
 import com.example.olive.carbon_tracker.R;
@@ -26,16 +29,17 @@ public class DisplayMonthlyUtilities extends AppCompatActivity {
 
     Singleton singleton = Singleton.getInstance();
     private List<MonthlyUtilitiesData> MonthlyUtilitiesList = new ArrayList<>();
+    private SQLiteDatabase myDataBase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_monthly_utilities);
-        MonthlyUtilitiesList = singleton.getBillList();
+        //MonthlyUtilitiesList = singleton.getBillList();
 
         SetupAddBtn();
-        EditBill();
         showAllBills();
+        EditBill();
 
     }
 
@@ -63,7 +67,7 @@ public class DisplayMonthlyUtilities extends AppCompatActivity {
         BillList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                singleton.setEditPosition_bill(position);
+                singleton.setEditPosition_bill(MonthlyUtilitiesList.get(position).getUtilityDBId());
                 singleton.userEditMonthlyUtilities();
                 startActivityForResult(new Intent(DisplayMonthlyUtilities.this, MonthlyUtilities.class), 0);
                 finish();
@@ -77,6 +81,29 @@ public class DisplayMonthlyUtilities extends AppCompatActivity {
 
     private void showAllBills() {
         //TODO show all bills using database
+        List<MonthlyUtilitiesData> MonthlyUtilitiesFromDB = new ArrayList<>();
+        myDataBase = SQLiteDatabase.openOrCreateDatabase(DatabaseHelper.DB_PATH +
+                DatabaseHelper.DB_NAME,null);
+        Cursor cursor = myDataBase.rawQuery("select * from " +
+                "UtilityInfoTable",null);
+        cursor.moveToFirst();
+        while(!cursor.isAfterLast()){
+            String starDate = cursor.getString(1);
+            String endDate = cursor.getString(2);
+            long totalDays = cursor.getLong(5);
+            long totalPerson = cursor.getLong(6);
+            double indEle = cursor.getDouble(3)/totalPerson/totalDays;
+            double indGas = cursor.getDouble(4)/totalPerson/totalDays;
+            double co2 = cursor.getDouble(7);
+            long UtilityDBId = cursor.getLong(cursor.getColumnIndex("_id"));
+            MonthlyUtilitiesData tmpUtility = new MonthlyUtilitiesData(starDate,endDate,
+                    totalDays,indEle,indGas,totalPerson,co2,UtilityDBId);
+            MonthlyUtilitiesFromDB.add(tmpUtility);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        MonthlyUtilitiesList = MonthlyUtilitiesFromDB;
+
         ArrayAdapter<MonthlyUtilitiesData> adapter = new myArrayAdapter();
         ListView list = (ListView) findViewById(R.id.ID_Bill_List);
         list.setAdapter(adapter);
