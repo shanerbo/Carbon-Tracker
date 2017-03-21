@@ -6,8 +6,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.olive.carbon_tracker.Model.Journey;
+import com.example.olive.carbon_tracker.Model.MonthlyUtilitiesData;
 import com.example.olive.carbon_tracker.Model.Singleton;
 import com.example.olive.carbon_tracker.R;
 import com.github.mikephil.charting.charts.LineChart;
@@ -86,11 +88,13 @@ public class YearGraph extends AppCompatActivity {
             ArrayList<Entry> busEntires = new ArrayList<>();
             ArrayList<Entry> carEntires = new ArrayList<>();
             ArrayList<Entry> skytrainEntires = new ArrayList<>();
+            ArrayList<Entry> utilityEntires = new ArrayList<>();
 
             for (int i = 0; i < 12; i++) {
                 busEntires.add(new Entry(i, busCO2.get(i).floatValue()));
                 carEntires.add(new Entry(i, carCO2.get(i).floatValue()));
                 skytrainEntires.add(new Entry(i, skytrainCO2.get(i).floatValue()));
+                utilityEntires.add(new Entry(i, utilityCO2.get(i).floatValue()));
             }
 
             IAxisValueFormatter formatter = new IAxisValueFormatter() {
@@ -119,6 +123,7 @@ public class YearGraph extends AppCompatActivity {
             LineDataSet busDataSet = new LineDataSet(busEntires, "Bus");
             LineDataSet carDataSet = new LineDataSet(carEntires, "Car");
             LineDataSet skytrainDataSet = new LineDataSet(skytrainEntires, "Sky Train");
+            LineDataSet utilityDataSet = new LineDataSet(utilityEntires, "Utilities");
 
             busDataSet.setLineWidth(0f);
             busDataSet.setCircleRadius(6f);
@@ -135,9 +140,16 @@ public class YearGraph extends AppCompatActivity {
             skytrainDataSet.setColor(ColorTemplate.MATERIAL_COLORS[2]);
             skytrainDataSet.setCircleColor(ColorTemplate.MATERIAL_COLORS[2]);
 
+
+            utilityDataSet.setLineWidth(0f);
+            utilityDataSet.setCircleRadius(6f);
+            utilityDataSet.setColor(ColorTemplate.MATERIAL_COLORS[3]);
+            utilityDataSet.setCircleColor(ColorTemplate.MATERIAL_COLORS[3]);
+
             lineDataSets.add(busDataSet);
             lineDataSets.add(carDataSet);
             lineDataSets.add(skytrainDataSet);
+            lineDataSets.add(utilityDataSet);
 
             lineChart.animateX(800);
             lineChart.animateY(800);
@@ -153,13 +165,14 @@ public class YearGraph extends AppCompatActivity {
         busCO2.clear();
         skytrainCO2.clear();
         carCO2.clear();
-
+        utilityCO2.clear();
         initMonths();
 
         for (int i = 0; i < MONTHS; i++) {
             busCO2.add(i, 0.0);
             carCO2.add(i, 0.0);
             skytrainCO2.add(i, 0.0);
+            utilityCO2.add(i, 0.0);
         }
 
         for (int i = 0; i < journeyList.size(); i++) {
@@ -194,8 +207,64 @@ public class YearGraph extends AppCompatActivity {
                 }
             }
         }
-    }
 
+        List<MonthlyUtilitiesData> utilitiesList = singleton.getBillList();
+        boolean insideRange = false;
+        long smallestDateDifference = 99999999;
+        double mostRecentCO2 = 0;
+        for (int i = 0; i < utilitiesList.size(); i++) {
+            isChartEmpty = false;
+            MonthlyUtilitiesData currentUtility = utilitiesList.get(i);
+            double currentUtilityIndCO2 = currentUtility.getIndCO2();
+            String[] currentUtilityStartDateArray = currentUtility.getStartDate().split("/");
+            String currentUtilityStartDate = currentUtilityStartDateArray[1] + "/" + currentUtilityStartDateArray[2];
+            String[] currentUtilityEndDateArray = currentUtility.getEndDate().split("/");
+            String currentUtilityEndDate = currentUtilityEndDateArray[1] + "/" + currentUtilityEndDateArray[2];
+
+            for (int j = 0; j < previousDates.size(); j++) {
+                String[] prevDateArray = previousDates.get(j).split("/");
+                int month = monthNumber2(prevDateArray[0]);
+                String prevDate = month +"/"+prevDateArray[1];
+
+                if (getDateDifference(currentUtilityStartDate, prevDate) >= 0 &&
+                        getDateDifference(prevDate, currentUtilityEndDate) >= 0) {
+
+                    currentUtilityIndCO2 += utilityCO2.remove(j);
+                    utilityCO2.add(j, currentUtilityIndCO2);
+
+                    insideRange = true;
+
+                } else {
+                    long currentDateDifference = getDateDifference(currentUtilityEndDate, prevDate);
+                    if (currentDateDifference < smallestDateDifference && currentDateDifference > 0) {
+                        mostRecentCO2 = currentUtilityIndCO2;
+                        smallestDateDifference = currentDateDifference;
+                    }
+                }
+                if (insideRange == false) {
+                    mostRecentCO2 += utilityCO2.remove(j);
+                    utilityCO2.add(j, mostRecentCO2);
+                }
+
+
+            }
+
+        }
+    }
+    private long getDateDifference(String StartDate, String EndDate) {
+
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/yyyy");
+        try {
+            Date start = sdf.parse(StartDate);
+            Date end = sdf.parse(EndDate);
+            long dateDifference = end.getTime() - start.getTime();
+            return dateDifference / 1000 / 60 / 60 / 24;
+        } catch (Exception e) {
+            Toast.makeText(YearGraph.this, "ERROR: YearGraph" +
+                    " dateDifference calculation failed", Toast.LENGTH_LONG).show();
+        }
+        return -1;
+    }
     private void initMonths() {
 
         chosenDay = Integer.parseInt(singleton.getUserDay());
@@ -362,4 +431,50 @@ public class YearGraph extends AppCompatActivity {
         }
 
     }
+    public int monthNumber2(String month) {
+
+        switch (month) {
+            case "Jan":
+                return 1;
+
+            case "Feb":
+                return 2;
+
+            case "Mar":
+                 return 3;
+
+            case "Apr":
+                return 4;
+
+            case "May":
+                return 5;
+
+            case "Jun":
+                return 6;
+
+            case "Jul":
+                return 7;
+
+            case "Aug":
+                 return 8;
+
+            case "Sep":
+                return 9;
+
+            case "Oct":
+                return 10;
+
+            case "Nov":
+                return 11;
+
+            case "Dec":
+                return 12;
+
+        }
+        return -1;
+    }
+
+
+
+
 }

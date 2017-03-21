@@ -187,7 +187,6 @@ public class SingleDayGraph extends AppCompatActivity {
 
             MonthlyUtilitiesData currentUtility= utilitiesList.get(i);
             double currentUtilityIndCO2 =  currentUtility.getIndCO2();
-            Toast.makeText(getApplicationContext(),"" + currentUtilityIndCO2,Toast.LENGTH_LONG).show();
             String currentUtilityStartDate = currentUtility.getStartDate();
             String currentUtilityEndDate = currentUtility.getEndDate();
 

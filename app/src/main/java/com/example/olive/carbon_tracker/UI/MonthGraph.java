@@ -223,7 +223,6 @@ public class MonthGraph extends AppCompatActivity {
 
         boolean insideRange = false;
         long smallestDateDifference = 99999999;
-        String mostRecentDate;
         double mostRecentCO2 = 0;
         for (int i = 0; i < utilitiesList.size(); i++) {
             isChartEmpty = false;
@@ -261,10 +260,10 @@ public class MonthGraph extends AppCompatActivity {
 
             }
       //  Toast.makeText(getApplicationContext(), "size " + utilityCO2.size(), Toast.LENGTH_LONG).show();
-        Log.i("size  " + utilityCO2.size(),"");
-            for(double c02: utilityCO2){
-           //     Toast.makeText(getApplicationContext(), "co2: " + c02, Toast.LENGTH_SHORT).show();
-            }
+//        Log.i("size  " + utilityCO2.size(),"");
+//            for(double c02: utilityCO2){
+//           //     Toast.makeText(getApplicationContext(), "co2: " + c02, Toast.LENGTH_SHORT).show();
+//            }
         }
 
 
