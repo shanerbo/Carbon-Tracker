@@ -106,7 +106,7 @@ public class DisplayMonthlyUtilities extends AppCompatActivity {
         }
         cursor.close();
         MonthlyUtilitiesList = MonthlyUtilitiesFromDB;
-
+        singleton.setBillList(MonthlyUtilitiesList);
         ArrayAdapter<MonthlyUtilitiesData> adapter = new myArrayAdapter();
         ListView list = (ListView) findViewById(R.id.ID_Bill_List);
         list.setAdapter(adapter);
