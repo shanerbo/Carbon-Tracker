@@ -9,59 +9,56 @@
         android:id="@+id/IndGasUsage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/IndElecUsage"
+        android:layout_below="@+id/IndElecUsage"
         android:text="@string/_0_0"
-        android:textAlignment="viewEnd"
-        android:textSize="12sp"
-        android:layout_alignBottom="@+id/BillImage"
-        android:layout_toEndOf="@+id/BillImage" />
+        android:textSize="12sp" />
 
     <TextView
         android:id="@+id/StartingDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/BillImage"
-        android:text="@string/dd_mm_yyyy"
-        android:textAlignment="viewEnd"
-        android:textSize="12sp" />
+        android:layout_marginStart="101dp"
+        android:text="@string/dd_mm_yyyy" />
 
     <TextView
         android:id="@+id/EndingDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/StartingDate"
         android:layout_below="@+id/StartingDate"
-        android:layout_toEndOf="@+id/BillImage"
-        android:text="@string/dd_mm_yyyy"
-        android:textAlignment="viewEnd"
+        android:text="@string/dd_mm_yyyy" />
+
+    <TextView
+        android:id="@+id/IndElecUsage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/EndingDate"
+        android:layout_below="@+id/EndingDate"
+        android:text="@string/_0_0"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/IndCO2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/IndGasUsage"
+        android:layout_below="@+id/IndGasUsage"
+        android:text="@string/_0_0"
         android:textSize="12sp" />
 
     <ImageView
         android:id="@+id/BillImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/old_vintage_car"
-        android:contentDescription=""
-        android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        tools:ignore="ContentDescription" />
-
-    <TextView
-        android:id="@+id/IndElecUsage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/_0_0"
-        android:textAlignment="viewEnd"
-        android:textSize="12sp"
-        android:layout_below="@+id/EndingDate"
-        android:layout_toEndOf="@+id/BillImage" />
-
-    <TextView
-        android:id="@+id/IndCO2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/_0_0"
-        android:layout_below="@+id/IndGasUsage"
-        android:layout_toEndOf="@+id/BillImage" />
+        android:layout_alignParentTop="true"
+        android:contentDescription=""
+        app:srcCompat="@drawable/bills"
+        android:layout_alignBottom="@+id/IndCO2"
+        android:layout_toStartOf="@+id/IndGasUsage" />
 
 
 </RelativeLayout>

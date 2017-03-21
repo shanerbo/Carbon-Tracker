@@ -10,7 +10,7 @@ public class MonthlyUtilitiesData {
     private double IndGasUsage;
     private double IndCO2;
     private long numOfPeople;
-    private int iconId = R.drawable.old_vintage_car;
+    private int iconId = R.drawable.bills;
     private long UtilityDBId;
 
     public MonthlyUtilitiesData(String startDate, String endDate, long totalDays, double indElecUsage,
