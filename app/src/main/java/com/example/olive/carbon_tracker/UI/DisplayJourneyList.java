@@ -127,6 +127,10 @@ public class DisplayJourneyList extends AppCompatActivity {
                 singleton.setEditJourneyPosition(position);
                 singleton.setEditPostion_Journey(JourneyList.get(position).getJourneyID());
                 singleton.userEditJourney();
+                String[] tempDate = JourneyList.get(position).getDateOfTrip().split("/");
+                singleton.setUserDay(tempDate[0]);
+                singleton.setUserMonth(tempDate[1]);
+                singleton.setUserYear(tempDate[2]);
                 startActivity(showActivity);
                 finish();
             }

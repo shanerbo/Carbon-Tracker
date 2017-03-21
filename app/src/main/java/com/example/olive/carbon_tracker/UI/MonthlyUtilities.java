@@ -12,6 +12,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -43,12 +44,23 @@ public class MonthlyUtilities extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().hide();
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_monthly_utilities);
         SuperUltraInfoDataBaseHelper UtilityDBhelper = new SuperUltraInfoDataBaseHelper(this);
         UtilityDB = UtilityDBhelper.getWritableDatabase();
         //////////////////////////////////////
         MonthlyUtilitiesList = singleton.getBillList();
+
+        setupCalendarButton(R.id.ID_startDate_button);
+        setupCalendarButton(R.id.ID_endDate_button);
+
+        setupAddButton(position);
+        setupDeleteButton(position);
+        viewCurrentDate();
+        uesrWantToEditBill();
+    }
+
+    private void uesrWantToEditBill() {
         if(singleton.checkEditMonthlyUtilities() == 1){
             position = singleton.getEditPosition_bill();
             String startDate = new String();
@@ -99,13 +111,8 @@ public class MonthlyUtilities extends AppCompatActivity {
         }
 
 
-        setupCalendarButton(R.id.ID_startDate_button);
-        setupCalendarButton(R.id.ID_endDate_button);
-
-        setupAddButton(position);
-        setupDeleteButton(position);
-        viewCurrentDate();
     }
+
     private void setupCalendarButton(final int buttonID){
         Button btn = (Button) findViewById(buttonID);
         btn.setOnClickListener(new View.OnClickListener() {
