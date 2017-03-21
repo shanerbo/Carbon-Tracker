@@ -42,10 +42,10 @@ public class DisplayRouteList extends AppCompatActivity {
     private long _EditedJourneyID = singleton.getEditPostion_Journey();
     private SQLiteDatabase myDataBase;
     private SQLiteDatabase RouteDB;
-    private String _day =   singleton.getUserDay();
-    private String _month =  singleton.getUserMonth();
+    private String _day =   checkDayIsSingleDIgit(singleton.getUserDay());
+    private String _month =  ChangeMonthInInt(singleton.getUserMonth());
     private String _year =  singleton.getUserYear();
-    private String _date = _day+"/"+_month+"/"+_year;
+    private String _date = _year+"-"+_month+"-"+_day;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,11 +59,14 @@ public class DisplayRouteList extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.ChooseRoute);
         setSupportActionBar(toolbar);
         //RouteList = singleton.getRouteList();
+        Toast.makeText(this,_date,Toast.LENGTH_SHORT).show();
         AddRoute();
         EditRoute();
         showAllRoute();
         UserChooseRoute();
     }
+
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -268,13 +271,13 @@ public class DisplayRouteList extends AppCompatActivity {
             String TotalCO2 = String.format("%.2f", totalCO2);
             Toast.makeText(getApplicationContext(), "You have produced: "+ TotalCO2 +"kg of CO2", Toast.LENGTH_SHORT).show();
 
-            String day =   singleton.getUserDay();
-            String month =  singleton.getUserMonth();
-            String year =  singleton.getUserYear();
-            String date = day+"/"+month+"/"+year;
+//            String day =   singleton.getUserDay();
+//            String month =  singleton.getUserMonth();
+//            String year =  singleton.getUserYear();
+//            String date = day+"/"+month+"/"+year;
 
             ContentValues cv = new ContentValues();
-            cv.put(SuperUltraInfoDataBaseHelper.Journey_Date,date);
+            cv.put(SuperUltraInfoDataBaseHelper.Journey_Date,_date);
 
             cv.put(SuperUltraInfoDataBaseHelper.Journey_CarName,"Walk/Bike");
             cv.put(SuperUltraInfoDataBaseHelper.Journey_CarMode,"Walk/Bike");
@@ -298,13 +301,13 @@ public class DisplayRouteList extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "You have produced: "+ TotalCO2 +"kg of CO2", Toast.LENGTH_SHORT).show();
 
 
-            String day =   singleton.getUserDay();
-            String month =  singleton.getUserMonth();
-            String year =  singleton.getUserYear();
-            String date = day+"/"+month+"/"+year;
+//            String day =   singleton.getUserDay();
+//            String month =  singleton.getUserMonth();
+//            String year =  singleton.getUserYear();
+//            String date = day+"/"+month+"/"+year;
 
             ContentValues cv = new ContentValues();
-            cv.put(SuperUltraInfoDataBaseHelper.Journey_Date,date);
+            cv.put(SuperUltraInfoDataBaseHelper.Journey_Date,_date);
 
             cv.put(SuperUltraInfoDataBaseHelper.Journey_CarName,"Bus");
             cv.put(SuperUltraInfoDataBaseHelper.Journey_CarMode,"Bus");
@@ -327,13 +330,13 @@ public class DisplayRouteList extends AppCompatActivity {
             String TotalCO2 = String.format("%.2f", totalCO2);
             Toast.makeText(getApplicationContext(), "You have produced: "+ TotalCO2 +"kg of CO2", Toast.LENGTH_SHORT).show();
 
-            String day =   singleton.getUserDay();
-            String month =  singleton.getUserMonth();
-            String year =  singleton.getUserYear();
-            String date = day+"/"+month+"/"+year;
+//            String day =   singleton.getUserDay();
+//            String month =  singleton.getUserMonth();
+//            String year =  singleton.getUserYear();
+//            String date = day+"/"+month+"/"+year;
 
             ContentValues cv = new ContentValues();
-            cv.put(SuperUltraInfoDataBaseHelper.Journey_Date,date);
+            cv.put(SuperUltraInfoDataBaseHelper.Journey_Date,_date);
 
             cv.put(SuperUltraInfoDataBaseHelper.Journey_CarName,"Skytrain");
             cv.put(SuperUltraInfoDataBaseHelper.Journey_CarMode,"Skytrain");
@@ -374,13 +377,13 @@ public class DisplayRouteList extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "The CO2 you produced: " + TotalCO2, Toast.LENGTH_LONG).show();
 
 
-            String day =   singleton.getUserDay();
-            String month =  singleton.getUserMonth();
-            String year =  singleton.getUserYear();
-            String date = day+"/"+month+"/"+year;
+//            String day =   singleton.getUserDay();
+//            String month =  singleton.getUserMonth();
+//            String year =  singleton.getUserYear();
+//            String date = day+"/"+month+"/"+year;
 
             ContentValues cv = new ContentValues();
-            cv.put(SuperUltraInfoDataBaseHelper.Journey_Date,date);
+            cv.put(SuperUltraInfoDataBaseHelper.Journey_Date,_date);
 
             cv.put(SuperUltraInfoDataBaseHelper.Journey_CarId,_vehicle.getCarDBId());
             cv.put(SuperUltraInfoDataBaseHelper.Journey_CarName, _vehicle.getName());
@@ -440,7 +443,7 @@ public class DisplayRouteList extends AppCompatActivity {
         simpleDateFormat = new SimpleDateFormat("MMMM");
        // System.out.println("MONTHS "+simpleDateFormat.format(date).toUpperCase());
 
-        simpleDateFormat = new SimpleDateFormat("YYYY");
+        simpleDateFormat = new SimpleDateFormat("yyyy");
      //   System.out.println("MONTHS "+simpleDateFormat.format(date).toUpperCase());
         Toast.makeText(getApplicationContext(),"MONTH "+simpleDateFormat.format(date).toUpperCase(),Toast.LENGTH_SHORT).show();
 
@@ -470,9 +473,55 @@ public class DisplayRouteList extends AppCompatActivity {
         if (singleton.isEditingJourney()) {
             singleton.changeJourney(journey);
         } else {
-            singleton.addUserJourney(journey);
+            //singleton.addUserJourney(journey);
         }
     }
+    private String checkDayIsSingleDIgit(String userDay) {
+        if (userDay.length() == 1){
+            return "0"+userDay;
+        }else{
+            return userDay;
+        }
+    }
+    private String ChangeMonthInInt(String _month) {
+        if (_month.matches("January")){
+            return "01";
+        }
+        if (_month.matches("February")){
+            return "02";
+        }
+        if (_month.matches("March")){
+            return "03";
+        }
+        if (_month.matches("April")){
+            return "04";
+        }
+        if (_month.matches("May")){
+            return "05";
+        }
+        if (_month.matches("June")){
+            return "06";
+        }
+        if (_month.matches("July")){
+            return "07";
+        }
+        if (_month.matches("August")){
+            return "08";
+        }
+        if (_month.matches("September")){
+            return "09";
+        }
+        if (_month.matches("October")){
+            return "10";
+        }
+        if (_month.matches("November")){
+            return "11";
+        }
+        else{
+            return "12";
+        }
+    }
+
 }
 
 

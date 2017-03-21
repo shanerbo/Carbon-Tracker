@@ -2,12 +2,15 @@ package com.example.olive.carbon_tracker.UI;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 
+import com.example.olive.carbon_tracker.Model.DatabaseHelper;
 import com.example.olive.carbon_tracker.Model.Journey;
 import com.example.olive.carbon_tracker.Model.Singleton;
 import com.example.olive.carbon_tracker.R;
@@ -17,17 +20,91 @@ import java.util.List;
 
 public class MainMenu extends AppCompatActivity {
     Singleton singleton = Singleton.getInstance();
+    public SQLiteDatabase myDataBase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
+        getJourneyList();
         setContentView(R.layout.activity_main_menu);
         setButton(R.id.btnCreateJourney);
         setButton(R.id.btnCurrentFootprint);
         setButton(R.id.btnEditJourney);
         setButton(R.id.btnMonthlyUti);
+    }
+    private void getJourneyList() {
+        List<Journey> JourneyListFromDB = new ArrayList<>();
+        myDataBase = SQLiteDatabase.openOrCreateDatabase(DatabaseHelper.DB_PATH + DatabaseHelper.DB_NAME,null);
+        Cursor cursor = myDataBase.rawQuery("select JourneyDate," +
+                "JourneyMode," +
+                "JourneyCarName," +
+                "JourneyRouteName, " +
+                "JourneyRouteTotal, " +
+                "JourneyCO2Emitted," +
+                "_id from JourneyInfoTable order by date(JourneyDate) asc ",null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()){
+            String[] tempDate = (cursor.getString(0)).split("-");
+            String tempYear = tempDate[0];
+            String tempMonth = ChangMonthInString(tempDate[1]);
+            String tempDay = tempDate[2];
+            String date = tempDay + "/" + tempMonth + "/" + tempYear;
+            String mode = cursor.getString(1);
+            String routeName = cursor.getString(3);
+            int totalDst = cursor.getInt(4);
+            String vehicleName = cursor.getString(2);
+            double co2 = cursor.getDouble(5);
+            long JourneyDBId = cursor.getLong(cursor.getColumnIndex("_id"));
+            Journey tempJourney = new Journey(date,mode,routeName,
+                    totalDst,vehicleName,co2,JourneyDBId);
+            JourneyListFromDB.add(tempJourney);
+            cursor.moveToNext();
+        }
+
+        cursor.close();
+        myDataBase.close();
+        singleton.setJourneyList(JourneyListFromDB);
+    }
+
+    private String ChangMonthInString(String tempMonth) {
+        if (tempMonth.matches("01")){
+            return "January";
+        }
+        if (tempMonth.matches("02")){
+            return "February";
+        }
+        if (tempMonth.matches("03")){
+            return "March";
+        }
+        if (tempMonth.matches("04")){
+            return "April";
+        }
+        if (tempMonth.matches("05")){
+            return "May";
+        }
+        if (tempMonth.matches("06")){
+            return "June";
+        }
+        if (tempMonth.matches("07")){
+            return "July";
+        }
+        if (tempMonth.matches("08")){
+            return "August";
+        }
+        if (tempMonth.matches("09")){
+            return "September";
+        }
+        if (tempMonth.matches("10")){
+            return "October";
+        }
+        if (tempMonth.matches("11")){
+            return "November";
+        }
+        else{
+            return "Decemeber";
+        }
     }
 
     private void setButton(final int id) {

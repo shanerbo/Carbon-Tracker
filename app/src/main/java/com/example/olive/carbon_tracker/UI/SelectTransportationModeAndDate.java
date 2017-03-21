@@ -17,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.olive.carbon_tracker.Model.Singleton;
 import com.example.olive.carbon_tracker.Model.SuperUltraInfoDataBaseHelper;
@@ -166,7 +167,7 @@ public class SelectTransportationModeAndDate extends AppCompatActivity {
                                         RouteDB.close();
                                         singleton.userFinishEdit();
                                         setResult(Activity.RESULT_OK,del_intent);
-                                        Toast.makeText(SelectTransportationModeAndDate.this,getString(R.string.UserDeleteJourney),Toast.LENGTH_LONG).show();
+                                        Toast.makeText(SelectTransportationModeAndDate.this,getString(R.string.UserDeleteJourney), Toast.LENGTH_LONG).show();
                                         finish();
                                         Intent ShowNewJourneyList = DisplayJourneyList.makeIntent(SelectTransportationModeAndDate.this);
                                         startActivity(ShowNewJourneyList);
