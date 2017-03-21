@@ -97,4 +97,8 @@ public class DisplayCarbonFootprint extends AppCompatActivity {
         textView.setGravity(Gravity.CENTER);
         tableRow.addView(textView);
     }
-}
+    public void onBackPressed() {
+        Intent goBackToMainMenu = MainMenu.makeIntent(DisplayCarbonFootprint.this);
+        startActivity(goBackToMainMenu);
+        finish();
+    }}
