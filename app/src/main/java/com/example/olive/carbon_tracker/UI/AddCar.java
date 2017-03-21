@@ -157,7 +157,7 @@ public class AddCar extends AppCompatActivity {
 //            Vehicle VehicleToBeEdit = VehicleList.get(position);
 
             Make_spinner.setSelection(getIndex(Make_spinner,_VehicleToBeEdit.getMake()));
-            Toast.makeText(this, ""+_VehicleToBeEdit.getMake(),Toast.LENGTH_LONG).show();
+//            Toast.makeText(this, ""+_VehicleToBeEdit.getMake(),Toast.LENGTH_LONG).show();
         }
 
         Make_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -306,7 +306,6 @@ public class AddCar extends AppCompatActivity {
                             new String[]{CarMake,CarModel,CarYear,drive,trany,displ});
                     cursor.moveToFirst();
                     while(!cursor.isAfterLast()){
-                        Toast.makeText(AddCar.this,"first fuelType",Toast.LENGTH_LONG).show();
                         CityHighway = (cursor.getString(0))+","+(cursor.getString(1)+","+(cursor.getString(2)));
                         city08_highway_08.add(CityHighway);
                         cursor.moveToNext();

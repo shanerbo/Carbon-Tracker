@@ -132,12 +132,12 @@ public class SuperUltraInfoDataBaseHelper extends SQLiteOpenHelper {
         String createUtility = "create table if not exists " + Utility_Table
                 +"("
                 + Utility_Id + " integer primary key autoincrement not null, "
-                + Utility_StartDate + "integer,"
-                + Utility_EndDate + "integer,"
-                + Utility_Electricy + "real,"
-                + Utility_Gas + "real,"
-                + Utility_TotalDay + "integer,"
-                + Utility_NumberOfSharing + "integer, "
+                + Utility_StartDate + " integer,"
+                + Utility_EndDate + " integer,"
+                + Utility_Electricy + " real,"
+                + Utility_Gas + " real,"
+                + Utility_TotalDay + " integer,"
+                + Utility_NumberOfSharing + " integer, "
                 + Utility_AverageCO2 + " real"
                 + ");";
         CarDB.execSQL(createUtility);
