@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.olive.carbon_tracker.Model.DatabaseHelper;
 import com.example.olive.carbon_tracker.Model.Journey;
@@ -42,7 +43,7 @@ public class MainMenu extends AppCompatActivity {
     private List<String> allRandomTips = new ArrayList<>();
 
     private void showUpTips(final int i) {
-        allRandomTips.add("tip1");
+        allRandomTips.add("Misc. Combine errands to make fewer trips.");
         allRandomTips.add("tip2");
         allRandomTips.add("tip3");
         allRandomTips.add("tip4");
@@ -52,15 +53,20 @@ public class MainMenu extends AppCompatActivity {
         allRandomTips.add("tip8");
         allRandomTips.add("tip9");
         //Collections.shuffle(allRandomTips);
-        Snackbar.make(findViewById(android.R.id.content), allRandomTips.get(i), Snackbar.LENGTH_LONG)
-                .setAction("Next", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        showUpTips(i+1);
-                    }
-                })
-                .setActionTextColor(Color.RED)
-                .show();
+        Snackbar tipBar =  Snackbar.make(findViewById(android.R.id.content), allRandomTips.get(i),
+                Snackbar.LENGTH_LONG);
+        View snackbarView = tipBar.getView();
+        TextView tv= (TextView) snackbarView.findViewById(android.support.design.R.id.snackbar_text);
+        tv.setMaxLines(5);
+        //make snackBar contain up to 5 lines
+        tipBar.setAction("Next", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showUpTips(i+1);
+            }
+        });
+        tipBar.setActionTextColor(Color.RED);
+        tipBar.show();
     }
 
     private void getJourneyList() {
