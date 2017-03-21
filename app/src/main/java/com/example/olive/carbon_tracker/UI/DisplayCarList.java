@@ -2,17 +2,21 @@ package com.example.olive.carbon_tracker.UI;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.olive.carbon_tracker.Model.DatabaseHelper;
 import com.example.olive.carbon_tracker.Model.Singleton;
 import com.example.olive.carbon_tracker.Model.Vehicle;
 import com.example.olive.carbon_tracker.R;
@@ -22,7 +26,9 @@ import java.util.List;
 
 public class DisplayCarList extends AppCompatActivity {
     Singleton singleton = Singleton.getInstance();
-    private List<Vehicle> VehicleList = new ArrayList<Vehicle>();
+    private List<Vehicle> VehicleList = new ArrayList<>();
+
+    private SQLiteDatabase myDataBase;
 
     public static Intent makeIntent(Context context) {
         return new Intent(context, DisplayCarList.class);
@@ -31,8 +37,14 @@ public class DisplayCarList extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_display_car_list);
-        VehicleList = singleton.getVehicleList();
+
+
+
+
+        //VehicleList = singleton.getVehicleList();
         showAllCar();
         AddNewCar();
         EditCar();
@@ -49,6 +61,7 @@ public class DisplayCarList extends AppCompatActivity {
                 singleton.setUserPickVehicleItem(userPickVehicle);
 
                 startActivity(ConfirmCar);
+                finish();
             }
 
 
@@ -61,11 +74,13 @@ public class DisplayCarList extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent EditIntent = AddCar.makeIntent(DisplayCarList.this);
-                singleton.setEditPosition_car(position);
+                long DB_id = VehicleList.get(position).getCarDBId();
+
+                singleton.setEditPosition_car(DB_id);
                 singleton.userEditRoute_car();
 
                 startActivityForResult(EditIntent,0);
-
+                finish();
                 return true;
             }
         });
@@ -79,6 +94,7 @@ public class DisplayCarList extends AppCompatActivity {
                 Intent AddIntent = com.example.olive.carbon_tracker.UI.AddCar.makeIntent(DisplayCarList.this);
                 singleton.userAddVehicle();
                 startActivityForResult(AddIntent,1);
+                finish();
             }
         });
     }
@@ -90,18 +106,48 @@ public class DisplayCarList extends AppCompatActivity {
     }
 
     private void showAllCar() {
+        List<Vehicle> VehicleListFromDB = new ArrayList<>();
+        myDataBase = SQLiteDatabase.openOrCreateDatabase(DatabaseHelper.DB_PATH + DatabaseHelper.DB_NAME,null);
+        Cursor cursor = myDataBase.rawQuery("select CarName," +
+                "CarMake," +
+                "CarModel," +
+                "CarYear, " +
+                "CarCity08, " +
+                "CarHwy08," +
+                "CarFuelType, " +
+                "_id from CarInfoTable",null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()){
+            String CarName = cursor.getString(0);
+            String CarMake = cursor.getString(1);
+            String CarModel = cursor.getString(2);
+            int CarYear = cursor.getInt(3);
+            double CarCity08 = cursor.getDouble(4);
+            double CarHwy08 = cursor.getDouble(5);
+            String fuelType = cursor.getString(6);
+            long carDBId = cursor.getLong(cursor.getColumnIndex("_id"));
+            Vehicle tempVehicle = new Vehicle(CarName,CarMake,CarModel,
+                    CarYear,CarCity08,CarHwy08,fuelType,carDBId);
+            VehicleListFromDB.add(tempVehicle);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        myDataBase.close();
+        VehicleList = VehicleListFromDB;
         ArrayAdapter<Vehicle> adapter = new mArrayAdapter();
         ListView list = (ListView) findViewById(R.id.ID_Car_List);
+
+
         list.setAdapter(adapter);
     }
 
-//    public void onBackPressed() {
-//        Intent goBackToMainMenu = MainMenu.makeIntent(DisplayCarList.this);
-//        startActivity(goBackToMainMenu);
-//    }
+    public void onBackPressed() {
+        Intent goBackToModeSelect = SelectTransportationModeAndDate.makeIntent(DisplayCarList.this);
+        startActivity(goBackToModeSelect);
+    }
 
     private class mArrayAdapter extends ArrayAdapter<Vehicle> {
-        public mArrayAdapter() {
+        private mArrayAdapter() {
             super(DisplayCarList.this, R.layout.singe_element_car_list, VehicleList);
         }
 
@@ -114,11 +160,11 @@ public class DisplayCarList extends AppCompatActivity {
             Vehicle currentVehicle = VehicleList.get(position);
             ImageView imageView = (ImageView) itemView.findViewById(R.id.RouteImage);
             imageView.setImageResource(currentVehicle.getIconId());
-            TextView carName = (TextView) itemView.findViewById(R.id.CarNameWithimage);
+            TextView carName = (TextView) itemView.findViewById(R.id.StartingDate);
             carName.setText("Car Name: " + currentVehicle.getName());
-            TextView carMake = (TextView) itemView.findViewById(R.id.CarMakeWithimage);
+            TextView carMake = (TextView) itemView.findViewById(R.id.EndingDate);
             carMake.setText("Car Make: " + currentVehicle.getMake());
-            TextView carModel = (TextView) itemView.findViewById(R.id.CarModelWithimage);
+            TextView carModel = (TextView) itemView.findViewById(R.id.IndElecUsage);
             carModel.setText("Car Model: " + currentVehicle.getModel());
             TextView carYear = (TextView) itemView.findViewById(R.id.CarYearWImage);
             carYear.setText("Car Year: " + currentVehicle.getYear());

@@ -8,32 +8,80 @@
         android:id="@+id/imgJourney"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
         android:contentDescription="@string/image_for_journey"
-        app:srcCompat="@drawable/map" />
-
-    <TextView
-        android:id="@+id/txtVehicle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/map"
         android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/imgJourney"
-        android:text="@string/textview" />
+        android:layout_alignParentStart="true"
+        android:layout_alignBottom="@+id/txtCarName" />
 
     <TextView
-        android:id="@+id/txtRoute"
+        android:id="@+id/txtMode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/txtVehicle"
+        android:layout_below="@+id/txtDate"
         android:layout_toEndOf="@+id/imgJourney"
-        android:text="@string/textview" />
+        android:fontFamily="casual"
+        android:text="@string/textview"
+        android:textSize="10sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txtCarName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtMode"
+        android:layout_toEndOf="@+id/imgJourney"
+        android:fontFamily="casual"
+        android:text="@string/textview"
+        android:textSize="10sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/txtDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/imgJourney"
+        android:fontFamily="sans-serif-condensed"
         android:text="@string/textview"
-        android:layout_below="@+id/txtRoute"
-        android:layout_toEndOf="@+id/imgJourney" />
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/textRouteName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/txtMode"
+        android:layout_alignEnd="@+id/textTotal"
+        android:fontFamily="casual"
+        android:text="TextView"
+        android:textAlignment="textEnd"
+        android:textSize="10sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textTotal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="casual"
+        android:text="TextView"
+        android:textAlignment="textEnd"
+        android:textSize="10sp"
+        android:textStyle="bold"
+        android:layout_alignBaseline="@+id/txtMode"
+        android:layout_alignBottom="@+id/txtMode"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="9dp" />
+
+    <TextView
+        android:id="@+id/textCO2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/txtCarName"
+        android:layout_alignBottom="@+id/txtCarName"
+        android:layout_alignEnd="@+id/textTotal"
+        android:fontFamily="casual"
+        android:text="TextView"
+        android:textAlignment="textEnd"
+        android:textSize="10sp"
+        android:textStyle="bold" />
 </RelativeLayout>

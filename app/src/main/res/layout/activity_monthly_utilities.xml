@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.olive.carbon_tracker.UI.MonthlyUtilities">
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/kw_h"
+        android:textSize="14sp"
+        android:layout_alignBaseline="@+id/editElecUsage"
+        android:layout_alignBottom="@+id/editElecUsage"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="21dp" />
+
+    <TextView
+        android:id="@+id/ID_Billing_Date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="27dp"
+        android:text="@string/billing_date"
+        android:textSize="18sp"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="16dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/ID_startDate_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:text="@string/start_date"
+        android:layout_marginStart="44dp"
+        android:layout_below="@+id/ID_Billing_Date"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:id="@+id/ID_endDate_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/end_date"
+        android:layout_marginTop="23dp"
+        android:layout_below="@+id/ID_startDate_button"
+        android:layout_alignStart="@+id/ID_startDate_button" />
+
+    <TextView
+        android:id="@+id/displayStartDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/dd_mm_yyyy"
+        android:layout_alignBaseline="@+id/ID_startDate_button"
+        android:layout_alignBottom="@+id/ID_startDate_button"
+        android:layout_toEndOf="@+id/TVNaturalGasUsage"
+        android:layout_marginStart="23dp" />
+
+    <TextView
+        android:id="@+id/DisplayEndDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/ID_endDate_button"
+        android:layout_alignBottom="@+id/ID_endDate_button"
+        android:layout_alignStart="@+id/displayStartDate"
+        android:text="@string/dd_mm_yyyy" />
+
+    <TextView
+        android:id="@+id/TVelecUsage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/total_electricity_usage"
+        android:layout_alignBaseline="@+id/editElecUsage"
+        android:layout_alignBottom="@+id/editElecUsage"
+        android:layout_alignStart="@+id/ID_endDate_button" />
+
+    <TextView
+        android:id="@+id/TVNaturalGasUsage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/total_natural_gas_usage"
+        android:layout_below="@+id/editElecUsage"
+        android:layout_alignStart="@+id/TVelecUsage" />
+
+    <EditText
+        android:id="@+id/editElecUsage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/_0_0"
+        android:inputType="numberDecimal"
+        android:textAlignment="center"
+        android:layout_marginTop="19dp"
+        android:layout_below="@+id/ID_endDate_button"
+        android:layout_alignStart="@+id/DisplayEndDate"
+        android:layout_toStartOf="@+id/textView8" />
+
+    <EditText
+        android:id="@+id/editNaturalGasUsage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/_0_0"
+        android:inputType="numberDecimal"
+        android:textAlignment="center"
+        android:layout_alignBaseline="@+id/inGJ"
+        android:layout_alignBottom="@+id/inGJ"
+        android:layout_alignStart="@+id/editElecUsage"
+        android:layout_toStartOf="@+id/inGJ" />
+
+    <TextView
+        android:id="@+id/inGJ"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/TVNaturalGasUsage"
+        android:layout_alignStart="@+id/textView8"
+        android:text="@string/gj"
+        android:textSize="14sp" />
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/ok_billing_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        app:backgroundTint="@android:color/holo_green_dark"
+        app:fabSize="normal"
+        app:srcCompat="@android:drawable/checkbox_on_background"
+        android:layout_marginBottom="38dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignEnd="@+id/DisplayEndDate" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/cancel_billing_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        app:backgroundTint="@android:color/holo_red_light"
+        app:fabSize="normal"
+        app:srcCompat="@android:drawable/btn_dialog"
+        android:layout_alignTop="@+id/ok_billing_btn"
+        android:layout_alignEnd="@+id/ID_endDate_button" />
+
+    <TextView
+        android:id="@+id/TVnum_people"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/TVNaturalGasUsage"
+        android:layout_alignStart="@+id/TVNaturalGasUsage"
+        android:layout_below="@+id/editNaturalGasUsage"
+        android:layout_marginTop="18dp"
+        android:text="@string/number_of_people_living_in_the_house"
+        android:textAlignment="center" />
+
+    <EditText
+        android:id="@+id/editNum_people"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/editNaturalGasUsage"
+        android:layout_alignStart="@+id/editNaturalGasUsage"
+        android:layout_alignTop="@+id/TVnum_people"
+        android:ems="10"
+        android:inputType="number"
+        android:textAlignment="center"
+        tools:ignore="LabelFor" />
+
+</RelativeLayout>

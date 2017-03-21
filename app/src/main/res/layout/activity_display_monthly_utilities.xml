@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.example.olive.carbon_tracker.UI.DisplayRouteList">
+    tools:context="com.example.olive.carbon_tracker.UI.DisplayMonthlyUtilities"    >
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
@@ -15,28 +15,28 @@
         android:fitsSystemWindows="true"
         android:theme="@style/AppTheme.AppBarOverlay">
 
-        <android.support.design.widget.CollapsingToolbarLayout
-            android:id="@+id/toolbar_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fitsSystemWindows="true"
-            app:contentScrim="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+    <android.support.design.widget.CollapsingToolbarLayout
+        android:id="@+id/toolbar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        app:contentScrim="?attr/colorPrimary"
+        app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/ChooseRoute"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:minHeight="170dp"
-                app:layout_collapseMode="pin"
-                app:title="Select A Route"
-                app:popupTheme="@style/AppTheme.PopupOverlay" />
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/ChooseBill"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_collapseMode="pin"
+            app:title="View your bills"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
 
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
+
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/AddRoute"
+        android:id="@+id/add_bill_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="top|left"
@@ -50,6 +50,6 @@
 
     <include
         android:id="@+id/include"
-        layout="@layout/content_display_route_list" />
+        layout="@layout/content_display_monthly_utilities" />
 
 </android.support.design.widget.CoordinatorLayout>

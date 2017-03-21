@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 
 import com.example.olive.carbon_tracker.Model.Journey;
@@ -20,10 +21,13 @@ public class MainMenu extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_main_menu);
         setButton(R.id.btnCreateJourney);
         setButton(R.id.btnCurrentFootprint);
         setButton(R.id.btnEditJourney);
+        setButton(R.id.btnMonthlyUti);
     }
 
     private void setButton(final int id) {
@@ -42,6 +46,9 @@ public class MainMenu extends AppCompatActivity {
                         break;
                     case R.id.btnEditJourney:
                         showActivity = new Intent(MainMenu.this, DisplayJourneyList.class);
+                        break;
+                    case R.id.btnMonthlyUti:
+                        showActivity = new Intent(MainMenu.this, DisplayMonthlyUtilities.class);
                         break;
                 }
                 startActivity(showActivity);

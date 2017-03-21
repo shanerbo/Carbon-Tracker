@@ -9,16 +9,34 @@ public class Journey {
     private String routeName;
     private int totalDistance;
     private String vehicleName;
+
+
+    private String Mode;
     private double carbonEmitted;
     private int iconID = R.drawable.map;
+    private long JourneyID;
 
 
-    public Journey(String dateOfTrip, String routeName, int totalDistance, String vehicleName, double carbonEmitted) {
+    public long getJourneyID() {
+        return JourneyID;
+    }
+
+    public void setJourneyID(long journeyID) {
+        JourneyID = journeyID;
+    }
+
+    public Journey(String dateOfTrip, String mode, String routeName, int totalDistance,
+                   String vehicleName, double carbonEmitted, long journeyID) {
         this.dateOfTrip = dateOfTrip;
         this.routeName = routeName;
+        this.Mode = mode;
         this.totalDistance = totalDistance;
         this.vehicleName = vehicleName;
         this.carbonEmitted = carbonEmitted;
+        this.JourneyID = journeyID;
+    }
+    public String getMode() {
+        return Mode;
     }
 
     public String getDateOfTrip() {

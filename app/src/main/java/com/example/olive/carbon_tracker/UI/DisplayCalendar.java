@@ -2,6 +2,7 @@ package com.example.olive.carbon_tracker.UI;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.WindowManager;
 import android.widget.CalendarView;
 import android.widget.CalendarView.OnDateChangeListener;
 import android.widget.Toast;
@@ -19,25 +20,59 @@ public class DisplayCalendar extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_calendar);
         getUsersDataPick();
 
     }
 
     private void  getUsersDataPick(){
-        CalendarView view = new CalendarView(this);
-        setContentView(view);
-        view.setOnDateChangeListener(new OnDateChangeListener() {
+        if(getIntent().getIntExtra("MonthlyUtilities", 0) == 10) { //User sets starting date for monthly utilities
+            CalendarView view = new CalendarView(this);
+            setContentView(view);
+            view.setOnDateChangeListener(new OnDateChangeListener() {
 
-            @Override
-            public void onSelectedDayChange(CalendarView arg0, int year, int month,
-                                            int date) {
-                singleton.setUserDay("" +date);
-                singleton.setUserMonth(getStringMonth(month));
-                singleton.setUserYear("" + year);
-                singleton.setIsDateChanged(true);
-            }
-        });
+                @Override
+                public void onSelectedDayChange(CalendarView arg0, int year, int month,
+                                                int date) {
+                    singleton.setStartDay("" +date);
+                    singleton.setStartMonth(""+(month+1));
+                    singleton.setStartYear("" + year);
+                    singleton.setStartDateChanged(true);
+                }
+            });
+        }
+        else if(getIntent().getIntExtra("MonthlyUtilities", 0) == 20) { //User sets ending date for monthly utilities
+            CalendarView view = new CalendarView(this);
+            setContentView(view);
+            view.setOnDateChangeListener(new OnDateChangeListener() {
+
+                @Override
+                public void onSelectedDayChange(CalendarView arg0, int year, int month,
+                                                int date) {
+                    singleton.setEndDay("" +date);
+                    singleton.setEndMonth(""+(month+1));
+                    singleton.setEndYear("" + year);
+                    singleton.setEndDateChanged(true);
+                }
+            });
+        }
+        else {
+            CalendarView view = new CalendarView(this);
+            setContentView(view);
+            view.setOnDateChangeListener(new OnDateChangeListener() {
+
+                @Override
+                public void onSelectedDayChange(CalendarView arg0, int year, int month,
+                                                int date) {
+                    singleton.setUserDay("" + date);
+                    singleton.setUserMonth(getStringMonth(month));
+                    singleton.setUserYear("" + year);
+                    singleton.setIsDateChanged(true);
+                }
+            });
+        }
     }
 
     public String  getStringMonth(int month){
