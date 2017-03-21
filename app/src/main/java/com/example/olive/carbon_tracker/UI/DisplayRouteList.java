@@ -81,7 +81,6 @@ public class DisplayRouteList extends AppCompatActivity {
                 singleton.setEditPosition_Route(DB_id);
                 singleton.userEditRoute();
                 startActivityForResult(EditIntent,0);
-                //finish();
                 return true;
             }
         });
@@ -429,9 +428,20 @@ public class DisplayRouteList extends AppCompatActivity {
 
     private void createNewJourney(int cityDistance,int hwyDistance,double co2, int TransMode){
         DateFormat df = new SimpleDateFormat("EEE, MMM d, ''yy");
-        Calendar calendar = new Calendar();
+        DisplayCalendar calendar = new DisplayCalendar();
+
+        //Calendar calendar = new Calendar();
         Date date = new Date();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEEE");
+
+        Toast.makeText(getApplicationContext(),"MONTHS "+simpleDateFormat.format(date).toUpperCase(),Toast.LENGTH_SHORT).show();
+       // System.out.println("DAY "+simpleDateFormat.format(date).toUpperCase());
+
+        simpleDateFormat = new SimpleDateFormat("MMMM");
+       // System.out.println("MONTHS "+simpleDateFormat.format(date).toUpperCase());
+
+        simpleDateFormat = new SimpleDateFormat("YYYY");
+     //   System.out.println("MONTHS "+simpleDateFormat.format(date).toUpperCase());
         Toast.makeText(getApplicationContext(),"MONTH "+simpleDateFormat.format(date).toUpperCase(),Toast.LENGTH_SHORT).show();
 
         String day =   singleton.getUserDay();

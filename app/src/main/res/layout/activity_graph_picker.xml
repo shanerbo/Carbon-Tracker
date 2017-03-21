@@ -13,12 +13,12 @@
         android:text="Single Day"
         tools:layout_editor_absoluteX="133dp"
         tools:layout_editor_absoluteY="87dp"
-        android:layout_above="@+id/button2"
+        android:layout_above="@+id/btnMonthGraph"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="82dp" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btnMonthGraph"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/btnSingleDay"
@@ -26,12 +26,12 @@
         android:text="Month" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/btnYearGraph"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/button2"
-        android:layout_marginBottom="79dp"
-        android:layout_marginStart="15dp"
+        android:layout_below="@+id/btnMonthGraph"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="51dp"
         android:text="Year" />
+
 </RelativeLayout>
