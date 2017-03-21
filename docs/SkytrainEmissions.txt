@@ -1,11 +1,14 @@
-Total distance: 53,132,000 km
-Total electricity: 99810 GJ = 27.725 GWh
-Total natural gas: 17788 GJ
+Calculation:
+Total distance driven in 2012: 53,132,000 km
+Total electricity usage in 2012: 99810 GJ = 27.725 GWh
+Total natural gas usage in 2012: 17788 GJ
 
 Assume 9000Kg CO2 per GWh & Assume 56.1 kg CO2 / GJ
-total CO2 emission = 9000*27.725 + 56.1*17788 = 1247431.8
-CO2 kg/km = 1247431.8/53132000 = 0.02348 kg/km
+total CO2 emission in 2012 = 9000*27.725 + 56.1*17788 = 1247431.8
+CO2 emission in kg per km driven = 1247431.8/53132000 = 0.02348 kg/km
 
+
+Resource:
 Slide 95/128: Appendix 2 Rail Operations
 http://www.translink.ca/-/media/Documents/about_translink/corporate_overview/corporate_reports/statutory_annual_report/2014_statutory_annual_report_with%20appendices.pdf
 
