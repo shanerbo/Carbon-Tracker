@@ -12,7 +12,8 @@ public class MonthlyUtilitiesData {
     private long numOfPeople;
     private int iconId = R.drawable.old_vintage_car;
 
-    public MonthlyUtilitiesData(String startDate, String endDate, long totalDays, double indElecUsage, double indGasUsage, long numOfPeople, double indCO2) {
+    public MonthlyUtilitiesData(String startDate, String endDate, long totalDays, double indElecUsage,
+                                double indGasUsage, long numOfPeople, double indCO2) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.totalDays = totalDays;

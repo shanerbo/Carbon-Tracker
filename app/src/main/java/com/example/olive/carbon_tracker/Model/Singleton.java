@@ -411,9 +411,9 @@ public class Singleton {
         journeyList = JourneyList;
     }
 
-    public void addUserJourney(Journey journey) {
-        journeyList.add(journey);
-    }
+//    public void addUserJourney(Journey journey) {
+//        journeyList.add(journey);
+//    }
 
     public Journey getJourney(int position) {
         return journeyList.get(position);
@@ -439,4 +439,5 @@ public class Singleton {
         journeyList.remove(editJourneyPosition);
         journeyList.add(editJourneyPosition, newJourney);
     }
+
 }

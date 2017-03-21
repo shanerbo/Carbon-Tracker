@@ -41,10 +41,10 @@ public class AddNewRoute extends AppCompatActivity {
     private String oldRouteName;
     private Route _RouteToBeEdit;
     private SQLiteDatabase RouteDB;
-    private String _day =   singleton.getUserDay();
-    private String _month =  singleton.getUserMonth();
+    private String _day =   checkDayIsSingleDIgit(singleton.getUserDay());
+    private String _month =  ChangeMonthInInt(singleton.getUserMonth());
     private String _year =  singleton.getUserYear();
-    private String _date = _day+"/"+_month+"/"+_year;
+    private String _date = _year+"-"+_month+"-"+_day;
     private long _EditedJourneyID = singleton.getEditPostion_Journey();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -486,7 +486,53 @@ public class AddNewRoute extends AppCompatActivity {
         if (singleton.isEditingJourney()) {
             singleton.changeJourney(journey);
         } else {
-            singleton.addUserJourney(journey);
+            //singleton.addUserJourney(journey);
         }
     }
+    private String checkDayIsSingleDIgit(String userDay) {
+        if (userDay.length() == 1){
+            return "0"+userDay;
+        }else{
+            return userDay;
+        }
+    }
+    private String ChangeMonthInInt(String _month) {
+        if (_month.matches("January")){
+            return "01";
+        }
+        if (_month.matches("February")){
+            return "02";
+        }
+        if (_month.matches("March")){
+            return "03";
+        }
+        if (_month.matches("April")){
+            return "04";
+        }
+        if (_month.matches("May")){
+            return "05";
+        }
+        if (_month.matches("June")){
+            return "06";
+        }
+        if (_month.matches("July")){
+            return "07";
+        }
+        if (_month.matches("August")){
+            return "08";
+        }
+        if (_month.matches("September")){
+            return "09";
+        }
+        if (_month.matches("October")){
+            return "10";
+        }
+        if (_month.matches("November")){
+            return "11";
+        }
+        else{
+            return "12";
+        }
+    }
+
 }

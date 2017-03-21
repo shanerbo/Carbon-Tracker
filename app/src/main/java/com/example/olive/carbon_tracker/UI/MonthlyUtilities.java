@@ -78,7 +78,7 @@ public class MonthlyUtilities extends AppCompatActivity {
         Button btn = (Button) findViewById(buttonID);
         btn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent setDate = new Intent(MonthlyUtilities.this, Calendar.class);
+                Intent setDate = new Intent(MonthlyUtilities.this, DisplayCalendar.class);
                 if(buttonID == R.id.ID_startDate_button)
                     setDate.putExtra("MonthlyUtilities", 10);
                 if(buttonID == R.id.ID_endDate_button)
