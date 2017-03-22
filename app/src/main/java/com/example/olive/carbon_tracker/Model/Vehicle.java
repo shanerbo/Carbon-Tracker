@@ -29,34 +29,6 @@ public class Vehicle {
 
     }
 
-    public long getVehicleDBId() {
-        return vehicleDBId;
-    }
-
-    public double getHighway08() {
-        return highway08;
-    }
-
-    public double getCity08() {
-        return city08;
-    }
-
-    public String getFuelType() {
-        return fuelType;
-    }
-
-    public void setCityDistance(int cityDistance) {
-        this.cityDistance = cityDistance;
-    }
-
-    public void setHwyDistance(int hwyDistance) {
-        this.hwyDistance = hwyDistance;
-    }
-
-    public int getIconId() {
-        return iconId;
-    }
-
     public String getName() {
         return name;
     }
@@ -71,7 +43,6 @@ public class Vehicle {
     public String getMake() {
         return make;
     }
-
 
     public String getModel() {
         return model;
@@ -88,5 +59,31 @@ public class Vehicle {
         return year;
     }
 
+    public int getIconId() {
+        return iconId;
+    }
 
+    public double getCity08() {
+        return city08;
+    }
+
+    public double getHighway08() {
+        return highway08;
+    }
+
+    public String getFuelType() {
+        return fuelType;
+    }
+
+    public long getVehicleDBId() {
+        return vehicleDBId;
+    }
+
+    public void setCityDistance(int cityDistance) {
+        this.cityDistance = cityDistance;
+    }
+
+    public void setHwyDistance(int hwyDistance) {
+        this.hwyDistance = hwyDistance;
+    }
 }
