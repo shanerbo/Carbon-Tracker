@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.olive.carbon_tracker.Model.DatabaseHelper;
 import com.example.olive.carbon_tracker.Model.Journey;
@@ -27,12 +28,13 @@ import java.util.Random;
 public class MainMenu extends AppCompatActivity {
     Singleton singleton = Singleton.getInstance();
     public SQLiteDatabase myDataBase;
-
+    List<String> allRandomTips = singleton.getShuffledTips();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        showUpTips(0);
+        HighestCO2FromCar();
+        //showUpTipsforCar(0);
         getJourneyList();
         setContentView(R.layout.activity_main_menu);
         setButton(R.id.btnCreateJourney);
@@ -40,18 +42,18 @@ public class MainMenu extends AppCompatActivity {
         setButton(R.id.btnEditJourney);
         setButton(R.id.btnMonthlyUti);
     }
-    private List<String> allRandomTips = new ArrayList<>();
 
-    private void showUpTips(final int i) {
-        allRandomTips.add("Misc. Combine errands to make fewer trips.");
-        allRandomTips.add("tip2");
-        allRandomTips.add("tip3");
-        allRandomTips.add("tip4");
-        allRandomTips.add("tip5");
-        allRandomTips.add("tip6");
-        allRandomTips.add("tip7");
-        allRandomTips.add("tip8");
-        allRandomTips.add("tip9");
+    private void HighestCO2FromCar() {
+        if (singleton.isCarCO2Highest()){
+            singleton.setCarCO2Highest(false);
+            showUpTipsforCar(0);
+        }else{
+            return;
+        }
+    }
+
+    private void showUpTipsforCar(final int i) {
+
         //Collections.shuffle(allRandomTips);
         Snackbar tipBar =  Snackbar.make(findViewById(android.R.id.content), allRandomTips.get(i),
                 Snackbar.LENGTH_LONG);
@@ -59,14 +61,25 @@ public class MainMenu extends AppCompatActivity {
         TextView tv= (TextView) snackbarView.findViewById(android.support.design.R.id.snackbar_text);
         tv.setMaxLines(5);
         //make snackBar contain up to 5 lines
-        tipBar.setAction("Next", new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showUpTips(i+1);
-            }
-        });
-        tipBar.setActionTextColor(Color.RED);
-        tipBar.show();
+        if (allRandomTips.size()>i+1) {
+            tipBar.setAction("Next", new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showUpTipsforCar(i + 1);
+                }
+            });
+            tipBar.setActionTextColor(Color.RED);
+            tipBar.show();
+        }else{
+            tipBar.setAction("OK", new View.OnClickListener() {//this is the last tips
+                @Override
+                public void onClick(View v) {
+                    return;
+                }
+            });
+            tipBar.setActionTextColor(Color.RED);
+            tipBar.show();
+        }
     }
 
     private void getJourneyList() {

@@ -32,8 +32,39 @@ public class Singleton {
     private String endYear = null;
     private boolean isEndDateChanged = false;
 
-    SQLiteDatabase CarInfoDB;
 
+    SQLiteDatabase CarInfoDB;
+//-------------------------------tips
+    private List<String> ShuffledTips;
+
+    public boolean isCarCO2Highest() {
+        return CarCO2Highest;
+    }
+
+    public void setCarCO2Highest(boolean carCO2Highest) {
+        CarCO2Highest = carCO2Highest;
+    }
+
+    public boolean isElectricityHighest() {
+        return ElectricityHighest;
+    }
+
+    public void setElectricityHighest(boolean electricityHighest) {
+        ElectricityHighest = electricityHighest;
+    }
+
+    public boolean isGasHighest() {
+        return GasHighest;
+    }
+
+    public void setGasHighest(boolean gasHighest) {
+        GasHighest = gasHighest;
+    }
+
+    private boolean CarCO2Highest = false;
+    private boolean ElectricityHighest = false;
+    private boolean GasHighest = false;
+//-------------------------------tips
 
 
     ///////WHAT I NEED FOR MY CARBON CLASS /////////////
@@ -439,5 +470,10 @@ public class Singleton {
         journeyList.remove(editJourneyPosition);
         journeyList.add(editJourneyPosition, newJourney);
     }
-
+    public void setShuffledTips(List<String> tipList){
+        this.ShuffledTips = tipList;
+    }
+    public List<String> getShuffledTips(){
+        return ShuffledTips;
+    }
 }
