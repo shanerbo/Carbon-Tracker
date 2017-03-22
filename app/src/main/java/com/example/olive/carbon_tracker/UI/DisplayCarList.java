@@ -74,7 +74,7 @@ public class DisplayCarList extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent EditIntent = AddCar.makeIntent(DisplayCarList.this);
-                long DB_id = VehicleList.get(position).getCarDBId();
+                long DB_id = VehicleList.get(position).getVehicleDBId();
 
                 singleton.setEditPosition_car(DB_id);
                 singleton.userEditRoute_car();

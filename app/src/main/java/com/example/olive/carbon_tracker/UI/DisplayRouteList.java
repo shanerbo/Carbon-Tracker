@@ -135,7 +135,7 @@ public class DisplayRouteList extends AppCompatActivity {
                         double hwyGas = highWayDst * 0.621371192 / _vehicle.getHighway08();
                         double totalGas = cityGas + hwyGas;
                         double co2 = fuelCost * totalGas;
-                        editJoutneyDB(_date,_vehicle.getCarDBId(),_vehicle.getName(),mode,_vehicle.getMake()
+                        editJoutneyDB(_date,_vehicle.getVehicleDBId(),_vehicle.getName(),mode,_vehicle.getMake()
                                 ,_vehicle.getModel(),_vehicle.getYear(),_vehicle.getCity08(),
                                 _vehicle.getHighway08(),_vehicle.getFuelType(),idPassedBack,name,cityDst,
                                 highWayDst,totalDst,_EditedJourneyID,co2);
@@ -355,9 +355,6 @@ public class DisplayRouteList extends AppCompatActivity {
             createNewJourney(cityDistance,HwyDistance,totalCO2, 3);
         }
         else {
-            singleton.getVehicle().setCityDistance(cityDistance);
-            singleton.getVehicle().setHwyDistance(HwyDistance);
-
             double cityConsume = singleton.getVehicle().getCity08();
             double HwyConsume = singleton.getVehicle().getHighway08();
             String fuelType = singleton.getVehicle().getFuelType();
@@ -385,7 +382,7 @@ public class DisplayRouteList extends AppCompatActivity {
             ContentValues cv = new ContentValues();
             cv.put(SuperUltraInfoDataBaseHelper.Journey_Date,_date);
 
-            cv.put(SuperUltraInfoDataBaseHelper.Journey_CarId,_vehicle.getCarDBId());
+            cv.put(SuperUltraInfoDataBaseHelper.Journey_CarId,_vehicle.getVehicleDBId());
             cv.put(SuperUltraInfoDataBaseHelper.Journey_CarName, _vehicle.getName());
             cv.put(SuperUltraInfoDataBaseHelper.Journey_CarMode, "Car");
             cv.put(SuperUltraInfoDataBaseHelper.Journey_CarMake,_vehicle.getMake());
