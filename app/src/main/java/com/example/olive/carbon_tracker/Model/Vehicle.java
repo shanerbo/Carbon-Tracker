@@ -1,9 +1,8 @@
-// Class to contain Vehicle data
+// This class contains the Vehicle object
 
 package com.example.olive.carbon_tracker.Model;
 
 import com.example.olive.carbon_tracker.R;
-
 
 public class Vehicle {
     private String name;

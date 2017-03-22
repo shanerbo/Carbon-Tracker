@@ -1,5 +1,6 @@
-package com.example.olive.carbon_tracker.Model;
+// This class contains the Route object
 
+package com.example.olive.carbon_tracker.Model;
 
 import com.example.olive.carbon_tracker.R;
 
