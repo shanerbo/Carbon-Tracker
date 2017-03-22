@@ -38,10 +38,9 @@ public class DisplayMonthlyUtilities extends AppCompatActivity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_display_monthly_utilities);
-        //MonthlyUtilitiesList = singleton.getBillList();
 
-        SetupAddBtn();
         showAllBills();
+        SetupAddBtn();
         EditBill();
 
     }

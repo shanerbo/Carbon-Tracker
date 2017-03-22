@@ -120,9 +120,9 @@ public class DisplayJourneyList extends AppCompatActivity {
     }
 
     private void setListClickListener(ListView listView) {
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent showActivity = new Intent(DisplayJourneyList.this, SelectTransportationModeAndDate.class);
                 singleton.setEditJourneyPosition(position);
                 singleton.setEditPostion_Journey(JourneyList.get(position).getJourneyID());
@@ -133,6 +133,7 @@ public class DisplayJourneyList extends AppCompatActivity {
                 singleton.setUserYear(tempDate[2]);
                 startActivity(showActivity);
                 finish();
+                return true;
             }
         });
     }
