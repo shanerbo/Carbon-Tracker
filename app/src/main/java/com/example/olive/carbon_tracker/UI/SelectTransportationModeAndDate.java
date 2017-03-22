@@ -64,7 +64,7 @@ public class SelectTransportationModeAndDate extends AppCompatActivity {
     private void viewCurrentDate(){
         boolean isDateChanged = singleton.getIsDateChanged();
         TextView currentDate = (TextView) findViewById(R.id.txtCurrentDate);
-        if(isDateChanged == false && !singleton.isEditingJourney()) {
+        if(!isDateChanged && !singleton.isEditingJourney()) {
             Date date = new Date();
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEEE");
 

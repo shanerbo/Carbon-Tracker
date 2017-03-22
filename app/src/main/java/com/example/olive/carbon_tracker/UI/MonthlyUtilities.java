@@ -128,7 +128,7 @@ public class MonthlyUtilities extends AppCompatActivity {
         boolean isEndDateChanged = singleton.isEndDateChanged();
         TextView currentStartDate = (TextView) findViewById(R.id.displayStartDate);
         TextView currentEndDate = (TextView) findViewById(R.id.DisplayEndDate);
-        if(isStartDateChanged == false) {
+        if(!isStartDateChanged) {
             Date StartDate = new Date();
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEEE");
 
@@ -145,7 +145,7 @@ public class MonthlyUtilities extends AppCompatActivity {
             singleton.setStartYear(StartYear);
             currentStartDate.setText(StartDay + "/" + StartMonth + "/" + StartYear);
         }
-        if(isStartDateChanged == true){
+        if(isStartDateChanged){
             super.onRestart();
             String startDay = singleton.getStartDay();
             String startMonth = singleton.getStartMonth();
@@ -154,7 +154,7 @@ public class MonthlyUtilities extends AppCompatActivity {
             singleton.setStartDateChanged(false);
         }
 
-        if(isEndDateChanged == false){
+        if(!isEndDateChanged){
             Date EndDate = new Date();
             SimpleDateFormat simpleEndDateFormat = new SimpleDateFormat("EEEE");
 
@@ -171,7 +171,7 @@ public class MonthlyUtilities extends AppCompatActivity {
             singleton.setEndYear(EndYear);
             currentEndDate.setText(EndDay + "/" + EndMonth + "/" + EndYear);
         }
-        if(isEndDateChanged == true){
+        if(isEndDateChanged){
             super.onRestart();
             String EndDay = singleton.getEndDay();
             String EndMonth = singleton.getEndMonth();
@@ -227,8 +227,8 @@ public class MonthlyUtilities extends AppCompatActivity {
                     try {
                         Date start = sdf.parse(startDay+"/"+startMonth+"/"+startYear);
                         Date end = sdf.parse(EndDay+"/"+EndMonth+"/"+EndYear);
-                        long dateDifference = end.getTime() - start.getTime();
-                        dateDifference = dateDifference / 86400000; //convert time in sec back to days (1000*60*60*24 = 86400000)
+                        long dateDifference = end.getTime() - start.getTime(); //convert date into msec
+                        dateDifference = dateDifference / 86400000; //convert time in msec back to days (1000*60*60*24 = 86400000)
 
                         if(dateDifference > 0 && (!electricUsage.matches("") || !naturalGasUsage.matches(""))
                                 && !numOfPeople.matches("") && parseInt(numOfPeople)!= 0){
