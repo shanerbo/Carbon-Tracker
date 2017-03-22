@@ -36,6 +36,7 @@ import static java.lang.Long.parseLong;
 public class MonthlyUtilities extends AppCompatActivity {
 
     Singleton singleton = Singleton.getInstance();
+
     private List<MonthlyUtilitiesData> MonthlyUtilitiesList = new ArrayList<>();
     private SQLiteDatabase UtilityDB;
     private long position;
@@ -50,14 +51,13 @@ public class MonthlyUtilities extends AppCompatActivity {
         UtilityDB = UtilityDBhelper.getWritableDatabase();
         //////////////////////////////////////
         MonthlyUtilitiesList = singleton.getBillList();
-
         setupCalendarButton(R.id.ID_startDate_button);
         setupCalendarButton(R.id.ID_endDate_button);
 
-        setupAddButton(position);
+        uesrWantToEditBill();
+        setupAddButton();
         setupDeleteButton(position);
         viewCurrentDate();
-        uesrWantToEditBill();
     }
 
     private void uesrWantToEditBill() {
@@ -101,12 +101,8 @@ public class MonthlyUtilities extends AppCompatActivity {
             EditText elec = (EditText) findViewById(R.id.editElecUsage);
             EditText gas = (EditText) findViewById(R.id.editNaturalGasUsage);
             EditText people = (EditText) findViewById(R.id.editNum_people);
-            String roundElec = String.format("%.2f", _billToBeEdited.getIndElecUsage() *
-                    billToBeEdit.getNumOfPeople() * _billToBeEdited.getTotalDays());
-            String roundGas = String.format("%.2f", _billToBeEdited.getIndGasUsage() *
-                    billToBeEdit.getNumOfPeople() * _billToBeEdited.getTotalDays());
-            elec.setText(""+eleUsage);
-            gas.setText(""+gasUsage);
+            elec.setText(""+eleUsage+"");
+            gas.setText(""+gasUsage+"");
             people.setText(""+_billToBeEdited.getNumOfPeople()+"");
         }
 
@@ -132,7 +128,7 @@ public class MonthlyUtilities extends AppCompatActivity {
         boolean isEndDateChanged = singleton.isEndDateChanged();
         TextView currentStartDate = (TextView) findViewById(R.id.displayStartDate);
         TextView currentEndDate = (TextView) findViewById(R.id.DisplayEndDate);
-        if(isStartDateChanged == false) {
+        if(!isStartDateChanged) {
             Date StartDate = new Date();
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEEE");
 
@@ -149,7 +145,7 @@ public class MonthlyUtilities extends AppCompatActivity {
             singleton.setStartYear(StartYear);
             currentStartDate.setText(StartDay + "/" + StartMonth + "/" + StartYear);
         }
-        if(isStartDateChanged == true){
+        if(isStartDateChanged){
             super.onRestart();
             String startDay = singleton.getStartDay();
             String startMonth = singleton.getStartMonth();
@@ -158,7 +154,7 @@ public class MonthlyUtilities extends AppCompatActivity {
             singleton.setStartDateChanged(false);
         }
 
-        if(isEndDateChanged == false){
+        if(!isEndDateChanged){
             Date EndDate = new Date();
             SimpleDateFormat simpleEndDateFormat = new SimpleDateFormat("EEEE");
 
@@ -175,7 +171,7 @@ public class MonthlyUtilities extends AppCompatActivity {
             singleton.setEndYear(EndYear);
             currentEndDate.setText(EndDay + "/" + EndMonth + "/" + EndYear);
         }
-        if(isEndDateChanged == true){
+        if(isEndDateChanged){
             super.onRestart();
             String EndDay = singleton.getEndDay();
             String EndMonth = singleton.getEndMonth();
@@ -204,7 +200,7 @@ public class MonthlyUtilities extends AppCompatActivity {
     }
 
 
-    private void setupAddButton(final long position) {
+    private void setupAddButton() {
         FloatingActionButton check = (FloatingActionButton) findViewById(R.id.ok_billing_btn);
 
         check.setOnClickListener(new View.OnClickListener() {
@@ -227,118 +223,84 @@ public class MonthlyUtilities extends AppCompatActivity {
                 String numOfPeople = ETnumOfPeople.getText().toString();
 
 
-                SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
                     try {
-                        Date start = sdf.parse(startMonth+"/"+startDay+"/"+startYear);
-                        Date end = sdf.parse(EndMonth+"/"+EndDay+"/"+EndYear);
-                        long dateDifference = end.getTime() - start.getTime();
-                        dateDifference = dateDifference / 1000 / 60 / 60 / 24;
+                        Date start = sdf.parse(startDay+"/"+startMonth+"/"+startYear);
+                        Date end = sdf.parse(EndDay+"/"+EndMonth+"/"+EndYear);
+                        long dateDifference = end.getTime() - start.getTime(); //convert date into msec
+                        dateDifference = dateDifference / 86400000; //convert time in msec back to days (1000*60*60*24 = 86400000)
 
                         if(dateDifference > 0 && (!electricUsage.matches("") || !naturalGasUsage.matches(""))
                                 && !numOfPeople.matches("") && parseInt(numOfPeople)!= 0){
 
-                                if(!electricUsage.matches("") && naturalGasUsage.matches("")) {
+                                if(!electricUsage.matches("") && naturalGasUsage.matches("")) {     //when no natural gas data given
                                     double indElecUsage = parseDouble(electricUsage) / parseDouble(numOfPeople);
                                     double indGasUsage = 0;
                                     double indCO2 = indElecUsage*0.009 + indGasUsage*56.1;
+                                        //0.009kg CO2 per kwh of elec, 56.1kg CO2 per GJ of natural gas
                                     String startDate = startDay+"/"+startMonth+"/"+startYear;
                                     String endDate = EndDay+"/"+EndMonth+"/"+EndYear;
-                                    double indEleUsagePerDay = indElecUsage/dateDifference;
-                                    double indGasUsagePerDay = indGasUsage/dateDifference;
                                     double CO2PerDayPerPerson = indCO2/dateDifference;
-                                    if(singleton.checkEditMonthlyUtilities() == 1){ //editing
-                                        //TODO edit with database
 
-                                        long tmp = UpdateUtilityToDB(startDate,endDate , parseDouble(electricUsage),
+                                    if(singleton.checkEditMonthlyUtilities() == 1){ //editing
+                                        UpdateUtilityToDB(startDate,endDate , parseDouble(electricUsage),
                                                 0, dateDifference,
                                                 parseLong(numOfPeople), CO2PerDayPerPerson);
-
                                         singleton.userFinishEditMonthlyUtilities();
                                     }
                                     else {
-                                        long tmp = addNewUtilityToDB(startDate,endDate , parseDouble(electricUsage),
+                                        addNewUtilityToDB(startDate,endDate , parseDouble(electricUsage),
                                                 0, dateDifference,
                                                 parseLong(numOfPeople), CO2PerDayPerPerson);
-
                                         singleton.userFinishAdd_MonthlyUtilities();
                                     }
                                 }
-                                else if(!naturalGasUsage.matches("") && electricUsage.matches("")) {
+
+                                else if(!naturalGasUsage.matches("") && electricUsage.matches("")) {    //when no electricity data given
                                     double indElecUsage = 0;
                                     double indGasUsage = parseDouble(naturalGasUsage) / parseDouble(numOfPeople);
                                     double indCO2 = indElecUsage*0.009 + indGasUsage*56.1;
+                                        //0.009kg CO2 per kwh of elec, 56.1kg CO2 per GJ of natural gas
                                     String startDate = startDay+"/"+startMonth+"/"+startYear;
                                     String endDate = EndDay+"/"+EndMonth+"/"+EndYear;
-                                    double indEleUsagePerDay = indElecUsage/dateDifference;
-                                    double indGasUsagePerDay = indGasUsage/dateDifference;
                                     double CO2PerDayPerPerson = indCO2/dateDifference;
 
                                     if(singleton.checkEditMonthlyUtilities() == 1){ //editing
-                                        //TODO edit with database
-//                                        long tmp = 1000;
-//                                        MonthlyUtilitiesData userInput = new MonthlyUtilitiesData(startDate
-//                                                ,endDate ,
-//                                                dateDifference, indEleUsagePerDay, indGasUsagePerDay,
-//                                                parseLong(numOfPeople), CO2PerDayPerPerson,tmp);
-//                                        MonthlyUtilitiesList.set(position, userInput);
-//                                        singleton.setBillList(MonthlyUtilitiesList);
-                                        long tmp = UpdateUtilityToDB(startDate,endDate , parseDouble(electricUsage),
-                                                0, dateDifference,
+                                        UpdateUtilityToDB(startDate,endDate , 0,
+                                                parseDouble(naturalGasUsage), dateDifference,
                                                 parseLong(numOfPeople), CO2PerDayPerPerson);
                                         singleton.userFinishEditMonthlyUtilities();
                                     }
                                     else {
-                                        long tmp = addNewUtilityToDB(startDate,endDate , 0,
+                                        addNewUtilityToDB(startDate,endDate , 0,
                                                 parseDouble(naturalGasUsage), dateDifference,
                                                 parseLong(numOfPeople), CO2PerDayPerPerson);
-
-//                                        MonthlyUtilitiesData userInput = new MonthlyUtilitiesData(startDate
-//                                                ,endDate ,
-//                                                dateDifference, indEleUsagePerDay, indGasUsagePerDay,
-//                                                parseLong(numOfPeople), CO2PerDayPerPerson, tmp);
-//                                        MonthlyUtilitiesList.add(userInput);
                                         singleton.userFinishAdd_MonthlyUtilities();
                                     }
                                 }
-                                else{
+
+                                else{   //when both electricity and natural gas data are given
                                     double indElecUsage = parseDouble(electricUsage) / parseDouble(numOfPeople);
                                     double indGasUsage = parseDouble(naturalGasUsage) / parseDouble(numOfPeople);
                                     double indCO2 = indElecUsage*0.009 + indGasUsage*56.1;
+                                        //0.009kg CO2 per kwh of elec, 56.1kg CO2 per GJ of natural gas
                                     String startDate = startDay+"/"+startMonth+"/"+startYear;
                                     String endDate = EndDay+"/"+EndMonth+"/"+EndYear;
-                                    double indEleUsagePerDay = indElecUsage/dateDifference;
-                                    double indGasUsagePerDay = indGasUsage/dateDifference;
                                     double CO2PerDayPerPerson = indCO2/dateDifference;
 
-
-
-                                    //Toast.makeText(MonthlyUtilities.this, decimalElec+"-"+decimalGas,Toast.LENGTH_LONG).show();
                                     if(singleton.checkEditMonthlyUtilities() == 1){ //editing
-                                        //TODO edit with database
-//                                        long tmp = 1000;
-//                                        MonthlyUtilitiesData userInput = new MonthlyUtilitiesData(
-//                                                startDate, endDate,
-//                                                dateDifference, indEleUsagePerDay, indGasUsagePerDay,
-//                                                parseLong(numOfPeople), CO2PerDayPerPerson,tmp);
-//                                        MonthlyUtilitiesList.set(position, userInput);
-//                                        singleton.setBillList(MonthlyUtilitiesList);
-                                        long tmp = UpdateUtilityToDB(startDate,endDate , parseDouble(electricUsage),
-                                                0, dateDifference,
+                                        UpdateUtilityToDB(startDate,endDate , parseDouble(electricUsage),
+                                                parseDouble(naturalGasUsage), dateDifference,
                                                 parseLong(numOfPeople), CO2PerDayPerPerson);
                                         singleton.userFinishEditMonthlyUtilities();
                                     }
                                     else {
-                                        long tmp = addNewUtilityToDB(startDate,endDate,parseDouble(electricUsage),parseDouble(naturalGasUsage),
-                                                dateDifference,parseLong(numOfPeople),CO2PerDayPerPerson);
-//                                        MonthlyUtilitiesData userInput = new MonthlyUtilitiesData(
-//                                                startDate, endDate,
-//                                                dateDifference, indEleUsagePerDay, indGasUsagePerDay,
-//                                                parseLong(numOfPeople), CO2PerDayPerPerson,tmp);
-                                        //MonthlyUtilitiesList.add(userInput);
+                                        addNewUtilityToDB(startDate,endDate,parseDouble(electricUsage),
+                                                parseDouble(naturalGasUsage), dateDifference,
+                                                parseLong(numOfPeople),CO2PerDayPerPerson);
                                         singleton.userFinishAdd_MonthlyUtilities();
                                     }
                                 }
-
 
                             startActivity(new Intent(MonthlyUtilities.this, DisplayMonthlyUtilities.class));
                             finish();
@@ -413,8 +375,9 @@ public class MonthlyUtilities extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 Intent del_intent = new Intent();
                                 //TODO delete bill from database
-                                MonthlyUtilitiesList.remove(position);
-                                singleton.setBillList(MonthlyUtilitiesList);
+                                UtilityDB.delete(SuperUltraInfoDataBaseHelper.Utility_Table,
+                                        "_id"+"="+position,null);
+                                UtilityDB.close();
                                 singleton.userFinishEditMonthlyUtilities();
                                 setResult(Activity.RESULT_OK, del_intent);
                                 Toast.makeText(MonthlyUtilities.this, "The selected bill has been deleted", Toast.LENGTH_LONG).show();
