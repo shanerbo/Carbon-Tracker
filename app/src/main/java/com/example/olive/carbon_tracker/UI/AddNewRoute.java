@@ -258,8 +258,6 @@ public class AddNewRoute extends AppCompatActivity {
                                 Intent del_intent = new Intent();
                                 RouteDB.delete(SuperUltraInfoDataBaseHelper.Route_Table,
                                         "_id"+"="+position,null);
-                                //RouteList.remove(position);
-                                //singleton.setRouteList(RouteList);
                                 RouteDB.close();
                                 singleton.userFinishEdit();
                                 setResult(Activity.RESULT_OK,del_intent);
