@@ -122,21 +122,27 @@ public class DisplayMonthlyUtilities extends AppCompatActivity {
                 itemView = getLayoutInflater().inflate(R.layout.single_element_bill_list, parent, false);
             }
             MonthlyUtilitiesData currentBill = MonthlyUtilitiesList.get(position);
+
             ImageView imageView = (ImageView) itemView.findViewById(R.id.BillImage);
             imageView.setImageResource(currentBill.getIconID());
+
             TextView startDate = (TextView) itemView.findViewById(R.id.StartingDate);
             startDate.setText("Starting date: " + currentBill.getStartDate() +"");
+
             TextView endDate = (TextView) itemView.findViewById(R.id.EndingDate);
             endDate.setText("Ending date: " + currentBill.getEndDate() +"");
+
             TextView indElec = (TextView) itemView.findViewById(R.id.IndElecUsage);
             String roundElec = String.format("%.2f", currentBill.getIndElecUsage());
-            indElec.setText("Electricity usage: " + roundElec +"kWh/day");
+            indElec.setText("Electricity usage: " + roundElec +"kWh/day/person");
+
             TextView indGas = (TextView) itemView.findViewById(R.id.IndGasUsage);
             String roundGas = String.format("%.2f", currentBill.getIndGasUsage());
-            indGas.setText("Natural gas usage: " + roundGas +"GJ/day");
+            indGas.setText("Natural gas usage: " + roundGas +"GJ/day/person");
+
             TextView indCO2 = (TextView) itemView.findViewById(R.id.IndCO2);
             String roundCO2 = String.format("%.2f", currentBill.getIndCO2());
-            indCO2.setText("CO2 emission: " + roundCO2 +"kg/day*Person");
+            indCO2.setText("CO2 emission: " + roundCO2 +"kg/day/person");
 
             return itemView;
 
