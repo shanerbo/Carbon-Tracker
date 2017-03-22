@@ -370,9 +370,6 @@ public class AddNewRoute extends AppCompatActivity {
             createNewJourney(cityDistance,HwyDistance,totalCO2, 3);
         }
         else {
-            singleton.getVehicle().setCityDistance(cityDistance);
-            singleton.getVehicle().setHwyDistance(HwyDistance);
-
             double cityConsume = singleton.getVehicle().getCity08();
             double HwyConsume = singleton.getVehicle().getHighway08();
             String fuelType = singleton.getVehicle().getFuelType();

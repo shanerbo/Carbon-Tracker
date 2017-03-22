@@ -1,3 +1,5 @@
+// Class to contain Vehicle data
+
 package com.example.olive.carbon_tracker.Model;
 
 import com.example.olive.carbon_tracker.R;
@@ -13,8 +15,10 @@ public class Vehicle {
     private double city08;
     private String fuelType;
     private long vehicleDBId;
-    private int cityDistance = 0;
-    private int hwyDistance = 0;
+
+    public Vehicle() {
+
+    }
 
     public Vehicle(String name, String make, String model, int year,
                    double city08, double highway08, String fuelType, long vehicleDBId) {
@@ -26,7 +30,6 @@ public class Vehicle {
         this.highway08 = highway08;
         this.fuelType = fuelType;
         this.vehicleDBId = vehicleDBId;
-
     }
 
     public String getName() {
@@ -77,13 +80,5 @@ public class Vehicle {
 
     public long getVehicleDBId() {
         return vehicleDBId;
-    }
-
-    public void setCityDistance(int cityDistance) {
-        this.cityDistance = cityDistance;
-    }
-
-    public void setHwyDistance(int hwyDistance) {
-        this.hwyDistance = hwyDistance;
     }
 }
