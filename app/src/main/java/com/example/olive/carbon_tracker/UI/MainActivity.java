@@ -15,6 +15,7 @@ import com.example.olive.carbon_tracker.Model.SuperUltraInfoDataBaseHelper;
 import com.example.olive.carbon_tracker.R;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         SQLiteDatabase createTable =TableHelper.getWritableDatabase();
         createTable.close();
         TableHelper.close();
+        generateTips();
 //------database done-------------------------
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -50,5 +52,35 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         },exist_time);
+    }
+    private List<String> allRandomTips = new ArrayList<>();
+    private void generateTips(){
+        allRandomTips.add("Your highest co2 is coming from driving. Try using transit.");
+        allRandomTips.add("Your highest co2 is coming from driving. Try car pooling.");
+        allRandomTips.add("Your highest co2 is coming from driving. Try getting an electric car.");
+        allRandomTips.add("Your highest co2 is coming from driving. Try Combine errands to make fewer trips.");
+        allRandomTips.add("Misc. Combine errands to make fewer trips. Remove excess weight from your car. Use cruise control.");
+        allRandomTips.add("Your electricity usage is high, try installing solar panels.");
+        allRandomTips.add("Your electricity usage is high, try shutting off lights when not in use");
+        allRandomTips.add("Your electricity usage is high, try unplugging unused electronic devices");
+        allRandomTips.add("The journey you just add has highest CO2 emission compare with past. ");
+        allRandomTips.add("The car you just add has highest CO2 emission compare with past. ");
+//        allRandomTips.add("The journey you just add has highest CO2 emission compare with past. ");
+//        allRandomTips.add("The journey you just add has highest CO2 emission compare with past. ");
+//        allRandomTips.add("The journey you just add has highest CO2 emission compare with past. ");
+//        allRandomTips.add("The journey you just add has highest CO2 emission compare with past. ");
+//        allRandomTips.add("The journey you just add has highest CO2 emission compare with past. ");
+//        allRandomTips.add("The journey you just add has highest CO2 emission compare with past. ");
+//        allRandomTips.add("The journey you just add has highest CO2 emission compare with past. ");
+//        allRandomTips.add("The journey you just add has highest CO2 emission compare with past. ");
+//        allRandomTips.add("The journey you just add has highest CO2 emission compare with past. ");
+//        allRandomTips.add("The journey you just add has highest CO2 emission compare with past. ");
+//        allRandomTips.add("The journey you just add has highest CO2 emission compare with past. ");
+//        allRandomTips.add("The journey you just add has highest CO2 emission compare with past. ");
+//        allRandomTips.add("The journey you just add has highest CO2 emission compare with past. ");
+//        allRandomTips.add("The journey you just add has highest CO2 emission compare with past. ");
+//        allRandomTips.add("The journey you just add has highest CO2 emission compare with past. ");
+          Collections.shuffle(allRandomTips);
+        singleton.setShuffledTips(allRandomTips);
     }
 }

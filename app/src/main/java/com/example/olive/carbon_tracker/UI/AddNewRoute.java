@@ -394,6 +394,19 @@ public class AddNewRoute extends AppCompatActivity {
             String TotalCO2 = String.format("%.2f", totalCO2);
             Toast.makeText(getApplicationContext(), "The CO2 you produced: " + TotalCO2, Toast.LENGTH_SHORT).show();
 
+            Cursor cursor = RouteDB.rawQuery("select max(JourneyCO2Emitted) from JourneyInfoTable" +
+                    " where JourneyMode = 'Car'",null);
+            double maxCO2 = 0;
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()){
+                maxCO2 = cursor.getDouble(0);
+                cursor.moveToNext();
+            }
+            cursor.close();
+            if (maxCO2 < totalCO2){
+                singleton.setCarCO2Highest(true);
+            }
+
             ContentValues cv = new ContentValues();
             cv.put(SuperUltraInfoDataBaseHelper.Journey_Date,_date);
 

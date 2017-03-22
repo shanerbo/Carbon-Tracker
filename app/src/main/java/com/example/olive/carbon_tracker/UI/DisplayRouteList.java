@@ -59,7 +59,6 @@ public class DisplayRouteList extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.ChooseRoute);
         setSupportActionBar(toolbar);
         //RouteList = singleton.getRouteList();
-        Toast.makeText(this,_date,Toast.LENGTH_SHORT).show();
         AddRoute();
         EditRoute();
         showAllRoute();
@@ -375,6 +374,18 @@ public class DisplayRouteList extends AppCompatActivity {
             totalCO2 = fuelCost * totalGas;
             String TotalCO2 = String.format("%.2f", totalCO2);
             Toast.makeText(getApplicationContext(), "The CO2 you produced: " + TotalCO2, Toast.LENGTH_LONG).show();
+            Cursor cursor = RouteDB.rawQuery("select max(JourneyCO2Emitted) from JourneyInfoTable" +
+                    " where JourneyMode = 'Car'",null);
+            double maxCO2 = 0;
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()){
+                maxCO2 = cursor.getDouble(0);
+                cursor.moveToNext();
+            }
+            cursor.close();
+            if (maxCO2 < totalCO2){
+                singleton.setCarCO2Highest(true);
+            }
 
 
 //            String day =   singleton.getUserDay();
@@ -437,7 +448,7 @@ public class DisplayRouteList extends AppCompatActivity {
         Date date = new Date();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEEE");
 
-        Toast.makeText(getApplicationContext(),"MONTHS "+simpleDateFormat.format(date).toUpperCase(),Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(),"MONTHS "+simpleDateFormat.format(date).toUpperCase(),Toast.LENGTH_SHORT).show();
        // System.out.println("DAY "+simpleDateFormat.format(date).toUpperCase());
 
         simpleDateFormat = new SimpleDateFormat("MMMM");
@@ -445,7 +456,7 @@ public class DisplayRouteList extends AppCompatActivity {
 
         simpleDateFormat = new SimpleDateFormat("yyyy");
      //   System.out.println("MONTHS "+simpleDateFormat.format(date).toUpperCase());
-        Toast.makeText(getApplicationContext(),"MONTH "+simpleDateFormat.format(date).toUpperCase(),Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(),"MONTH "+simpleDateFormat.format(date).toUpperCase(),Toast.LENGTH_SHORT).show();
 
         String day =   singleton.getUserDay();
         String month =  singleton.getUserMonth();
