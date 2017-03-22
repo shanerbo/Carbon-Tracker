@@ -48,9 +48,11 @@
         <activity android:name=".UI.SingleDayGraph" />
         <activity android:name=".UI.MonthGraph" />
         <activity android:name=".UI.YearGraph" />
-        <activity android:name=".UI.MonthlyUtilities" />
+        <activity android:name=".UI.MonthlyUtilities"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".UI.DisplayCalendar"/>
-        <activity android:name=".UI.DisplayMonthlyUtilities"></activity>
+        <activity android:name=".UI.DisplayMonthlyUtilities"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

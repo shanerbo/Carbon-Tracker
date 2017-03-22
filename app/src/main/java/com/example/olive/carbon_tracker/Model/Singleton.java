@@ -55,7 +55,7 @@ public class Singleton {
     }
 
     private static long editPostion_Journey;
-    private static int editPosition_bill;
+    private static long editPosition_bill;
     private boolean editJourney = false;
     private int editJourneyPosition;
     private static int addRoute;
@@ -296,11 +296,11 @@ public class Singleton {
     public void userFinishEditMonthlyUtilities() { editMonthlyUtilities = 0;  }
 
 
-    public void setEditPosition_bill(int Position) {
+    public void setEditPosition_bill(long Position) {
         editPosition_bill = Position;
     }
 
-    public int getEditPosition_bill() {
+    public long getEditPosition_bill() {
         return editPosition_bill;
     }
 

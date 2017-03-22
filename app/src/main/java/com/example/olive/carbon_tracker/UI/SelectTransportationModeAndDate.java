@@ -59,12 +59,12 @@ public class SelectTransportationModeAndDate extends AppCompatActivity {
         currentDate.setText(day + "/" + month + "/" + year);
         //TODO fix the problem that if i want to edit a journey like march 8th 2016,
         // the text shows is 08/March 2016 but the calender is pointing to the current date
-        singleton.setIsDateChanged(true);
+        singleton.setIsDateChanged(false);
     }
     private void viewCurrentDate(){
         boolean isDateChanged = singleton.getIsDateChanged();
         TextView currentDate = (TextView) findViewById(R.id.txtCurrentDate);
-        if(isDateChanged == false) {
+        if(isDateChanged == false && !singleton.isEditingJourney()) {
             Date date = new Date();
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEEE");
 

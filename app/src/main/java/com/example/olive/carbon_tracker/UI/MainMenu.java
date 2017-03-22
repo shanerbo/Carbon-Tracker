@@ -4,11 +4,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.olive.carbon_tracker.Model.DatabaseHelper;
 import com.example.olive.carbon_tracker.Model.Journey;
@@ -16,7 +19,10 @@ import com.example.olive.carbon_tracker.Model.Singleton;
 import com.example.olive.carbon_tracker.R;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 public class MainMenu extends AppCompatActivity {
     Singleton singleton = Singleton.getInstance();
@@ -26,7 +32,7 @@ public class MainMenu extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
+        showUpTips(0);
         getJourneyList();
         setContentView(R.layout.activity_main_menu);
         setButton(R.id.btnCreateJourney);
@@ -34,6 +40,35 @@ public class MainMenu extends AppCompatActivity {
         setButton(R.id.btnEditJourney);
         setButton(R.id.btnMonthlyUti);
     }
+    private List<String> allRandomTips = new ArrayList<>();
+
+    private void showUpTips(final int i) {
+        allRandomTips.add("Misc. Combine errands to make fewer trips.");
+        allRandomTips.add("tip2");
+        allRandomTips.add("tip3");
+        allRandomTips.add("tip4");
+        allRandomTips.add("tip5");
+        allRandomTips.add("tip6");
+        allRandomTips.add("tip7");
+        allRandomTips.add("tip8");
+        allRandomTips.add("tip9");
+        //Collections.shuffle(allRandomTips);
+        Snackbar tipBar =  Snackbar.make(findViewById(android.R.id.content), allRandomTips.get(i),
+                Snackbar.LENGTH_LONG);
+        View snackbarView = tipBar.getView();
+        TextView tv= (TextView) snackbarView.findViewById(android.support.design.R.id.snackbar_text);
+        tv.setMaxLines(5);
+        //make snackBar contain up to 5 lines
+        tipBar.setAction("Next", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showUpTips(i+1);
+            }
+        });
+        tipBar.setActionTextColor(Color.RED);
+        tipBar.show();
+    }
+
     private void getJourneyList() {
         List<Journey> JourneyListFromDB = new ArrayList<>();
         myDataBase = SQLiteDatabase.openOrCreateDatabase(DatabaseHelper.DB_PATH + DatabaseHelper.DB_NAME,null);
@@ -49,7 +84,7 @@ public class MainMenu extends AppCompatActivity {
             String[] tempDate = (cursor.getString(0)).split("-");
             String tempYear = tempDate[0];
             String tempMonth = ChangMonthInString(tempDate[1]);
-            String tempDay = tempDate[2];
+            String tempDay = ChangDayInString(tempDate[2]) ;
             String date = tempDay + "/" + tempMonth + "/" + tempYear;
             String mode = cursor.getString(1);
             String routeName = cursor.getString(3);
@@ -62,12 +97,41 @@ public class MainMenu extends AppCompatActivity {
             JourneyListFromDB.add(tempJourney);
             cursor.moveToNext();
         }
-
         cursor.close();
         myDataBase.close();
         singleton.setJourneyList(JourneyListFromDB);
     }
 
+    private String ChangDayInString(String tempDay) {
+        if (tempDay.matches("01")){
+            return "1";
+        }
+        if (tempDay.matches("02")){
+            return "2";
+        }
+        if (tempDay.matches("03")){
+            return "3";
+        }
+        if (tempDay.matches("04")){
+            return "4";
+        }
+        if (tempDay.matches("05")){
+            return "5";
+        }
+        if (tempDay.matches("06")){
+            return "6";
+        }
+        if (tempDay.matches("07")){
+            return "7";
+        }
+        if (tempDay.matches("08")){
+            return "8";
+        }
+        else{
+            return "9";
+        }
+
+    }
     private String ChangMonthInString(String tempMonth) {
         if (tempMonth.matches("01")){
             return "January";
