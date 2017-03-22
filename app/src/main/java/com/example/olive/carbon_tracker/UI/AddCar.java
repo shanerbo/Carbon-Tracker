@@ -330,7 +330,7 @@ public class AddCar extends AppCompatActivity {
 
                         if (singleton.checkEdit_car() == 1) {
                             //VehicleList.set(position, userInput);
-                            long DBID = _VehicleToBeEdit.getCarDBId();
+                            long DBID = _VehicleToBeEdit.getVehicleDBId();
 
 
                             ContentValues cv = new ContentValues();
