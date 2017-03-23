@@ -17,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.olive.carbon_tracker.Model.Singleton;
 import com.example.olive.carbon_tracker.Model.SuperUltraInfoDataBaseHelper;
@@ -58,12 +59,12 @@ public class SelectTransportationModeAndDate extends AppCompatActivity {
         currentDate.setText(day + "/" + month + "/" + year);
         //TODO fix the problem that if i want to edit a journey like march 8th 2016,
         // the text shows is 08/March 2016 but the calender is pointing to the current date
-        singleton.setIsDateChanged(true);
+        singleton.setIsDateChanged(false);
     }
     private void viewCurrentDate(){
         boolean isDateChanged = singleton.getIsDateChanged();
         TextView currentDate = (TextView) findViewById(R.id.txtCurrentDate);
-        if(isDateChanged == false) {
+        if(!isDateChanged && !singleton.isEditingJourney()) {
             Date date = new Date();
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEEE");
 
@@ -154,6 +155,39 @@ public class SelectTransportationModeAndDate extends AppCompatActivity {
                             break;
                         }
                     case R.id.ID_button_mode_cancel:
+                        if (!singleton.isEditingJourney()){
+                            Intent goBackToMainMenu = MainMenu.makeIntent(SelectTransportationModeAndDate.this);
+                            startActivity(goBackToMainMenu);
+                            finish();
+                        }else {
+                            new AlertDialog.Builder(SelectTransportationModeAndDate.this)
+                                    .setTitle("Delete Journey")
+                                    .setMessage(R.string.DeleteJourneyWarning)
+                                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+
+                                            Intent del_intent = new Intent();
+                                            RouteDB.delete(SuperUltraInfoDataBaseHelper.Journey_Table,
+                                                    "_id" + "=" + JourneyPosition, null);
+                                            RouteDB.close();
+                                            singleton.userFinishEditJourney();
+                                            setResult(Activity.RESULT_OK, del_intent);
+                                            //    Toast.makeText(SelectTransportationModeAndDate.this,getString(R.string.UserDeleteJourney),Toast.LENGTH_LONG).show();
+                                            finish();
+                                            Intent ShowNewJourneyList = DisplayJourneyList.makeIntent(SelectTransportationModeAndDate.this);
+                                            startActivity(ShowNewJourneyList);
+                                        }
+                                    })
+                                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.cancel();
+                                            singleton.userFinishEdit();
+                                        }
+                                    })
+                                    .setIcon(android.R.drawable.ic_dialog_alert).show();
+                        }
                         new AlertDialog.Builder(SelectTransportationModeAndDate.this)
                                 .setTitle("Delete Journey")
                                 .setMessage(R.string.DeleteJourneyWarning)

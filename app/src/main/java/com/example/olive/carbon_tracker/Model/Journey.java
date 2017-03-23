@@ -1,42 +1,28 @@
-package com.example.olive.carbon_tracker.Model;
+// This class contains the Journey object
 
+package com.example.olive.carbon_tracker.Model;
 
 import com.example.olive.carbon_tracker.R;
 
 public class Journey {
-
     private String dateOfTrip;
     private String routeName;
     private int totalDistance;
     private String vehicleName;
-
-
-    private String Mode;
+    private String mode;
     private double carbonEmitted;
     private int iconID = R.drawable.map;
-    private long JourneyID;
-
-
-    public long getJourneyID() {
-        return JourneyID;
-    }
-
-    public void setJourneyID(long journeyID) {
-        JourneyID = journeyID;
-    }
+    private long journeyID;
 
     public Journey(String dateOfTrip, String mode, String routeName, int totalDistance,
                    String vehicleName, double carbonEmitted, long journeyID) {
         this.dateOfTrip = dateOfTrip;
         this.routeName = routeName;
-        this.Mode = mode;
+        this.mode = mode;
         this.totalDistance = totalDistance;
         this.vehicleName = vehicleName;
         this.carbonEmitted = carbonEmitted;
-        this.JourneyID = journeyID;
-    }
-    public String getMode() {
-        return Mode;
+        this.journeyID = journeyID;
     }
 
     public String getDateOfTrip() {
@@ -71,6 +57,10 @@ public class Journey {
         this.vehicleName = vehicleName;
     }
 
+    public String getMode() {
+        return mode;
+    }
+
     public double getCarbonEmitted() {
         return carbonEmitted;
     }
@@ -81,5 +71,13 @@ public class Journey {
 
     public int getIconID() {
         return iconID;
+    }
+
+    public long getJourneyID() {
+        return journeyID;
+    }
+
+    public void setJourneyID(long journeyID) {
+        this.journeyID = journeyID;
     }
 }

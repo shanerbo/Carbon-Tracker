@@ -32,8 +32,39 @@ public class Singleton {
     private String endYear = null;
     private boolean isEndDateChanged = false;
 
-    SQLiteDatabase CarInfoDB;
 
+    SQLiteDatabase CarInfoDB;
+//-------------------------------tips
+    private List<String> ShuffledTips;
+
+    public boolean isCarCO2Highest() {
+        return CarCO2Highest;
+    }
+
+    public void setCarCO2Highest(boolean carCO2Highest) {
+        CarCO2Highest = carCO2Highest;
+    }
+
+    public boolean isElectricityHighest() {
+        return ElectricityHighest;
+    }
+
+    public void setElectricityHighest(boolean electricityHighest) {
+        ElectricityHighest = electricityHighest;
+    }
+
+    public boolean isGasHighest() {
+        return GasHighest;
+    }
+
+    public void setGasHighest(boolean gasHighest) {
+        GasHighest = gasHighest;
+    }
+
+    private boolean CarCO2Highest = false;
+    private boolean ElectricityHighest = false;
+    private boolean GasHighest = false;
+//-------------------------------tips
 
 
     ///////WHAT I NEED FOR MY CARBON CLASS /////////////
@@ -55,7 +86,7 @@ public class Singleton {
     }
 
     private static long editPostion_Journey;
-    private static int editPosition_bill;
+    private static long editPosition_bill;
     private boolean editJourney = false;
     private int editJourneyPosition;
     private static int addRoute;
@@ -296,11 +327,11 @@ public class Singleton {
     public void userFinishEditMonthlyUtilities() { editMonthlyUtilities = 0;  }
 
 
-    public void setEditPosition_bill(int Position) {
+    public void setEditPosition_bill(long Position) {
         editPosition_bill = Position;
     }
 
-    public int getEditPosition_bill() {
+    public long getEditPosition_bill() {
         return editPosition_bill;
     }
 
@@ -411,9 +442,9 @@ public class Singleton {
         journeyList = JourneyList;
     }
 
-    public void addUserJourney(Journey journey) {
-        journeyList.add(journey);
-    }
+//    public void addUserJourney(Journey journey) {
+//        journeyList.add(journey);
+//    }
 
     public Journey getJourney(int position) {
         return journeyList.get(position);
@@ -438,5 +469,11 @@ public class Singleton {
     public void changeJourney(Journey newJourney) {
         journeyList.remove(editJourneyPosition);
         journeyList.add(editJourneyPosition, newJourney);
+    }
+    public void setShuffledTips(List<String> tipList){
+        this.ShuffledTips = tipList;
+    }
+    public List<String> getShuffledTips(){
+        return ShuffledTips;
     }
 }

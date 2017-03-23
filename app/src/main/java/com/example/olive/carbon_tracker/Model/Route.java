@@ -1,26 +1,18 @@
-package com.example.olive.carbon_tracker.Model;
+// This class contains the Route object
 
+package com.example.olive.carbon_tracker.Model;
 
 import com.example.olive.carbon_tracker.R;
 
 public class Route {
-    private String Name;
-    private int CityDistance;
-    private int HighwayDistance;
-    private int TotalDistance;
+    private String name;
+    private int cityDistance;
+    private int highwayDistance;
+    private int totalDistance;
     private int iconId = R.drawable.routesign;
+    private long routeDBId;
 
-    public void setRouteDBId(long routeDBId) {
-        RouteDBId = routeDBId;
-    }
-
-    public long getRouteDBId() {
-        return RouteDBId;
-    }
-
-    private long RouteDBId;
-
-    public Route(String name, int cityDistance, int highwayDistance, int totalDistance,long routeDBId) {
+    public Route(String name, int cityDistance, int highwayDistance, int totalDistance, long routeDBId) {
         setName(name);
         setCityDistance(cityDistance);
         setHighwayDistance(highwayDistance);
@@ -30,44 +22,49 @@ public class Route {
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
     private void setName(String name) {
         if (name.length() == 0) {
             throw new IllegalArgumentException();
         }
-        this.Name = name;
-    }
-
-    public int getIconId(){
-        return iconId;
+        this.name = name;
     }
 
     public int getCityDistance() {
-        return CityDistance;
+        return cityDistance;
     }
 
     private void setCityDistance(int cityDistance) {
-
-        this.CityDistance = cityDistance;
+        this.cityDistance = cityDistance;
     }
 
     public int getHighwayDistance() {
-        return HighwayDistance;
+        return highwayDistance;
     }
 
     private void setHighwayDistance(int highwayDistance) {
-
-        this.HighwayDistance = highwayDistance;
+        this.highwayDistance = highwayDistance;
     }
 
-    public int getTotalDistance(){
-        return TotalDistance;
+    public int getTotalDistance() {
+        return totalDistance;
     }
 
     private void setTotalDistance(int totalDistance) {
+        this.totalDistance = totalDistance;
+    }
 
-        this.TotalDistance = totalDistance;
+    public int getIconId() {
+        return iconId;
+    }
+
+    public long getRouteDBId() {
+        return routeDBId;
+    }
+
+    public void setRouteDBId(long routeDBId) {
+        this.routeDBId = routeDBId;
     }
 }

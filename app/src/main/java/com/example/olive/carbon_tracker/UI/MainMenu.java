@@ -2,32 +2,192 @@ package com.example.olive.carbon_tracker.UI;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.olive.carbon_tracker.Model.DatabaseHelper;
 import com.example.olive.carbon_tracker.Model.Journey;
 import com.example.olive.carbon_tracker.Model.Singleton;
 import com.example.olive.carbon_tracker.R;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 public class MainMenu extends AppCompatActivity {
     Singleton singleton = Singleton.getInstance();
-
+    public SQLiteDatabase myDataBase;
+    List<String> allRandomTips = singleton.getShuffledTips();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
+        HighestCO2FromCar();
+        //showUpTipsforCar(0);
+        getJourneyList();
         setContentView(R.layout.activity_main_menu);
         setButton(R.id.btnCreateJourney);
         setButton(R.id.btnCurrentFootprint);
         setButton(R.id.btnEditJourney);
         setButton(R.id.btnMonthlyUti);
+    }
+
+    private void HighestCO2FromCar() {
+        if (singleton.isCarCO2Highest()){
+            singleton.setCarCO2Highest(false);
+            showUpTipsforCar(0);
+        }else{
+            return;
+        }
+    }
+
+    private void showUpTipsforCar(final int i) {
+
+        //Collections.shuffle(allRandomTips);
+        Snackbar tipBar =  Snackbar.make(findViewById(android.R.id.content), allRandomTips.get(i),
+                Snackbar.LENGTH_LONG);
+        View snackbarView = tipBar.getView();
+        TextView tv= (TextView) snackbarView.findViewById(android.support.design.R.id.snackbar_text);
+        tv.setMaxLines(5);
+        //make snackBar contain up to 5 lines
+        if (allRandomTips.size()>i+1) {
+            tipBar.setAction("Next", new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showUpTipsforCar(i + 1);
+                }
+            });
+            tipBar.setActionTextColor(Color.RED);
+            tipBar.show();
+        }else{
+            tipBar.setAction("OK", new View.OnClickListener() {//this is the last tips
+                @Override
+                public void onClick(View v) {
+                    return;
+                }
+            });
+            tipBar.setActionTextColor(Color.RED);
+            tipBar.show();
+        }
+    }
+
+    private void getJourneyList() {
+        List<Journey> JourneyListFromDB = new ArrayList<>();
+        myDataBase = SQLiteDatabase.openOrCreateDatabase(DatabaseHelper.DB_PATH + DatabaseHelper.DB_NAME,null);
+        Cursor cursor = myDataBase.rawQuery("select JourneyDate," +
+                "JourneyMode," +
+                "JourneyCarName," +
+                "JourneyRouteName, " +
+                "JourneyRouteTotal, " +
+                "JourneyCO2Emitted," +
+                "_id from JourneyInfoTable order by date(JourneyDate) asc ",null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()){
+            String[] tempDate = (cursor.getString(0)).split("-");
+            String tempYear = tempDate[0];
+            String tempMonth = ChangMonthInString(tempDate[1]);
+            String tempDay = ChangDayInString(tempDate[2]) ;
+            String date = tempDay + "/" + tempMonth + "/" + tempYear;
+            Log.i("day:",tempDate[1].getClass().getName());
+            String mode = cursor.getString(1);
+            String routeName = cursor.getString(3);
+            int totalDst = cursor.getInt(4);
+            String vehicleName = cursor.getString(2);
+            double co2 = cursor.getDouble(5);
+            long JourneyDBId = cursor.getLong(cursor.getColumnIndex("_id"));
+            Journey tempJourney = new Journey(date,mode,routeName,
+                    totalDst,vehicleName,co2,JourneyDBId);
+            JourneyListFromDB.add(tempJourney);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        myDataBase.close();
+        singleton.setJourneyList(JourneyListFromDB);
+    }
+
+    private String ChangDayInString(String tempDay) {
+        Log.i("day to be changed",tempDay);
+        if (tempDay.equals("01")){
+            return "1";
+        }
+        if (tempDay.equals("02")){
+            return "2";
+        }
+        if (tempDay.equals("03")){
+            return "3";
+        }
+        if (tempDay.equals("04")){
+            return "4";
+        }
+        if (tempDay.equals("05")){
+            return "5";
+        }
+        if (tempDay.equals("06")){
+            return "6";
+        }
+        if (tempDay.equals("07")){
+            return "7";
+        }
+        if (tempDay.equals("08")){
+            return "8";
+        }
+        if (tempDay.equals("09")){
+            return "9";
+        }
+        else {
+            return tempDay;
+        }
+
+    }
+    private String ChangMonthInString(String tempMonth) {
+        if (tempMonth.matches("01")){
+            return "January";
+        }
+        if (tempMonth.matches("02")){
+            return "February";
+        }
+        if (tempMonth.matches("03")){
+            return "March";
+        }
+        if (tempMonth.matches("04")){
+            return "April";
+        }
+        if (tempMonth.matches("05")){
+            return "May";
+        }
+        if (tempMonth.matches("06")){
+            return "June";
+        }
+        if (tempMonth.matches("07")){
+            return "July";
+        }
+        if (tempMonth.matches("08")){
+            return "August";
+        }
+        if (tempMonth.matches("09")){
+            return "September";
+        }
+        if (tempMonth.matches("10")){
+            return "October";
+        }
+        if (tempMonth.matches("11")){
+            return "November";
+        }
+        else{
+            return "Decemeber";
+        }
     }
 
     private void setButton(final int id) {

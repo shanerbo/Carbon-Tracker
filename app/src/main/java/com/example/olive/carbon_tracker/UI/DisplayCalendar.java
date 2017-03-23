@@ -10,10 +10,7 @@ import android.widget.Toast;
 import com.example.olive.carbon_tracker.Model.Singleton;
 import com.example.olive.carbon_tracker.R;
 
-import java.text.DateFormat;
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+
 
 public class DisplayCalendar extends AppCompatActivity {
     private Singleton singleton = Singleton.getInstance();

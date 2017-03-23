@@ -50,10 +50,14 @@ public class DisplayJourneyList extends AppCompatActivity {
                 "JourneyRouteName, " +
                 "JourneyRouteTotal, " +
                 "JourneyCO2Emitted," +
-                "_id from JourneyInfoTable",null);
+                "_id from JourneyInfoTable order by date(JourneyDate) asc ",null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()){
-            String date = cursor.getString(0);
+            String[] tempDate = (cursor.getString(0)).split("-");
+            String tempYear = tempDate[0];
+            String tempMonth = ChangMonthInString(tempDate[1]);
+            String tempDay = tempDate[2];
+            String date = tempDay + "/" + tempMonth + "/" + tempYear;
             String mode = cursor.getString(1);
             String routeName = cursor.getString(3);
             int totalDst = cursor.getInt(4);
@@ -69,22 +73,67 @@ public class DisplayJourneyList extends AppCompatActivity {
         cursor.close();
         myDataBase.close();
         JourneyList = JourneyListFromDB;
+        singleton.setJourneyList(JourneyList);
         ArrayAdapter<Journey> adapter = new myArrayAdapter();
         ListView listView = (ListView) findViewById(R.id.listJourneys);
         listView.setAdapter(adapter);
         setListClickListener(listView);
     }
 
+    private String ChangMonthInString(String tempMonth) {
+        if (tempMonth.matches("01")){
+            return "January";
+        }
+        if (tempMonth.matches("02")){
+            return "February";
+        }
+        if (tempMonth.matches("03")){
+            return "March";
+        }
+        if (tempMonth.matches("04")){
+            return "April";
+        }
+        if (tempMonth.matches("05")){
+            return "May";
+        }
+        if (tempMonth.matches("06")){
+            return "June";
+        }
+        if (tempMonth.matches("07")){
+            return "July";
+        }
+        if (tempMonth.matches("08")){
+            return "August";
+        }
+        if (tempMonth.matches("09")){
+            return "September";
+        }
+        if (tempMonth.matches("10")){
+            return "October";
+        }
+        if (tempMonth.matches("11")){
+            return "November";
+        }
+        else{
+            return "Decemeber";
+        }
+    }
+
     private void setListClickListener(ListView listView) {
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent showActivity = new Intent(DisplayJourneyList.this, SelectTransportationModeAndDate.class);
                 singleton.setEditJourneyPosition(position);
                 singleton.setEditPostion_Journey(JourneyList.get(position).getJourneyID());
                 singleton.userEditJourney();
+                String[] tempDate = JourneyList.get(position).getDateOfTrip().split("/");
+                singleton.setUserDay(tempDate[0]);
+                singleton.setUserMonth(tempDate[1]);
+                singleton.setUserYear(tempDate[2]);
                 startActivity(showActivity);
                 finish();
+                return true;
             }
         });
     }

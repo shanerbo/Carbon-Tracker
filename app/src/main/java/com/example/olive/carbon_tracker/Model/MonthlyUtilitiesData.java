@@ -10,9 +10,11 @@ public class MonthlyUtilitiesData {
     private double IndGasUsage;
     private double IndCO2;
     private long numOfPeople;
-    private int iconId = R.drawable.old_vintage_car;
+    private int iconId = R.drawable.bills;
+    private long UtilityDBId;
 
-    public MonthlyUtilitiesData(String startDate, String endDate, long totalDays, double indElecUsage, double indGasUsage, long numOfPeople, double indCO2) {
+    public MonthlyUtilitiesData(String startDate, String endDate, long totalDays, double indElecUsage,
+                                double indGasUsage, long numOfPeople, double indCO2, long utilityDBId) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.totalDays = totalDays;
@@ -20,6 +22,7 @@ public class MonthlyUtilitiesData {
         this.IndGasUsage = indGasUsage;
         this.numOfPeople = numOfPeople;
         this.IndCO2 = indCO2;
+        this.UtilityDBId = utilityDBId;
     }
 
     public String getStartDate() { return startDate; }
@@ -51,4 +54,8 @@ public class MonthlyUtilitiesData {
     public void setNumOfPeople(long numOfPeople) { this.numOfPeople = numOfPeople; }
 
     public int getIconID(){ return iconId; }
+
+    public long getUtilityDBId() {
+        return UtilityDBId;
+    }
 }

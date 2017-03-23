@@ -55,6 +55,15 @@ public class SuperUltraInfoDataBaseHelper extends SQLiteOpenHelper {
     public static String Journey_RouteTotalDist = "JourneyRouteTotal";
     public static String Journey_CO2Emitted = "JourneyCO2Emitted";
 
+    public static String Utility_Table = "UtilityInfoTable";
+    public static String Utility_Id = "_id";
+    public static String Utility_StartDate = "UtilityStartDate";
+    public static String Utility_EndDate = "UtilityEndDate";
+    public static String Utility_TotalDay = "UtilityTotalDay";
+    public static String Utility_Electricy = "UtilityElectricity";
+    public static String Utility_Gas = "UtilityEGas";
+    public static String Utility_NumberOfSharing = "UtilityNumberOfSharing";
+    public static String Utility_AverageCO2 = "UtilityAverageCO2";
 
 
     public SuperUltraInfoDataBaseHelper(Context context) {
@@ -95,7 +104,7 @@ public class SuperUltraInfoDataBaseHelper extends SQLiteOpenHelper {
         String createJourneyDB = "create table if not exists " + Journey_Table
                 + "("
                 + Journey_Id + " integer primary key autoincrement not null,"
-                + Journey_Date + " Text,"
+                + Journey_Date + " integer,"
                 + Journey_CarId + " integer ,"
                 + Journey_CarMode + " text ,"
                 + Journey_CarName +" text ,"
@@ -118,6 +127,20 @@ public class SuperUltraInfoDataBaseHelper extends SQLiteOpenHelper {
                 + ");";
         CarDB.execSQL(createJourneyDB);
 
+
+
+        String createUtility = "create table if not exists " + Utility_Table
+                +"("
+                + Utility_Id + " integer primary key autoincrement not null, "
+                + Utility_StartDate + " integer,"
+                + Utility_EndDate + " integer,"
+                + Utility_Electricy + " real,"
+                + Utility_Gas + " real,"
+                + Utility_TotalDay + " integer,"
+                + Utility_NumberOfSharing + " integer, "
+                + Utility_AverageCO2 + " real"
+                + ");";
+        CarDB.execSQL(createUtility);
     }
 
 
