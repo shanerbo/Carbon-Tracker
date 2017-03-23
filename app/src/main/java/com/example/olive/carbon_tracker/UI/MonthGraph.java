@@ -106,7 +106,6 @@ public class MonthGraph extends AppCompatActivity {
                         carCO2.get(i).floatValue(),
                         skytrainCO2.get(i).floatValue(),
                         utilityCO2.get(i).floatValue()}));
-                Toast.makeText(getApplicationContext(), "currUtCo2,: "+utilityCO2.get(i).floatValue() , Toast.LENGTH_SHORT).show();
             }
 
             BarDataSet set1;
@@ -222,55 +221,60 @@ public class MonthGraph extends AppCompatActivity {
 
 
         boolean insideRange = false;
-        long smallestDateDifference = 99999999;
+        long smallestDateDifference = 9999999;
         double mostRecentCO2 = 0;
-        for (int i = 0; i < utilitiesList.size(); i++) {
+        for (int i=0; i < utilitiesList.size(); i++) {
+            //for(int i = utilitiesList.size()-1; i>=0; i--){
+            insideRange = false;
+
             isChartEmpty = false;
             MonthlyUtilitiesData currentUtility = utilitiesList.get(i);
+
             double currentUtilityIndCO2 = currentUtility.getIndCO2();
-          // Toast.makeText(getApplicationContext(), "" + currentUtilityIndCO2, Toast.LENGTH_LONG).show();
+            Log.i("utility,co2: " ,"" +currentUtilityIndCO2);
             String currentUtilityStartDate = currentUtility.getStartDate();
+            Log.i("utility,sd: " ,"" +currentUtilityStartDate);
             String currentUtilityEndDate = currentUtility.getEndDate();
+            Log.i("utility,ed: " ,"" +currentUtilityEndDate);
 
-            String currentDate = chosenDay + "/" + chosenMonth + "/" + chosenYear;
-
-            for (int j = 0; j < previousDates.size(); j++) {
+            //String firstDate = previousDates.get(0);
+// if(getDateDifference(currentUtilityEndDate, firstDate)+1 < smallestDateDifference) {
+// smallestDateDifference = getDateDifference(currentUtilityEndDate, firstDate) + 1; // } //smallestDateDifference = 2; //smallestDateDifference = getDateDifference(currentUtilityEndDate, firstDate)+1;
+            for (int j = 0; j <previousDates.size(); j++) {
                 String prevDate = previousDates.get(j);
-              // Toast.makeText(getApplicationContext(), "prevDate " + prevDate, Toast.LENGTH_LONG).show();
-              if (getDateDifference(currentUtilityStartDate, prevDate) >= 0 &&
-                       getDateDifference(prevDate ,currentUtilityEndDate) >= 0) {
 
-                    currentUtilityIndCO2 += utilityCO2.remove(j);
-                    utilityCO2.add(j,currentUtilityIndCO2);
+                String[] prevDate2 = prevDate.split("/");
+                String day = addZeroToDay(prevDate2[DAY_TOKEN]);
+                String month =   addZeroToDay(prevDate2[MONTH_TOKEN]);
+                String year = prevDate2[YEAR_TOKEN];
+                String prevDateNewFormat = year + "-" + month + "-" + day;
 
-                    insideRange = true;
 
+
+
+                Log.i("prevDate: " , ""+ prevDate);
+                if (getDateDifference(currentUtilityStartDate, prevDateNewFormat) >= 0 &&
+                        getDateDifference(prevDateNewFormat, currentUtilityEndDate) >= 0) {
+                    utilityCO2.remove(j);
+                    //currentUtilityIndCO2 += utilityCO2.remove(j);
+                    utilityCO2.add(j, currentUtilityIndCO2);
+                            insideRange = true;
                 } else {
-                    long currentDateDifference = getDateDifference(currentUtilityEndDate, prevDate);
+                    long currentDateDifference = getDateDifference(currentUtilityEndDate, prevDateNewFormat);
                     if (currentDateDifference < smallestDateDifference && currentDateDifference > 0) {
                         mostRecentCO2 = currentUtilityIndCO2;
-                        smallestDateDifference = currentDateDifference;
+                        //smallestDateDifference = currentDateDifference;
+
+                        if (!insideRange) {
+                            //currentUtilityIndCO2 += utilityCO2.remove(j);
+                            utilityCO2.remove(j);
+                            utilityCO2.add(j, mostRecentCO2);
+                        }
                     }
-                }
-                if (insideRange == false) {
-                    mostRecentCO2 += utilityCO2.remove(j);
-                    utilityCO2.add(j,mostRecentCO2);
-                }
 
-
+                }
             }
-      //  Toast.makeText(getApplicationContext(), "size " + utilityCO2.size(), Toast.LENGTH_LONG).show();
-//        Log.i("size  " + utilityCO2.size(),"");
-//            for(double c02: utilityCO2){
-//           //     Toast.makeText(getApplicationContext(), "co2: " + c02, Toast.LENGTH_SHORT).show();
-//            }
         }
-
-
-//        if (insideRange == false) {
-//            mostRecentCO2 += utilityCO2.remove(0);
-//            utilityCO2.add(mostRecentCO2);
-//        }
      }
 
 
@@ -278,7 +282,8 @@ public class MonthGraph extends AppCompatActivity {
 
     private long getDateDifference(String StartDate, String EndDate) {
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        //SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         try {
             Date start = sdf.parse(StartDate);
             Date end = sdf.parse(EndDate);
@@ -329,6 +334,34 @@ public class MonthGraph extends AppCompatActivity {
             previousDates.add(chosenDay + "/" + (--chosenMonth) + "/" + chosenYear);
         }
     }
+
+
+    private String addZeroToDay(String startDay) {
+        if(startDay.equals("1")){
+            return "01";
+        }        if(startDay.equals("2")){
+            return "02";
+        }        if(startDay.equals("3")){
+            return "03";
+        }        if(startDay.equals("4")){
+            return "04";
+        }        if(startDay.equals("5")){
+            return "05";
+        }        if(startDay.equals("6")){
+            return "06";
+        }        if(startDay.equals("7")){
+            return "07";
+        }        if(startDay.equals("8")){
+            return "08";
+        }        if(startDay.equals("9")){
+            return "09";
+        }else{
+            return startDay;
+        }
+    }
+
+
+
 
 
     public void monthNumber(String month) {
