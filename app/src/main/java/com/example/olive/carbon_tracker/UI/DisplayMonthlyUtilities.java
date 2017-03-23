@@ -87,7 +87,7 @@ public class DisplayMonthlyUtilities extends AppCompatActivity {
         myDataBase = SQLiteDatabase.openOrCreateDatabase(DatabaseHelper.DB_PATH +
                 DatabaseHelper.DB_NAME,null);
         Cursor cursor = myDataBase.rawQuery("select * from " +
-                "UtilityInfoTable",null);
+                "UtilityInfoTable order by UtilityEndDate asc",null);
         cursor.moveToFirst();
         while(!cursor.isAfterLast()){
             String starDate = cursor.getString(1);

@@ -105,8 +105,6 @@ public class MonthlyUtilities extends AppCompatActivity {
             gas.setText(""+gasUsage+"");
             people.setText(""+_billToBeEdited.getNumOfPeople()+"");
         }
-
-
     }
 
     private void setupCalendarButton(final int buttonID){
@@ -132,7 +130,7 @@ public class MonthlyUtilities extends AppCompatActivity {
             Date StartDate = new Date();
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEEE");
 
-            simpleDateFormat = new SimpleDateFormat("d");
+            simpleDateFormat = new SimpleDateFormat("dd");
             String StartDay = simpleDateFormat.format(StartDate);
 
             simpleDateFormat = new SimpleDateFormat("MM");
@@ -158,7 +156,7 @@ public class MonthlyUtilities extends AppCompatActivity {
             Date EndDate = new Date();
             SimpleDateFormat simpleEndDateFormat = new SimpleDateFormat("EEEE");
 
-            simpleEndDateFormat = new SimpleDateFormat("d");
+            simpleEndDateFormat = new SimpleDateFormat("dd");
             String EndDay = simpleEndDateFormat.format(EndDate);
 
             simpleEndDateFormat = new SimpleDateFormat("MM");
@@ -238,8 +236,8 @@ public class MonthlyUtilities extends AppCompatActivity {
                                     double indGasUsage = 0;
                                     double indCO2 = indElecUsage*0.009 + indGasUsage*56.1;
                                         //0.009kg CO2 per kwh of elec, 56.1kg CO2 per GJ of natural gas
-                                    String startDate = startDay+"/"+startMonth+"/"+startYear;
-                                    String endDate = EndDay+"/"+EndMonth+"/"+EndYear;
+                                    String startDate = startYear+"-"+addZeroToDay(startMonth)+"-"+addZeroToDay(startDay);
+                                    String endDate = EndYear+"-"+addZeroToDay(EndMonth)+"-"+addZeroToDay(EndDay);
                                     double CO2PerDayPerPerson = indCO2/dateDifference;
 
                                     if(singleton.checkEditMonthlyUtilities() == 1){ //editing
@@ -261,8 +259,8 @@ public class MonthlyUtilities extends AppCompatActivity {
                                     double indGasUsage = parseDouble(naturalGasUsage) / parseDouble(numOfPeople);
                                     double indCO2 = indElecUsage*0.009 + indGasUsage*56.1;
                                         //0.009kg CO2 per kwh of elec, 56.1kg CO2 per GJ of natural gas
-                                    String startDate = startDay+"/"+startMonth+"/"+startYear;
-                                    String endDate = EndDay+"/"+EndMonth+"/"+EndYear;
+                                    String startDate = startYear+"-"+addZeroToDay(startMonth)+"-"+addZeroToDay(startDay);
+                                    String endDate = EndYear+"-"+addZeroToDay(EndMonth)+"-"+addZeroToDay(EndDay);
                                     double CO2PerDayPerPerson = indCO2/dateDifference;
 
                                     if(singleton.checkEditMonthlyUtilities() == 1){ //editing
@@ -284,8 +282,8 @@ public class MonthlyUtilities extends AppCompatActivity {
                                     double indGasUsage = parseDouble(naturalGasUsage) / parseDouble(numOfPeople);
                                     double indCO2 = indElecUsage*0.009 + indGasUsage*56.1;
                                         //0.009kg CO2 per kwh of elec, 56.1kg CO2 per GJ of natural gas
-                                    String startDate = startDay+"/"+startMonth+"/"+startYear;
-                                    String endDate = EndDay+"/"+EndMonth+"/"+EndYear;
+                                    String startDate = startYear+"-"+addZeroToDay(startMonth)+"-"+addZeroToDay(startDay);
+                                    String endDate = EndYear+"-"+addZeroToDay(EndMonth)+"-"+addZeroToDay(EndDay);
                                     double CO2PerDayPerPerson = indCO2/dateDifference;
 
                                     if(singleton.checkEditMonthlyUtilities() == 1){ //editing
@@ -323,6 +321,30 @@ public class MonthlyUtilities extends AppCompatActivity {
 
             }
         });
+    }
+
+    private String addZeroToDay(String startDay) {
+        if(startDay.equals("1")){
+            return "01";
+        }        if(startDay.equals("2")){
+            return "02";
+        }        if(startDay.equals("3")){
+            return "03";
+        }        if(startDay.equals("4")){
+            return "04";
+        }        if(startDay.equals("5")){
+            return "05";
+        }        if(startDay.equals("6")){
+            return "06";
+        }        if(startDay.equals("7")){
+            return "07";
+        }        if(startDay.equals("8")){
+            return "08";
+        }        if(startDay.equals("9")){
+            return "09";
+        }else{
+            return startDay;
+        }
     }
 
     private long UpdateUtilityToDB(String startDate, String endDate, double electricUsage, double gasUsage,
