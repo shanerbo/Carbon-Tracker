@@ -10,7 +10,7 @@
         android:id="@+id/btnSingleDay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Single Day"
+        android:text="@string/single_day"
         tools:layout_editor_absoluteX="133dp"
         tools:layout_editor_absoluteY="87dp"
         android:layout_marginBottom="54dp"
@@ -21,7 +21,7 @@
         android:id="@+id/btnMonthGraph"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Month"
+        android:text="@string/month"
         android:layout_centerVertical="true"
         android:layout_alignStart="@+id/btnYearGraph" />
 
@@ -30,7 +30,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="53dp"
-        android:text="Year"
+        android:text="@string/year"
         android:layout_below="@+id/btnMonthGraph"
         android:layout_centerHorizontal="true" />
 
