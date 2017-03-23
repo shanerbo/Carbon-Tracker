@@ -119,7 +119,7 @@
         estimated miles-per-gallon rating. Electric cars emit no CO2 if they’re charged with clean electricity. </string>
     <string name="unrelated_tip_4">Get a hitch-mounted cargo rack. Don’t buy a minivan or SUV if you don’t need 4WD and/or will only
         occasionally need the extra space. Since you drove SUV %d times </string>
-    <string name="unrelated_tip_5">You drove %d KM on highway,Speeding and unnecessary acceleration reduce mileage by up to 33%, waste gas and money,
+    <string name="unrelated_tip_5">You drove %d KM on highway,Speeding and unnecessary acceleration reduce mileage by up to 33/100, waste gas and money,
         and increase your carbon footprint.</string>
     <string name="unrelated_tip_6">Insulate and seal your home. You produced %f CO2 from home, Reduce drafts and air leaks with caulk,
         insulation, and weather stripping. </string>

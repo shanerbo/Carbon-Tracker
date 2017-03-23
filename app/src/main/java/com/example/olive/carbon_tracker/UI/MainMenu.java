@@ -120,7 +120,7 @@ public class MainMenu extends AppCompatActivity {
             totalHWYDST = cursor.getInt(0);
             cursor.moveToNext();
         }
-        //allRandomUnrelatedTips.add(getString(R.string.unrelated_tip_5,totalHWYDST));
+        allRandomUnrelatedTips.add(getString(R.string.unrelated_tip_5,totalHWYDST));
         allRandomUnrelatedTips.add(getString(R.string.unrelated_tip_6,totalUtilityCO2));
         cursor = myDataBase.rawQuery("select sum(JourneyRouteCity) from JourneyInfoTable " +
                 "where JourneyMode= 'Car'",null);
