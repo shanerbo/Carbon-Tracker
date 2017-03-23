@@ -382,7 +382,9 @@ public class DisplayRouteList extends AppCompatActivity {
             cursor.close();
             if (maxCO2 < totalCO2){
                 singleton.setCarCO2Highest(true);
+                singleton.setHighestCO2FromCar(totalCO2);
             }
+
 
 
 //            String day =   singleton.getUserDay();
@@ -414,9 +416,9 @@ public class DisplayRouteList extends AppCompatActivity {
             long idPassBack = RouteDB.insert(SuperUltraInfoDataBaseHelper.Journey_Table,null,cv);
             RouteDB.close();
 
+
             createNewJourney(cityDistance, HwyDistance, totalCO2, 0);
         }
-
         if (singleton.isEditingJourney()) {
             singleton.userFinishEditJourney();
             Intent userEditJourney = DisplayJourneyList.makeIntent(DisplayRouteList.this);
@@ -425,7 +427,8 @@ public class DisplayRouteList extends AppCompatActivity {
             Intent ConfirmCar = MainMenu.makeIntent(DisplayRouteList.this);
             startActivity(ConfirmCar);
         }
-        finish();
+        Intent goBackToMainMenu = MainMenu.makeIntent(DisplayRouteList.this);
+        startActivity(goBackToMainMenu);
     }
 
     public void onBackPressed() {

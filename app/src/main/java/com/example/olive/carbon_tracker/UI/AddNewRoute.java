@@ -28,6 +28,8 @@ import com.example.olive.carbon_tracker.Model.Singleton;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.Math.round;
+
 public class AddNewRoute extends AppCompatActivity {
     private List<Route> RouteList = new ArrayList<>();
 
@@ -397,7 +399,9 @@ public class AddNewRoute extends AppCompatActivity {
             cursor.close();
             if (maxCO2 < totalCO2){
                 singleton.setCarCO2Highest(true);
+                singleton.setHighestCO2FromCar(totalCO2);
             }
+
 
             ContentValues cv = new ContentValues();
             cv.put(SuperUltraInfoDataBaseHelper.Journey_Date,_date);

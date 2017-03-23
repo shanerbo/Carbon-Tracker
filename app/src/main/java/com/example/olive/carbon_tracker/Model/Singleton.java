@@ -35,7 +35,15 @@ public class Singleton {
 
     SQLiteDatabase CarInfoDB;
 //-------------------------------tips
-    private List<String> ShuffledTips;
+    private List<String> ShuffledTipsForCar;
+    private List<String> shuffledTipsForGas;
+    private List<String> shuffledTipsForEnegy;
+    private List<String> unrelatedTips;
+
+
+    private double highestCO2FromCar;
+    private double highestCO2FromEnegy;
+    private double highestCO2FromGas;
 
     public boolean isCarCO2Highest() {
         return CarCO2Highest;
@@ -45,12 +53,12 @@ public class Singleton {
         CarCO2Highest = carCO2Highest;
     }
 
-    public boolean isElectricityHighest() {
-        return ElectricityHighest;
+    public boolean isEnegyHighest() {
+        return EnegyHighest;
     }
 
-    public void setElectricityHighest(boolean electricityHighest) {
-        ElectricityHighest = electricityHighest;
+    public void setEnegyHighest(boolean enegyHighest) {
+        EnegyHighest = enegyHighest;
     }
 
     public boolean isGasHighest() {
@@ -62,8 +70,9 @@ public class Singleton {
     }
 
     private boolean CarCO2Highest = false;
-    private boolean ElectricityHighest = false;
+    private boolean EnegyHighest = false;
     private boolean GasHighest = false;
+
 //-------------------------------tips
 
 
@@ -470,10 +479,61 @@ public class Singleton {
         journeyList.remove(editJourneyPosition);
         journeyList.add(editJourneyPosition, newJourney);
     }
-    public void setShuffledTips(List<String> tipList){
-        this.ShuffledTips = tipList;
+    public void setShuffledTipsForCar(List<String> tipList){
+        this.ShuffledTipsForCar = tipList;
     }
-    public List<String> getShuffledTips(){
-        return ShuffledTips;
+    public List<String> getShuffledTipsForCar(){
+        return ShuffledTipsForCar;
     }
+
+    public void setShuffledTipsForGas(List<String> shuffledTipsForGas) {
+        this.shuffledTipsForGas = shuffledTipsForGas;
+    }
+
+    public List<String> getShuffledTipsForEnegy() {
+        return shuffledTipsForEnegy;
+    }
+
+    public List<String> getShuffledTipsForGas() {
+        return shuffledTipsForGas;
+    }
+
+    public void setShuffledTipsForEnegy(List<String> shuffledTipsForEnegy) {
+        this.shuffledTipsForEnegy = shuffledTipsForEnegy;
+    }
+
+    public List<String> getUnrelatedTips() {
+        return unrelatedTips;
+    }
+
+    public void setUnrelatedTips(List<String> unrelatedTips) {
+        this.unrelatedTips = unrelatedTips;
+    }
+
+    public double getHighestCO2FromCar() {
+        return highestCO2FromCar;
+    }
+
+    public void setHighestCO2FromCar(double highestCO2FromCar) {
+        this.highestCO2FromCar = highestCO2FromCar;
+    }
+
+    public double getHighestCO2FromEnegy() {
+        return highestCO2FromEnegy;
+    }
+
+    public void setHighestCO2FromEnegy(double highestCO2FromEnegy) {
+        this.highestCO2FromEnegy = highestCO2FromEnegy;
+    }
+
+    public double getHighestCO2FromGas() {
+        return highestCO2FromGas;
+    }
+
+    public void setHighestCO2FromGas(double highestCO2FromGas) {
+        this.highestCO2FromGas = highestCO2FromGas;
+    }
+
+
+
 }

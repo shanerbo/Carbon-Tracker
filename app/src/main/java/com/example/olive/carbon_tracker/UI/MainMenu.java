@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.olive.carbon_tracker.Model.DatabaseHelper;
 import com.example.olive.carbon_tracker.Model.Journey;
@@ -20,21 +19,26 @@ import com.example.olive.carbon_tracker.Model.Singleton;
 import com.example.olive.carbon_tracker.R;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 public class MainMenu extends AppCompatActivity {
     Singleton singleton = Singleton.getInstance();
     public SQLiteDatabase myDataBase;
-    List<String> allRandomTips = singleton.getShuffledTips();
+
+    private List<String> allRandomCarTips = new ArrayList<>();
+    private List<String> allRandomEnegyTips = new ArrayList<>();
+    private List<String> allRandomUnrelatedTips = new ArrayList<>();
+    private int whichTipShowUP = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        generateTipsForCar(singleton.getHighestCO2FromCar());
+        generateTipsForEnegy(singleton.getHighestCO2FromEnegy());
+        generateTipsForUnrelated();
+
         HighestCO2FromCar();
-        //showUpTipsforCar(0);
         getJourneyList();
         setContentView(R.layout.activity_main_menu);
         setButton(R.id.btnCreateJourney);
@@ -43,43 +47,87 @@ public class MainMenu extends AppCompatActivity {
         setButton(R.id.btnMonthlyUti);
     }
 
+    private void generateTipsForEnegy(double co2) {
+        allRandomEnegyTips.add(getString(R.string.energy_tip_1, co2));
+        allRandomEnegyTips.add(getString(R.string.energy_tip_2, co2));
+        allRandomEnegyTips.add(getString(R.string.energy_tip_3, co2));
+        allRandomEnegyTips.add(getString(R.string.energy_tip_4, co2));
+        allRandomEnegyTips.add(getString(R.string.energy_tip_5, co2));
+        allRandomEnegyTips.add(getString(R.string.energy_tip_6, co2));
+        allRandomEnegyTips.add(getString(R.string.energy_tip_7, co2));
+        allRandomEnegyTips.add(getString(R.string.energy_tip_8, co2));
+//        Collections.shuffle(allRandomEnegyTips);
+//        singleton.setShuffledTipsForEnegy(allRandomEnegyTips);
+    }
+
+
+    private void generateTipsForCar(double co2){
+        allRandomCarTips.add(getString(R.string.vehicle_tip_1, co2));
+        allRandomCarTips.add(getString(R.string.vehicle_tip_2, co2));
+        allRandomCarTips.add(getString(R.string.vehicle_tip_3, co2));
+        allRandomCarTips.add(getString(R.string.vehicle_tip_4, co2));
+        allRandomCarTips.add(getString(R.string.vehicle_tip_5, co2));
+        allRandomCarTips.add(getString(R.string.vehicle_tip_6, co2));
+        allRandomCarTips.add(getString(R.string.vehicle_tip_7, co2));
+        allRandomCarTips.add(getString(R.string.vehicle_tip_8, co2));
+//        Collections.shuffle(allRandomCarTips);
+//        singleton.setShuffledTipsForCar(allRandomCarTips);
+    }
+    private void generateTipsForUnrelated(){
+        allRandomUnrelatedTips.add(getString(R.string.unrelated_tip_1));
+        allRandomUnrelatedTips.add(getString(R.string.unrelated_tip_2));
+        allRandomUnrelatedTips.add(getString(R.string.unrelated_tip_3));
+        allRandomUnrelatedTips.add(getString(R.string.unrelated_tip_4));
+        allRandomUnrelatedTips.add(getString(R.string.unrelated_tip_5));
+        allRandomUnrelatedTips.add(getString(R.string.unrelated_tip_6));
+        allRandomUnrelatedTips.add(getString(R.string.unrelated_tip_7));
+        allRandomUnrelatedTips.add(getString(R.string.unrelated_tip_8));
+        Collections.shuffle(allRandomUnrelatedTips);
+        singleton.setUnrelatedTips(allRandomUnrelatedTips);
+    }
     private void HighestCO2FromCar() {
         if (singleton.isCarCO2Highest()){
             singleton.setCarCO2Highest(false);
-            showUpTipsforCar(0);
+            showUpTips(0,allRandomCarTips);
+        }else if (singleton.isEnegyHighest()){
+            singleton.setEnegyHighest(false);
+            showUpTips(0,allRandomEnegyTips);
+        }else if(whichTipShowUP%3 ==0){
+            showUpTips(0,allRandomUnrelatedTips);
         }else{
-            return;
+            whichTipShowUP++;
         }
     }
 
-    private void showUpTipsforCar(final int i) {
-
+    private void showUpTips(final int i,final List<String> tipsList) {
         //Collections.shuffle(allRandomTips);
-        Snackbar tipBar =  Snackbar.make(findViewById(android.R.id.content), allRandomTips.get(i),
+        Snackbar tipBar =  Snackbar.make(findViewById(android.R.id.content), tipsList.get(i%tipsList.size()),
                 Snackbar.LENGTH_LONG);
         View snackbarView = tipBar.getView();
         TextView tv= (TextView) snackbarView.findViewById(android.support.design.R.id.snackbar_text);
         tv.setMaxLines(5);
         //make snackBar contain up to 5 lines
-        if (allRandomTips.size()>i+1) {
+        //if (tipsList.size()>i+1) {
             tipBar.setAction("Next", new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    showUpTipsforCar(i + 1);
+                    whichTipShowUP++;
+                    showUpTips(i + 1,tipsList);
                 }
             });
             tipBar.setActionTextColor(Color.RED);
             tipBar.show();
-        }else{
-            tipBar.setAction("OK", new View.OnClickListener() {//this is the last tips
-                @Override
-                public void onClick(View v) {
-                    return;
-                }
-            });
-            tipBar.setActionTextColor(Color.RED);
-            tipBar.show();
-        }
+        //}
+//        else{
+//            tipBar.setAction("OK", new View.OnClickListener() {//this is the last tips
+//                @Override
+//                public void onClick(View v) {
+//                    return;
+//                }
+//            });
+//            tipBar.setActionTextColor(Color.RED);
+//            tipBar.show();
+//        }
     }
 
     private void getJourneyList() {

@@ -243,12 +243,36 @@ public class MonthlyUtilities extends AppCompatActivity {
                                     double CO2PerDayPerPerson = indCO2/dateDifference;
 
                                     if(singleton.checkEditMonthlyUtilities() == 1){ //editing
+                                        Cursor cursor = UtilityDB.rawQuery("select max(UtilityAverageCO2) from UtilityInfoTable",null);
+                                        double maxCO2 = 0;
+                                        cursor.moveToFirst();
+                                        while (!cursor.isAfterLast()){
+                                            maxCO2 = cursor.getDouble(0);
+                                            cursor.moveToNext();
+                                        }
+                                        cursor.close();
+                                        if (maxCO2 < indCO2){
+                                            singleton.setEnegyHighest(true);
+                                            singleton.setHighestCO2FromEnegy(indCO2);
+                                        }
                                         UpdateUtilityToDB(startDate,endDate , parseDouble(electricUsage),
                                                 0, dateDifference,
                                                 parseLong(numOfPeople), CO2PerDayPerPerson);
                                         singleton.userFinishEditMonthlyUtilities();
                                     }
                                     else {
+                                        Cursor cursor = UtilityDB.rawQuery("select max(UtilityAverageCO2) from UtilityInfoTable",null);
+                                        double maxCO2 = 0;
+                                        cursor.moveToFirst();
+                                        while (!cursor.isAfterLast()){
+                                            maxCO2 = cursor.getDouble(0);
+                                            cursor.moveToNext();
+                                        }
+                                        cursor.close();
+                                        if (maxCO2 < indCO2){
+                                            singleton.setEnegyHighest(true);
+                                            singleton.setHighestCO2FromEnegy(indCO2);
+                                        }
                                         addNewUtilityToDB(startDate,endDate , parseDouble(electricUsage),
                                                 0, dateDifference,
                                                 parseLong(numOfPeople), CO2PerDayPerPerson);
@@ -266,12 +290,36 @@ public class MonthlyUtilities extends AppCompatActivity {
                                     double CO2PerDayPerPerson = indCO2/dateDifference;
 
                                     if(singleton.checkEditMonthlyUtilities() == 1){ //editing
+                                        Cursor cursor = UtilityDB.rawQuery("select max(UtilityAverageCO2) from UtilityInfoTable",null);
+                                        double maxCO2 = 0;
+                                        cursor.moveToFirst();
+                                        while (!cursor.isAfterLast()){
+                                            maxCO2 = cursor.getDouble(0);
+                                            cursor.moveToNext();
+                                        }
+                                        cursor.close();
+                                        if (maxCO2 < indCO2){
+                                            singleton.setEnegyHighest(true);
+                                            singleton.setHighestCO2FromEnegy(indCO2);
+                                        }
                                         UpdateUtilityToDB(startDate,endDate , 0,
                                                 parseDouble(naturalGasUsage), dateDifference,
                                                 parseLong(numOfPeople), CO2PerDayPerPerson);
                                         singleton.userFinishEditMonthlyUtilities();
                                     }
                                     else {
+                                        Cursor cursor = UtilityDB.rawQuery("select max(UtilityAverageCO2) from UtilityInfoTable",null);
+                                        double maxCO2 = 0;
+                                        cursor.moveToFirst();
+                                        while (!cursor.isAfterLast()){
+                                            maxCO2 = cursor.getDouble(0);
+                                            cursor.moveToNext();
+                                        }
+                                        cursor.close();
+                                        if (maxCO2 < indCO2){
+                                            singleton.setEnegyHighest(true);
+                                            singleton.setHighestCO2FromEnegy(indCO2);
+                                        }
                                         addNewUtilityToDB(startDate,endDate , 0,
                                                 parseDouble(naturalGasUsage), dateDifference,
                                                 parseLong(numOfPeople), CO2PerDayPerPerson);
@@ -289,12 +337,36 @@ public class MonthlyUtilities extends AppCompatActivity {
                                     double CO2PerDayPerPerson = indCO2/dateDifference;
 
                                     if(singleton.checkEditMonthlyUtilities() == 1){ //editing
+                                        Cursor cursor = UtilityDB.rawQuery("select max(UtilityAverageCO2) from UtilityInfoTable",null);
+                                        double maxCO2 = 0;
+                                        cursor.moveToFirst();
+                                        while (!cursor.isAfterLast()){
+                                            maxCO2 = cursor.getDouble(0);
+                                            cursor.moveToNext();
+                                        }
+                                        cursor.close();
+                                        if (maxCO2 < indCO2){
+                                            singleton.setEnegyHighest(true);
+                                            singleton.setHighestCO2FromEnegy(indCO2);
+                                        }
                                         UpdateUtilityToDB(startDate,endDate , parseDouble(electricUsage),
                                                 parseDouble(naturalGasUsage), dateDifference,
                                                 parseLong(numOfPeople), CO2PerDayPerPerson);
                                         singleton.userFinishEditMonthlyUtilities();
                                     }
                                     else {
+                                        Cursor cursor = UtilityDB.rawQuery("select max(UtilityAverageCO2) from UtilityInfoTable",null);
+                                        double maxCO2 = 0;
+                                        cursor.moveToFirst();
+                                        while (!cursor.isAfterLast()){
+                                            maxCO2 = cursor.getDouble(0);
+                                            cursor.moveToNext();
+                                        }
+                                        cursor.close();
+                                        if (maxCO2 < indCO2){
+                                            singleton.setEnegyHighest(true);
+                                            singleton.setHighestCO2FromEnegy(indCO2);
+                                        }
                                         addNewUtilityToDB(startDate,endDate,parseDouble(electricUsage),
                                                 parseDouble(naturalGasUsage), dateDifference,
                                                 parseLong(numOfPeople),CO2PerDayPerPerson);
