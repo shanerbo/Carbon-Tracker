@@ -2,6 +2,9 @@ package com.example.olive.carbon_tracker.Model;
 
 import com.example.olive.carbon_tracker.R;
 
+/**
+ * Stores monthly utility information
+ */
 public class MonthlyUtilitiesData {
     private String startDate;
     private String endDate;

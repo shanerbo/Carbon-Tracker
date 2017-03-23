@@ -4,6 +4,9 @@ package com.example.olive.carbon_tracker.Model;
 
 import com.example.olive.carbon_tracker.R;
 
+/**
+ * makes a vehicle object and stores vehicle information
+ */
 public class Vehicle {
     private String name;
     private String make;

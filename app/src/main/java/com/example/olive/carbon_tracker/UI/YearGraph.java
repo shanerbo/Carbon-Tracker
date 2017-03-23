@@ -3,11 +3,14 @@ package com.example.olive.carbon_tracker.UI;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.olive.carbon_tracker.Model.Journey;
+import com.example.olive.carbon_tracker.Model.MonthlyUtilitiesData;
 import com.example.olive.carbon_tracker.Model.Singleton;
 import com.example.olive.carbon_tracker.R;
 import com.github.mikephil.charting.charts.LineChart;
@@ -26,6 +29,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * uses a line graph to display average monthly carbon emission for one year
+ */
 public class YearGraph extends AppCompatActivity {
     Singleton singleton = Singleton.getInstance();
     public static final int MONTHS = 12;
@@ -34,7 +40,7 @@ public class YearGraph extends AppCompatActivity {
     int chosenDay;
     public static final int MONTH_TOKEN = 1;
     public static final int YEAR_TOKEN = 2;
-
+    List<Double> utilityCO2 = new ArrayList<>();
     List<Double> carCO2 = new ArrayList<>();
     List<Double> busCO2 = new ArrayList<>();
     List<Double> skytrainCO2 = new ArrayList<>();
@@ -86,11 +92,13 @@ public class YearGraph extends AppCompatActivity {
             ArrayList<Entry> busEntires = new ArrayList<>();
             ArrayList<Entry> carEntires = new ArrayList<>();
             ArrayList<Entry> skytrainEntires = new ArrayList<>();
+            ArrayList<Entry> utilityEntires = new ArrayList<>();
 
             for (int i = 0; i < 12; i++) {
                 busEntires.add(new Entry(i, busCO2.get(i).floatValue()));
                 carEntires.add(new Entry(i, carCO2.get(i).floatValue()));
                 skytrainEntires.add(new Entry(i, skytrainCO2.get(i).floatValue()));
+                utilityEntires.add(new Entry(i, utilityCO2.get(i).floatValue()));
             }
 
             IAxisValueFormatter formatter = new IAxisValueFormatter() {
@@ -119,6 +127,7 @@ public class YearGraph extends AppCompatActivity {
             LineDataSet busDataSet = new LineDataSet(busEntires, "Bus");
             LineDataSet carDataSet = new LineDataSet(carEntires, "Car");
             LineDataSet skytrainDataSet = new LineDataSet(skytrainEntires, "Sky Train");
+            LineDataSet utilityDataSet = new LineDataSet(utilityEntires, "Utilities");
 
             busDataSet.setLineWidth(0f);
             busDataSet.setCircleRadius(6f);
@@ -135,9 +144,16 @@ public class YearGraph extends AppCompatActivity {
             skytrainDataSet.setColor(ColorTemplate.MATERIAL_COLORS[2]);
             skytrainDataSet.setCircleColor(ColorTemplate.MATERIAL_COLORS[2]);
 
+
+            utilityDataSet.setLineWidth(0f);
+            utilityDataSet.setCircleRadius(6f);
+            utilityDataSet.setColor(ColorTemplate.MATERIAL_COLORS[3]);
+            utilityDataSet.setCircleColor(ColorTemplate.MATERIAL_COLORS[3]);
+
             lineDataSets.add(busDataSet);
             lineDataSets.add(carDataSet);
             lineDataSets.add(skytrainDataSet);
+            lineDataSets.add(utilityDataSet);
 
             lineChart.animateX(800);
             lineChart.animateY(800);
@@ -153,13 +169,14 @@ public class YearGraph extends AppCompatActivity {
         busCO2.clear();
         skytrainCO2.clear();
         carCO2.clear();
-
+        utilityCO2.clear();
         initMonths();
 
         for (int i = 0; i < MONTHS; i++) {
             busCO2.add(i, 0.0);
             carCO2.add(i, 0.0);
             skytrainCO2.add(i, 0.0);
+            utilityCO2.add(i, 0.0);
         }
 
         for (int i = 0; i < journeyList.size(); i++) {
@@ -194,8 +211,99 @@ public class YearGraph extends AppCompatActivity {
                 }
             }
         }
+
+        List<MonthlyUtilitiesData> utilitiesList = singleton.getBillList();
+
+        boolean insideRange;
+        long smallestDateDifference = 9999999;
+        double mostRecentCO2 = 0;
+        for (int i=0; i < utilitiesList.size(); i++) {
+            insideRange = false;
+
+            isChartEmpty = false;
+            MonthlyUtilitiesData currentUtility = utilitiesList.get(i);
+
+            double currentUtilityIndCO2 = currentUtility.getIndCO2();
+            //Log.i("utility,co2: " ,"" +currentUtilityIndCO2);
+            String currentUtilityStartDate = currentUtility.getStartDate();
+            Log.i("utility,sd: " ,"" +currentUtilityStartDate);
+            String currentUtilityEndDate = currentUtility.getEndDate();
+            Log.i("utility,ed: " ,"" +currentUtilityEndDate);
+
+            for (int j = 0; j <previousDates.size(); j++) {
+                String prevDate = previousDates.get(j);
+
+                String[] prevDate2 = prevDate.split("/");
+
+                String month = addZeroToDay("" + AbbrMonthNumber(prevDate2[0]));
+                String year = prevDate2[1];
+                String prevDateNewFormat = year + "-" + month + "-" + "15";
+
+
+
+
+
+                if (getDateDifference(currentUtilityStartDate, prevDateNewFormat) >= 0 &&
+                        getDateDifference(prevDateNewFormat, currentUtilityEndDate) >= 0) {
+                    utilityCO2.remove(j);
+                    utilityCO2.add(j, currentUtilityIndCO2);
+                    insideRange = true;
+                } else {
+                    long currentDateDifference = getDateDifference(currentUtilityEndDate, prevDateNewFormat);
+                    if (currentDateDifference < smallestDateDifference && currentDateDifference > 0) {
+                        mostRecentCO2 = currentUtilityIndCO2;
+
+                        if (!insideRange) {
+                            utilityCO2.remove(j);
+                            utilityCO2.add(j, mostRecentCO2);
+                        }
+                    }
+
+                }
+            }
+        }
+
+
     }
 
+
+    private String addZeroToDay(String startDay) {
+        if(startDay.equals("1")){
+            return "01";
+        }        if(startDay.equals("2")){
+            return "02";
+        }        if(startDay.equals("3")){
+            return "03";
+        }        if(startDay.equals("4")){
+            return "04";
+        }        if(startDay.equals("5")){
+            return "05";
+        }        if(startDay.equals("6")){
+            return "06";
+        }        if(startDay.equals("7")){
+            return "07";
+        }        if(startDay.equals("8")){
+            return "08";
+        }        if(startDay.equals("9")){
+            return "09";
+        }else{
+            return startDay;
+        }
+    }
+
+    private long getDateDifference(String StartDate, String EndDate) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date start = sdf.parse(StartDate);
+            Date end = sdf.parse(EndDate);
+            long dateDifference = end.getTime() - start.getTime();
+            return dateDifference / 1000 / 60 / 60 / 24;
+        } catch (Exception e) {
+            Toast.makeText(YearGraph.this, "ERROR: YearGraph" +
+                    " dateDifference calculation failed", Toast.LENGTH_LONG).show();
+        }
+        return -1;
+    }
     private void initMonths() {
 
         chosenDay = Integer.parseInt(singleton.getUserDay());
@@ -362,4 +470,50 @@ public class YearGraph extends AppCompatActivity {
         }
 
     }
+    public int AbbrMonthNumber(String month) {
+
+        switch (month) {
+            case "Jan":
+                return 1;
+
+            case "Feb":
+                return 2;
+
+            case "Mar":
+                 return 3;
+
+            case "Apr":
+                return 4;
+
+            case "May":
+                return 5;
+
+            case "Jun":
+                return 6;
+
+            case "Jul":
+                return 7;
+
+            case "Aug":
+                 return 8;
+
+            case "Sep":
+                return 9;
+
+            case "Oct":
+                return 10;
+
+            case "Nov":
+                return 11;
+
+            case "Dec":
+                return 12;
+
+        }
+        return -1;
+    }
+
+
+
+
 }

@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bgimage"
-    tools:context="com.example.olive.carbon_tracker.UI.MainMenu">
+    tools:context="com.example.olive.carbon_tracker.UI.MainMenu"
+    tools:ignore="GradleDependency">
 
 
     <ProgressBar

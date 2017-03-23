@@ -30,9 +30,11 @@ import com.example.olive.carbon_tracker.Model.VehicleData;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Adds / edits a car
+ */
 public class AddCar extends AppCompatActivity {
 
-    private List<Vehicle> VehicleList = new ArrayList<>();
     private List<String> make_list = new ArrayList<>();
     private Singleton singleton = Singleton.getInstance();
     private long position;
@@ -43,11 +45,9 @@ public class AddCar extends AppCompatActivity {
 
     private  List<String> carListDB;
 
-//    public DatabaseHelper myHelper;
     private SQLiteDatabase myDataBase;
     private SQLiteDatabase CarDB;
 
-//    myHelper.close()
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,13 +55,7 @@ public class AddCar extends AppCompatActivity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_add_car);
-//        VehicleList = singleton.getVehicleList();
-//        make_list = singleton.getVehicleMakeArray();
-//------------create a new DatabaseHelper and it will copy external sql to local-------------------
-//        myHelper = new DatabaseHelper(this);
-//        //myHelper.openDataBase();
-//        myHelper.close();
-//------------get local sql which is created by Helper---------------------------------------------
+
         myDataBase = SQLiteDatabase.openOrCreateDatabase(DatabaseHelper.DB_PATH + DatabaseHelper.DB_NAME,null);
 
         SuperUltraInfoDataBaseHelper CarDBhelper = new SuperUltraInfoDataBaseHelper(this);
@@ -206,7 +200,6 @@ public class AddCar extends AppCompatActivity {
                         }
 
                         cursor.close();
-                        //myHelper.close();
 
 
 
@@ -320,11 +313,7 @@ public class AddCar extends AppCompatActivity {
                     double highWay = Double.parseDouble(splitCityHighway[1]);
                     String fuelType = splitCityHighway[2];
                     int CarYearFromString = Integer.parseInt(CarYear);
-//                    int city = singleton.getCityData(CityAndHighway);
-//                    int highWay = singleton.getHwayData(CityAndHighway);
-//                    String fuelType = singleton.getFuelType(CityAndHighway);
-//
-//                    int CarYear = Integer.parseInt(Year_spinner.getSelectedItem().toString());
+
 
                     if (!CarName.matches("") && !CarMake.matches("") && !CarModel.matches("") && CarYearFromString > 0) {
 
@@ -349,13 +338,11 @@ public class AddCar extends AppCompatActivity {
                             CarDB.close();
 //                            singleton.setVehiclesList(VehicleList);
                             singleton.userFinishEdit_car();
-                            //String userInputNewCarName = userInput.getName();
-                            //singleton.UserEnterNewCarName(userInputNewCarName,VehicleNameToBeEdit);
+
                             Intent userEditCar = DisplayCarList.makeIntent(AddCar.this);
                             startActivity(userEditCar);
                         } else {
-                            //VehicleList.add(userInput);
-                            //singleton.setVehiclesList(VehicleList);
+
                             ContentValues cv = new ContentValues();
                             cv.put(SuperUltraInfoDataBaseHelper.Car_Name,CarName);
                             cv.put(SuperUltraInfoDataBaseHelper.Car_Make,CarMake);
@@ -409,8 +396,7 @@ public class AddCar extends AppCompatActivity {
                                 CarDB.delete(SuperUltraInfoDataBaseHelper.Car_Table,
                                         "  _id" + "="+position,null);
                                 CarDB.close();
-                                //VehicleList.remove(position);
-                                //singleton.setVehiclesList(VehicleList);
+
                                 singleton.userFinishEdit_car();
                                 setResult(Activity.RESULT_OK,del_intent);
                                 Toast.makeText(AddCar.this,getString(R.string.UserDeleteVehicle),Toast.LENGTH_LONG).show();

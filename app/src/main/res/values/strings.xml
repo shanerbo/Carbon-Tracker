@@ -88,6 +88,12 @@
     <string name="end_date">End Date</string>
     <string name="dd_mm_yyyy">dd/mm/yyyy</string>
     <string name="total_electricity_usage">Total Electricity Usage</string>
+    <string name="click_date_to_change">click date to change</string>
+    <string name="co2_emitted">co2 emitted</string>
+    <string name="single_day">Single Day</string>
+    <string name="month">Month</string>
+    <string name="monthly_utilities">Monthly Utilities</string>
+    <string name="change_date">change date</string>
     <string name="vehicle_tip_1">You are creating %f kg of CO2 from driving. Try using transit.</string>
     <string name="vehicle_tip_2">Driving is creating %f kg of CO2 emissions. Try car pooling.</string>
     <string name="vehicle_tip_3">Your car trips are generating %f kg of CO2. Try getting an electric car.</string>

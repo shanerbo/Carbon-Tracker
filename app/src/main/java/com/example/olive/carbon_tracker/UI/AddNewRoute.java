@@ -28,11 +28,14 @@ import com.example.olive.carbon_tracker.Model.Singleton;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Adds / edits a route
+ */
+
 import static java.lang.Math.round;
 
 public class AddNewRoute extends AppCompatActivity {
     private List<Route> RouteList = new ArrayList<>();
-
     private String _currentRouteName;
     private long position;
     private Singleton singleton  = Singleton.getInstance();
@@ -125,18 +128,13 @@ public class AddNewRoute extends AppCompatActivity {
                     cv.put(SuperUltraInfoDataBaseHelper.Route_total_Dst,totalDst);
                     if (singleton.checkEdit() == 1) {
                         long DBID = _RouteToBeEdit.getRouteDBId();
-                        //RouteList.set(position, userInput);
                         long idPassBack = RouteDB.update(SuperUltraInfoDataBaseHelper.Route_Table,cv,"_id="+DBID, null);
                         RouteDB.close();
-                        //singleton.setRouteList(RouteList);
                         singleton.userFinishEdit();
-                        //String newUserInputRouteName = userInput.getName();
-                        //singleton.UserEnterNewRouteName(newUserInputRouteName,oldRouteName);
                         Intent userEditRoute = DisplayRouteList.makeIntent(AddNewRoute.this);
                         startActivity(userEditRoute);
                     }
                     else {
-                        //RouteList.add(userInput);
                         long idPassedBack = RouteDB.insert(SuperUltraInfoDataBaseHelper.Route_Table,null,cv);
                         Route userInput = new Route(name, cityDst, highWayDst, totalDst,idPassedBack);
                         if (singleton.isEditingJourney()) {
@@ -181,10 +179,6 @@ public class AddNewRoute extends AppCompatActivity {
                             }
 
 
-
-//                        long idPassedBack = RouteDB.insert(SuperUltraInfoDataBaseHelper.Route_Table,null,cv);
-//                        Route userInput = new Route(name, cityDst, highWayDst, totalDst,idPassedBack);
-//                        calculateCO2(userInput);
                             singleton.userFinishEditJourney();
                             Intent userEditJourney = DisplayJourneyList.makeIntent(AddNewRoute.this);
                             startActivity(userEditJourney);
@@ -192,8 +186,6 @@ public class AddNewRoute extends AppCompatActivity {
                             finish();
                         }
                         else {
-                            //RouteDB.close();
-                            //singleton.setRouteList(RouteList);
                             singleton.userFinishAdd();
                             calculateCO2(userInput);
                             Intent ConfirmRoute = MainMenu.makeIntent(AddNewRoute.this);
@@ -322,6 +314,8 @@ public class AddNewRoute extends AppCompatActivity {
 
             addJourneyToDBNotCar(_date,userInput,RouteDB,"Bus",totalCO2);
 
+
+
             createNewJourney(cityDistance,HwyDistance,totalCO2, 2);
         }
         else if (singleton.checkTransportationMode() == 3){ //Skytrain
@@ -342,6 +336,8 @@ public class AddNewRoute extends AppCompatActivity {
                 singleton.setHighestCO2FromCar(totalCO2);
             }
             addJourneyToDBNotCar(_date,userInput,RouteDB,"Skytrain",totalCO2);
+
+
 
             createNewJourney(cityDistance,HwyDistance,totalCO2, 3);
         }
@@ -442,11 +438,6 @@ public class AddNewRoute extends AppCompatActivity {
     }
 
     private void createNewJourney(int cityDistance,int hwyDistance,double co2, int TransMode){
-//        String day =   singleton.getUserDay();
-//        String month =  singleton.getUserMonth();
-//        String year =  singleton.getUserYear();
-//        DateFormat df = new SimpleDateFormat("EEE, MMM d, ''yy");
-//        Date date = new Date();
         DecimalFormat Format = new DecimalFormat("#.##");
         double CO2 = Double.valueOf(Format.format(co2));
 
@@ -470,8 +461,6 @@ public class AddNewRoute extends AppCompatActivity {
         Journey journey = new Journey(_date, VehicleName, _currentRouteName,(cityDistance+hwyDistance), VehicleName, CO2, temp);
         if (singleton.isEditingJourney()) {
             singleton.changeJourney(journey);
-        } else {
-            //singleton.addUserJourney(journey);
         }
     }
     private String checkDayIsSingleDIgit(String userDay) {

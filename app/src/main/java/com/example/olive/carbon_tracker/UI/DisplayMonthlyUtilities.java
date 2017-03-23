@@ -20,12 +20,12 @@ import com.example.olive.carbon_tracker.Model.MonthlyUtilitiesData;
 import com.example.olive.carbon_tracker.Model.Singleton;
 import com.example.olive.carbon_tracker.R;
 
-import org.w3c.dom.Text;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * displays monthly utility bills
+ */
 public class DisplayMonthlyUtilities extends AppCompatActivity {
 
     Singleton singleton = Singleton.getInstance();
@@ -51,7 +51,7 @@ public class DisplayMonthlyUtilities extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 singleton.userAddMonthlyUtilities();
-                startActivityForResult(new Intent(DisplayMonthlyUtilities.this, MonthlyUtilities.class), 1);
+                startActivityForResult(new Intent(DisplayMonthlyUtilities.this, AddMonthlyUtilities.class), 1);
                 finish();
             }
         });
@@ -71,7 +71,7 @@ public class DisplayMonthlyUtilities extends AppCompatActivity {
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 singleton.setEditPosition_bill(MonthlyUtilitiesList.get(position).getUtilityDBId());
                 singleton.userEditMonthlyUtilities();
-                startActivityForResult(new Intent(DisplayMonthlyUtilities.this, MonthlyUtilities.class), 0);
+                startActivityForResult(new Intent(DisplayMonthlyUtilities.this, AddMonthlyUtilities.class), 0);
                 finish();
                 return true;
             }
@@ -87,7 +87,7 @@ public class DisplayMonthlyUtilities extends AppCompatActivity {
         myDataBase = SQLiteDatabase.openOrCreateDatabase(DatabaseHelper.DB_PATH +
                 DatabaseHelper.DB_NAME,null);
         Cursor cursor = myDataBase.rawQuery("select * from " +
-                "UtilityInfoTable",null);
+                "UtilityInfoTable order by UtilityEndDate asc",null);
         cursor.moveToFirst();
         while(!cursor.isAfterLast()){
             String starDate = cursor.getString(1);

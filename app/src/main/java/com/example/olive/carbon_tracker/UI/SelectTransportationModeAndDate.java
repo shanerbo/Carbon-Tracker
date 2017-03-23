@@ -27,6 +27,9 @@ import java.nio.channels.SelectionKey;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+/**
+ * lets user to pick transportation mode and set travel date
+ */
 public class SelectTransportationModeAndDate extends AppCompatActivity {
 
     Singleton singleton = Singleton.getInstance();
@@ -188,6 +191,32 @@ public class SelectTransportationModeAndDate extends AppCompatActivity {
                                     })
                                     .setIcon(android.R.drawable.ic_dialog_alert).show();
                         }
+                        new AlertDialog.Builder(SelectTransportationModeAndDate.this)
+                                .setTitle("Delete Journey")
+                                .setMessage(R.string.DeleteJourneyWarning)
+                                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        Intent del_intent = new Intent();
+                                        RouteDB.delete(SuperUltraInfoDataBaseHelper.Journey_Table,
+                                                "_id"+"="+JourneyPosition,null);
+                                        RouteDB.close();
+                                        singleton.userFinishEdit();
+                                        setResult(Activity.RESULT_OK,del_intent);
+                                     //   Toast.makeText(SelectTransportationModeAndDate.this,getString(R.string.UserDeleteJourney),Toast.LENGTH_LONG).show();
+                                        finish();
+                                        Intent ShowNewJourneyList = DisplayJourneyList.makeIntent(SelectTransportationModeAndDate.this);
+                                        startActivity(ShowNewJourneyList);
+                                    }
+                                })
+                                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.cancel();
+                                        singleton.userFinishEdit();
+                                    }
+                                })
+                                .setIcon(android.R.drawable.ic_dialog_alert).show();
                         break;
                 }
             }

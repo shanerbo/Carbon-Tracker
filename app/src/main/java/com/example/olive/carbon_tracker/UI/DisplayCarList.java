@@ -24,6 +24,9 @@ import com.example.olive.carbon_tracker.R;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Displays the list of cars the user has entered
+ */
 public class DisplayCarList extends AppCompatActivity {
     Singleton singleton = Singleton.getInstance();
     private List<Vehicle> VehicleList = new ArrayList<>();

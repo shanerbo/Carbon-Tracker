@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.olive.carbon_tracker.Model.Journey;
+import com.example.olive.carbon_tracker.Model.MonthlyUtilitiesData;
 import com.example.olive.carbon_tracker.Model.Singleton;
 import com.example.olive.carbon_tracker.R;
 import com.github.mikephil.charting.charts.BarChart;
@@ -34,6 +35,9 @@ import java.util.List;
 
 import static com.example.olive.carbon_tracker.R.id.chart;
 
+/**
+ * uses a stacked bar chart to display monthly carbon emission
+ */
 
 public class MonthGraph extends AppCompatActivity {
     public static final int DAY_TOKEN = 0;
@@ -47,6 +51,7 @@ public class MonthGraph extends AppCompatActivity {
     List<Double> carCO2 = new ArrayList<>();
     List<Double> busCO2 = new ArrayList<>();
     List<Double> skytrainCO2 = new ArrayList<>();
+    List<Double> utilityCO2 = new ArrayList<>();
     List<Journey> journeyList = singleton.getUsersJourneys();
 
     private List<String> previousDates = new ArrayList<>();
@@ -102,14 +107,14 @@ public class MonthGraph extends AppCompatActivity {
                 transportationEntries.add(new BarEntry(
                         i, new float[]{busCO2.get(i).floatValue(),
                         carCO2.get(i).floatValue(),
-                        skytrainCO2.get(i).floatValue()}));
-
+                        skytrainCO2.get(i).floatValue(),
+                        utilityCO2.get(i).floatValue()}));
             }
 
             BarDataSet set1;
             set1 = new BarDataSet(transportationEntries, "");
             set1.setColors(getColors());
-            set1.setStackLabels(new String[]{"Bus", "Car", "Sky Train"});
+            set1.setStackLabels(new String[]{"Bus", "Car", "Sky Train","Utility"});
 
             ArrayList<IBarDataSet> dataSets = new ArrayList<IBarDataSet>();
             dataSets.add(set1);
@@ -173,13 +178,14 @@ public class MonthGraph extends AppCompatActivity {
         busCO2.clear();
         skytrainCO2.clear();
         carCO2.clear();
-
+        utilityCO2.clear();
         getPrevious28Days();
-
+        List<MonthlyUtilitiesData> utilitiesList = singleton.getBillList();
         for (int i = 0; i < MONTH; i++) {
             busCO2.add(i, 0.0);
             carCO2.add(i, 0.0);
             skytrainCO2.add(i, 0.0);
+            utilityCO2.add(i, 0.0);
         }
 
         for (int i = 0; i < journeyList.size(); i++) {
@@ -212,9 +218,86 @@ public class MonthGraph extends AppCompatActivity {
                     }
                 }
             }
-        }
-    }
 
+
+        }
+
+
+        boolean insideRange = false;
+        long smallestDateDifference = 9999999;
+        double mostRecentCO2 = 0;
+        for (int i=0; i < utilitiesList.size(); i++) {
+            //for(int i = utilitiesList.size()-1; i>=0; i--){
+            insideRange = false;
+
+            isChartEmpty = false;
+            MonthlyUtilitiesData currentUtility = utilitiesList.get(i);
+
+            double currentUtilityIndCO2 = currentUtility.getIndCO2();
+            Log.i("utility,co2: " ,"" +currentUtilityIndCO2);
+            String currentUtilityStartDate = currentUtility.getStartDate();
+            Log.i("utility,sd: " ,"" +currentUtilityStartDate);
+            String currentUtilityEndDate = currentUtility.getEndDate();
+            Log.i("utility,ed: " ,"" +currentUtilityEndDate);
+
+            //String firstDate = previousDates.get(0);
+// if(getDateDifference(currentUtilityEndDate, firstDate)+1 < smallestDateDifference) {
+// smallestDateDifference = getDateDifference(currentUtilityEndDate, firstDate) + 1; // } //smallestDateDifference = 2; //smallestDateDifference = getDateDifference(currentUtilityEndDate, firstDate)+1;
+            for (int j = 0; j <previousDates.size(); j++) {
+                String prevDate = previousDates.get(j);
+
+                String[] prevDate2 = prevDate.split("/");
+                String day = addZeroToDay(prevDate2[DAY_TOKEN]);
+                String month =   addZeroToDay(prevDate2[MONTH_TOKEN]);
+                String year = prevDate2[YEAR_TOKEN];
+                String prevDateNewFormat = year + "-" + month + "-" + day;
+
+
+
+
+                Log.i("prevDate: " , ""+ prevDate);
+                if (getDateDifference(currentUtilityStartDate, prevDateNewFormat) >= 0 &&
+                        getDateDifference(prevDateNewFormat, currentUtilityEndDate) >= 0) {
+                    utilityCO2.remove(j);
+                    //currentUtilityIndCO2 += utilityCO2.remove(j);
+                    utilityCO2.add(j, currentUtilityIndCO2);
+                            insideRange = true;
+                } else {
+                    long currentDateDifference = getDateDifference(currentUtilityEndDate, prevDateNewFormat);
+                    if (currentDateDifference < smallestDateDifference && currentDateDifference > 0) {
+                        mostRecentCO2 = currentUtilityIndCO2;
+                        //smallestDateDifference = currentDateDifference;
+
+                        if (!insideRange) {
+                            //currentUtilityIndCO2 += utilityCO2.remove(j);
+                            utilityCO2.remove(j);
+                            utilityCO2.add(j, mostRecentCO2);
+                        }
+                    }
+
+                }
+            }
+        }
+     }
+
+
+
+
+    private long getDateDifference(String StartDate, String EndDate) {
+
+        //SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date start = sdf.parse(StartDate);
+            Date end = sdf.parse(EndDate);
+            long dateDifference = end.getTime() - start.getTime();
+            return dateDifference / 1000 / 60 / 60 / 24;
+        } catch (Exception e) {
+            Toast.makeText(MonthGraph.this, "ERROR: SingleDayGraph" +
+                    " dateDifference calculation failed", Toast.LENGTH_LONG).show();
+        }
+        return -1;
+    }
 
     private void getPrevious28Days() {
         //what the user has picked as a date
@@ -224,7 +307,7 @@ public class MonthGraph extends AppCompatActivity {
         int currentDay = chosenDay;
 
         previousDates.clear();
-        int subtract  = 0; //to include the current day
+        int subtract = 0; //to include the current day
         //getting the dates for the past 28 days
         for (int i = 0; i < MONTH; i++) {
             currentDay = currentDay - subtract;
@@ -254,6 +337,34 @@ public class MonthGraph extends AppCompatActivity {
             previousDates.add(chosenDay + "/" + (--chosenMonth) + "/" + chosenYear);
         }
     }
+
+
+    private String addZeroToDay(String startDay) {
+        if(startDay.equals("1")){
+            return "01";
+        }        if(startDay.equals("2")){
+            return "02";
+        }        if(startDay.equals("3")){
+            return "03";
+        }        if(startDay.equals("4")){
+            return "04";
+        }        if(startDay.equals("5")){
+            return "05";
+        }        if(startDay.equals("6")){
+            return "06";
+        }        if(startDay.equals("7")){
+            return "07";
+        }        if(startDay.equals("8")){
+            return "08";
+        }        if(startDay.equals("9")){
+            return "09";
+        }else{
+            return startDay;
+        }
+    }
+
+
+
 
 
     public void monthNumber(String month) {
@@ -343,7 +454,7 @@ public class MonthGraph extends AppCompatActivity {
 
     private int[] getColors() {
 
-        int stacksize = 3;
+        int stacksize = 4;
 
         // have as many colors as stack-values per entry
         int[] colors = new int[stacksize];

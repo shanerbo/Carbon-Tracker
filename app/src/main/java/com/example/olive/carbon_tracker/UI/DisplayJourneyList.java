@@ -27,6 +27,9 @@ import java.util.List;
 
 // ListView Icon: Icon made by Puppets (http://www.flaticon.com/authors/puppets) from www.flaticon.com
 
+/**
+ * displays the list of journeys created by the user
+ */
 public class DisplayJourneyList extends AppCompatActivity {
     Singleton singleton = Singleton.getInstance();
     private List<Journey> JourneyList = singleton.getUsersJourneys();

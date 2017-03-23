@@ -9,6 +9,9 @@ import android.widget.Button;
 
 import com.example.olive.carbon_tracker.R;
 
+/**
+ * lets user pick a single day, monthly or year graph
+ */
 public class GraphPicker extends AppCompatActivity {
 
     @Override
