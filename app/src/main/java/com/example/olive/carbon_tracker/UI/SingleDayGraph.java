@@ -181,7 +181,6 @@ public class SingleDayGraph extends AppCompatActivity {
 
         boolean insideRange = false;
         long smallestDateDifference = 99999999;
-        String mostRecentDate;
         double mostRecentCO2 = 0;
         for (int i = 0; i < utilitiesList.size(); i++) {
 
@@ -190,10 +189,9 @@ public class SingleDayGraph extends AppCompatActivity {
             String currentUtilityStartDate = currentUtility.getStartDate();
             String currentUtilityEndDate = currentUtility.getEndDate();
 
-
             String[] date = userDate.split("/");
-            int monthNumber = getMonthNumber(date[MONTH_TOKEN]);
-            String currentDate = date[DAY_TOKEN] + "/" + monthNumber + "/" + date[YEAR_TOKEN];
+            String monthNumber = addZeroToDay(""+getMonthNumber(date[MONTH_TOKEN]));
+            String currentDate =  date[YEAR_TOKEN]+ "-" + monthNumber + "-" + addZeroToDay(date[DAY_TOKEN]);
 
             if(getDateDifference(currentUtilityStartDate, currentDate)>=0 &&
                     getDateDifference(currentDate, currentUtilityEndDate)>=0){
@@ -212,18 +210,17 @@ public class SingleDayGraph extends AppCompatActivity {
             }
 
         }
-        if(insideRange == false){
+        if(!insideRange){
             mostRecentCO2 += utilityCO2.remove(0);
             utilityCO2.add(mostRecentCO2);
         }
 
-        //if utility co2 is 0
 
     }
 
     private long getDateDifference(String StartDate, String EndDate) {
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         try {
             Date start = sdf.parse(StartDate);
             Date end = sdf.parse(EndDate);
@@ -236,6 +233,32 @@ public class SingleDayGraph extends AppCompatActivity {
         }
         return -1;
     }
+
+
+    private String addZeroToDay(String startDay) {
+        if(startDay.equals("1")){
+            return "01";
+        }        if(startDay.equals("2")){
+            return "02";
+        }        if(startDay.equals("3")){
+            return "03";
+        }        if(startDay.equals("4")){
+            return "04";
+        }        if(startDay.equals("5")){
+            return "05";
+        }        if(startDay.equals("6")){
+            return "06";
+        }        if(startDay.equals("7")){
+            return "07";
+        }        if(startDay.equals("8")){
+            return "08";
+        }        if(startDay.equals("9")){
+            return "09";
+        }else{
+            return startDay;
+        }
+    }
+
 
     public int getMonthNumber(String month) {
 

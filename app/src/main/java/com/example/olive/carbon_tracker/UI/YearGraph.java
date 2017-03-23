@@ -208,13 +208,13 @@ public class YearGraph extends AppCompatActivity {
                 }
             }
         }
+
         List<MonthlyUtilitiesData> utilitiesList = singleton.getBillList();
 
-        boolean insideRange = false;
+        boolean insideRange;
         long smallestDateDifference = 9999999;
         double mostRecentCO2 = 0;
         for (int i=0; i < utilitiesList.size(); i++) {
-            //for(int i = utilitiesList.size()-1; i>=0; i--){
             insideRange = false;
 
             isChartEmpty = false;
@@ -227,17 +227,12 @@ public class YearGraph extends AppCompatActivity {
             String currentUtilityEndDate = currentUtility.getEndDate();
             Log.i("utility,ed: " ,"" +currentUtilityEndDate);
 
-            //String firstDate = previousDates.get(0);
-// if(getDateDifference(currentUtilityEndDate, firstDate)+1 < smallestDateDifference) {
-// smallestDateDifference = getDateDifference(currentUtilityEndDate, firstDate) + 1; // } //smallestDateDifference = 2; //smallestDateDifference = getDateDifference(currentUtilityEndDate, firstDate)+1;
             for (int j = 0; j <previousDates.size(); j++) {
                 String prevDate = previousDates.get(j);
 
                 String[] prevDate2 = prevDate.split("/");
 
-                String month = addZeroToDay("" + AbbrMonthNumber(prevDate2[0])) ;
-                             //Log.i("prevDate2[0]: " , ""+ prevDate2[0]);
-                //Log.i("month: " , ""+ month);
+                String month = addZeroToDay("" + AbbrMonthNumber(prevDate2[0]));
                 String year = prevDate2[1];
                 String prevDateNewFormat = year + "-" + month + "-" + "15";
 
@@ -248,18 +243,14 @@ public class YearGraph extends AppCompatActivity {
                 if (getDateDifference(currentUtilityStartDate, prevDateNewFormat) >= 0 &&
                         getDateDifference(prevDateNewFormat, currentUtilityEndDate) >= 0) {
                     utilityCO2.remove(j);
-                    //currentUtilityIndCO2 += utilityCO2.remove(j);
                     utilityCO2.add(j, currentUtilityIndCO2);
                     insideRange = true;
-                    Log.i("**** " , ""+ prevDateNewFormat);
                 } else {
                     long currentDateDifference = getDateDifference(currentUtilityEndDate, prevDateNewFormat);
                     if (currentDateDifference < smallestDateDifference && currentDateDifference > 0) {
                         mostRecentCO2 = currentUtilityIndCO2;
-                        //smallestDateDifference = currentDateDifference;
 
                         if (!insideRange) {
-                            //currentUtilityIndCO2 += utilityCO2.remove(j);
                             utilityCO2.remove(j);
                             utilityCO2.add(j, mostRecentCO2);
                         }
@@ -296,9 +287,8 @@ public class YearGraph extends AppCompatActivity {
             return startDay;
         }
     }
-    // 2017-03-01: , ed: 2016-Sep-01
+
     private long getDateDifference(String StartDate, String EndDate) {
-//Log.i("sd: " + StartDate,", ed: " + EndDate);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         try {
             Date start = sdf.parse(StartDate);
