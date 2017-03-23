@@ -13,25 +13,25 @@
         android:text="Single Day"
         tools:layout_editor_absoluteX="133dp"
         tools:layout_editor_absoluteY="87dp"
+        android:layout_marginBottom="54dp"
         android:layout_above="@+id/btnMonthGraph"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="82dp" />
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:id="@+id/btnMonthGraph"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/btnSingleDay"
+        android:text="Month"
         android:layout_centerVertical="true"
-        android:text="Month" />
+        android:layout_alignStart="@+id/btnYearGraph" />
 
     <Button
         android:id="@+id/btnYearGraph"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="53dp"
+        android:text="Year"
         android:layout_below="@+id/btnMonthGraph"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="51dp"
-        android:text="Year" />
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

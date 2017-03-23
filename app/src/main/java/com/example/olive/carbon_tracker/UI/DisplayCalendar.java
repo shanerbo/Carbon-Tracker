@@ -10,6 +10,9 @@ import android.widget.Toast;
 import com.example.olive.carbon_tracker.Model.Singleton;
 import com.example.olive.carbon_tracker.R;
 
+/**
+ * Sets date when using calender
+ */
 
 
 public class DisplayCalendar extends AppCompatActivity {
@@ -25,7 +28,8 @@ public class DisplayCalendar extends AppCompatActivity {
     }
 
     private void  getUsersDataPick(){
-        if(getIntent().getIntExtra("MonthlyUtilities", 0) == 10) { //User sets starting date for monthly utilities
+        if(getIntent().getIntExtra("MonthlyUtilities", 0) == 10) {
+            //User sets starting date for monthly utilities
             CalendarView view = new CalendarView(this);
             setContentView(view);
             view.setOnDateChangeListener(new OnDateChangeListener() {
@@ -40,7 +44,8 @@ public class DisplayCalendar extends AppCompatActivity {
                 }
             });
         }
-        else if(getIntent().getIntExtra("MonthlyUtilities", 0) == 20) { //User sets ending date for monthly utilities
+        else if(getIntent().getIntExtra("MonthlyUtilities", 0) == 20) {
+            //User sets ending date for monthly utilities
             CalendarView view = new CalendarView(this);
             setContentView(view);
             view.setOnDateChangeListener(new OnDateChangeListener() {

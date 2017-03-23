@@ -49,7 +49,8 @@ public class MonthlyUtilities extends AppCompatActivity {
         setContentView(R.layout.activity_monthly_utilities);
         SuperUltraInfoDataBaseHelper UtilityDBhelper = new SuperUltraInfoDataBaseHelper(this);
         UtilityDB = UtilityDBhelper.getWritableDatabase();
-        //////////////////////////////////////
+
+
         MonthlyUtilitiesList = singleton.getBillList();
         setupCalendarButton(R.id.ID_startDate_button);
         setupCalendarButton(R.id.ID_endDate_button);
@@ -226,12 +227,14 @@ public class MonthlyUtilities extends AppCompatActivity {
                         Date start = sdf.parse(startDay+"/"+startMonth+"/"+startYear);
                         Date end = sdf.parse(EndDay+"/"+EndMonth+"/"+EndYear);
                         long dateDifference = end.getTime() - start.getTime(); //convert date into msec
-                        dateDifference = dateDifference / 86400000; //convert time in msec back to days (1000*60*60*24 = 86400000)
+                        dateDifference = dateDifference / 86400000;
+                        //convert time in msec back to days (1000*60*60*24 = 86400000)
 
                         if(dateDifference > 0 && (!electricUsage.matches("") || !naturalGasUsage.matches(""))
                                 && !numOfPeople.matches("") && parseInt(numOfPeople)!= 0){
 
-                                if(!electricUsage.matches("") && naturalGasUsage.matches("")) {     //when no natural gas data given
+                                if(!electricUsage.matches("") && naturalGasUsage.matches("")) {
+                                    //when no natural gas data given
                                     double indElecUsage = parseDouble(electricUsage) / parseDouble(numOfPeople);
                                     double indGasUsage = 0;
                                     double indCO2 = indElecUsage*0.009 + indGasUsage*56.1;
@@ -254,7 +257,8 @@ public class MonthlyUtilities extends AppCompatActivity {
                                     }
                                 }
 
-                                else if(!naturalGasUsage.matches("") && electricUsage.matches("")) {    //when no electricity data given
+                                else if(!naturalGasUsage.matches("") && electricUsage.matches("")) {
+                                    //when no electricity data given
                                     double indElecUsage = 0;
                                     double indGasUsage = parseDouble(naturalGasUsage) / parseDouble(numOfPeople);
                                     double indCO2 = indElecUsage*0.009 + indGasUsage*56.1;
@@ -304,13 +308,16 @@ public class MonthlyUtilities extends AppCompatActivity {
                             finish();
                         }
                         else if(dateDifference <= 0){
-                            Toast.makeText(MonthlyUtilities.this,"Ending date cannot be equal to or earlier than starting date",Toast.LENGTH_LONG).show();
+                            Toast.makeText(MonthlyUtilities.this,"Ending date cannot be equal to or " +
+                                    "earlier than starting date",Toast.LENGTH_LONG).show();
                         }
                         else if(electricUsage.matches("") && naturalGasUsage.matches("")){
-                            Toast.makeText(MonthlyUtilities.this,"Please fill in at least one of the usage data",Toast.LENGTH_LONG).show();
+                            Toast.makeText(MonthlyUtilities.this,"Please fill in at least one of the" +
+                                    " usage data",Toast.LENGTH_LONG).show();
                         }
                         else if(numOfPeople.matches("") || parseInt(numOfPeople)== 0){
-                            Toast.makeText(MonthlyUtilities.this,"Number of people cannot be zero(blank)",Toast.LENGTH_LONG).show();
+                            Toast.makeText(MonthlyUtilities.this,"Number of people cannot be zero(blank)",
+                                    Toast.LENGTH_LONG).show();
                         }
 
 
@@ -402,7 +409,8 @@ public class MonthlyUtilities extends AppCompatActivity {
                                 UtilityDB.close();
                                 singleton.userFinishEditMonthlyUtilities();
                                 setResult(Activity.RESULT_OK, del_intent);
-                                Toast.makeText(MonthlyUtilities.this, "The selected bill has been deleted", Toast.LENGTH_LONG).show();
+                                Toast.makeText(MonthlyUtilities.this, "The selected bill has been deleted",
+                                        Toast.LENGTH_LONG).show();
                                 startActivity(new Intent(MonthlyUtilities.this, DisplayMonthlyUtilities.class));
                                 finish();
                             }

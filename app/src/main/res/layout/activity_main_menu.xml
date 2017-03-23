@@ -16,34 +16,33 @@
         android:layout_height="wrap_content"
         android:text="@string/new_journey"
         android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/btnCurrentFootprint"
-        android:layout_marginTop="60dp" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="77dp" />
 
     <Button
         android:id="@+id/btnCurrentFootprint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/carbon_footprint"
-        android:layout_marginStart="17dp"
-        android:layout_marginBottom="74dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignTop="@+id/btnMonthlyUti"
+        android:layout_alignStart="@+id/btnMonthlyUti"
+        android:layout_marginTop="94dp" />
 
     <Button
         android:id="@+id/btnEditJourney"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/edit_journeys"
-        android:layout_above="@+id/btnMonthlyUti"
-        android:layout_alignStart="@+id/btnMonthlyUti"
-        android:layout_marginBottom="71dp" />
+        android:layout_below="@+id/btnCreateJourney"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="74dp" />
 
     <Button
         android:id="@+id/btnMonthlyUti"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/btnCurrentFootprint"
-        android:layout_alignStart="@+id/btnCurrentFootprint"
-        android:layout_marginBottom="64dp"
-        android:text="Monthly Utilities" />
+        android:text="Monthly Utilities"
+        android:layout_below="@+id/btnEditJourney"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="46dp" />
 </RelativeLayout>
