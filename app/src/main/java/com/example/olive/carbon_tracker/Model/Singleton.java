@@ -7,6 +7,9 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * singleton restricts the instantiation of a class to one object
+ */
 public class Singleton {
     private static Singleton currInstance = new Singleton();
     //    private String currenMake;
