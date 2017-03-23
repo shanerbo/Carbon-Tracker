@@ -3,6 +3,7 @@ package com.example.olive.carbon_tracker.UI;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -207,53 +208,98 @@ public class YearGraph extends AppCompatActivity {
                 }
             }
         }
-
         List<MonthlyUtilitiesData> utilitiesList = singleton.getBillList();
+
         boolean insideRange = false;
-        long smallestDateDifference = 99999999;
+        long smallestDateDifference = 9999999;
         double mostRecentCO2 = 0;
-        for (int i = 0; i < utilitiesList.size(); i++) {
+        for (int i=0; i < utilitiesList.size(); i++) {
+            //for(int i = utilitiesList.size()-1; i>=0; i--){
+            insideRange = false;
+
             isChartEmpty = false;
             MonthlyUtilitiesData currentUtility = utilitiesList.get(i);
+
             double currentUtilityIndCO2 = currentUtility.getIndCO2();
-            String[] currentUtilityStartDateArray = currentUtility.getStartDate().split("/");
-            String currentUtilityStartDate = currentUtilityStartDateArray[1] + "/" + currentUtilityStartDateArray[2];
-            String[] currentUtilityEndDateArray = currentUtility.getEndDate().split("/");
-            String currentUtilityEndDate = currentUtilityEndDateArray[1] + "/" + currentUtilityEndDateArray[2];
+            //Log.i("utility,co2: " ,"" +currentUtilityIndCO2);
+            String currentUtilityStartDate = currentUtility.getStartDate();
+            Log.i("utility,sd: " ,"" +currentUtilityStartDate);
+            String currentUtilityEndDate = currentUtility.getEndDate();
+            Log.i("utility,ed: " ,"" +currentUtilityEndDate);
 
-            for (int j = 0; j < previousDates.size(); j++) {
-                String[] prevDateArray = previousDates.get(j).split("/");
-                int month = monthNumber2(prevDateArray[0]);
-                String prevDate = month +"/"+prevDateArray[1];
+            //String firstDate = previousDates.get(0);
+// if(getDateDifference(currentUtilityEndDate, firstDate)+1 < smallestDateDifference) {
+// smallestDateDifference = getDateDifference(currentUtilityEndDate, firstDate) + 1; // } //smallestDateDifference = 2; //smallestDateDifference = getDateDifference(currentUtilityEndDate, firstDate)+1;
+            for (int j = 0; j <previousDates.size(); j++) {
+                String prevDate = previousDates.get(j);
 
-                if (getDateDifference(currentUtilityStartDate, prevDate) >= 0 &&
-                        getDateDifference(prevDate, currentUtilityEndDate) >= 0) {
+                String[] prevDate2 = prevDate.split("/");
 
-                    currentUtilityIndCO2 += utilityCO2.remove(j);
+                String month = addZeroToDay("" + AbbrMonthNumber(prevDate2[0])) ;
+                             //Log.i("prevDate2[0]: " , ""+ prevDate2[0]);
+                //Log.i("month: " , ""+ month);
+                String year = prevDate2[1];
+                String prevDateNewFormat = year + "-" + month + "-" + "15";
+
+
+
+
+
+                if (getDateDifference(currentUtilityStartDate, prevDateNewFormat) >= 0 &&
+                        getDateDifference(prevDateNewFormat, currentUtilityEndDate) >= 0) {
+                    utilityCO2.remove(j);
+                    //currentUtilityIndCO2 += utilityCO2.remove(j);
                     utilityCO2.add(j, currentUtilityIndCO2);
-
                     insideRange = true;
-
+                    Log.i("**** " , ""+ prevDateNewFormat);
                 } else {
-                    long currentDateDifference = getDateDifference(currentUtilityEndDate, prevDate);
+                    long currentDateDifference = getDateDifference(currentUtilityEndDate, prevDateNewFormat);
                     if (currentDateDifference < smallestDateDifference && currentDateDifference > 0) {
                         mostRecentCO2 = currentUtilityIndCO2;
-                        smallestDateDifference = currentDateDifference;
+                        //smallestDateDifference = currentDateDifference;
+
+                        if (!insideRange) {
+                            //currentUtilityIndCO2 += utilityCO2.remove(j);
+                            utilityCO2.remove(j);
+                            utilityCO2.add(j, mostRecentCO2);
+                        }
                     }
-                }
-                if (insideRange == false) {
-                    mostRecentCO2 += utilityCO2.remove(j);
-                    utilityCO2.add(j, mostRecentCO2);
-                }
 
-
+                }
             }
+        }
 
+
+    }
+
+
+    private String addZeroToDay(String startDay) {
+        if(startDay.equals("1")){
+            return "01";
+        }        if(startDay.equals("2")){
+            return "02";
+        }        if(startDay.equals("3")){
+            return "03";
+        }        if(startDay.equals("4")){
+            return "04";
+        }        if(startDay.equals("5")){
+            return "05";
+        }        if(startDay.equals("6")){
+            return "06";
+        }        if(startDay.equals("7")){
+            return "07";
+        }        if(startDay.equals("8")){
+            return "08";
+        }        if(startDay.equals("9")){
+            return "09";
+        }else{
+            return startDay;
         }
     }
+    // 2017-03-01: , ed: 2016-Sep-01
     private long getDateDifference(String StartDate, String EndDate) {
-
-        SimpleDateFormat sdf = new SimpleDateFormat("MM/yyyy");
+//Log.i("sd: " + StartDate,", ed: " + EndDate);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         try {
             Date start = sdf.parse(StartDate);
             Date end = sdf.parse(EndDate);
@@ -431,7 +477,7 @@ public class YearGraph extends AppCompatActivity {
         }
 
     }
-    public int monthNumber2(String month) {
+    public int AbbrMonthNumber(String month) {
 
         switch (month) {
             case "Jan":
