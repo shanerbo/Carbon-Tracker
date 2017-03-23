@@ -251,9 +251,9 @@ public class MonthlyUtilities extends AppCompatActivity {
                                             cursor.moveToNext();
                                         }
                                         cursor.close();
-                                        if (maxCO2 < indCO2){
+                                        if (maxCO2 < CO2PerDayPerPerson){
                                             singleton.setEnegyHighest(true);
-                                            singleton.setHighestCO2FromEnegy(indCO2);
+                                            singleton.setHighestCO2FromEnegy(CO2PerDayPerPerson);
                                         }
                                         UpdateUtilityToDB(startDate,endDate , parseDouble(electricUsage),
                                                 0, dateDifference,
@@ -269,9 +269,9 @@ public class MonthlyUtilities extends AppCompatActivity {
                                             cursor.moveToNext();
                                         }
                                         cursor.close();
-                                        if (maxCO2 < indCO2){
+                                        if (maxCO2 < CO2PerDayPerPerson){
                                             singleton.setEnegyHighest(true);
-                                            singleton.setHighestCO2FromEnegy(indCO2);
+                                            singleton.setHighestCO2FromEnegy(CO2PerDayPerPerson);
                                         }
                                         addNewUtilityToDB(startDate,endDate , parseDouble(electricUsage),
                                                 0, dateDifference,
@@ -298,9 +298,9 @@ public class MonthlyUtilities extends AppCompatActivity {
                                             cursor.moveToNext();
                                         }
                                         cursor.close();
-                                        if (maxCO2 < indCO2){
+                                        if (maxCO2 < CO2PerDayPerPerson){
                                             singleton.setEnegyHighest(true);
-                                            singleton.setHighestCO2FromEnegy(indCO2);
+                                            singleton.setHighestCO2FromEnegy(CO2PerDayPerPerson);
                                         }
                                         UpdateUtilityToDB(startDate,endDate , 0,
                                                 parseDouble(naturalGasUsage), dateDifference,
@@ -316,9 +316,9 @@ public class MonthlyUtilities extends AppCompatActivity {
                                             cursor.moveToNext();
                                         }
                                         cursor.close();
-                                        if (maxCO2 < indCO2){
+                                        if (maxCO2 < CO2PerDayPerPerson){
                                             singleton.setEnegyHighest(true);
-                                            singleton.setHighestCO2FromEnegy(indCO2);
+                                            singleton.setHighestCO2FromEnegy(CO2PerDayPerPerson);
                                         }
                                         addNewUtilityToDB(startDate,endDate , 0,
                                                 parseDouble(naturalGasUsage), dateDifference,
@@ -345,9 +345,9 @@ public class MonthlyUtilities extends AppCompatActivity {
                                             cursor.moveToNext();
                                         }
                                         cursor.close();
-                                        if (maxCO2 < indCO2){
+                                        if (maxCO2 < CO2PerDayPerPerson){
                                             singleton.setEnegyHighest(true);
-                                            singleton.setHighestCO2FromEnegy(indCO2);
+                                            singleton.setHighestCO2FromEnegy(CO2PerDayPerPerson);
                                         }
                                         UpdateUtilityToDB(startDate,endDate , parseDouble(electricUsage),
                                                 parseDouble(naturalGasUsage), dateDifference,
@@ -363,9 +363,9 @@ public class MonthlyUtilities extends AppCompatActivity {
                                             cursor.moveToNext();
                                         }
                                         cursor.close();
-                                        if (maxCO2 < indCO2){
+                                        if (maxCO2 < CO2PerDayPerPerson){
                                             singleton.setEnegyHighest(true);
-                                            singleton.setHighestCO2FromEnegy(indCO2);
+                                            singleton.setHighestCO2FromEnegy(CO2PerDayPerPerson);
                                         }
                                         addNewUtilityToDB(startDate,endDate,parseDouble(electricUsage),
                                                 parseDouble(naturalGasUsage), dateDifference,

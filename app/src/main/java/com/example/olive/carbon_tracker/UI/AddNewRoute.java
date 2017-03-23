@@ -296,22 +296,7 @@ public class AddNewRoute extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "You have produced: "+ TotalCO2 +"kg of CO2", Toast.LENGTH_SHORT).show();
 
             addJourneyToDBNotCar(_date,userInput,RouteDB,"Walk/Bike",totalCO2);
-//            ContentValues cv = new ContentValues();
-//            cv.put(SuperUltraInfoDataBaseHelper.Journey_Date,date);
-//
-//            cv.put(SuperUltraInfoDataBaseHelper.Journey_CarName,"Walk/Bike");
-//            cv.put(SuperUltraInfoDataBaseHelper.Journey_CarMode,"Walk/Bike");
-//
-//            cv.put(SuperUltraInfoDataBaseHelper.Journey_RouteId, userInput.getRouteDBId());
-//            cv.put(SuperUltraInfoDataBaseHelper.Journey_RouteName, userInput.getName());
-//            cv.put(SuperUltraInfoDataBaseHelper.Journey_RouteCityDist, userInput.getCityDistance());
-//            cv.put(SuperUltraInfoDataBaseHelper.Journey_RouteHwyDist, userInput.getHighwayDistance());
-//            cv.put(SuperUltraInfoDataBaseHelper.Journey_RouteTotalDist, userInput.getTotalDistance());
-//
-//            cv.put(SuperUltraInfoDataBaseHelper.Journey_CO2Emitted, totalCO2);
-//
-//            long idPassBack = RouteDB.insert(SuperUltraInfoDataBaseHelper.Journey_Table,null,cv);
-//            RouteDB.close();
+
 
 
             createNewJourney(cityDistance,HwyDistance,totalCO2, 1);
@@ -321,24 +306,21 @@ public class AddNewRoute extends AppCompatActivity {
             String TotalCO2 = String.format("%.2f", totalCO2);
             Toast.makeText(getApplicationContext(), "You have produced: "+ TotalCO2 +"kg of CO2", Toast.LENGTH_SHORT).show();
 
-            addJourneyToDBNotCar(_date,userInput,RouteDB,"Bus",totalCO2);
-//            ContentValues cv = new ContentValues();
-//            cv.put(SuperUltraInfoDataBaseHelper.Journey_Date,date);
-//
-//            cv.put(SuperUltraInfoDataBaseHelper.Journey_CarName,"Bus");
-//            cv.put(SuperUltraInfoDataBaseHelper.Journey_CarMode,"Bus");
-//
-//            cv.put(SuperUltraInfoDataBaseHelper.Journey_RouteId, userInput.getRouteDBId());
-//            cv.put(SuperUltraInfoDataBaseHelper.Journey_RouteName, userInput.getName());
-//            cv.put(SuperUltraInfoDataBaseHelper.Journey_RouteCityDist, userInput.getCityDistance());
-//            cv.put(SuperUltraInfoDataBaseHelper.Journey_RouteHwyDist, userInput.getHighwayDistance());
-//            cv.put(SuperUltraInfoDataBaseHelper.Journey_RouteTotalDist, userInput.getTotalDistance());
-//
-//            cv.put(SuperUltraInfoDataBaseHelper.Journey_CO2Emitted, totalCO2);
-//
-//            long idPassBack = RouteDB.insert(SuperUltraInfoDataBaseHelper.Journey_Table,null,cv);
-//            RouteDB.close();
+            Cursor cursor = RouteDB.rawQuery("select max(JourneyCO2Emitted) from JourneyInfoTable" +
+                    " where JourneyMode = 'Bus'",null);
+            double maxCO2 = 0;
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()){
+                maxCO2 = cursor.getDouble(0);
+                cursor.moveToNext();
+            }
+            cursor.close();
+            if (maxCO2 < totalCO2){
+                singleton.setCarCO2Highest(true);
+                singleton.setHighestCO2FromCar(totalCO2);
+            }
 
+            addJourneyToDBNotCar(_date,userInput,RouteDB,"Bus",totalCO2);
 
             createNewJourney(cityDistance,HwyDistance,totalCO2, 2);
         }
@@ -346,26 +328,20 @@ public class AddNewRoute extends AppCompatActivity {
             totalCO2 = (cityDistance+HwyDistance)*0.02348;
             String TotalCO2 = String.format("%.2f", totalCO2);
             Toast.makeText(getApplicationContext(), "You have produced: "+ TotalCO2 +"kg of CO2", Toast.LENGTH_SHORT).show();
-
+            Cursor cursor = RouteDB.rawQuery("select max(JourneyCO2Emitted) from JourneyInfoTable" +
+                    " where JourneyMode = 'Skytrain'",null);
+            double maxCO2 = 0;
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()){
+                maxCO2 = cursor.getDouble(0);
+                cursor.moveToNext();
+            }
+            cursor.close();
+            if (maxCO2 < totalCO2){
+                singleton.setCarCO2Highest(true);
+                singleton.setHighestCO2FromCar(totalCO2);
+            }
             addJourneyToDBNotCar(_date,userInput,RouteDB,"Skytrain",totalCO2);
-//            ContentValues cv = new ContentValues();
-//            cv.put(SuperUltraInfoDataBaseHelper.Journey_Date,date);
-//
-//            cv.put(SuperUltraInfoDataBaseHelper.Journey_CarName,"Skytrain");
-//            cv.put(SuperUltraInfoDataBaseHelper.Journey_CarMode,"Skytrain");
-//
-//            cv.put(SuperUltraInfoDataBaseHelper.Journey_RouteId, userInput.getRouteDBId());
-//            cv.put(SuperUltraInfoDataBaseHelper.Journey_RouteName, userInput.getName());
-//            cv.put(SuperUltraInfoDataBaseHelper.Journey_RouteCityDist, userInput.getCityDistance());
-//            cv.put(SuperUltraInfoDataBaseHelper.Journey_RouteHwyDist, userInput.getHighwayDistance());
-//            cv.put(SuperUltraInfoDataBaseHelper.Journey_RouteTotalDist, userInput.getTotalDistance());
-//
-//            cv.put(SuperUltraInfoDataBaseHelper.Journey_CO2Emitted, totalCO2);
-//
-//            long idPassBack = RouteDB.insert(SuperUltraInfoDataBaseHelper.Journey_Table,null,cv);
-//            RouteDB.close();
-
-
 
             createNewJourney(cityDistance,HwyDistance,totalCO2, 3);
         }

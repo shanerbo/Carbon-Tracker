@@ -29,11 +29,12 @@ public class MainMenu extends AppCompatActivity {
     private List<String> allRandomCarTips = new ArrayList<>();
     private List<String> allRandomEnegyTips = new ArrayList<>();
     private List<String> allRandomUnrelatedTips = new ArrayList<>();
-    private int whichTipShowUP = 0;
+    private int whichTipShowUP = (int)(Math.random() * 50 + 1);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        myDataBase = SQLiteDatabase.openOrCreateDatabase(DatabaseHelper.DB_PATH + DatabaseHelper.DB_NAME,null);
         generateTipsForCar(singleton.getHighestCO2FromCar());
         generateTipsForEnegy(singleton.getHighestCO2FromEnegy());
         generateTipsForUnrelated();
@@ -56,8 +57,6 @@ public class MainMenu extends AppCompatActivity {
         allRandomEnegyTips.add(getString(R.string.energy_tip_6, co2));
         allRandomEnegyTips.add(getString(R.string.energy_tip_7, co2));
         allRandomEnegyTips.add(getString(R.string.energy_tip_8, co2));
-//        Collections.shuffle(allRandomEnegyTips);
-//        singleton.setShuffledTipsForEnegy(allRandomEnegyTips);
     }
 
 
@@ -70,20 +69,74 @@ public class MainMenu extends AppCompatActivity {
         allRandomCarTips.add(getString(R.string.vehicle_tip_6, co2));
         allRandomCarTips.add(getString(R.string.vehicle_tip_7, co2));
         allRandomCarTips.add(getString(R.string.vehicle_tip_8, co2));
-//        Collections.shuffle(allRandomCarTips);
-//        singleton.setShuffledTipsForCar(allRandomCarTips);
+
     }
     private void generateTipsForUnrelated(){
-        allRandomUnrelatedTips.add(getString(R.string.unrelated_tip_1));
-        allRandomUnrelatedTips.add(getString(R.string.unrelated_tip_2));
-        allRandomUnrelatedTips.add(getString(R.string.unrelated_tip_3));
-        allRandomUnrelatedTips.add(getString(R.string.unrelated_tip_4));
-        allRandomUnrelatedTips.add(getString(R.string.unrelated_tip_5));
-        allRandomUnrelatedTips.add(getString(R.string.unrelated_tip_6));
-        allRandomUnrelatedTips.add(getString(R.string.unrelated_tip_7));
-        allRandomUnrelatedTips.add(getString(R.string.unrelated_tip_8));
-        Collections.shuffle(allRandomUnrelatedTips);
-        singleton.setUnrelatedTips(allRandomUnrelatedTips);
+        Cursor cursor = myDataBase.rawQuery("select count(*) from JourneyInfoTable where " +
+                "JourneyMode = 'Car'",null);
+        int CarTimes = 0;
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()){
+            CarTimes = cursor.getInt(0);
+            cursor.moveToNext();
+        }
+        allRandomUnrelatedTips.add(getString(R.string.unrelated_tip_1,CarTimes));
+        cursor = myDataBase.rawQuery("select sum(UtilityAverageCO2) from " +
+                "UtilityInfoTable  ",null);
+        double totalUtilityCO2 = 0;
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()){
+            totalUtilityCO2 = cursor.getDouble(0);
+            cursor.moveToNext();
+        }
+        allRandomUnrelatedTips.add(getString(R.string.unrelated_tip_2,totalUtilityCO2));
+        cursor = myDataBase.rawQuery("select sum(JourneyRouteTotal) from JourneyInfoTable " +
+                "where JourneyMode = 'Car'",null);
+        int TotalofTotalDST = 0;
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()){
+            TotalofTotalDST = cursor.getInt(0);
+            cursor.moveToNext();
+        }
+        allRandomUnrelatedTips.add(getString(R.string.unrelated_tip_3,TotalofTotalDST));
+        cursor = myDataBase.rawQuery("select count(*) from JourneyInfoTable where " +
+                "JourneyCarModel = 'Suv' ",null);
+        int dringSUVtimes = 0;
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()){
+            dringSUVtimes = cursor.getInt(0);
+            cursor.moveToNext();
+        }
+        allRandomUnrelatedTips.add(getString(R.string.unrelated_tip_4,dringSUVtimes));
+        cursor = myDataBase.rawQuery("select sum(JourneyRouteHwy) from JourneyInfoTable " +
+                "where JourneyMode= 'Car'",null);
+        int totalHWYDST = 0;
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()){
+            totalHWYDST = cursor.getInt(0);
+            cursor.moveToNext();
+        }
+        //allRandomUnrelatedTips.add(getString(R.string.unrelated_tip_5,totalHWYDST));
+        allRandomUnrelatedTips.add(getString(R.string.unrelated_tip_6,totalUtilityCO2));
+        cursor = myDataBase.rawQuery("select sum(JourneyRouteCity) from JourneyInfoTable " +
+                "where JourneyMode= 'Car'",null);
+        int totalCITYDST = 0;
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()){
+            totalCITYDST = cursor.getInt(0);
+            cursor.moveToNext();
+        }
+        allRandomUnrelatedTips.add(getString(R.string.unrelated_tip_7,totalCITYDST));
+        cursor = myDataBase.rawQuery("select count(*) from JourneyInfoTable " +
+                "where JourneyMode ='Bus' or JourneyMode='Skytrain'",null);
+        int TotalBUSSKYtraintime = 0;
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()){
+            TotalBUSSKYtraintime = cursor.getInt(0);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        allRandomUnrelatedTips.add(getString(R.string.unrelated_tip_8,TotalBUSSKYtraintime));
     }
     private void HighestCO2FromCar() {
         if (singleton.isCarCO2Highest()){
@@ -100,34 +153,21 @@ public class MainMenu extends AppCompatActivity {
     }
 
     private void showUpTips(final int i,final List<String> tipsList) {
-        //Collections.shuffle(allRandomTips);
         Snackbar tipBar =  Snackbar.make(findViewById(android.R.id.content), tipsList.get(i%tipsList.size()),
                 Snackbar.LENGTH_LONG);
         View snackbarView = tipBar.getView();
         TextView tv= (TextView) snackbarView.findViewById(android.support.design.R.id.snackbar_text);
         tv.setMaxLines(5);
         //make snackBar contain up to 5 lines
-        //if (tipsList.size()>i+1) {
             tipBar.setAction("Next", new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    whichTipShowUP++;
                     showUpTips(i + 1,tipsList);
                 }
             });
             tipBar.setActionTextColor(Color.RED);
+            tipBar.setDuration(7500);
             tipBar.show();
-        //}
-//        else{
-//            tipBar.setAction("OK", new View.OnClickListener() {//this is the last tips
-//                @Override
-//                public void onClick(View v) {
-//                    return;
-//                }
-//            });
-//            tipBar.setActionTextColor(Color.RED);
-//            tipBar.show();
-//        }
     }
 
     private void getJourneyList() {

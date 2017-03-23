@@ -119,8 +119,7 @@
         insulation, and weather stripping. </string>
     <string name="unrelated_tip_7">You drove %d KM on city,Being stuck in traffic wastes gas and unneccessarily creates CO2.
         Use traffic websites and apps and go a different way or wait.</string>
-    <string name="unrelated_tip_8"> You emitted %f CO2 from using gas and electricity Make energy efficiency a primary consideration when choosing a new furnace,
-        air conditioning unit, dishwasher, or refrigerator.</string>
+    <string name="unrelated_tip_8"> You have used Bus and Skytrain as your daily transportation %d times! Keep it up!</string>
 
 
 </resources>
