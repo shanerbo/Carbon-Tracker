@@ -3,7 +3,9 @@
 package com.example.olive.carbon_tracker.Model;
 
 import com.example.olive.carbon_tracker.R;
-
+/**
+ * Stores journey information
+ */
 public class Journey {
     private String dateOfTrip;
     private String routeName;

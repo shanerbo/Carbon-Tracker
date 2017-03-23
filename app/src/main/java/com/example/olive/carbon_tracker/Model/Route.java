@@ -4,6 +4,9 @@ package com.example.olive.carbon_tracker.Model;
 
 import com.example.olive.carbon_tracker.R;
 
+/**
+ * Saves route information
+ */
 public class Route {
     private String name;
     private int cityDistance;

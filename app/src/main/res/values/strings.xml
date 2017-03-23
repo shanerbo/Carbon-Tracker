@@ -88,5 +88,11 @@
     <string name="end_date">End Date</string>
     <string name="dd_mm_yyyy">dd/mm/yyyy</string>
     <string name="total_electricity_usage">Total Electricity Usage</string>
+    <string name="click_date_to_change">click date to change</string>
+    <string name="co2_emitted">co2 emitted</string>
+    <string name="single_day">Single Day</string>
+    <string name="month">Month</string>
+    <string name="monthly_utilities">Monthly Utilities</string>
+    <string name="change_date">change date</string>
 
 </resources>

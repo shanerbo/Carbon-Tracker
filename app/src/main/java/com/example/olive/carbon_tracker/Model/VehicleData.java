@@ -18,6 +18,9 @@ import java.util.List;
 
 import static android.media.CamcorderProfile.get;
 
+/**
+ * extracts data from excel
+ */
 public class VehicleData {
     private List<Integer> saveCity = new ArrayList<>();
     private List<Integer> saveHwy = new ArrayList<>();

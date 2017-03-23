@@ -35,6 +35,9 @@ import java.util.List;
 
 import static com.example.olive.carbon_tracker.R.id.chart;
 
+/**
+ * uses a stacked bar chart to display monthly carbon emission
+ */
 
 public class MonthGraph extends AppCompatActivity {
     public static final int DAY_TOKEN = 0;

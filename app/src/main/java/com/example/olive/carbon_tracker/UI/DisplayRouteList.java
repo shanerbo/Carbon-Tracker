@@ -34,6 +34,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * displays the route list the user has entered
+ */
 public class DisplayRouteList extends AppCompatActivity {
     private List<Route> RouteList = new ArrayList<Route>();
     Singleton singleton  = Singleton.getInstance();

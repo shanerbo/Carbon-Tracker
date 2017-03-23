@@ -10,7 +10,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
-
+/*
+Connect android studio to sql lite
+get readable and writable database from internal memory
+ */
 public class DatabaseHelper extends SQLiteOpenHelper {
     private SQLiteDatabase myDataBase;
     private final Context myContext;

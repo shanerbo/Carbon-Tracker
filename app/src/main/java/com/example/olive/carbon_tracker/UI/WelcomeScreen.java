@@ -1,6 +1,5 @@
 package com.example.olive.carbon_tracker.UI;
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -9,7 +8,6 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.example.olive.carbon_tracker.Model.DatabaseHelper;
-import com.example.olive.carbon_tracker.Model.Journey;
 import com.example.olive.carbon_tracker.Model.Singleton;
 import com.example.olive.carbon_tracker.Model.SuperUltraInfoDataBaseHelper;
 import com.example.olive.carbon_tracker.R;
@@ -18,7 +16,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+/**
+ * first screen the user sees as the app loads the data
+ */
+public class WelcomeScreen extends AppCompatActivity {
     private static int exist_time = 2000;
     Singleton singleton = Singleton.getInstance();
     public DatabaseHelper myHelper;
@@ -45,8 +46,8 @@ public class MainActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent MainMenu = new Intent(MainActivity.this, com.example.olive.carbon_tracker.UI.MainMenu.class);
-//                singleton.setVehicleData(MainActivity.this);
+                Intent MainMenu = new Intent(WelcomeScreen.this, com.example.olive.carbon_tracker.UI.MainMenu.class);
+//                singleton.setVehicleData(WelcomeScreen.this);
 //                singleton.setVehicleMakeArray();
                 startActivity(MainMenu);
                 finish();

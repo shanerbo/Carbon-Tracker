@@ -30,6 +30,9 @@ import static android.R.attr.mode;
 import static android.media.CamcorderProfile.get;
 import static com.example.olive.carbon_tracker.R.id.chart;
 
+/**
+ * uses pie chart to display carbon emissions for s single day
+ */
 public class SingleDayGraph extends AppCompatActivity {
 
     Singleton singleton = Singleton.getInstance();

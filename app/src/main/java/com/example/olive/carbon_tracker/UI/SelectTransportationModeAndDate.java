@@ -27,6 +27,9 @@ import java.nio.channels.SelectionKey;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+/**
+ * lets user to pick transportation mode and set travel date
+ */
 public class SelectTransportationModeAndDate extends AppCompatActivity {
 
     Singleton singleton = Singleton.getInstance();

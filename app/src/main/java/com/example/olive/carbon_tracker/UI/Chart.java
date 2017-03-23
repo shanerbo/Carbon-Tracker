@@ -15,6 +15,10 @@ import com.github.mikephil.charting.data.PieEntry;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * draws a pie chart for single day data
+ */
+
 public class Chart extends AppCompatActivity {
 
     Singleton singleton = Singleton.getInstance();

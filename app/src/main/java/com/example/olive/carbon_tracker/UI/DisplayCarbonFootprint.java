@@ -19,6 +19,9 @@ import com.example.olive.carbon_tracker.Model.Singleton;
 
 import java.util.List;
 
+/**
+ * creates a table to display journey details
+ */
 
 public class DisplayCarbonFootprint extends AppCompatActivity {
 

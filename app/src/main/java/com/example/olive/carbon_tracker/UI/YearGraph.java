@@ -29,6 +29,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * uses a line graph to display average monthly carbon emission for one year
+ */
 public class YearGraph extends AppCompatActivity {
     Singleton singleton = Singleton.getInstance();
     public static final int MONTHS = 12;

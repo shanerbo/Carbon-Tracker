@@ -26,6 +26,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * lets user navigate to add journey, edit journey, add utility and display carbon footprint
+ */
 public class MainMenu extends AppCompatActivity {
     Singleton singleton = Singleton.getInstance();
     public SQLiteDatabase myDataBase;

@@ -58,7 +58,8 @@
         android:contentDescription=""
         app:srcCompat="@drawable/bills"
         android:layout_alignBottom="@+id/IndCO2"
-        android:layout_toStartOf="@+id/IndGasUsage" />
+        android:layout_toStartOf="@+id/IndGasUsage"
+        tools:ignore="ContentDescription" />
 
 
 </RelativeLayout>
