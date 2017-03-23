@@ -32,6 +32,8 @@ import java.util.List;
  * Adds / edits a route
  */
 
+import static java.lang.Math.round;
+
 public class AddNewRoute extends AppCompatActivity {
     private List<Route> RouteList = new ArrayList<>();
     private String _currentRouteName;
@@ -287,12 +289,28 @@ public class AddNewRoute extends AppCompatActivity {
 
             addJourneyToDBNotCar(_date,userInput,RouteDB,"Walk/Bike",totalCO2);
 
+
+
             createNewJourney(cityDistance,HwyDistance,totalCO2, 1);
         }
         else if (singleton.checkTransportationMode() == 2){ //Bus
             totalCO2 = (cityDistance+HwyDistance)*0.089;
             String TotalCO2 = String.format("%.2f", totalCO2);
             Toast.makeText(getApplicationContext(), "You have produced: "+ TotalCO2 +"kg of CO2", Toast.LENGTH_SHORT).show();
+
+            Cursor cursor = RouteDB.rawQuery("select max(JourneyCO2Emitted) from JourneyInfoTable" +
+                    " where JourneyMode = 'Bus'",null);
+            double maxCO2 = 0;
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()){
+                maxCO2 = cursor.getDouble(0);
+                cursor.moveToNext();
+            }
+            cursor.close();
+            if (maxCO2 < totalCO2){
+                singleton.setCarCO2Highest(true);
+                singleton.setHighestCO2FromCar(totalCO2);
+            }
 
             addJourneyToDBNotCar(_date,userInput,RouteDB,"Bus",totalCO2);
 
@@ -304,7 +322,19 @@ public class AddNewRoute extends AppCompatActivity {
             totalCO2 = (cityDistance+HwyDistance)*0.02348;
             String TotalCO2 = String.format("%.2f", totalCO2);
             Toast.makeText(getApplicationContext(), "You have produced: "+ TotalCO2 +"kg of CO2", Toast.LENGTH_SHORT).show();
-
+            Cursor cursor = RouteDB.rawQuery("select max(JourneyCO2Emitted) from JourneyInfoTable" +
+                    " where JourneyMode = 'Skytrain'",null);
+            double maxCO2 = 0;
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()){
+                maxCO2 = cursor.getDouble(0);
+                cursor.moveToNext();
+            }
+            cursor.close();
+            if (maxCO2 < totalCO2){
+                singleton.setCarCO2Highest(true);
+                singleton.setHighestCO2FromCar(totalCO2);
+            }
             addJourneyToDBNotCar(_date,userInput,RouteDB,"Skytrain",totalCO2);
 
 
@@ -341,7 +371,9 @@ public class AddNewRoute extends AppCompatActivity {
             cursor.close();
             if (maxCO2 < totalCO2){
                 singleton.setCarCO2Highest(true);
+                singleton.setHighestCO2FromCar(totalCO2);
             }
+
 
             ContentValues cv = new ContentValues();
             cv.put(SuperUltraInfoDataBaseHelper.Journey_Date,_date);

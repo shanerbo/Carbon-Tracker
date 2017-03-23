@@ -94,5 +94,38 @@
     <string name="month">Month</string>
     <string name="monthly_utilities">Monthly Utilities</string>
     <string name="change_date">change date</string>
+    <string name="vehicle_tip_1">You are creating %f kg of CO2 from driving. Try using transit.</string>
+    <string name="vehicle_tip_2">Driving is creating %f kg of CO2 emissions. Try car pooling.</string>
+    <string name="vehicle_tip_3">Your car trips are generating %f kg of CO2. Try getting an electric car.</string>
+    <string name="vehicle_tip_4">Driving is creating %f kg of CO2. Consider using cruise control.</string>
+    <string name="vehicle_tip_5">You are generating %f kg of CO2 from driving. Remember to remove excess weight from your car.</string>
+    <string name="vehicle_tip_6">%f kg of CO2 is generated from your driving. Combine errands to make fewer trips.</string>
+    <string name="vehicle_tip_7">You are creating %f kg of CO2 from driving. Consider getting a fuel efficient car.</string>
+    <string name="vehicle_tip_8">Driving is creating %f kg of CO2. Consider walking or riding a bike.</string>
+    <string name="energy_tip_1">Your electricity consumption is making %f of CO2, try unplugging unused electronic devices</string>
+    <string name="energy_tip_2">You are making %f kg of CO2 from electricity, try shutting off lights when not in use and Consider taking shorter showers.</string>
+    <string name="energy_tip_3">Your electricity usage is making %f kg of CO2, try installing solar panels.</string>
+    <string name="energy_tip_4">Your energy bill is creating %f kg of CO2. Consider putting your computers in sleep mode when they\'re not in use.</string>
+    <string name="energy_tip_5">Your energy bill is generating %f kg of CO2. Try washing your laundry in cold water, and Remember to change air filters frequently.</string>
+    <string name="energy_tip_6">%f kg of CO2 is created from your electricity bill. Consider switching to LED lightbulbs.</string>
+    <string name="energy_tip_7">Your energy consumption is generating %f kg of CO2. Try using your microwave over your oven when possible.</string>
+    <string name="energy_tip_8">%f of CO2 emissions come from your energy bill. Consider managing your thermostat.Try using your heater less often.</string>
+
+    <string name="unrelated_tip_1">You drove %d times car so far, When possible, walk or ride your bike in order to avoid carbon emissions completely. Carpooling
+        and public transportation drastically reduce CO2 emissions by spreading them out over many riders.</string>
+    <string name="unrelated_tip_2">You produce %f from home application A better concept is probably ‘embodied energy’, which takes account of all the carbon,
+         water and energy that goes into producing any food or manufactured item. </string>
+    <string name="unrelated_tip_3">Drive a low carbon vehicle. You drove %d in HWY and city, High mileage doesn’t always mean low CO2 emissions. All vehicles have an
+        estimated miles-per-gallon rating. Electric cars emit no CO2 if they’re charged with clean electricity. </string>
+    <string name="unrelated_tip_4">Get a hitch-mounted cargo rack. Don’t buy a minivan or SUV if you don’t need 4WD and/or will only
+        occasionally need the extra space. Since you drove SUV %d times </string>
+    <string name="unrelated_tip_5">You drove %d KM on highway,Speeding and unnecessary acceleration reduce mileage by up to 33/100, waste gas and money,
+        and increase your carbon footprint.</string>
+    <string name="unrelated_tip_6">Insulate and seal your home. You produced %f CO2 from home, Reduce drafts and air leaks with caulk,
+        insulation, and weather stripping. </string>
+    <string name="unrelated_tip_7">You drove %d KM on city,Being stuck in traffic wastes gas and unneccessarily creates CO2.
+        Use traffic websites and apps and go a different way or wait.</string>
+    <string name="unrelated_tip_8"> You have used Bus and Skytrain as your daily transportation %d times! Keep it up!</string>
+
 
 </resources>
