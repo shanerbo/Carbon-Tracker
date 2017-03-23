@@ -5,10 +5,10 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-/**
- *
+/*
+Connect android studio to sql lite
+get readable and writable database from internal memory
  */
-
 public class SuperUltraInfoDataBaseHelper extends SQLiteOpenHelper {
     public static final String DB_Name = "CarInfo.sqlite";
     public static final int DB_Version = 1;

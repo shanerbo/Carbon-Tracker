@@ -10,9 +10,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
-/*
-Connect android studio to sql lite
-get readable and writable database from internal memory
+/**
+ * Copy and create a database for existing sqlite file which is located at external memeory, and this
+ * sqlite file contains all vehicle info which can be used when user try to add car;
  */
 public class DatabaseHelper extends SQLiteOpenHelper {
     private SQLiteDatabase myDataBase;
