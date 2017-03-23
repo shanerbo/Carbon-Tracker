@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.olive.carbon_tracker.Model.Journey;
 import com.example.olive.carbon_tracker.R;
@@ -66,7 +67,6 @@ public class DisplayCarbonFootprint extends AppCompatActivity {
             if (!journeyList.isEmpty()) {
                 Journey currentJourney = journeyList.get(i);
                 enterRowInfo(dateOfTrip, tableRow, currentJourney.getDateOfTrip());
-
                 TextView routeName = new TextView(this);
                 enterRowInfo(routeName, tableRow, currentJourney.getRouteName());
 

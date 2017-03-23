@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -99,6 +100,7 @@ public class MainMenu extends AppCompatActivity {
             String tempMonth = ChangMonthInString(tempDate[1]);
             String tempDay = ChangDayInString(tempDate[2]) ;
             String date = tempDay + "/" + tempMonth + "/" + tempYear;
+            Log.i("day:",tempDate[1].getClass().getName());
             String mode = cursor.getString(1);
             String routeName = cursor.getString(3);
             int totalDst = cursor.getInt(4);
@@ -116,32 +118,36 @@ public class MainMenu extends AppCompatActivity {
     }
 
     private String ChangDayInString(String tempDay) {
-        if (tempDay.matches("01")){
+        Log.i("day to be changed",tempDay);
+        if (tempDay.equals("01")){
             return "1";
         }
-        if (tempDay.matches("02")){
+        if (tempDay.equals("02")){
             return "2";
         }
-        if (tempDay.matches("03")){
+        if (tempDay.equals("03")){
             return "3";
         }
-        if (tempDay.matches("04")){
+        if (tempDay.equals("04")){
             return "4";
         }
-        if (tempDay.matches("05")){
+        if (tempDay.equals("05")){
             return "5";
         }
-        if (tempDay.matches("06")){
+        if (tempDay.equals("06")){
             return "6";
         }
-        if (tempDay.matches("07")){
+        if (tempDay.equals("07")){
             return "7";
         }
-        if (tempDay.matches("08")){
+        if (tempDay.equals("08")){
             return "8";
         }
-        else{
+        if (tempDay.equals("09")){
             return "9";
+        }
+        else {
+            return tempDay;
         }
 
     }
