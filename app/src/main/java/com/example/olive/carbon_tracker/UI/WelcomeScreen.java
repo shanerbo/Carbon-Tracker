@@ -1,9 +1,13 @@
 package com.example.olive.carbon_tracker.UI;
+
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -56,6 +60,27 @@ public class WelcomeScreen extends AppCompatActivity {
                 finish();
             }
         },exist_time);
+
+        setNotification();
     }
+
+    private void setNotification() {
+        NotificationCompat.Builder builder =
+                new NotificationCompat.Builder(this)
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle("Carbon Tracker")
+                .setContentText("Test");
+        PendingIntent resultPendingIntent = setPendingIntent();
+        builder.setContentIntent(resultPendingIntent);
+        int notificationID = 001;
+        NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        manager.notify(notificationID, builder.build());
+    }
+
+    private PendingIntent setPendingIntent() {
+        Intent resultIntent = new Intent(this, MainMenu.class);
+        return PendingIntent.getActivity(this, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+    }
+
 
 }
