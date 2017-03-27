@@ -1,12 +1,14 @@
 package com.example.olive.carbon_tracker.UI;
 import android.app.AlarmManager;
 import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import java.util.Calendar;
 import android.os.Handler;
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Window;
@@ -43,6 +45,8 @@ public class WelcomeScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        setAlarm();
+//        testNotification();
         getSupportActionBar().hide();
         setContentView(R.layout.activity_main);
 //------DataBase starup-----------------------
@@ -64,20 +68,30 @@ public class WelcomeScreen extends AppCompatActivity {
             }
         },exist_time);
 
-        setAlarm();
+
     }
 
     private void setAlarm() {
         Intent intent = new Intent(WelcomeScreen.this, AlarmReceiver.class);
-        intent.putExtra("Notification", getNotification());
-        PendingIntent alarmIntent = PendingIntent.getActivity(WelcomeScreen.this, 0, intent, 0);
+        PendingIntent alarmIntent = PendingIntent.getBroadcast(WelcomeScreen.this, 0, intent, 0);
+        singleton.setNotification(getNotification());
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.set(Calendar.HOUR_OF_DAY, 21);
+//        Calendar calendar = Calendar.getInstance();
+//        calendar.setTimeInMillis(System.currentTimeMillis());
+//        calendar.set(Calendar.HOUR_OF_DAY, 21);
+//
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+//        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmIntent);
+        alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,
+                SystemClock.elapsedRealtime() +
+                        1, alarmIntent);
+    }
 
-        AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
-        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmIntent);
+    private void testNotification() {
+        NotificationManager notificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        Notification notification = getNotification();
+        notificationManager.notify(0, notification);
     }
 
     private Notification getNotification() {
@@ -85,7 +99,12 @@ public class WelcomeScreen extends AppCompatActivity {
         builder.setContentTitle("Carbon Tracker");
         builder.setContentText("Test");
         builder.setSmallIcon(R.mipmap.ic_launcher);
+        builder.setContentIntent(makeNotificationIntent());
         return builder.build();
     }
 
+    private PendingIntent makeNotificationIntent() {
+        Intent intent = new Intent(this, MainMenu.class);
+        return PendingIntent.getActivity(this, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+    }
 }

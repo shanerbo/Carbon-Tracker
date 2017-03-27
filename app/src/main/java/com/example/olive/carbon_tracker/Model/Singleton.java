@@ -1,6 +1,7 @@
 package com.example.olive.carbon_tracker.Model;
 
 
+import android.app.Notification;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -37,6 +38,16 @@ public class Singleton {
 
 
     SQLiteDatabase CarInfoDB;
+
+    public Notification getNotification() {
+        return notification;
+    }
+
+    public void setNotification(Notification notification) {
+        this.notification = notification;
+    }
+
+    private Notification notification;
 //-------------------------------tips
     private List<String> ShuffledTipsForCar;
     private List<String> shuffledTipsForGas;
