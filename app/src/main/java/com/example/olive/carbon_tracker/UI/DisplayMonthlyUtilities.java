@@ -1,5 +1,7 @@
 package com.example.olive.carbon_tracker.UI;
 
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -31,6 +33,10 @@ public class DisplayMonthlyUtilities extends AppCompatActivity {
     Singleton singleton = Singleton.getInstance();
     private List<MonthlyUtilitiesData> MonthlyUtilitiesList = new ArrayList<>();
     private SQLiteDatabase myDataBase;
+    private enum databaseCountMode {
+        Journey,
+        Utilities
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +48,7 @@ public class DisplayMonthlyUtilities extends AppCompatActivity {
         showAllBills();
         SetupAddBtn();
         EditBill();
-
+        checkNotifications();
     }
 
     private void SetupAddBtn() {
@@ -150,6 +156,55 @@ public class DisplayMonthlyUtilities extends AppCompatActivity {
     }
 
     public void onBackPressed(){
+        checkNotifications();
         startActivity(new Intent(DisplayMonthlyUtilities.this, MainMenu.class));
     }
+
+    // Remake notifications when necessary
+    private void checkNotifications() {
+        int journeys = getDatabaseCount(databaseCountMode.Journey);
+        int utilities = getDatabaseCount(databaseCountMode.Utilities);
+        if (journeys < utilities) {
+            singleton.setNotification(makeNotification(databaseCountMode.Journey, journeys));
+        } else if (journeys > utilities) {
+            singleton.setNotification(makeNotification(databaseCountMode.Utilities, journeys));
+        }
+    }
+
+    private int getDatabaseCount(databaseCountMode mode) {
+        int count = 0;
+        if (mode == databaseCountMode.Journey) {
+            String countQuery = "SELECT  * FROM " + "JourneyInfoTable";
+            Cursor cursor = myDataBase.rawQuery(countQuery, null);
+            count = cursor.getCount();
+            cursor.close();
+        } else if (mode == databaseCountMode.Utilities) {
+            String countQuery = "SELECT  * FROM " + "UtilityInfoTable";
+            Cursor cursor = myDataBase.rawQuery(countQuery, null);
+            count = cursor.getCount();
+            cursor.close();
+        } else {
+            count = -1;
+        }
+        return count;
+    }
+
+    private Notification makeNotification(databaseCountMode mode, int count) {
+        Notification.Builder builder = new Notification.Builder(this);
+        builder.setContentTitle("Carbon Tracker");
+        if (mode == databaseCountMode.Journey) {
+            builder.setContentText(getString(R.string.journey_notification, count));
+        } else {
+            builder.setContentText(getString(R.string.utilities_notification, count));
+        }
+        builder.setSmallIcon(R.mipmap.ic_launcher);
+        builder.setContentIntent(makeNotificationIntent());
+        return builder.build();
+    }
+
+    private PendingIntent makeNotificationIntent() {
+        Intent intent = new Intent(this, DisplayMonthlyUtilities.class);
+        return PendingIntent.getActivity(this, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+    }
+
 }

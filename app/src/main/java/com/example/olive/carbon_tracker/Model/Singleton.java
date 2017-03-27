@@ -39,14 +39,6 @@ public class Singleton {
 
     SQLiteDatabase CarInfoDB;
 
-    public Notification getNotification() {
-        return notification;
-    }
-
-    public void setNotification(Notification notification) {
-        this.notification = notification;
-    }
-
     private Notification notification;
 //-------------------------------tips
     private List<String> ShuffledTipsForCar;
@@ -548,6 +540,11 @@ public class Singleton {
         this.highestCO2FromGas = highestCO2FromGas;
     }
 
+    public Notification getNotification() {
+        return notification;
+    }
 
-
+    public void setNotification(Notification notification) {
+        this.notification = notification;
+    }
 }

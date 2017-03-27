@@ -1,14 +1,13 @@
 package com.example.olive.carbon_tracker.UI;
 import android.app.AlarmManager;
 import android.app.Notification;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import java.util.Calendar;
 import android.os.Handler;
-import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Window;
@@ -22,7 +21,6 @@ import com.example.olive.carbon_tracker.Model.SuperUltraInfoDataBaseHelper;
 import com.example.olive.carbon_tracker.R;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -39,6 +37,10 @@ public class WelcomeScreen extends AppCompatActivity {
     private List<String> allRandomEnegyTips = new ArrayList<>();
     private List<String> allRandomGasTips = new ArrayList<>();
     private List<String> allRandomUnrelatedTips = new ArrayList<>();
+    private enum databaseCountMode {
+        Journey,
+        Utilities
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,30 +76,55 @@ public class WelcomeScreen extends AppCompatActivity {
     private void setAlarm() {
         Intent intent = new Intent(WelcomeScreen.this, AlarmReceiver.class);
         PendingIntent alarmIntent = PendingIntent.getBroadcast(WelcomeScreen.this, 0, intent, 0);
-        singleton.setNotification(getNotification());
+        checkNotifications();
 
-//        Calendar calendar = Calendar.getInstance();
-//        calendar.setTimeInMillis(System.currentTimeMillis());
-//        calendar.set(Calendar.HOUR_OF_DAY, 21);
-//
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.set(Calendar.HOUR_OF_DAY, 21);
+
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-//        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmIntent);
-        alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                SystemClock.elapsedRealtime() +
-                        1, alarmIntent);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmIntent);
     }
 
-    private void testNotification() {
-        NotificationManager notificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        Notification notification = getNotification();
-        notificationManager.notify(0, notification);
+    // Remake notifications when necessary
+    private void checkNotifications() {
+        int journeys = getDatabaseCount(databaseCountMode.Journey);
+        int utilities = getDatabaseCount(databaseCountMode.Utilities);
+        if (journeys < utilities) {
+            singleton.setNotification(makeNotification(databaseCountMode.Journey, journeys));
+        } else if (journeys > utilities) {
+            singleton.setNotification(makeNotification(databaseCountMode.Utilities, journeys));
+        } else {
+            singleton.setNotification(makeNotification(databaseCountMode.Journey, journeys));
+        }
     }
 
-    private Notification getNotification() {
+    private int getDatabaseCount(databaseCountMode mode) {
+        int count = 0;
+        if (mode == databaseCountMode.Journey) {
+            String countQuery = "SELECT  * FROM " + "JourneyInfoTable";
+            Cursor cursor = myDataBase.rawQuery(countQuery, null);
+            count = cursor.getCount();
+            cursor.close();
+        } else if (mode == databaseCountMode.Utilities) {
+            String countQuery = "SELECT  * FROM " + "UtilityInfoTable";
+            Cursor cursor = myDataBase.rawQuery(countQuery, null);
+            count = cursor.getCount();
+            cursor.close();
+        } else {
+            count = -1;
+        }
+        return count;
+    }
+
+    private Notification makeNotification(databaseCountMode mode, int count) {
         Notification.Builder builder = new Notification.Builder(this);
         builder.setContentTitle("Carbon Tracker");
-        builder.setContentText("Test");
+        if (mode == databaseCountMode.Journey) {
+            builder.setContentText(getString(R.string.journey_notification, count));
+        } else {
+            builder.setContentText(getString(R.string.utilities_notification, count));
+        }
         builder.setSmallIcon(R.mipmap.ic_launcher);
         builder.setContentIntent(makeNotificationIntent());
         return builder.build();

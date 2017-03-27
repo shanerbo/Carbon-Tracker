@@ -8,7 +8,7 @@ import android.content.Intent;
 import android.widget.Toast;
 
 /**
- *
+ * Launch a notification once the alarm goes off
  */
 
 public class AlarmReceiver extends BroadcastReceiver {
@@ -21,6 +21,6 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         Notification notification = singleton.getNotification();
         notificationManager.notify(1, notification);
-        Toast.makeText(context, "Alarm Received", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(context, "Alarm Received", Toast.LENGTH_SHORT).show();
     }
 }

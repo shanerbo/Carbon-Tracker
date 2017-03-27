@@ -126,6 +126,8 @@
     <string name="unrelated_tip_7">You drove %d KM on city,Being stuck in traffic wastes gas and unneccessarily creates CO2.
         Use traffic websites and apps and go a different way or wait.</string>
     <string name="unrelated_tip_8"> You have used Bus and Skytrain as your daily transportation %d times! Keep it up!</string>
+    <string name="journey_notification">You have entered %d journeys; want to enter more?</string>
+    <string name="utilities_notification">You entered %d bills; want to add more?</string>
 
 
 </resources>

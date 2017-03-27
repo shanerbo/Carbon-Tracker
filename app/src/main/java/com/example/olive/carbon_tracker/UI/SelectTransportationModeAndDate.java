@@ -1,10 +1,12 @@
 package com.example.olive.carbon_tracker.UI;
 
 import android.app.Activity;
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.LauncherApps;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
@@ -17,13 +19,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.olive.carbon_tracker.Model.Singleton;
 import com.example.olive.carbon_tracker.Model.SuperUltraInfoDataBaseHelper;
 import com.example.olive.carbon_tracker.R;
 
-import java.nio.channels.SelectionKey;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -36,6 +36,10 @@ public class SelectTransportationModeAndDate extends AppCompatActivity {
     private static int UserTransportationMode;
     private SQLiteDatabase RouteDB;
     private long JourneyPosition = singleton.getEditPostion_Journey();
+    private enum databaseCountMode {
+        Journey,
+        Utilities
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +55,7 @@ public class SelectTransportationModeAndDate extends AppCompatActivity {
         setButton(R.id.ID_button_mode_cancel);
         viewCurrentDate();
         setupCalendarButton();
-
+        checkNotifications();
     }
     public void onRestart() {
         super.onRestart();
@@ -202,10 +206,59 @@ public class SelectTransportationModeAndDate extends AppCompatActivity {
             Intent goBackToJourneyList = DisplayJourneyList.makeIntent(SelectTransportationModeAndDate.this);
             startActivity(goBackToJourneyList);
         }else {
+            checkNotifications();
             Intent goBackToMainMenu = MainMenu.makeIntent(SelectTransportationModeAndDate.this);
             startActivity(goBackToMainMenu);
         }
     }
+
+    // Remake notifications when necessary
+    private void checkNotifications() {
+        int journeys = getDatabaseCount(databaseCountMode.Journey);
+        int utilities = getDatabaseCount(databaseCountMode.Utilities);
+        if (journeys < utilities) {
+            singleton.setNotification(makeNotification(databaseCountMode.Journey, journeys));
+        } else if (journeys > utilities) {
+            singleton.setNotification(makeNotification(databaseCountMode.Utilities, journeys));
+        }
+    }
+
+    private int getDatabaseCount(databaseCountMode mode) {
+        int count = 0;
+        if (mode == databaseCountMode.Journey) {
+            String countQuery = "SELECT  * FROM " + "JourneyInfoTable";
+            Cursor cursor = RouteDB.rawQuery(countQuery, null);
+            count = cursor.getCount();
+            cursor.close();
+        } else if (mode == databaseCountMode.Utilities) {
+            String countQuery = "SELECT  * FROM " + "UtilityInfoTable";
+            Cursor cursor = RouteDB.rawQuery(countQuery, null);
+            count = cursor.getCount();
+            cursor.close();
+        } else {
+            count = -1;
+        }
+        return count;
+    }
+
+    private Notification makeNotification(databaseCountMode mode, int count) {
+        Notification.Builder builder = new Notification.Builder(this);
+        builder.setContentTitle("Carbon Tracker");
+        if (mode == databaseCountMode.Journey) {
+            builder.setContentText(getString(R.string.journey_notification, count));
+        } else {
+            builder.setContentText(getString(R.string.utilities_notification, count));
+        }
+        builder.setSmallIcon(R.mipmap.ic_launcher);
+        builder.setContentIntent(makeNotificationIntent());
+        return builder.build();
+    }
+
+    private PendingIntent makeNotificationIntent() {
+        Intent intent = new Intent(this, SelectTransportationModeAndDate.class);
+        return PendingIntent.getActivity(this, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+    }
+
     public static Intent makeIntent (Context context) {
         return new Intent(context, SelectTransportationModeAndDate.class);
     }
