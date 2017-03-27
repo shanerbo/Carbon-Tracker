@@ -40,6 +40,7 @@ public class Singleton {
     SQLiteDatabase CarInfoDB;
 
     private Notification notification;
+    private boolean addJourneyToday = false;
 //-------------------------------tips
     private List<String> ShuffledTipsForCar;
     private List<String> shuffledTipsForGas;
@@ -448,7 +449,7 @@ public class Singleton {
         return CarInfoDB;
     }
 
-    //-----------------------------------Journey functions-------------------------------------------
+    //-----------------------------------MoreJourneys functions-------------------------------------------
     public List<Journey> getUsersJourneys() {
         return journeyList;
     }
@@ -457,7 +458,7 @@ public class Singleton {
         journeyList = JourneyList;
     }
 
-//    public void addUserJourney(Journey journey) {
+//    public void addUserJourney(MoreJourneys journey) {
 //        journeyList.add(journey);
 //    }
 
@@ -546,5 +547,13 @@ public class Singleton {
 
     public void setNotification(Notification notification) {
         this.notification = notification;
+    }
+
+    public boolean isAddJourneyToday() {
+        return addJourneyToday;
+    }
+
+    public void AddedJourneyToday() {
+        addJourneyToday = true;
     }
 }

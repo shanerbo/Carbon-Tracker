@@ -193,7 +193,7 @@ public class DisplayMonthlyUtilities extends AppCompatActivity {
         Notification.Builder builder = new Notification.Builder(this);
         builder.setContentTitle("Carbon Tracker");
         if (mode == databaseCountMode.Journey) {
-            builder.setContentText(getString(R.string.journey_notification, count));
+            builder.setContentText(getString(R.string.more_journeys_notification, count));
         } else {
             builder.setContentText(getString(R.string.utilities_notification, count));
         }

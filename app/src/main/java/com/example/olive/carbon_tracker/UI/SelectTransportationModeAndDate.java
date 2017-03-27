@@ -168,7 +168,7 @@ public class SelectTransportationModeAndDate extends AppCompatActivity {
                             finish();
                         }else {
                             new AlertDialog.Builder(SelectTransportationModeAndDate.this)
-                                    .setTitle("Delete Journey")
+                                    .setTitle("Delete MoreJourneys")
                                     .setMessage(R.string.DeleteJourneyWarning)
                                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                         @Override
@@ -245,7 +245,7 @@ public class SelectTransportationModeAndDate extends AppCompatActivity {
         Notification.Builder builder = new Notification.Builder(this);
         builder.setContentTitle("Carbon Tracker");
         if (mode == databaseCountMode.Journey) {
-            builder.setContentText(getString(R.string.journey_notification, count));
+            builder.setContentText(getString(R.string.more_journeys_notification, count));
         } else {
             builder.setContentText(getString(R.string.utilities_notification, count));
         }
