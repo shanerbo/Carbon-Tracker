@@ -1,13 +1,12 @@
 package com.example.olive.carbon_tracker.UI;
 import android.app.AlarmManager;
-import android.app.NotificationManager;
+import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import java.util.Calendar;
 import android.os.Handler;
-import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Window;
@@ -38,7 +37,6 @@ public class WelcomeScreen extends AppCompatActivity {
     private List<String> allRandomEnegyTips = new ArrayList<>();
     private List<String> allRandomGasTips = new ArrayList<>();
     private List<String> allRandomUnrelatedTips = new ArrayList<>();
-    private PendingIntent alarmIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,12 +64,13 @@ public class WelcomeScreen extends AppCompatActivity {
             }
         },exist_time);
 
-        setNotification();
+        setAlarm();
     }
 
     private void setAlarm() {
         Intent intent = new Intent(WelcomeScreen.this, AlarmReceiver.class);
-        alarmIntent = PendingIntent.getActivity(WelcomeScreen.this, 0, intent, 0);
+        intent.putExtra("Notification", getNotification());
+        PendingIntent alarmIntent = PendingIntent.getActivity(WelcomeScreen.this, 0, intent, 0);
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
@@ -81,22 +80,12 @@ public class WelcomeScreen extends AppCompatActivity {
         alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmIntent);
     }
 
-    private void setNotification() {
-        NotificationCompat.Builder builder =
-                new NotificationCompat.Builder(this)
-                        .setSmallIcon(R.mipmap.ic_launcher)
-                        .setContentTitle("Carbon Tracker")
-                        .setContentText("Test");
-        PendingIntent resultPendingIntent = setPendingIntent();
-        builder.setContentIntent(resultPendingIntent);
-        int notificationID = 001;
-        NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        manager.notify(notificationID, builder.build());
-    }
-
-    private PendingIntent setPendingIntent() {
-        Intent resultIntent = new Intent(WelcomeScreen.this, MainMenu.class);
-        return PendingIntent.getActivity(WelcomeScreen.this, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+    private Notification getNotification() {
+        Notification.Builder builder = new Notification.Builder(this);
+        builder.setContentTitle("Carbon Tracker");
+        builder.setContentText("Test");
+        builder.setSmallIcon(R.mipmap.ic_launcher);
+        return builder.build();
     }
 
 }
