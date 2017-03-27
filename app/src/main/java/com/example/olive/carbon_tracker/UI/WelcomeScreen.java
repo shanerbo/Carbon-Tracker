@@ -5,7 +5,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
-import android.icu.util.Calendar;
+import java.util.Calendar;
 import android.os.Handler;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -69,17 +69,17 @@ public class WelcomeScreen extends AppCompatActivity {
         setNotification();
     }
 
-//    private void setAlarm() {
-//        Intent intent = new Intent(WelcomeScreen.this, AlarmReceiver.class);
-//        alarmIntent = PendingIntent.getActivity(WelcomeScreen.this, 0, intent, 0);
-//
-//        Calendar calendar = Calendar.getInstance();
-//        calendar.setTimeInMillis(System.currentTimeMillis());
-//        calendar.set(Calendar.HOUR_OF_DAY, 21);
-//
-//        AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
-//        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmIntent);
-//    }
+    private void setAlarm() {
+        Intent intent = new Intent(WelcomeScreen.this, AlarmReceiver.class);
+        alarmIntent = PendingIntent.getActivity(WelcomeScreen.this, 0, intent, 0);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.set(Calendar.HOUR_OF_DAY, 21);
+
+        AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmIntent);
+    }
 
     private void setNotification() {
         NotificationCompat.Builder builder =
