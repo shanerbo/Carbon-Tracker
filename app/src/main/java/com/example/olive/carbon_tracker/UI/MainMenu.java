@@ -24,7 +24,6 @@ import com.example.olive.carbon_tracker.R;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -52,6 +51,7 @@ public class MainMenu extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         myDataBase = SQLiteDatabase.openOrCreateDatabase(DatabaseHelper.DB_PATH + DatabaseHelper.DB_NAME,null);
+        getLatestBill();
         checkNotifications();
         generateTipsForCar(singleton.getHighestCO2FromCar());
         generateTipsForEnegy(singleton.getHighestCO2FromEnegy());
@@ -333,15 +333,14 @@ public class MainMenu extends AppCompatActivity {
         return new Intent(context, MainMenu.class);
     }
 
-    //TODO: update other activities
     // Remake notifications when necessary
     private void checkNotifications() {
         int journeys = getDatabaseCount(databaseCountMode.MoreJourneys);
         int utilities = getDatabaseCount(databaseCountMode.MoreUtilities);
         long dateDiff = getDateDifference(singleton.getLatestBill(), singleton.getCurrentDate());
-        if (singleton.isAddJourneyToday()) {
+        if (!singleton.isAddJourneyToday()) {
             singleton.setNotification(makeNotification(databaseCountMode.NoRecentJourneys));
-        } else if (dateDiff > NUM_DAYS_REMINDER) {
+        } else if (dateDiff >= NUM_DAYS_REMINDER) {
             singleton.setNotification(makeNotification(databaseCountMode.NoRecentUtilities));
         } else if (journeys > utilities) {
             singleton.setNotification(makeNotification(databaseCountMode.MoreUtilities, utilities));
@@ -374,7 +373,10 @@ public class MainMenu extends AppCompatActivity {
         if (mode == databaseCountMode.NoRecentJourneys) {
             builder.setContentText("You have not entered a journey today; want to enter one now?");
         } else {
-            builder.setContentText("You have not entered a journey today; want to enter one now?");
+            builder.setContentText(
+                    "You have not entered utility in over a month and a half;" +
+                            "want to enter one now?"
+            );
         }
         builder.setSmallIcon(R.mipmap.ic_launcher);
         builder.setContentIntent(makeNotificationIntent(mode));
@@ -418,5 +420,19 @@ public class MainMenu extends AppCompatActivity {
                     " dateDifference calculation failed", Toast.LENGTH_LONG).show();
         }
         return -1;
+    }
+
+    private void getLatestBill() {
+        if (getDatabaseCount(databaseCountMode.MoreUtilities) == 0) {
+            return;
+        }
+
+        Cursor cursor = myDataBase.rawQuery("select * from " +
+                "UtilityInfoTable order by UtilityCreationDate asc",null);
+
+        cursor.moveToLast();
+        String creationDate = cursor.getString(8);
+        cursor.close();
+        singleton.setLatestBill(creationDate);
     }
 }

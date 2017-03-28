@@ -170,9 +170,9 @@ public class DisplayMonthlyUtilities extends AppCompatActivity {
         int journeys = getDatabaseCount(databaseCountMode.MoreJourneys);
         int utilities = getDatabaseCount(databaseCountMode.MoreUtilities);
         long dateDiff = getDateDifference(singleton.getLatestBill(), singleton.getCurrentDate());
-        if (singleton.isAddJourneyToday()) {
+        if (!singleton.isAddJourneyToday()) {
             singleton.setNotification(makeNotification(databaseCountMode.NoRecentJourneys));
-        } else if (dateDiff > NUM_DAYS_REMINDER) {
+        } else if (dateDiff >= NUM_DAYS_REMINDER) {
             singleton.setNotification(makeNotification(databaseCountMode.NoRecentUtilities));
         } else if (journeys > utilities) {
             singleton.setNotification(makeNotification(databaseCountMode.MoreUtilities, utilities));
@@ -205,7 +205,10 @@ public class DisplayMonthlyUtilities extends AppCompatActivity {
         if (mode == databaseCountMode.NoRecentJourneys) {
             builder.setContentText("You have not entered a journey today; want to enter one now?");
         } else {
-            builder.setContentText("You have not entered a journey today; want to enter one now?");
+            builder.setContentText(
+                    "You have not entered utility in over a month and a half;" +
+                            "want to enter one now?"
+            );
         }
         builder.setSmallIcon(R.mipmap.ic_launcher);
         builder.setContentIntent(makeNotificationIntent(mode));
@@ -241,6 +244,7 @@ public class DisplayMonthlyUtilities extends AppCompatActivity {
         try {
             Date start = sdf.parse(StartDate);
             Date end = sdf.parse(EndDate);
+
             long dateDifference = end.getTime() - start.getTime();
             return dateDifference / 1000 / 60 / 60 / 24;
         } catch (Exception e) {

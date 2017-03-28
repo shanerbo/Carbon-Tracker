@@ -1,10 +1,8 @@
 package com.example.olive.carbon_tracker.UI;
 import android.app.AlarmManager;
-import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.text.SimpleDateFormat;
@@ -14,7 +12,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 import com.example.olive.carbon_tracker.Model.AlarmReceiver;
 import com.example.olive.carbon_tracker.Model.DatabaseHelper;
@@ -24,7 +21,6 @@ import com.example.olive.carbon_tracker.Model.SuperUltraInfoDataBaseHelper;
 import com.example.olive.carbon_tracker.R;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**

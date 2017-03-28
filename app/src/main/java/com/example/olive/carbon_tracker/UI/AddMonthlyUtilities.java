@@ -455,6 +455,8 @@ public class AddMonthlyUtilities extends AppCompatActivity {
         cv.put(SuperUltraInfoDataBaseHelper.Utility_TotalDay,dateDifference);
         cv.put(SuperUltraInfoDataBaseHelper.Utility_NumberOfSharing,numOfPeople);
         cv.put(SuperUltraInfoDataBaseHelper.Utility_AverageCO2,CO2PerDayPerPerson);
+        setLatestBill();
+        cv.put(SuperUltraInfoDataBaseHelper.Utility_CreationDate, singleton.getLatestBill());
         long idPassBack = UtilityDB.insert(SuperUltraInfoDataBaseHelper.Utility_Table,null,cv);
         UtilityDB.close();
         return  idPassBack;
