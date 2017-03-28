@@ -71,7 +71,12 @@ public class WelcomeScreen extends AppCompatActivity {
 
     private void setAlarm() {
         Intent intent = new Intent(WelcomeScreen.this, AlarmReceiver.class);
-        PendingIntent alarmIntent = PendingIntent.getBroadcast(WelcomeScreen.this, 0, intent, 0);
+        PendingIntent alarmIntent = PendingIntent.getBroadcast(
+                this,
+                0,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT
+        );
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
