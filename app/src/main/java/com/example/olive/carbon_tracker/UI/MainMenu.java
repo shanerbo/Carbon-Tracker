@@ -369,14 +369,11 @@ public class MainMenu extends AppCompatActivity {
 
     private Notification makeNotification(databaseCountMode mode) {
         Notification.Builder builder = new Notification.Builder(this);
-        builder.setContentTitle("Carbon Tracker");
+        builder.setContentTitle(getString(R.string.app_name));
         if (mode == databaseCountMode.NoRecentJourneys) {
-            builder.setContentText("You have not entered a journey today; want to enter one now?");
+            builder.setContentText(getString(R.string.no_recent_journeys_notification));
         } else {
-            builder.setContentText(
-                    "You have not entered utility in over a month and a half;" +
-                            "want to enter one now?"
-            );
+            builder.setContentText(getString(R.string.no_utilities_in_a_month_and_a_half));
         }
         builder.setSmallIcon(R.mipmap.ic_launcher);
         builder.setContentIntent(makeNotificationIntent(mode));
@@ -385,9 +382,9 @@ public class MainMenu extends AppCompatActivity {
 
     private Notification makeNotification(databaseCountMode mode, int count) {
         Notification.Builder builder = new Notification.Builder(this);
-        builder.setContentTitle("Carbon Tracker");
+        builder.setContentTitle(getString(R.string.app_name));
         if (mode == databaseCountMode.MoreUtilities) {
-            builder.setContentText(getString(R.string.utilities_notification, count));
+            builder.setContentText(getString(R.string.more_utilities_notification, count));
         } else {
             builder.setContentText(getString(R.string.more_journeys_notification, count));
         }

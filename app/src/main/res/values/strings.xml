@@ -127,7 +127,9 @@
         Use traffic websites and apps and go a different way or wait.</string>
     <string name="unrelated_tip_8"> You have used Bus and Skytrain as your daily transportation %d times! Keep it up!</string>
     <string name="more_journeys_notification">You have entered %d journeys; want to enter more?</string>
-    <string name="utilities_notification">You entered %d utility bills; want to add more?</string>
+    <string name="more_utilities_notification">You entered %d utility bills; want to add more?</string>
+    <string name="no_recent_journeys_notification">You have not entered a journey today; want to enter one now?</string>
+    <string name="no_utilities_in_a_month_and_a_half">You have not entered utility in over a month and a half; want to enter one now?</string>
 
 
 </resources>
