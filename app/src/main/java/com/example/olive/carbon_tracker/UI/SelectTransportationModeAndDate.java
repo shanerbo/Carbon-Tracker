@@ -215,6 +215,10 @@ public class SelectTransportationModeAndDate extends AppCompatActivity {
         }
     }
 
+    public static Intent makeIntent(Context context) {
+        return new Intent(context, SelectTransportationModeAndDate.class);
+    }
+
     // Remake notifications when necessary
     private void checkNotifications() {
         int journeys = getDatabaseCount(databaseCountMode.MoreJourneys);
