@@ -6,12 +6,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.example.olive.carbon_tracker.Model.AlarmReceiver;
 import com.example.olive.carbon_tracker.Model.DatabaseHelper;
@@ -21,12 +24,14 @@ import com.example.olive.carbon_tracker.Model.SuperUltraInfoDataBaseHelper;
 import com.example.olive.carbon_tracker.R;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
  * first screen the user sees as the app loads the data
  */
 public class WelcomeScreen extends AppCompatActivity {
+    private static final long NUM_DAYS_REMINDER = 43;
     private static int exist_time = 3000;
     Singleton singleton = Singleton.getInstance();
     public DatabaseHelper myHelper;
@@ -38,9 +43,10 @@ public class WelcomeScreen extends AppCompatActivity {
     private List<String> allRandomGasTips = new ArrayList<>();
     private List<String> allRandomUnrelatedTips = new ArrayList<>();
     private enum databaseCountMode {
-        NoJourneys,
+        NoRecentJourneys,
         MoreJourneys,
-        Utilities
+        NoRecentUtilities,
+        MoreUtilities
     }
 
     @Override
@@ -48,8 +54,8 @@ public class WelcomeScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        setCurrentDate();
         setAlarm();
-//        testNotification();
         getSupportActionBar().hide();
         setContentView(R.layout.activity_main);
 //------DataBase starup-----------------------
@@ -87,28 +93,30 @@ public class WelcomeScreen extends AppCompatActivity {
         alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmIntent);
     }
 
-    //TODO: update other activities
     // Remake notifications when necessary
     private void checkNotifications() {
         int journeys = getDatabaseCount(databaseCountMode.MoreJourneys);
-        int utilities = getDatabaseCount(databaseCountMode.Utilities);
+        int utilities = getDatabaseCount(databaseCountMode.MoreUtilities);
+        long dateDiff = getDateDifference(singleton.getLatestBill(), singleton.getCurrentDate());
         if (singleton.isAddJourneyToday()) {
-            singleton.setNotification(makeNotification(databaseCountMode.NoJourneys, journeys));
+            singleton.setNotification(makeNotification(databaseCountMode.NoRecentJourneys));
+        } else if (dateDiff > NUM_DAYS_REMINDER) {
+            singleton.setNotification(makeNotification(databaseCountMode.NoRecentUtilities));
         } else if (journeys > utilities) {
-            singleton.setNotification(makeNotification(databaseCountMode.Utilities, journeys));
+            singleton.setNotification(makeNotification(databaseCountMode.MoreUtilities, utilities));
         } else {
             singleton.setNotification(makeNotification(databaseCountMode.MoreJourneys, journeys));
         }
     }
 
     private int getDatabaseCount(databaseCountMode mode) {
-        int count = 0;
+        int count;
         if (mode == databaseCountMode.MoreJourneys) {
             String countQuery = "SELECT  * FROM " + "JourneyInfoTable";
             Cursor cursor = myDataBase.rawQuery(countQuery, null);
             count = cursor.getCount();
             cursor.close();
-        } else if (mode == databaseCountMode.Utilities) {
+        } else if (mode == databaseCountMode.MoreUtilities) {
             String countQuery = "SELECT  * FROM " + "UtilityInfoTable";
             Cursor cursor = myDataBase.rawQuery(countQuery, null);
             count = cursor.getCount();
@@ -119,12 +127,23 @@ public class WelcomeScreen extends AppCompatActivity {
         return count;
     }
 
+    private Notification makeNotification(databaseCountMode mode) {
+        Notification.Builder builder = new Notification.Builder(this);
+        builder.setContentTitle("Carbon Tracker");
+        if (mode == databaseCountMode.NoRecentJourneys) {
+            builder.setContentText("You have not entered a journey today; want to enter one now?");
+        } else {
+            builder.setContentText("You have not entered a journey today; want to enter one now?");
+        }
+        builder.setSmallIcon(R.mipmap.ic_launcher);
+        builder.setContentIntent(makeNotificationIntent(mode));
+        return builder.build();
+    }
+
     private Notification makeNotification(databaseCountMode mode, int count) {
         Notification.Builder builder = new Notification.Builder(this);
         builder.setContentTitle("Carbon Tracker");
-        if (mode == databaseCountMode.NoJourneys) {
-            builder.setContentText("You have not entered a journey today; want to enter one now?");
-        } else if (mode == databaseCountMode.Utilities) {
+        if (mode == databaseCountMode.MoreUtilities) {
             builder.setContentText(getString(R.string.utilities_notification, count));
         } else {
             builder.setContentText(getString(R.string.more_journeys_notification, count));
@@ -135,12 +154,33 @@ public class WelcomeScreen extends AppCompatActivity {
     }
 
     private PendingIntent makeNotificationIntent(databaseCountMode mode) {
-        Intent intent = new Intent();
-        if (mode == databaseCountMode.Utilities) {
+        Intent intent;
+        if (mode == databaseCountMode.MoreUtilities
+                || mode == databaseCountMode.NoRecentUtilities) {
             intent = new Intent(this, DisplayMonthlyUtilities.class);
         } else {
             intent = new Intent(this, SelectTransportationModeAndDate.class);
         }
         return PendingIntent.getActivity(this, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+    }
+
+    private long getDateDifference(String StartDate, String EndDate) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date start = sdf.parse(StartDate);
+            Date end = sdf.parse(EndDate);
+            long dateDifference = end.getTime() - start.getTime();
+            return dateDifference / 1000 / 60 / 60 / 24;
+        } catch (Exception e) {
+            Toast.makeText(WelcomeScreen.this, "ERROR: WelcomeScreen" +
+                    " dateDifference calculation failed", Toast.LENGTH_LONG).show();
+        }
+        return -1;
+    }
+
+    private void setCurrentDate() {
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        singleton.setCurrentDate(sdf.format(calendar.getTime()));
     }
 }

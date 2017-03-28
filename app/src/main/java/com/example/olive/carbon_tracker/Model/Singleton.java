@@ -41,6 +41,8 @@ public class Singleton {
 
     private Notification notification;
     private boolean addJourneyToday = false;
+    private String currentDate;
+    private String latestBill;
 //-------------------------------tips
     private List<String> ShuffledTipsForCar;
     private List<String> shuffledTipsForGas;
@@ -449,7 +451,7 @@ public class Singleton {
         return CarInfoDB;
     }
 
-    //-----------------------------------MoreJourneys functions-------------------------------------------
+    //-----------------------------------Journeys functions-------------------------------------------
     public List<Journey> getUsersJourneys() {
         return journeyList;
     }
@@ -458,7 +460,7 @@ public class Singleton {
         journeyList = JourneyList;
     }
 
-//    public void addUserJourney(MoreJourneys journey) {
+//    public void addUserJourney(Journeys journey) {
 //        journeyList.add(journey);
 //    }
 
@@ -553,7 +555,23 @@ public class Singleton {
         return addJourneyToday;
     }
 
-    public void AddedJourneyToday() {
+    public void addedJourneyToday() {
         addJourneyToday = true;
+    }
+
+    public String getCurrentDate() {
+        return currentDate;
+    }
+
+    public void setCurrentDate(String currentDate) {
+        this.currentDate = currentDate;
+    }
+
+    public String getLatestBill() {
+        return latestBill;
+    }
+
+    public void setLatestBill(String latestBill) {
+        this.latestBill = latestBill;
     }
 }

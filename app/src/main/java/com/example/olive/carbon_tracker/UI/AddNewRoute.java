@@ -187,7 +187,7 @@ public class AddNewRoute extends AppCompatActivity {
                         }
                         else {
                             singleton.userFinishAdd();
-                            singleton.AddedJourneyToday();
+                            singleton.addedJourneyToday();
                             calculateCO2(userInput);
                             Intent ConfirmRoute = MainMenu.makeIntent(AddNewRoute.this);
                             startActivity(ConfirmRoute);

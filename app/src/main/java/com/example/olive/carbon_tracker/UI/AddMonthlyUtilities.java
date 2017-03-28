@@ -24,6 +24,7 @@ import com.example.olive.carbon_tracker.R;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -376,7 +377,7 @@ public class AddMonthlyUtilities extends AppCompatActivity {
                                         singleton.userFinishAdd_MonthlyUtilities();
                                     }
                                 }
-
+                            setLatestBill();
                             startActivity(new Intent(AddMonthlyUtilities.this, DisplayMonthlyUtilities.class));
                             finish();
                         }
@@ -509,5 +510,9 @@ public class AddMonthlyUtilities extends AppCompatActivity {
         finish();
     }
 
-
+    private void setLatestBill() {
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        singleton.setLatestBill(sdf.format(calendar.getTime()));
+    }
 }

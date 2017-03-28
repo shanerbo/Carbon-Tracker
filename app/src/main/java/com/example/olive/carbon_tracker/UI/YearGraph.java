@@ -127,7 +127,7 @@ public class YearGraph extends AppCompatActivity {
             LineDataSet busDataSet = new LineDataSet(busEntires, "Bus");
             LineDataSet carDataSet = new LineDataSet(carEntires, "Car");
             LineDataSet skytrainDataSet = new LineDataSet(skytrainEntires, "Sky Train");
-            LineDataSet utilityDataSet = new LineDataSet(utilityEntires, "Utilities");
+            LineDataSet utilityDataSet = new LineDataSet(utilityEntires, "MoreUtilities");
 
             busDataSet.setLineWidth(0f);
             busDataSet.setCircleRadius(6f);
