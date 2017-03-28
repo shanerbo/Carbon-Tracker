@@ -37,7 +37,8 @@ public class SelectTransportationModeAndDate extends AppCompatActivity {
     private SQLiteDatabase RouteDB;
     private long JourneyPosition = singleton.getEditPostion_Journey();
     private enum databaseCountMode {
-        Journey,
+        NoJourneys,
+        MoreJourneys,
         Utilities
     }
 
@@ -214,18 +215,20 @@ public class SelectTransportationModeAndDate extends AppCompatActivity {
 
     // Remake notifications when necessary
     private void checkNotifications() {
-        int journeys = getDatabaseCount(databaseCountMode.Journey);
+        int journeys = getDatabaseCount(databaseCountMode.MoreJourneys);
         int utilities = getDatabaseCount(databaseCountMode.Utilities);
-        if (journeys < utilities) {
-            singleton.setNotification(makeNotification(databaseCountMode.Journey, journeys));
+        if (singleton.isAddJourneyToday()) {
+            singleton.setNotification(makeNotification(databaseCountMode.NoJourneys, journeys));
         } else if (journeys > utilities) {
             singleton.setNotification(makeNotification(databaseCountMode.Utilities, journeys));
+        } else {
+            singleton.setNotification(makeNotification(databaseCountMode.MoreJourneys, journeys));
         }
     }
 
     private int getDatabaseCount(databaseCountMode mode) {
         int count = 0;
-        if (mode == databaseCountMode.Journey) {
+        if (mode == databaseCountMode.MoreJourneys) {
             String countQuery = "SELECT  * FROM " + "JourneyInfoTable";
             Cursor cursor = RouteDB.rawQuery(countQuery, null);
             count = cursor.getCount();
@@ -244,23 +247,25 @@ public class SelectTransportationModeAndDate extends AppCompatActivity {
     private Notification makeNotification(databaseCountMode mode, int count) {
         Notification.Builder builder = new Notification.Builder(this);
         builder.setContentTitle("Carbon Tracker");
-        if (mode == databaseCountMode.Journey) {
-            builder.setContentText(getString(R.string.more_journeys_notification, count));
-        } else {
+        if (mode == databaseCountMode.NoJourneys) {
+            builder.setContentText("You have not entered a journey today; want to enter one now?");
+        } else if (mode == databaseCountMode.Utilities) {
             builder.setContentText(getString(R.string.utilities_notification, count));
+        } else {
+            builder.setContentText(getString(R.string.more_journeys_notification, count));
         }
         builder.setSmallIcon(R.mipmap.ic_launcher);
-        builder.setContentIntent(makeNotificationIntent());
+        builder.setContentIntent(makeNotificationIntent(mode));
         return builder.build();
     }
 
-    private PendingIntent makeNotificationIntent() {
-        Intent intent = new Intent(this, SelectTransportationModeAndDate.class);
+    private PendingIntent makeNotificationIntent(databaseCountMode mode) {
+        Intent intent = new Intent();
+        if (mode == databaseCountMode.Utilities) {
+            intent = new Intent(this, DisplayMonthlyUtilities.class);
+        } else {
+            intent = new Intent(this, SelectTransportationModeAndDate.class);
+        }
         return PendingIntent.getActivity(this, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
-
-    public static Intent makeIntent (Context context) {
-        return new Intent(context, SelectTransportationModeAndDate.class);
-    }
-
 }
