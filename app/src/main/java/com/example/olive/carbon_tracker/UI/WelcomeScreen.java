@@ -78,7 +78,7 @@ public class WelcomeScreen extends AppCompatActivity {
         calendar.set(Calendar.HOUR_OF_DAY, 21);
 
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmIntent);
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmIntent);
     }
 
     private void setDates() {
