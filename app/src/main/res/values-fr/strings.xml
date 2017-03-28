@@ -1,0 +1,136 @@
+<resources>
+    <string name="app_name">"Traqueur De Carbone"</string>
+    <string name="pie_chart">"Graphique \"Camembert\""</string>
+    <string name="main_menu">"Menu principal"</string>
+    <string name="new_journey">"Nouveau Journey"</string>
+    <string name="select_journey">"Sélectionnez Journey"</string>
+    <string name="carbon_footprint">"Empreinte carbone"</string>
+    <string name="title_activity_display_route_list">"DisplayRouteList"</string>
+    <string name="large_text">"
+        \"Liste de route\"
+    "</string>
+    <!--CreateNewJourney-->
+    <string name="RouteName">"Nom de l'itinéraire: "</string>
+    <string name="CityDistance">"Distance de la ville: "</string>
+    <string name="HwayDistance">"Distance de la route: "</string>
+    <string name="TotalDistance">"Distance totale: "</string>
+    <string name="action_settings">"Paramètres"</string>
+    <string name="select_route">"Sélectionnez Itinéraire"</string>
+    <string name="select_transportation_mode">"Sélectionnez le mode de transport"</string>
+    <string name="welcomescreen_text">"écrand'accueil"</string>
+    <string name="route_name_input">"Nom de la route"</string>
+    <string name="hint_in_km">"KM"</string>
+    <string name="hint_in_km_hway">"en km"</string>
+    <string name="hint_0">"1 0"</string>
+    <string name="AddRouteName">"Nom de l'itinéraire:"</string>
+    <string name="CityDst">"Distance En Ville:"</string>
+    <string name="HwayDst">"Distance En route:"</string>
+    <string name="TotalDst">"Distance totale:"</string>
+    <string name="default_totalDst_0">"1 0"</string>
+    <string name="Hint_Route_name">"Nom de la route"</string>
+    <string name="City_in_km">"KM"</string>
+    <string name="hway_in_km">"KM"</string>
+    <string name="DistanceInHighWay">"KM6239 
+
+Article neuf dans son emballage d'origine.
+
+Spécial garage/atelier/mécanicien.
+Origine: Allemagne. 
+"</string>
+    <string name="DistanceInCity">"KM6239 
+
+Article neuf dans son emballage d'origine.
+
+Spécial garage/atelier/mécanicien.
+Origine: Allemagne. 
+"</string>
+    <string name="tempRouteName">"VueTextye"</string>
+    <string name="tempTotalDst">"VueTextye"</string>
+    <string name="tempCityDst">"VueTextye"</string>
+    <string name="tempHwatDst">"VueTextye"</string>
+    <string name="Warning">"L'itinéraire choisi sera mis au rebut. Voulez-vous encore supprimer?"</string>
+    <string name="CarWarning">"L'itinéraire choisi sera mis au rebut. Voulez-vous encore supprimer?"</string>
+    <string name="BillWarning">"L'itinéraire choisi sera mis au rebut. Voulez-vous encore supprimer?"</string>
+    <string name="DeleteJourneyWarning">"Le voyage sera rejeté, Voulez-vous toujours de le supprimer?"</string>
+    <string name="CO2Emission">"L'émission de CO2 est: "</string>
+    <string name="UserDeleteRoute">"La Route Vous Select a été supprimé"</string>
+    <string name="UserDeleteVehicle">"La voiture que vous Select a été supprimé"</string>
+
+    <!--CreateNewJourney-->
+
+
+    <string name="nickname_for_your_car">"surnom pour votre voiture"</string>
+
+    <string-array name="make_list">
+        <item>"Les transmissions manuelles Toyota"</item>
+        <item>"Nissan"</item>
+        <item>"BMW"</item>
+    </string-array>
+
+    <string-array name="model_list">
+        <item>"Corolla"</item>
+        <item>"Loyale"</item>
+        <item>"Superbe"</item>
+    </string-array>
+
+    <string-array name="year_list">
+        <item>"1985"</item>
+        <item>"045.01 1"</item>
+        <item>"20"</item>
+    </string-array>
+    <string name="title_activity_display_car_list">"DisplayCarList"</string>
+    <string name="edit_a_car">"Modifier A Car"</string>
+    <string name="displacement_and_transmission">"Déplacement et transmission"</string>
+    <string name="make">"Manufacturer"</string>
+    <string name="model">"Modèle"</string>
+    <string name="year">"Année"</string>
+    <string name="select_a_transportation_mode">"Sélectionnez un mode de transport"</string>
+    <string name="textview">"VueTextye"</string>
+    <string name="edit_journeys">"Modifier Journeys"</string>
+    <string name="image_for_journey">"Photo pour Journey"</string>
+    <string name="UserDeleteJourney">"Le voyage que vous avez sélectionné a été supprimé"</string>
+    <string name="graphs">"Graphiques"</string>
+    <string name="_0_0">"0.0"</string>
+    <string name="total_natural_gas_usage">"Utilisation totale de gaz naturel"</string>
+    <string name="gj">"GJ"</string>
+    <string name="number_of_people_living_in_the_house">"Nombre de personnes vivant dans la maison"</string>
+    <string name="kw_h">"kW.h"</string>
+    <string name="billing_date">"Ajouter une facture mensuelle des services publics"</string>
+    <string name="start_date">"Date de début"</string>
+    <string name="end_date">"Date de fin"</string>
+    <string name="dd_mm_yyyy">"jj/mm/aaaa"</string>
+    <string name="total_electricity_usage">"Totale consommation d'électricité"</string>
+    <string name="click_date_to_change">"Date cliquez pour changer"</string>
+    <string name="co2_emitted">"co2 émis"</string>
+    <string name="single_day">"Seule journée"</string>
+    <string name="month">"Mois"</string>
+    <string name="monthly_utilities">"Utilitaires mensuels"</string>
+    <string name="change_date">"date de modification"</string>
+    <string name="vehicle_tip_1">"Vous créez %f kg de CO2 provenant de la conduite. Essayez d'utiliser le transport."</string>
+    <string name="vehicle_tip_2">"Conduite crée %f kg d'émissions de CO2. Essayer le covoiturage."</string>
+    <string name="vehicle_tip_3">"Vos déplacements en voiture génèrent %f kg de CO2. Essayez d'obtenir une voiture électrique."</string>
+    <string name="vehicle_tip_4">"Conduite crée %f kg de CO2. Envisagez d'utiliser le régulateur de vitesse."</string>
+    <string name="vehicle_tip_5">"Vous générez %f kg de CO2 provenant de la conduite. Pensez à retirer l'excès de poids de votre voiture."</string>
+    <string name="vehicle_tip_6">"%f kg de CO2 est généré à partir de votre conduite. Combinez courses à faire moins de voyages."</string>
+    <string name="vehicle_tip_7">"Vous créez %f kg de CO2 provenant de la conduite. Envisager d'obtenir une voiture économe en carburant."</string>
+    <string name="vehicle_tip_8">"Conduite crée %f kg de CO2. Pensez à la marche ou le vélo."</string>
+    <string name="energy_tip_1">"Votre consommation d'électricité fait %f de CO2, essayez de débrancher les appareils électroniques inutilisés"</string>
+    <string name="energy_tip_2">"Vous faites %f kg de CO2 de l' électricité, essayez de fermer les lumières lorsqu'ils ne sont pas utilisés et envisager de prendre des douches plus courtes."</string>
+    <string name="energy_tip_3">"Votre consommation d'électricité fait %f kg de CO2, essayez d' installer des panneaux solaires."</string>
+    <string name="energy_tip_4">"Votre facture d'énergie crée %f kg de CO2. Envisager de mettre vos ordinateurs en mode veille lorsqu'ils ne sont pas en cours d'utilisation."</string>
+    <string name="energy_tip_5">"Votre facture d'énergie génère %f kg de CO2. Essayez de laver votre linge à l'eau froide, et oubliez pas de changer les filtres à air fréquemment."</string>
+    <string name="energy_tip_6">"%f kg de CO2 est créé à partir de votre facture d'électricité. Envisager de passer à des ampoules LED."</string>
+    <string name="energy_tip_7">"Votre consommation d'énergie génère %f kg de CO2. Essayez d'utiliser votre micro-ondes sur votre four si possible."</string>
+    <string name="energy_tip_8">"%f des émissions de CO2 proviennent de votre facture d'énergie. Envisager la gestion de votre thermostat.Try en utilisant votre chauffe moins souvent."</string>
+
+    <string name="unrelated_tip_1">"Vous avez conduit %d fois la voiture à ce jour, si possible, à pied ou à vélo pour éviter les émissions de carbone complètement. Covoiturage et les transports publics de réduire drastiquement les émissions de CO2 en les étalant sur de nombreux coureurs."</string>
+    <string name="unrelated_tip_2">"Vous produisez %f de l' application de la maison Une meilleure idée est probablement «énergie intrinsèque», qui tient compte de tout le carbone, l' eau et l' énergie qui va dans la production d'aliments ou de l' article manufacturé. "</string>
+    <string name="unrelated_tip_3">"Conduire un véhicule à bas carbone. Vous avez conduit %d dans HWY et la ville, kilométrage élevé ne signifie pas toujours faibles émissions de CO2. Tous les véhicules ont une cote estimée miles par gallon. Les voitures électriques émettent pas de CO2 si elles sont chargées d'électricité propre. "</string>
+    <string name="unrelated_tip_4">"Obtenez un porte-bagages monté sur attelage. Ne pas acheter une mini-fourgonnette ou un VUS si vous n'avez pas besoin 4WD et / ou ne aurez parfois besoin de l'espace supplémentaire. Depuis que vous avez conduit SUV %d fois "</string>
+    <string name="unrelated_tip_5">"Vous avez conduit %d KM sur la route, la vitesse et l' accélération nécessaire de réduire le kilométrage jusqu'à 33/100, du gaz et de l' argent des déchets, et d' augmenter votre empreinte carbone."</string>
+    <string name="unrelated_tip_6">"Isoler et sceller votre maison. Vous avez produit %f CO2 de la maison, de réduire les courants d' air et les fuites d'air avec du calfeutrage, l' isolation et le calfeutrage. "</string>
+    <string name="unrelated_tip_7">"Vous avez conduit %d KM sur la ville, Être coincé dans le gaz des déchets de la circulation et crée inutilement CO2. Utilisez les sites Web de la circulation et des applications et aller d'une manière différente ou attendre."</string>
+    <string name="unrelated_tip_8">" Vous avez utilisé Bus et Skytrain que vos quotidiens transport %d fois! Continuez!"</string>
+
+
+</resources>
