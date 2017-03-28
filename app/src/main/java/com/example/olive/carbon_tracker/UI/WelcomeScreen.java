@@ -70,7 +70,7 @@ public class WelcomeScreen extends AppCompatActivity {
     }
 
     private void setAlarm() {
-        Intent intent = new Intent(WelcomeScreen.this, AlarmReceiver.class);
+        Intent intent = new Intent(this, AlarmReceiver.class);
         PendingIntent alarmIntent = PendingIntent.getBroadcast(
                 this,
                 0,

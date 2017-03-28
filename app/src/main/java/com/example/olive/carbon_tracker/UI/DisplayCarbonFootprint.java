@@ -1,5 +1,8 @@
 package com.example.olive.carbon_tracker.UI;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
@@ -13,10 +16,12 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.olive.carbon_tracker.Model.AlarmReceiver;
 import com.example.olive.carbon_tracker.Model.Journey;
 import com.example.olive.carbon_tracker.R;
 import com.example.olive.carbon_tracker.Model.Singleton;
 
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -32,7 +37,7 @@ public class DisplayCarbonFootprint extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
+        setAlarm();
         setContentView(R.layout.activity_display_carbon_footprint);
         setupPieChart();
         populateCarbonFootprintTable();
@@ -104,4 +109,22 @@ public class DisplayCarbonFootprint extends AppCompatActivity {
         Intent goBackToMainMenu = MainMenu.makeIntent(DisplayCarbonFootprint.this);
         startActivity(goBackToMainMenu);
         finish();
-    }}
+    }
+
+    private void setAlarm() {
+        Intent intent = new Intent(this, AlarmReceiver.class);
+        PendingIntent alarmIntent = PendingIntent.getBroadcast(
+                this,
+                0,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT
+        );
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.set(Calendar.HOUR_OF_DAY, 21);
+
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmIntent);
+    }
+}
