@@ -54,7 +54,7 @@
         <activity android:name=".UI.DisplayMonthlyUtilities"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
-        <receiver android:name=".Model.AlarmReceiver" ></receiver>
+        <receiver android:process=":remote" android:name=".Model.AlarmReceiver" ></receiver>
     </application>
 
 </manifest>

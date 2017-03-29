@@ -5,22 +5,19 @@ import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.widget.Toast;
+import android.util.Log;
+
 
 /**
  * Launch a notification once the alarm goes off
  */
 
 public class AlarmReceiver extends BroadcastReceiver {
-    private Singleton singleton = Singleton.getInstance();
-
     @Override
     public void onReceive(Context context, Intent intent) {
         NotificationManager notificationManager =
                 (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-
-        Notification notification = singleton.getNotification();
+        Notification notification = intent.getParcelableExtra("Notification");
         notificationManager.notify(1, notification);
-//        Toast.makeText(context, "Alarm Received", Toast.LENGTH_SHORT).show();
     }
 }

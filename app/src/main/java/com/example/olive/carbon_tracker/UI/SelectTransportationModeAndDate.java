@@ -1,7 +1,6 @@
 package com.example.olive.carbon_tracker.UI;
 
 import android.app.Activity;
-import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -22,7 +21,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.olive.carbon_tracker.Model.AlarmReceiver;
 import com.example.olive.carbon_tracker.Model.Singleton;
 import com.example.olive.carbon_tracker.Model.SuperUltraInfoDataBaseHelper;
 import com.example.olive.carbon_tracker.R;
@@ -61,7 +59,6 @@ public class SelectTransportationModeAndDate extends AppCompatActivity {
         viewCurrentDate();
         setupCalendarButton();
         checkNotifications();
-        setAlarm();
     }
     public void onRestart() {
         super.onRestart();
@@ -302,27 +299,12 @@ public class SelectTransportationModeAndDate extends AppCompatActivity {
             long dateDifference = end.getTime() - start.getTime();
             return dateDifference / 1000 / 60 / 60 / 24;
         } catch (Exception e) {
-            Toast.makeText(SelectTransportationModeAndDate.this,
-                    "ERROR: SelectTransportationModeAndDate" + " dateDifference calculation failed",
-                    Toast.LENGTH_LONG).show();
+            Toast.makeText(
+                    SelectTransportationModeAndDate.this,
+                    getString(R.string.date_difference_error, "SelectTransportationAndDate"),
+                    Toast.LENGTH_LONG
+            ).show();
         }
         return -1;
-    }
-
-    private void setAlarm() {
-        Intent intent = new Intent(this, AlarmReceiver.class);
-        PendingIntent alarmIntent = PendingIntent.getBroadcast(
-                this,
-                0,
-                intent,
-                PendingIntent.FLAG_UPDATE_CURRENT
-        );
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.set(Calendar.HOUR_OF_DAY, 21);
-
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmIntent);
     }
 }

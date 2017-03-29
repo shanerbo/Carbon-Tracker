@@ -53,10 +53,10 @@ public class MainMenu extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setAlarm();
         myDataBase = SQLiteDatabase.openOrCreateDatabase(DatabaseHelper.DB_PATH + DatabaseHelper.DB_NAME,null);
         getLatestBill();
         checkNotifications();
+        setAlarm();
         generateTipsForCar(singleton.getHighestCO2FromCar());
         generateTipsForEnegy(singleton.getHighestCO2FromEnegy());
         generateTipsForUnrelated();
@@ -337,23 +337,6 @@ public class MainMenu extends AppCompatActivity {
         return new Intent(context, MainMenu.class);
     }
 
-    private void setAlarm() {
-        Intent intent = new Intent(this, AlarmReceiver.class);
-        PendingIntent alarmIntent = PendingIntent.getBroadcast(
-                this,
-                0,
-                intent,
-                PendingIntent.FLAG_UPDATE_CURRENT
-        );
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.set(Calendar.HOUR_OF_DAY, 21);
-
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmIntent);
-    }
-
     // Remake notifications when necessary
     private void checkNotifications() {
         int journeys = getDatabaseCount(databaseCountMode.MoreJourneys);
@@ -434,8 +417,11 @@ public class MainMenu extends AppCompatActivity {
             long dateDifference = end.getTime() - start.getTime();
             return dateDifference / 1000 / 60 / 60 / 24;
         } catch (Exception e) {
-            Toast.makeText(MainMenu.this, "ERROR: MainMenu" +
-                    " dateDifference calculation failed", Toast.LENGTH_LONG).show();
+            Toast.makeText(
+                    MainMenu.this,
+                    getString(R.string.date_difference_error, "MainMenu"),
+                    Toast.LENGTH_LONG
+            ).show();
         }
         return -1;
     }
@@ -452,5 +438,23 @@ public class MainMenu extends AppCompatActivity {
         String creationDate = cursor.getString(8);
         cursor.close();
         singleton.setLatestBill(creationDate);
+    }
+
+    private void setAlarm() {
+        Intent intent = new Intent(this, AlarmReceiver.class);
+        intent.putExtra("Notification", singleton.getNotification());
+        PendingIntent alarmIntent = PendingIntent.getBroadcast(
+                this,
+                0,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT
+        );
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.set(Calendar.HOUR_OF_DAY, 21);
+
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmIntent);
     }
 }
