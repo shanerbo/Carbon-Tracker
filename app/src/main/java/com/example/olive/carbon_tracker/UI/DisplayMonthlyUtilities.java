@@ -151,7 +151,7 @@ public class DisplayMonthlyUtilities extends AppCompatActivity {
                 TextView indCO2 = (TextView) itemView.findViewById(R.id.IndCO2);
                 String HumanCO2 = String.format("%.2f", currentBill.getIndCO2()/2.06);
                 //human-relatable unit conversion: 1 kg of garbage can produce 2.06 kg of CO2
-                indCO2.setText("CO2 emission equivalent to: " + HumanCO2 + "kg of garbage/day/person");
+                indCO2.setText("CO2 emission equivalent to:\n       " + HumanCO2 + "kg of garbage/day/person");
             }
 
             return itemView;
