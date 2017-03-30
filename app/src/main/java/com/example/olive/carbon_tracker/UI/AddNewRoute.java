@@ -285,18 +285,19 @@ public class AddNewRoute extends AppCompatActivity {
 
         if (TransportMode == 1) { // Walk/Bike
             String TotalCO2 = String.format("%.2f", totalCO2);
-            Toast.makeText(getApplicationContext(), "You have produced: "+ TotalCO2 +"kg of CO2", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "You have produced: "+ TotalCO2 +"kg of CO2"+
+                    " ,equivalent to producing 0 kg of regular garbage.", Toast.LENGTH_SHORT).show();
 
             addJourneyToDBNotCar(_date,userInput,RouteDB,"Walk/Bike",totalCO2);
-
-
 
             createNewJourney(cityDistance,HwyDistance,totalCO2, 1);
         }
         else if (singleton.checkTransportationMode() == 2){ //Bus
             totalCO2 = (cityDistance+HwyDistance)*0.089;
             String TotalCO2 = String.format("%.2f", totalCO2);
-            Toast.makeText(getApplicationContext(), "You have produced: "+ TotalCO2 +"kg of CO2", Toast.LENGTH_SHORT).show();
+            String HumanCO2 = String.format("%.2f", totalCO2/2.06);
+            Toast.makeText(getApplicationContext(), "You have produced: "+ TotalCO2 +"kg of CO2"+
+                    " ,equivalent to producing "+HumanCO2+"kg of regular garbage.", Toast.LENGTH_SHORT).show();
 
             Cursor cursor = RouteDB.rawQuery("select max(JourneyCO2Emitted) from JourneyInfoTable" +
                     " where JourneyMode = 'Bus'",null);
@@ -314,14 +315,14 @@ public class AddNewRoute extends AppCompatActivity {
 
             addJourneyToDBNotCar(_date,userInput,RouteDB,"Bus",totalCO2);
 
-
-
             createNewJourney(cityDistance,HwyDistance,totalCO2, 2);
         }
         else if (singleton.checkTransportationMode() == 3){ //Skytrain
             totalCO2 = (cityDistance+HwyDistance)*0.02348;
             String TotalCO2 = String.format("%.2f", totalCO2);
-            Toast.makeText(getApplicationContext(), "You have produced: "+ TotalCO2 +"kg of CO2", Toast.LENGTH_SHORT).show();
+            String HumanCO2 = String.format("%.2f", totalCO2/2.06);
+            Toast.makeText(getApplicationContext(), "You have produced: "+ TotalCO2 +"kg of CO2"+
+                    " ,equivalent to producing "+HumanCO2+"kg of regular garbage.", Toast.LENGTH_SHORT).show();
             Cursor cursor = RouteDB.rawQuery("select max(JourneyCO2Emitted) from JourneyInfoTable" +
                     " where JourneyMode = 'Skytrain'",null);
             double maxCO2 = 0;
@@ -358,7 +359,9 @@ public class AddNewRoute extends AppCompatActivity {
             double totalGas = cityGas + hwyGas;
             totalCO2 = fuelCost * totalGas;
             String TotalCO2 = String.format("%.2f", totalCO2);
-            Toast.makeText(getApplicationContext(), "The CO2 you produced: " + TotalCO2, Toast.LENGTH_SHORT).show();
+            String HumanCO2 = String.format("%.2f", totalCO2/2.06);
+            Toast.makeText(getApplicationContext(), "The CO2 you produced: "+TotalCO2+"kg of CO2"+
+                    " ,equivalent to producing "+HumanCO2+"kg of regular garbage.", Toast.LENGTH_SHORT).show();
 
             Cursor cursor = RouteDB.rawQuery("select max(JourneyCO2Emitted) from JourneyInfoTable" +
                     " where JourneyMode = 'Car'",null);
