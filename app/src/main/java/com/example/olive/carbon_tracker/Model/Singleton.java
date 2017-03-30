@@ -106,6 +106,7 @@ public class Singleton {
     private static int addMonthlyUtilities;
     private static int deleteRoute;
     private static int TransportationMode;
+    private static int CO2Unit;
     private static Singleton instance = new Singleton();
     private static Vehicle userPickVehicle;
 
@@ -415,7 +416,7 @@ public class Singleton {
         }
     }
 
-//-----------------------------------Route's function-------------------------------------------
+   //------------------------------Transportation Mode functions------------------------------------
 
     public int checkTransportationMode() {
         return TransportationMode;
@@ -444,6 +445,15 @@ public class Singleton {
     public SQLiteDatabase getCarInfoDb() {
         return CarInfoDB;
     }
+
+    //----------------------------CO2 unit conversion functions-------------------------------------
+
+    public int checkCO2Unit(){ return CO2Unit; }
+
+    public void originalUnit(){ CO2Unit = 0; }
+
+    public void humanRelatableUnit() { CO2Unit = 1; }
+
 
     //-----------------------------------Journey functions-------------------------------------------
     public List<Journey> getUsersJourneys() {

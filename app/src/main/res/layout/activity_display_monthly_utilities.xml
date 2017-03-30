@@ -46,6 +46,16 @@
         app:srcCompat="@android:drawable/ic_input_add"
         tools:ignore="RtlHardcoded" />
 
+    <Button
+        android:id="@+id/unit_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:text="change CO2 unit"
+        android:textStyle="italic"
+        app:layout_anchor="@+id/include"
+        app:layout_anchorGravity="center_vertical|left" />
+
     <include
         android:id="@+id/include"
         layout="@layout/content_display_monthly_utilities" />

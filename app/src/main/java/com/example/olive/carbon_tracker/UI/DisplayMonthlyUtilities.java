@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -42,6 +43,7 @@ public class DisplayMonthlyUtilities extends AppCompatActivity {
         showAllBills();
         SetupAddBtn();
         EditBill();
+        unitButton();
 
     }
 
@@ -140,16 +142,45 @@ public class DisplayMonthlyUtilities extends AppCompatActivity {
             String roundGas = String.format("%.2f", currentBill.getIndGasUsage());
             indGas.setText("Natural gas usage: " + roundGas +"GJ/day/person");
 
-            TextView indCO2 = (TextView) itemView.findViewById(R.id.IndCO2);
-            String roundCO2 = String.format("%.2f", currentBill.getIndCO2());
-            indCO2.setText("CO2 emission: " + roundCO2 +"kg/day/person");
+            if(singleton.checkCO2Unit() == 0) {
+                TextView indCO2 = (TextView) itemView.findViewById(R.id.IndCO2);
+                String roundCO2 = String.format("%.2f", currentBill.getIndCO2());
+                indCO2.setText("CO2 emission: " + roundCO2 + "kg/day/person");
+            }
+            else{
+                TextView indCO2 = (TextView) itemView.findViewById(R.id.IndCO2);
+                String HumanCO2 = String.format("%.2f", currentBill.getIndCO2()/2.06);
+                //human-relatable unit conversion: 1 kg of garbage can produce 2.06 kg of CO2
+                indCO2.setText("CO2 emission equivalent to: " + HumanCO2 + "kg of garbage/day/person");
+            }
 
             return itemView;
 
         }
     }
 
+    private void unitButton() {
+        Button unitButton = (Button) findViewById(R.id.unit_btn);
+        unitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(singleton.checkCO2Unit() == 0)
+                    singleton.humanRelatableUnit();
+                else
+                    singleton.originalUnit();
+                ArrayAdapter<MonthlyUtilitiesData> adapter = new myArrayAdapter();
+                ListView list = (ListView) findViewById(R.id.ID_Bill_List);
+                list.setAdapter(adapter);
+            }
+        });
+    }
+
+
+
     public void onBackPressed(){
         startActivity(new Intent(DisplayMonthlyUtilities.this, MainMenu.class));
     }
+
+
+
 }
