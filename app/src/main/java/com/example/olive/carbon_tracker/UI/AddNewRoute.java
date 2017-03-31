@@ -149,9 +149,54 @@ public class AddNewRoute extends AppCompatActivity {
                     }
                     finish();
                 } else if (temp_cityDst.matches("") || temp_highWayDst.matches("")) {
+                    int cityDst;
+                    if (temp_cityDst.matches("")) {
+                        cityDst = 0;
+                    } else {
+                        cityDst = Integer.parseInt(temp_cityDst);
+                    }
 
+                    int highWayDst;
+                    if (temp_highWayDst.matches("")) {
+                        highWayDst = 0;
+                    } else {
+                        highWayDst = Integer.parseInt(temp_highWayDst);
+                    }
+
+                    int totalDst = CalculateTotalDistance(cityDst, highWayDst);
+
+                    ContentValues cv = new ContentValues();
+                    cv.put(SuperUltraInfoDataBaseHelper.Route_Name, name);
+                    cv.put(SuperUltraInfoDataBaseHelper.Route_City_Dst, cityDst);
+                    cv.put(SuperUltraInfoDataBaseHelper.Route_HWY_Dst, highWayDst);
+                    cv.put(SuperUltraInfoDataBaseHelper.Route_total_Dst, totalDst);
+                    if (singleton.checkEdit() == 1) {
+                        long DBID = _RouteToBeEdit.getRouteDBId();
+                        long idPassBack = RouteDB.update(SuperUltraInfoDataBaseHelper.Route_Table, cv, "_id=" + DBID, null);
+                        RouteDB.close();
+                        singleton.userFinishEdit();
+                        Intent userEditRoute = DisplayRouteList.makeIntent(AddNewRoute.this);
+                        startActivity(userEditRoute);
+                    } else {
+                        long idPassedBack = RouteDB.insert(SuperUltraInfoDataBaseHelper.Route_Table, null, cv);
+                        Route userInput = new Route(name, cityDst, highWayDst, totalDst, idPassedBack);
+                        if (singleton.isEditingJourney()) {
+                            checkTransportationMode(name, cityDst, highWayDst, totalDst, idPassedBack);
+                            singleton.userFinishEditJourney();
+                            Intent userEditJourney = DisplayJourneyList.makeIntent(AddNewRoute.this);
+                            startActivity(userEditJourney);
+                            singleton.userFinishAdd();
+                            finish();
+                        } else {
+                            singleton.userFinishAdd();
+                            calculateCO2(userInput);
+                            Intent ConfirmRoute = MainMenu.makeIntent(AddNewRoute.this);
+                            startActivity(ConfirmRoute);
+                        }
+                    }
                 } else {
-                    Toast.makeText(getApplicationContext(),"Please fill all blanks",Toast.LENGTH_LONG).show();
+                    String msg = "Please enter at least your name and one of the distance fields";
+                    Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
                 }
             }
 
