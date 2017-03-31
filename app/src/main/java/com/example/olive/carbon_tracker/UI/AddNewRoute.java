@@ -117,6 +117,11 @@ public class AddNewRoute extends AppCompatActivity {
                     int cityDst = Integer.parseInt(temp_cityDst);
                     int highWayDst = Integer.parseInt(temp_highWayDst);
                     int totalDst = CalculateTotalDistance(cityDst, highWayDst);
+                    if (totalDst == 0) {
+                        String msg = "The total distance must not add up to zero.";
+                        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+                        return;
+                    }
 
                     ContentValues cv = new ContentValues();
                     cv.put(SuperUltraInfoDataBaseHelper.Route_Name, name);
@@ -148,6 +153,9 @@ public class AddNewRoute extends AppCompatActivity {
                         }
                     }
                     finish();
+                } else if (equalsZero(temp_cityDst, temp_highWayDst)) {
+                    String msg = "The total distance must not add up to zero.";
+                    Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
                 } else if (temp_cityDst.matches("") || temp_highWayDst.matches("")) {
                     int cityDst;
                     if (temp_cityDst.matches("")) {
@@ -163,7 +171,13 @@ public class AddNewRoute extends AppCompatActivity {
                         highWayDst = Integer.parseInt(temp_highWayDst);
                     }
 
+
                     int totalDst = CalculateTotalDistance(cityDst, highWayDst);
+                    if (totalDst == 0) {
+                        String msg = "The total distance must not add up to zero.";
+                        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+                        return;
+                    }
 
                     ContentValues cv = new ContentValues();
                     cv.put(SuperUltraInfoDataBaseHelper.Route_Name, name);
@@ -195,7 +209,7 @@ public class AddNewRoute extends AppCompatActivity {
                         }
                     }
                 } else {
-                    String msg = "Please enter at least your name and one of the distance fields";
+                    String msg = "Please enter at least your name and one of the distance fields.";
                     Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
                 }
             }
@@ -270,6 +284,16 @@ public class AddNewRoute extends AppCompatActivity {
 
             }
         });
+    }
+
+    private boolean equalsZero(String cityDist, String highwayDist) {
+        if (cityDist.matches("") && Integer.parseInt(highwayDist) == 0) {
+            return true;
+        } else if (highwayDist.matches("") && Integer.parseInt(cityDist) == 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private void delButton(final long position) {
