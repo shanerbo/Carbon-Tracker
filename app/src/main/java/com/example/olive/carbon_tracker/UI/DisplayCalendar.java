@@ -27,6 +27,8 @@ public class DisplayCalendar extends AppCompatActivity {
 
     }
 
+
+
     private void  getUsersDataPick(){
         if(getIntent().getIntExtra("AddMonthlyUtilities", 0) == 10) {
             //User sets starting date for monthly utilities

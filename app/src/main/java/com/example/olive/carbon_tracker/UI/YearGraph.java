@@ -1,6 +1,7 @@
 package com.example.olive.carbon_tracker.UI;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,11 +16,15 @@ import com.example.olive.carbon_tracker.Model.Singleton;
 import com.example.olive.carbon_tracker.R;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
@@ -29,12 +34,18 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static android.support.v7.widget.AppCompatDrawableManager.get;
+import static com.example.olive.carbon_tracker.UI.MonthGraph.NATIONAL_AVERAGE;
+import static com.example.olive.carbon_tracker.UI.MonthGraph.PARIS_ACCORD;
+
 /**
  * uses a line graph to display average monthly carbon emission for one year
  */
 public class YearGraph extends AppCompatActivity {
     Singleton singleton = Singleton.getInstance();
     public static final int MONTHS = 12;
+    public static final int NATIONAL_AVERAGE = 50;
+    public static final int PARIS_ACCORD = 30;
     int chosenYear;
     int chosenMonth;
     int chosenDay;
@@ -53,7 +64,7 @@ public class YearGraph extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_year_graph);
         viewCurrentDate();
-        setupLineChart();
+   setupCharts();
         setupCalendarButton();
         onRestart();
 
@@ -81,11 +92,131 @@ public class YearGraph extends AppCompatActivity {
         setupLineChart();
     }
 
+
+
+
+
+    private void setupCharts() {
+        getYearCO2();
+       // setupCombinedCharts();
+        setupLineChart();
+        setupPieChart();
+    }
+
+
+    private void setupPieChart() {
+
+        List<PieEntry> pieEntries = new ArrayList<>();
+
+        float totalCarCO2 = 0;
+        float totalBusCO2 = 0;
+        float totalSkyTrainCO2 = 0;
+        float totalUtility = 0;
+
+        for (int i = 0; i < MONTHS; i++) {
+            totalCarCO2 += carCO2.get(i).floatValue();
+            totalBusCO2 += busCO2.get(i).floatValue();
+            totalSkyTrainCO2 += skytrainCO2.get(i).floatValue();
+            totalUtility += utilityCO2.get(i).floatValue();
+        }
+
+        if (totalCarCO2 != 0.0) {
+            pieEntries.add(new PieEntry(totalCarCO2, "CAR"));
+        }
+        if (totalBusCO2 != 0.0) {
+            pieEntries.add(new PieEntry(totalBusCO2, "BUS"));
+        }
+        if (totalSkyTrainCO2 != 0.0) {
+            pieEntries.add(new PieEntry(totalSkyTrainCO2, "SKYTRAIN"));
+        }
+        if (totalUtility != 0.0) {
+            pieEntries.add(new PieEntry(totalUtility, "UTILITY"));
+        }
+
+        PieDataSet dataSet = new PieDataSet(pieEntries, "");
+        dataSet.setColors(Color.rgb(0, 128, 255), Color.rgb(96, 96, 96), Color.rgb(255, 153, 2255), Color.rgb(255, 128, 0), Color.rgb(255, 0, 0));
+        dataSet.setSelectionShift(5f);
+        //TODO fix overlapping of names
+        //dataSet.setValueLinePart1Length(.7f);
+        //dataSet.setValueLinePart2Length(.2f);
+        //  dataSet.setYValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
+        //dataSet.setXValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
+        //   dataSet.setValueTextColor(Color.BLUE);
+
+        // dataSet.setValueLineColor(Color.BLUE);
+        dataSet.setSliceSpace(2);
+        PieData data = new PieData(dataSet);
+
+        data.setValueTextSize(11f);
+        data.setValueTextColor(Color.BLACK);
+
+        com.github.mikephil.charting.charts.PieChart chart = (com.github.mikephil.charting.charts.PieChart) findViewById(R.id.piechart_year);
+        chart.setUsePercentValues(false);
+//chart.setCenterTextColor(Color.BLACK);
+        chart.setEntryLabelColor(Color.BLUE);
+        chart.setCenterTextOffset(0, -20);
+        Legend l = chart.getLegend();
+        chart.getLegend().setEnabled(false);
+
+        //chart.setCenterText(generateCenterSpannableText());
+        //chart.setCenterTextColor(Color.BLACK);
+        chart.setExtraOffsets(5, 10, 5, 5);
+        chart.setData(data);
+        chart.animateY(1000);
+        chart.invalidate();
+    }
+
     private void setupLineChart() {
 
-        getYearCO2();
 
         if (!isChartEmpty) {
+
+
+            ArrayList<Entry> nationalAvgEntries = new ArrayList<Entry>();
+            ArrayList<Entry> parisAccordEntries = new ArrayList<Entry>();
+            LineDataSet set2 = new LineDataSet(parisAccordEntries, "Paris Accord");
+            for (int i = -1; i < MONTHS; i++) {
+                nationalAvgEntries.add(new Entry(i + 0.5f, NATIONAL_AVERAGE));
+                parisAccordEntries.add(new Entry(i + 0.5f, PARIS_ACCORD));
+            }
+
+            LineDataSet set = new LineDataSet(nationalAvgEntries, "National Avg");
+            set.setColor(Color.CYAN);
+            set.setLineWidth(2f);
+            set.setCircleColor(Color.CYAN);
+            set.setCircleRadius(2f);
+            set.setFillColor(Color.CYAN);
+            set.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+            set.setDrawValues(false);
+            set.setAxisDependency(YAxis.AxisDependency.LEFT);
+
+            set2.setColor(Color.MAGENTA);
+            set2.setLineWidth(2f);
+            set2.setCircleColor(Color.MAGENTA);
+            set2.setCircleRadius(2f);
+            set2.setFillColor(Color.MAGENTA);
+            set2.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+            set2.setDrawValues(false);
+            set2.setAxisDependency(YAxis.AxisDependency.LEFT);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             LineChart lineChart = (LineChart) findViewById(R.id.chart3);
 
@@ -150,10 +281,13 @@ public class YearGraph extends AppCompatActivity {
             utilityDataSet.setColor(ColorTemplate.MATERIAL_COLORS[3]);
             utilityDataSet.setCircleColor(ColorTemplate.MATERIAL_COLORS[3]);
 
+            lineDataSets.add(set);
+            lineDataSets.add(set2);
             lineDataSets.add(busDataSet);
             lineDataSets.add(carDataSet);
             lineDataSets.add(skytrainDataSet);
             lineDataSets.add(utilityDataSet);
+
 
             lineChart.animateX(800);
             lineChart.animateY(800);
