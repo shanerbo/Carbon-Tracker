@@ -48,11 +48,14 @@
         <activity android:name=".UI.SingleDayGraph" />
         <activity android:name=".UI.MonthGraph" />
         <activity android:name=".UI.YearGraph" />
-        <activity android:name=".UI.AddMonthlyUtilities"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".UI.DisplayCalendar"/>
-        <activity android:name=".UI.DisplayMonthlyUtilities"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".UI.AddMonthlyUtilities"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".UI.DisplayCalendar" />
+        <activity
+            android:name=".UI.DisplayMonthlyUtilities"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".UI.AboutActivity"></activity>
     </application>
 
 </manifest>
