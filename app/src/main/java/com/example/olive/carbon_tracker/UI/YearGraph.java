@@ -87,7 +87,7 @@ public class YearGraph extends AppCompatActivity {
         String day = singleton.getUserDay();
         String month = singleton.getUserMonth();
         String year = singleton.getUserYear();
-        currentDate.setText(day + "/" + month + "/" + year);
+        currentDate.setText(month + "/" + year);
         singleton.setIsDateChanged(true);
         setupLineChart();
     }
@@ -119,31 +119,23 @@ public class YearGraph extends AppCompatActivity {
             totalSkyTrainCO2 += skytrainCO2.get(i).floatValue();
             totalUtility += utilityCO2.get(i).floatValue();
         }
-
-        if (totalCarCO2 != 0.0) {
-            pieEntries.add(new PieEntry(totalCarCO2, "CAR"));
-        }
         if (totalBusCO2 != 0.0) {
-            pieEntries.add(new PieEntry(totalBusCO2, "BUS"));
+            pieEntries.add(new PieEntry(totalBusCO2, ""));
         }
+        if (totalCarCO2 != 0.0) {
+            pieEntries.add(new PieEntry(totalCarCO2, ""));
+        }
+
         if (totalSkyTrainCO2 != 0.0) {
-            pieEntries.add(new PieEntry(totalSkyTrainCO2, "SKYTRAIN"));
+            pieEntries.add(new PieEntry(totalSkyTrainCO2, ""));
         }
         if (totalUtility != 0.0) {
-            pieEntries.add(new PieEntry(totalUtility, "UTILITY"));
+            pieEntries.add(new PieEntry(totalUtility, ""));
         }
 
         PieDataSet dataSet = new PieDataSet(pieEntries, "");
-        dataSet.setColors(Color.rgb(0, 128, 255), Color.rgb(96, 96, 96), Color.rgb(255, 153, 2255), Color.rgb(255, 128, 0), Color.rgb(255, 0, 0));
+        dataSet.setColors(getColors());
         dataSet.setSelectionShift(5f);
-        //TODO fix overlapping of names
-        //dataSet.setValueLinePart1Length(.7f);
-        //dataSet.setValueLinePart2Length(.2f);
-        //  dataSet.setYValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
-        //dataSet.setXValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
-        //   dataSet.setValueTextColor(Color.BLUE);
-
-        // dataSet.setValueLineColor(Color.BLUE);
         dataSet.setSliceSpace(2);
         PieData data = new PieData(dataSet);
 
@@ -157,7 +149,7 @@ public class YearGraph extends AppCompatActivity {
         chart.setCenterTextOffset(0, -20);
         Legend l = chart.getLegend();
         chart.getLegend().setEnabled(false);
-
+        chart.setRotationAngle(0);
         //chart.setCenterText(generateCenterSpannableText());
         //chart.setCenterTextColor(Color.BLACK);
         chart.setExtraOffsets(5, 10, 5, 5);
@@ -550,7 +542,7 @@ public class YearGraph extends AppCompatActivity {
             singleton.setUserDay(day);
             singleton.setUserMonth(month);
             singleton.setUserYear(year);
-            currentDate.setText(day + "/" + month + "/" + year);
+            currentDate.setText(month + "/" + year);
 
         } else {
             super.onRestart();
@@ -647,7 +639,19 @@ public class YearGraph extends AppCompatActivity {
         return -1;
     }
 
+    private int[] getColors() {
 
+        int stacksize = 4;
+
+        // have as many colors as stack-values per entry
+        int[] colors = new int[stacksize];
+
+        for (int i = 0; i < colors.length; i++) {
+            colors[i] = ColorTemplate.MATERIAL_COLORS[i];
+        }
+
+        return colors;
+    }
 
 
 }
