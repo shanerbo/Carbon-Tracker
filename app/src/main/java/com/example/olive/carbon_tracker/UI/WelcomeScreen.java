@@ -1,6 +1,10 @@
 package com.example.olive.carbon_tracker.UI;
+
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,7 +18,6 @@ import com.example.olive.carbon_tracker.Model.SuperUltraInfoDataBaseHelper;
 import com.example.olive.carbon_tracker.R;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -31,16 +34,19 @@ public class WelcomeScreen extends AppCompatActivity {
     private List<String> allRandomEnegyTips = new ArrayList<>();
     private List<String> allRandomGasTips = new ArrayList<>();
     private List<String> allRandomUnrelatedTips = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+//        setAlarm();
+        setDates();
         getSupportActionBar().hide();
         setContentView(R.layout.activity_main);
-//------DataBase starup-----------------------
+//------DataBase startup-----------------------
         myHelper = new DatabaseHelper(this);
-        SQLiteDatabase myDataBase = SQLiteDatabase.openOrCreateDatabase(DatabaseHelper.DB_PATH + DatabaseHelper.DB_NAME,null);
+        myDataBase = SQLiteDatabase.openOrCreateDatabase(DatabaseHelper.DB_PATH + DatabaseHelper.DB_NAME,null);
         myDataBase.close();
         myHelper.close();
         TableHelper = new SuperUltraInfoDataBaseHelper(this);
@@ -56,6 +62,14 @@ public class WelcomeScreen extends AppCompatActivity {
                 finish();
             }
         },exist_time);
+
+
     }
 
+    private void setDates() {
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        singleton.setCurrentDate(sdf.format(calendar.getTime()));
+        singleton.setLatestBill(sdf.format(calendar.getTime()));
+    }
 }

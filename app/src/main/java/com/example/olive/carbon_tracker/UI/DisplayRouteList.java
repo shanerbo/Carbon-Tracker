@@ -54,7 +54,6 @@ public class DisplayRouteList extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
         SuperUltraInfoDataBaseHelper RouteDBhelper = new SuperUltraInfoDataBaseHelper(this);
         RouteDB = RouteDBhelper.getWritableDatabase();
 
@@ -535,7 +534,6 @@ public class DisplayRouteList extends AppCompatActivity {
             return "12";
         }
     }
-
 }
 
 

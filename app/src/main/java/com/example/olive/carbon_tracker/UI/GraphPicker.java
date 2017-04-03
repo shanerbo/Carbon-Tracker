@@ -9,6 +9,7 @@ import android.widget.Button;
 
 import com.example.olive.carbon_tracker.R;
 
+
 /**
  * lets user pick a single day, monthly or year graph
  */
@@ -18,7 +19,6 @@ public class GraphPicker extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
         setContentView(R.layout.activity_graph_picker);
         setButton(R.id.btnSingleDay);
         setButton(R.id.btnMonthGraph);

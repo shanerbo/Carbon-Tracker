@@ -11,7 +11,6 @@ import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.olive.carbon_tracker.Model.Journey;
 import com.example.olive.carbon_tracker.R;
@@ -32,7 +31,6 @@ public class DisplayCarbonFootprint extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
         setContentView(R.layout.activity_display_carbon_footprint);
         setupPieChart();
         populateCarbonFootprintTable();
@@ -104,4 +102,5 @@ public class DisplayCarbonFootprint extends AppCompatActivity {
         Intent goBackToMainMenu = MainMenu.makeIntent(DisplayCarbonFootprint.this);
         startActivity(goBackToMainMenu);
         finish();
-    }}
+    }
+}
