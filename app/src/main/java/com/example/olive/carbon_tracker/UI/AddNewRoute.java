@@ -53,7 +53,6 @@ public class AddNewRoute extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-
         SuperUltraInfoDataBaseHelper RouteDBhelper = new SuperUltraInfoDataBaseHelper(this);
         RouteDB = RouteDBhelper.getWritableDatabase();
 
@@ -187,6 +186,7 @@ public class AddNewRoute extends AppCompatActivity {
                         }
                         else {
                             singleton.userFinishAdd();
+                            singleton.addedJourneyToday();
                             calculateCO2(userInput);
                             Intent ConfirmRoute = MainMenu.makeIntent(AddNewRoute.this);
                             startActivity(ConfirmRoute);
@@ -511,5 +511,4 @@ public class AddNewRoute extends AppCompatActivity {
             return "12";
         }
     }
-
 }

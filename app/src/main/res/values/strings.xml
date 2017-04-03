@@ -139,6 +139,16 @@
         occasionally need the extra space since you drove SUV %d times </string>
     <string name="unrelated_tip_5">You drove %d kn on highways. Speeding and unnecessary acceleration reduce mileage by up to 33/100, waste gas and money,
         and increase your carbon footprint.</string>
+    <string name="unrelated_tip_6">Insulate and seal your home. You produced %f CO2 from home, Reduce drafts and air leaks with caulk,
+        insulation, and weather stripping. </string>
+    <string name="unrelated_tip_7">You drove %d KM on city,Being stuck in traffic wastes gas and unneccessarily creates CO2.
+        Use traffic websites and apps and go a different way or wait.</string>
+    <string name="unrelated_tip_8"> You have used Bus and Skytrain as your daily transportation %d times! Keep it up!</string>
+    <string name="more_journeys_notification">You have entered %d journeys; want to enter more?</string>
+    <string name="more_utilities_notification">You entered %d utility bills; want to add more?</string>
+    <string name="no_recent_journeys_notification">You have not entered a journey today; want to enter one now?</string>
+    <string name="no_utilities_in_a_month_and_a_half">You have not entered utility in over a month and a half; want to enter one now?</string>
+    <string name="date_difference_error">ERROR: %s dateDifference calculation failed</string>
     <string name="unrelated_tip_6" formatted="false">Insulate and seal your home. You produced %f kg of CO2, equivalent to %f kg of regular garbage, from home application.
         Reduce drafts and air leaks with caulk, insulation, and weather stripping. </string>
     <string name="unrelated_tip_7">You drove %d km in cities. Being stuck in traffic wastes gas and unnecessarily creates CO2.

@@ -66,6 +66,7 @@ public class SuperUltraInfoDataBaseHelper extends SQLiteOpenHelper {
     public static String Utility_Gas = "UtilityEGas";
     public static String Utility_NumberOfSharing = "UtilityNumberOfSharing";
     public static String Utility_AverageCO2 = "UtilityAverageCO2";
+    public static String Utility_CreationDate = "UtilityCreationDate";
 
 
     public SuperUltraInfoDataBaseHelper(Context context) {
@@ -140,7 +141,8 @@ public class SuperUltraInfoDataBaseHelper extends SQLiteOpenHelper {
                 + Utility_Gas + " real,"
                 + Utility_TotalDay + " integer,"
                 + Utility_NumberOfSharing + " integer, "
-                + Utility_AverageCO2 + " real"
+                + Utility_AverageCO2 + " real,"
+                + Utility_CreationDate + " real"
                 + ");";
         CarDB.execSQL(createUtility);
     }
