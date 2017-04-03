@@ -65,34 +65,9 @@ public class YearGraph extends AppCompatActivity {
         setContentView(R.layout.activity_year_graph);
         viewCurrentDate();
    setupCharts();
-        setupCalendarButton();
-        onRestart();
+
 
     }
-
-
-    private void setupCalendarButton() {
-        Button btn = (Button) findViewById(R.id.btnChangeDate_YearGraph);
-        btn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent(YearGraph.this, DisplayCalendar.class);
-                startActivity(intent);
-            }
-        });
-    }
-
-    public void onRestart() {
-        super.onRestart();
-        TextView currentDate = (TextView) findViewById(R.id.txtcurrentDate_YearGraph);
-        String day = singleton.getUserDay();
-        String month = singleton.getUserMonth();
-        String year = singleton.getUserYear();
-        currentDate.setText(month + "/" + year);
-        singleton.setIsDateChanged(true);
-        setupLineChart();
-    }
-
-
 
 
 
@@ -524,9 +499,7 @@ public class YearGraph extends AppCompatActivity {
 
     private void viewCurrentDate() {
 
-        boolean isDateChanged = singleton.getIsDateChanged();
-        TextView currentDate = (TextView) findViewById(R.id.txtcurrentDate_YearGraph);
-        if (isDateChanged == false) {
+
             Date date = new Date();
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEEE");
 
@@ -542,16 +515,7 @@ public class YearGraph extends AppCompatActivity {
             singleton.setUserDay(day);
             singleton.setUserMonth(month);
             singleton.setUserYear(year);
-            currentDate.setText(month + "/" + year);
 
-        } else {
-            super.onRestart();
-            String day = singleton.getUserDay();
-            String month = singleton.getUserMonth();
-            String year = singleton.getUserYear();
-            currentDate.setText(day + "/" + month + "/" + year);
-            singleton.setIsDateChanged(false);
-        }
     }
 
     public void monthNumber(String month) {
