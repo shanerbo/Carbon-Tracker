@@ -24,6 +24,7 @@ import com.example.olive.carbon_tracker.R;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -376,7 +377,7 @@ public class AddMonthlyUtilities extends AppCompatActivity {
                                         singleton.userFinishAdd_MonthlyUtilities();
                                     }
                                 }
-
+                            setLatestBill();
                             startActivity(new Intent(AddMonthlyUtilities.this, DisplayMonthlyUtilities.class));
                             finish();
                         }
@@ -454,6 +455,8 @@ public class AddMonthlyUtilities extends AppCompatActivity {
         cv.put(SuperUltraInfoDataBaseHelper.Utility_TotalDay,dateDifference);
         cv.put(SuperUltraInfoDataBaseHelper.Utility_NumberOfSharing,numOfPeople);
         cv.put(SuperUltraInfoDataBaseHelper.Utility_AverageCO2,CO2PerDayPerPerson);
+        setLatestBill();
+        cv.put(SuperUltraInfoDataBaseHelper.Utility_CreationDate, singleton.getLatestBill());
         long idPassBack = UtilityDB.insert(SuperUltraInfoDataBaseHelper.Utility_Table,null,cv);
         UtilityDB.close();
         return  idPassBack;
@@ -509,5 +512,9 @@ public class AddMonthlyUtilities extends AppCompatActivity {
         finish();
     }
 
-
+    private void setLatestBill() {
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        singleton.setLatestBill(sdf.format(calendar.getTime()));
+    }
 }

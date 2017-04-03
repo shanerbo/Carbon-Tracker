@@ -48,11 +48,11 @@ public class AddNewRoute extends AppCompatActivity {
     private String _year =  singleton.getUserYear();
     private String _date = _year+"-"+_month+"-"+_day;
     private long _EditedJourneyID = singleton.getEditPostion_Journey();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
 
         SuperUltraInfoDataBaseHelper RouteDBhelper = new SuperUltraInfoDataBaseHelper(this);
         RouteDB = RouteDBhelper.getWritableDatabase();
@@ -100,9 +100,6 @@ public class AddNewRoute extends AppCompatActivity {
         delButton(position);
     }
 
-
-
-
     private void checkButton(final long position) {
         FloatingActionButton check = (FloatingActionButton) findViewById(R.id.comfirm_add);
         check.setOnClickListener(new View.OnClickListener() {
@@ -116,76 +113,38 @@ public class AddNewRoute extends AppCompatActivity {
                 String temp_cityDst = CityDst.getText().toString();
                 String temp_highWayDst = HighWayDst.getText().toString();
                 if (!name.matches("") && !temp_cityDst.matches("") && !temp_highWayDst.matches("")) {
-
                     int cityDst = Integer.parseInt(temp_cityDst);
                     int highWayDst = Integer.parseInt(temp_highWayDst);
-                    int totalDst = CalculateTotalDistance(cityDst,highWayDst);
+                    int totalDst = CalculateTotalDistance(cityDst, highWayDst);
+                    if (totalDst == 0) {
+                        String msg = "The total distance must not add up to zero.";
+                        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+                        return;
+                    }
 
                     ContentValues cv = new ContentValues();
                     cv.put(SuperUltraInfoDataBaseHelper.Route_Name, name);
                     cv.put(SuperUltraInfoDataBaseHelper.Route_City_Dst, cityDst);
                     cv.put(SuperUltraInfoDataBaseHelper.Route_HWY_Dst, highWayDst);
-                    cv.put(SuperUltraInfoDataBaseHelper.Route_total_Dst,totalDst);
+                    cv.put(SuperUltraInfoDataBaseHelper.Route_total_Dst, totalDst);
                     if (singleton.checkEdit() == 1) {
                         long DBID = _RouteToBeEdit.getRouteDBId();
-                        long idPassBack = RouteDB.update(SuperUltraInfoDataBaseHelper.Route_Table,cv,"_id="+DBID, null);
+                        long idPassBack = RouteDB.update(SuperUltraInfoDataBaseHelper.Route_Table, cv, "_id=" + DBID, null);
                         RouteDB.close();
                         singleton.userFinishEdit();
                         Intent userEditRoute = DisplayRouteList.makeIntent(AddNewRoute.this);
                         startActivity(userEditRoute);
-                    }
-                    else {
-                        long idPassedBack = RouteDB.insert(SuperUltraInfoDataBaseHelper.Route_Table,null,cv);
-                        Route userInput = new Route(name, cityDst, highWayDst, totalDst,idPassedBack);
+                    } else {
+                        long idPassedBack = RouteDB.insert(SuperUltraInfoDataBaseHelper.Route_Table, null, cv);
+                        Route userInput = new Route(name, cityDst, highWayDst, totalDst, idPassedBack);
                         if (singleton.isEditingJourney()) {
-                            String mode;
-                            if (singleton.checkTransportationMode() == 1){
-                                mode = "Walk/bike";
-                                double co2 = 0;
-                                editJoutneyDB(_date,0,mode,mode,"N/A","N/A",0,0,0,"N/A",idPassedBack,name,cityDst,
-                                        highWayDst,totalDst,_EditedJourneyID,co2);
-                            }
-                            else if (singleton.checkTransportationMode() == 2){
-                                mode = "Bus";
-                                double co2 = (cityDst + highWayDst)*0.089;
-                                editJoutneyDB(_date,0,mode,mode,"N/A","N/A",0,0,0,"N/A",idPassedBack,name,cityDst,
-                                        highWayDst,totalDst,_EditedJourneyID,co2);
-
-                            }
-                            else if (singleton.checkTransportationMode() == 3){
-                                mode = "Skytrain";
-                                double co2 = (cityDst + highWayDst)*0.02348;
-                                editJoutneyDB(_date,0,mode,mode,"N/A","N/A",0,0,0,"N/A",idPassedBack,name,cityDst,
-                                        highWayDst,totalDst,_EditedJourneyID,co2);
-                            }
-                            else{
-                                mode = "Car";
-                                double fuelCost;
-                                if (_vehicle.getFuelType().toLowerCase().matches("diesel")) {
-                                    fuelCost = 10.16;
-                                } else if (_vehicle.getFuelType().toLowerCase().matches("electricity")) {
-                                    fuelCost = 0;
-                                } else {
-                                    fuelCost = 8.89;
-                                }
-                                double cityGas = (cityDst * 0.621371192 / _vehicle.getCity08());
-                                double hwyGas = highWayDst * 0.621371192 / _vehicle.getHighway08();
-                                double totalGas = cityGas + hwyGas;
-                                double co2 = fuelCost * totalGas;
-                                editJoutneyDB(_date,_vehicle.getVehicleDBId(),_vehicle.getName(),mode,_vehicle.getMake()
-                                        ,_vehicle.getModel(),_vehicle.getYear(),_vehicle.getCity08(),
-                                        _vehicle.getHighway08(),_vehicle.getFuelType(),idPassedBack,name,cityDst,
-                                        highWayDst,totalDst,_EditedJourneyID,co2);
-                            }
-
-
+                            checkTransportationMode(name, cityDst, highWayDst, totalDst, idPassedBack);
                             singleton.userFinishEditJourney();
                             Intent userEditJourney = DisplayJourneyList.makeIntent(AddNewRoute.this);
                             startActivity(userEditJourney);
                             singleton.userFinishAdd();
                             finish();
-                        }
-                        else {
+                        } else {
                             singleton.userFinishAdd();
                             calculateCO2(userInput);
                             Intent ConfirmRoute = MainMenu.makeIntent(AddNewRoute.this);
@@ -193,8 +152,104 @@ public class AddNewRoute extends AppCompatActivity {
                         }
                     }
                     finish();
-                }else{
-                    Toast.makeText(getApplicationContext(),"Please fill all blanks",Toast.LENGTH_LONG).show();
+                } else if (equalsZero(temp_cityDst, temp_highWayDst)) {
+                    String msg = "The total distance must not add up to zero.";
+                    Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+                } else if (temp_cityDst.matches("") || temp_highWayDst.matches("")) {
+                    int cityDst;
+                    if (temp_cityDst.matches("")) {
+                        cityDst = 0;
+                    } else {
+                        cityDst = Integer.parseInt(temp_cityDst);
+                    }
+
+                    int highWayDst;
+                    if (temp_highWayDst.matches("")) {
+                        highWayDst = 0;
+                    } else {
+                        highWayDst = Integer.parseInt(temp_highWayDst);
+                    }
+
+
+                    int totalDst = CalculateTotalDistance(cityDst, highWayDst);
+                    if (totalDst == 0) {
+                        String msg = "The total distance must not add up to zero.";
+                        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+                        return;
+                    }
+
+                    ContentValues cv = new ContentValues();
+                    cv.put(SuperUltraInfoDataBaseHelper.Route_Name, name);
+                    cv.put(SuperUltraInfoDataBaseHelper.Route_City_Dst, cityDst);
+                    cv.put(SuperUltraInfoDataBaseHelper.Route_HWY_Dst, highWayDst);
+                    cv.put(SuperUltraInfoDataBaseHelper.Route_total_Dst, totalDst);
+                    if (singleton.checkEdit() == 1) {
+                        long DBID = _RouteToBeEdit.getRouteDBId();
+                        long idPassBack = RouteDB.update(SuperUltraInfoDataBaseHelper.Route_Table, cv, "_id=" + DBID, null);
+                        RouteDB.close();
+                        singleton.userFinishEdit();
+                        Intent userEditRoute = DisplayRouteList.makeIntent(AddNewRoute.this);
+                        startActivity(userEditRoute);
+                    } else {
+                        long idPassedBack = RouteDB.insert(SuperUltraInfoDataBaseHelper.Route_Table, null, cv);
+                        Route userInput = new Route(name, cityDst, highWayDst, totalDst, idPassedBack);
+                        if (singleton.isEditingJourney()) {
+                            checkTransportationMode(name, cityDst, highWayDst, totalDst, idPassedBack);
+                            singleton.userFinishEditJourney();
+                            Intent userEditJourney = DisplayJourneyList.makeIntent(AddNewRoute.this);
+                            startActivity(userEditJourney);
+                            singleton.userFinishAdd();
+                            finish();
+                        } else {
+                            singleton.userFinishAdd();
+                            singleton.addedJourneyToday();
+                            calculateCO2(userInput);
+                            Intent ConfirmRoute = MainMenu.makeIntent(AddNewRoute.this);
+                            startActivity(ConfirmRoute);
+                        }
+                    }
+                } else {
+                    String msg = "Please enter at least your name and one of the distance fields.";
+                    Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+                }
+            }
+
+            private void checkTransportationMode(String name, int cityDst, int highWayDst, int totalDst, long idPassedBack) {
+                String mode;
+                if (singleton.checkTransportationMode() == 1) {
+                    mode = "Walk/bike";
+                    double co2 = 0;
+                    editJoutneyDB(_date, 0, mode, mode, "N/A", "N/A", 0, 0, 0, "N/A", idPassedBack, name, cityDst,
+                            highWayDst, totalDst, _EditedJourneyID, co2);
+                } else if (singleton.checkTransportationMode() == 2) {
+                    mode = "Bus";
+                    double co2 = (cityDst + highWayDst) * 0.089;
+                    editJoutneyDB(_date, 0, mode, mode, "N/A", "N/A", 0, 0, 0, "N/A", idPassedBack, name, cityDst,
+                            highWayDst, totalDst, _EditedJourneyID, co2);
+
+                } else if (singleton.checkTransportationMode() == 3) {
+                    mode = "Skytrain";
+                    double co2 = (cityDst + highWayDst) * 0.02348;
+                    editJoutneyDB(_date, 0, mode, mode, "N/A", "N/A", 0, 0, 0, "N/A", idPassedBack, name, cityDst,
+                            highWayDst, totalDst, _EditedJourneyID, co2);
+                } else {
+                    mode = "Car";
+                    double fuelCost;
+                    if (_vehicle.getFuelType().toLowerCase().matches("diesel")) {
+                        fuelCost = 10.16;
+                    } else if (_vehicle.getFuelType().toLowerCase().matches("electricity")) {
+                        fuelCost = 0;
+                    } else {
+                        fuelCost = 8.89;
+                    }
+                    double cityGas = (cityDst * 0.621371192 / _vehicle.getCity08());
+                    double hwyGas = highWayDst * 0.621371192 / _vehicle.getHighway08();
+                    double totalGas = cityGas + hwyGas;
+                    double co2 = fuelCost * totalGas;
+                    editJoutneyDB(_date, _vehicle.getVehicleDBId(), _vehicle.getName(), mode, _vehicle.getMake()
+                            , _vehicle.getModel(), _vehicle.getYear(), _vehicle.getCity08(),
+                            _vehicle.getHighway08(), _vehicle.getFuelType(), idPassedBack, name, cityDst,
+                            highWayDst, totalDst, _EditedJourneyID, co2);
                 }
             }
 
@@ -229,6 +284,16 @@ public class AddNewRoute extends AppCompatActivity {
 
             }
         });
+    }
+
+    private boolean equalsZero(String cityDist, String highwayDist) {
+        if (cityDist.matches("") && Integer.parseInt(highwayDist) == 0) {
+            return true;
+        } else if (highwayDist.matches("") && Integer.parseInt(cityDist) == 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private void delButton(final long position) {
@@ -285,18 +350,19 @@ public class AddNewRoute extends AppCompatActivity {
 
         if (TransportMode == 1) { // Walk/Bike
             String TotalCO2 = String.format("%.2f", totalCO2);
-            Toast.makeText(getApplicationContext(), "You have produced: "+ TotalCO2 +"kg of CO2", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "You have produced: "+ TotalCO2 +"kg of CO2"+
+                    " ,equivalent to producing 0 kg of regular garbage.", Toast.LENGTH_SHORT).show();
 
             addJourneyToDBNotCar(_date,userInput,RouteDB,"Walk/Bike",totalCO2);
-
-
 
             createNewJourney(cityDistance,HwyDistance,totalCO2, 1);
         }
         else if (singleton.checkTransportationMode() == 2){ //Bus
             totalCO2 = (cityDistance+HwyDistance)*0.089;
             String TotalCO2 = String.format("%.2f", totalCO2);
-            Toast.makeText(getApplicationContext(), "You have produced: "+ TotalCO2 +"kg of CO2", Toast.LENGTH_SHORT).show();
+            String HumanCO2 = String.format("%.2f", totalCO2/2.06);
+            Toast.makeText(getApplicationContext(), "You have produced: "+ TotalCO2 +"kg of CO2"+
+                    " ,equivalent to producing "+HumanCO2+"kg of regular garbage.", Toast.LENGTH_SHORT).show();
 
             Cursor cursor = RouteDB.rawQuery("select max(JourneyCO2Emitted) from JourneyInfoTable" +
                     " where JourneyMode = 'Bus'",null);
@@ -314,14 +380,14 @@ public class AddNewRoute extends AppCompatActivity {
 
             addJourneyToDBNotCar(_date,userInput,RouteDB,"Bus",totalCO2);
 
-
-
             createNewJourney(cityDistance,HwyDistance,totalCO2, 2);
         }
         else if (singleton.checkTransportationMode() == 3){ //Skytrain
             totalCO2 = (cityDistance+HwyDistance)*0.02348;
             String TotalCO2 = String.format("%.2f", totalCO2);
-            Toast.makeText(getApplicationContext(), "You have produced: "+ TotalCO2 +"kg of CO2", Toast.LENGTH_SHORT).show();
+            String HumanCO2 = String.format("%.2f", totalCO2/2.06);
+            Toast.makeText(getApplicationContext(), "You have produced: "+ TotalCO2 +"kg of CO2"+
+                    " ,equivalent to producing "+HumanCO2+"kg of regular garbage.", Toast.LENGTH_SHORT).show();
             Cursor cursor = RouteDB.rawQuery("select max(JourneyCO2Emitted) from JourneyInfoTable" +
                     " where JourneyMode = 'Skytrain'",null);
             double maxCO2 = 0;
@@ -358,7 +424,9 @@ public class AddNewRoute extends AppCompatActivity {
             double totalGas = cityGas + hwyGas;
             totalCO2 = fuelCost * totalGas;
             String TotalCO2 = String.format("%.2f", totalCO2);
-            Toast.makeText(getApplicationContext(), "The CO2 you produced: " + TotalCO2, Toast.LENGTH_SHORT).show();
+            String HumanCO2 = String.format("%.2f", totalCO2/2.06);
+            Toast.makeText(getApplicationContext(), "The CO2 you produced: "+TotalCO2+"kg of CO2"+
+                    " ,equivalent to producing "+HumanCO2+"kg of regular garbage.", Toast.LENGTH_SHORT).show();
 
             Cursor cursor = RouteDB.rawQuery("select max(JourneyCO2Emitted) from JourneyInfoTable" +
                     " where JourneyMode = 'Car'",null);
@@ -403,9 +471,9 @@ public class AddNewRoute extends AppCompatActivity {
 
             createNewJourney(cityDistance, HwyDistance, totalCO2, 0);
         }
-        
+
         if (singleton.isEditingJourney()) {
-            
+
         } else {
             Intent ConfirmRoute = MainMenu.makeIntent(AddNewRoute.this);
             startActivity(ConfirmRoute);
@@ -463,6 +531,7 @@ public class AddNewRoute extends AppCompatActivity {
             singleton.changeJourney(journey);
         }
     }
+
     private String checkDayIsSingleDIgit(String userDay) {
         if (userDay.length() == 1){
             return "0"+userDay;
@@ -470,6 +539,7 @@ public class AddNewRoute extends AppCompatActivity {
             return userDay;
         }
     }
+
     private String ChangeMonthInInt(String _month) {
         if (_month.matches("January")){
             return "01";
@@ -508,5 +578,4 @@ public class AddNewRoute extends AppCompatActivity {
             return "12";
         }
     }
-
 }

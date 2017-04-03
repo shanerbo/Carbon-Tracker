@@ -52,6 +52,4 @@ public class Chart extends AppCompatActivity {
         chart.animateY(1000);
         chart.invalidate();
     }
-
-
 }
