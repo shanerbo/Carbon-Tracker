@@ -146,9 +146,7 @@ public class MonthGraph extends AppCompatActivity {
             BarData data = new BarData(dataSets);
             data.setValueTextSize(0f);
 
-
             return data;
-
 
         }
 
@@ -207,6 +205,7 @@ public class MonthGraph extends AppCompatActivity {
             totalSkyTrainCO2 += skytrainCO2.get(i).floatValue();
             totalUtility += utilityCO2.get(i).floatValue();
         }
+
         if (totalBusCO2 != 0.0) {
             pieEntries.add(new PieEntry(totalBusCO2, ""));
         }
@@ -223,33 +222,15 @@ public class MonthGraph extends AppCompatActivity {
 
         PieDataSet dataSet = new PieDataSet(pieEntries, "");
         dataSet.setColors(getColors());
-      //  dataSet.setSelectionShift(5f);
-        //TODO fix overlapping of names
-//        dataSet.setValueLinePart1OffsetPercentage(50.f);
-//        dataSet.setValueLinePart1Length(0.3f);//MAKES BOTH LINES TALLER
-//       dataSet.setValueLinePart2Length(0.1f);
-//       dataSet.setXValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
-//          dataSet.setValueTextColor(Color.BLUE);
-
-        dataSet.setValueLineColor(Color.BLUE);
         dataSet.setSliceSpace(2);
-        PieData data = new PieData(dataSet);
 
+        PieData data = new PieData(dataSet);
         data.setValueTextSize(11f);
         data.setValueTextColor(Color.BLACK);
 
         com.github.mikephil.charting.charts.PieChart chart = (com.github.mikephil.charting.charts.PieChart) findViewById(R.id.piechart_month);
         chart.setUsePercentValues(false);
-//chart.setCenterTextColor(Color.BLACK);
-        //chart.setEntryLabelColor(Color.BLACK);
-
-       chart.setCenterTextOffset(0, -20);
-        Legend l = chart.getLegend();
         chart.getLegend().setEnabled(false);
-
-        //chart.setCenterText(generateCenterSpannableText());
-        chart.setCenterTextColor(Color.BLACK);
-     //   chart.setExtraOffsets(5, 10, 5, 5);
         chart.setData(data);
         chart.animateY(1000);
         chart.setEntryLabelTextSize(10f);
@@ -582,7 +563,6 @@ public class MonthGraph extends AppCompatActivity {
 
         int stacksize = 4;
 
-        // have as many colors as stack-values per entry
         int[] colors = new int[stacksize];
 
         for (int i = 0; i < colors.length; i++) {

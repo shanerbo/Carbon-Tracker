@@ -25,7 +25,6 @@ import java.util.List;
 
 public class DisplayCarbonFootprint extends AppCompatActivity {
 
-
     Singleton singleton = Singleton.getInstance();
 
     @Override
