@@ -64,16 +64,13 @@ public class YearGraph extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_year_graph);
         viewCurrentDate();
-   setupCharts();
-
+        setupCharts();
 
     }
 
 
-
     private void setupCharts() {
         getYearCO2();
-       // setupCombinedCharts();
         setupLineChart();
         setupPieChart();
     }
@@ -112,21 +109,17 @@ public class YearGraph extends AppCompatActivity {
         dataSet.setColors(getColors());
         dataSet.setSelectionShift(5f);
         dataSet.setSliceSpace(2);
-        PieData data = new PieData(dataSet);
 
+        PieData data = new PieData(dataSet);
         data.setValueTextSize(11f);
         data.setValueTextColor(Color.BLACK);
 
         com.github.mikephil.charting.charts.PieChart chart = (com.github.mikephil.charting.charts.PieChart) findViewById(R.id.piechart_year);
         chart.setUsePercentValues(false);
-//chart.setCenterTextColor(Color.BLACK);
         chart.setEntryLabelColor(Color.BLUE);
         chart.setCenterTextOffset(0, -20);
-        Legend l = chart.getLegend();
         chart.getLegend().setEnabled(false);
         chart.setRotationAngle(0);
-        //chart.setCenterText(generateCenterSpannableText());
-        //chart.setCenterTextColor(Color.BLACK);
         chart.setExtraOffsets(5, 10, 5, 5);
         chart.setData(data);
         chart.animateY(1000);
@@ -134,11 +127,7 @@ public class YearGraph extends AppCompatActivity {
     }
 
     private void setupLineChart() {
-
-
         if (!isChartEmpty) {
-
-
             ArrayList<Entry> nationalAvgEntries = new ArrayList<Entry>();
             ArrayList<Entry> parisAccordEntries = new ArrayList<Entry>();
             LineDataSet set2 = new LineDataSet(parisAccordEntries, "Paris Accord");
@@ -165,24 +154,6 @@ public class YearGraph extends AppCompatActivity {
             set2.setMode(LineDataSet.Mode.CUBIC_BEZIER);
             set2.setDrawValues(false);
             set2.setAxisDependency(YAxis.AxisDependency.LEFT);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
             LineChart lineChart = (LineChart) findViewById(R.id.chart3);
@@ -255,7 +226,6 @@ public class YearGraph extends AppCompatActivity {
             lineDataSets.add(skytrainDataSet);
             lineDataSets.add(utilityDataSet);
 
-
             lineChart.animateX(800);
             lineChart.animateY(800);
             lineChart.setData(new LineData(lineDataSets));
@@ -318,7 +288,7 @@ public class YearGraph extends AppCompatActivity {
         boolean insideRange;
         long smallestDateDifference = 9999999;
         double mostRecentCO2 = 0;
-        for (int i=0; i < utilitiesList.size(); i++) {
+        for (int i = 0; i < utilitiesList.size(); i++) {
             insideRange = false;
 
             isChartEmpty = false;
@@ -327,11 +297,11 @@ public class YearGraph extends AppCompatActivity {
             double currentUtilityIndCO2 = currentUtility.getIndCO2();
             //Log.i("utility,co2: " ,"" +currentUtilityIndCO2);
             String currentUtilityStartDate = currentUtility.getStartDate();
-            Log.i("utility,sd: " ,"" +currentUtilityStartDate);
+            Log.i("utility,sd: ", "" + currentUtilityStartDate);
             String currentUtilityEndDate = currentUtility.getEndDate();
-            Log.i("utility,ed: " ,"" +currentUtilityEndDate);
+            Log.i("utility,ed: ", "" + currentUtilityEndDate);
 
-            for (int j = 0; j <previousDates.size(); j++) {
+            for (int j = 0; j < previousDates.size(); j++) {
                 String prevDate = previousDates.get(j);
 
                 String[] prevDate2 = prevDate.split("/");
@@ -339,9 +309,6 @@ public class YearGraph extends AppCompatActivity {
                 String month = addZeroToDay("" + AbbrMonthNumber(prevDate2[0]));
                 String year = prevDate2[1];
                 String prevDateNewFormat = year + "-" + month + "-" + "15";
-
-
-
 
 
                 if (getDateDifference(currentUtilityStartDate, prevDateNewFormat) >= 0 &&
@@ -369,25 +336,33 @@ public class YearGraph extends AppCompatActivity {
 
 
     private String addZeroToDay(String startDay) {
-        if(startDay.equals("1")){
+        if (startDay.equals("1")) {
             return "01";
-        }        if(startDay.equals("2")){
+        }
+        if (startDay.equals("2")) {
             return "02";
-        }        if(startDay.equals("3")){
+        }
+        if (startDay.equals("3")) {
             return "03";
-        }        if(startDay.equals("4")){
+        }
+        if (startDay.equals("4")) {
             return "04";
-        }        if(startDay.equals("5")){
+        }
+        if (startDay.equals("5")) {
             return "05";
-        }        if(startDay.equals("6")){
+        }
+        if (startDay.equals("6")) {
             return "06";
-        }        if(startDay.equals("7")){
+        }
+        if (startDay.equals("7")) {
             return "07";
-        }        if(startDay.equals("8")){
+        }
+        if (startDay.equals("8")) {
             return "08";
-        }        if(startDay.equals("9")){
+        }
+        if (startDay.equals("9")) {
             return "09";
-        }else{
+        } else {
             return startDay;
         }
     }
@@ -405,6 +380,7 @@ public class YearGraph extends AppCompatActivity {
         }
         return -1;
     }
+
     private void initMonths() {
 
         chosenDay = Integer.parseInt(singleton.getUserDay());
@@ -500,21 +476,21 @@ public class YearGraph extends AppCompatActivity {
     private void viewCurrentDate() {
 
 
-            Date date = new Date();
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEEE");
+        Date date = new Date();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEEE");
 
-            simpleDateFormat = new SimpleDateFormat("d");
-            String day = simpleDateFormat.format(date);
+        simpleDateFormat = new SimpleDateFormat("d");
+        String day = simpleDateFormat.format(date);
 
-            simpleDateFormat = new SimpleDateFormat("MMMM");
-            String month = simpleDateFormat.format(date);
+        simpleDateFormat = new SimpleDateFormat("MMMM");
+        String month = simpleDateFormat.format(date);
 
-            simpleDateFormat = new SimpleDateFormat("yyyy");
-            String year = simpleDateFormat.format(date);
+        simpleDateFormat = new SimpleDateFormat("yyyy");
+        String year = simpleDateFormat.format(date);
 
-            singleton.setUserDay(day);
-            singleton.setUserMonth(month);
-            singleton.setUserYear(year);
+        singleton.setUserDay(day);
+        singleton.setUserMonth(month);
+        singleton.setUserYear(year);
 
     }
 
@@ -560,6 +536,7 @@ public class YearGraph extends AppCompatActivity {
         }
 
     }
+
     public int AbbrMonthNumber(String month) {
 
         switch (month) {
@@ -570,7 +547,7 @@ public class YearGraph extends AppCompatActivity {
                 return 2;
 
             case "Mar":
-                 return 3;
+                return 3;
 
             case "Apr":
                 return 4;
@@ -585,7 +562,7 @@ public class YearGraph extends AppCompatActivity {
                 return 7;
 
             case "Aug":
-                 return 8;
+                return 8;
 
             case "Sep":
                 return 9;
