@@ -26,10 +26,18 @@
             android:layout_height="?attr/actionBarSize"
             android:minHeight="170dp"
             app:layout_collapseMode="pin"
-            app:title="View your bills"
+            app:title="View Your Bills"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
-        </android.support.design.widget.CollapsingToolbarLayout>
+        <Button
+            android:id="@+id/unit_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|left"
+            android:text="change CO2 unit"
+            android:textStyle="italic" />
+
+    </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
 

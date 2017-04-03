@@ -27,6 +27,13 @@
                 app:layout_collapseMode="pin"
                 app:title="Select A Journey"
                 app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+            <Button
+                android:id="@+id/unit_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|left"
+                android:text="Change CO2 Unit" />
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 

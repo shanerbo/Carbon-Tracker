@@ -11,12 +11,14 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.olive.carbon_tracker.Model.DatabaseHelper;
 import com.example.olive.carbon_tracker.Model.Journey;
+import com.example.olive.carbon_tracker.Model.MonthlyUtilitiesData;
 import com.example.olive.carbon_tracker.Model.Singleton;
 import com.example.olive.carbon_tracker.R;
 
@@ -40,6 +42,7 @@ public class DisplayJourneyList extends AppCompatActivity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_display_journey_list);
         setListView();
+        unitButton();
     }
 
     private void setListView() {
@@ -160,8 +163,17 @@ public class DisplayJourneyList extends AppCompatActivity {
         } else {
             double CO2Emitted = journey.getCarbonEmitted();
             DecimalFormat df = new DecimalFormat("#.##");
-            CO2Emitted = Double.valueOf(df.format(CO2Emitted));
-            msg = "CO2 Emitted: " + CO2Emitted;
+
+            if(singleton.checkCO2Unit() == 0){
+                CO2Emitted = Double.valueOf(df.format(CO2Emitted));
+                msg = "CO2 Emitted: " + CO2Emitted;
+            }
+            else{
+                CO2Emitted = Double.valueOf(df.format(CO2Emitted/2.06));
+                msg = "CO2 Emission equivalent to:\n" + CO2Emitted + "kg of garbage";
+            }
+
+
         }
         textView.setText(msg);
     }
@@ -189,6 +201,27 @@ public class DisplayJourneyList extends AppCompatActivity {
             return itemView;
         }
     }
+
+    private void unitButton() {
+        Button unitButton = (Button) findViewById(R.id.unit_btn);
+        unitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(singleton.checkCO2Unit() == 0)
+                    singleton.humanRelatableUnit();
+                else
+                    singleton.originalUnit();
+                finish();
+                startActivity(getIntent());
+            }
+        });
+    }
+
+
+
+
+
+
     public void onBackPressed() {
         Intent goBackToMainMenu = MainMenu.makeIntent(DisplayJourneyList.this);
         startActivity(goBackToMainMenu);
