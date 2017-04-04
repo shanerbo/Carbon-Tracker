@@ -1,6 +1,8 @@
 package com.example.olive.carbon_tracker.UI;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.text.SimpleDateFormat;
@@ -63,6 +65,12 @@ public class WelcomeScreen extends AppCompatActivity {
             }
         },exist_time);
 
+        int CO2Status = getCO2UnitStatus(this);
+        if(CO2Status == 1)
+            singleton.humanRelatableUnit();
+        else
+            singleton.originalUnit();
+
 
     }
 
@@ -71,5 +79,10 @@ public class WelcomeScreen extends AppCompatActivity {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         singleton.setCurrentDate(sdf.format(calendar.getTime()));
         singleton.setLatestBill(sdf.format(calendar.getTime()));
+    }
+
+    static public int getCO2UnitStatus(Context context){
+        SharedPreferences prefs = context.getSharedPreferences("CO2Status", MODE_PRIVATE);
+        return prefs.getInt("CO2 status", 0);
     }
 }

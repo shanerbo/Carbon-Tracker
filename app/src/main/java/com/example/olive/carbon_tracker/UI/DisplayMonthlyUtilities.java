@@ -3,6 +3,7 @@ package com.example.olive.carbon_tracker.UI;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.design.widget.FloatingActionButton;
@@ -182,10 +183,17 @@ public class DisplayMonthlyUtilities extends AppCompatActivity {
                 ArrayAdapter<MonthlyUtilitiesData> adapter = new myArrayAdapter();
                 ListView list = (ListView) findViewById(R.id.ID_Bill_List);
                 list.setAdapter(adapter);
+                saveCO2UnitStatus(singleton.checkCO2Unit());
             }
         });
     }
 
+    private void saveCO2UnitStatus(int status) {
+        SharedPreferences prefs = this.getSharedPreferences("CO2Status", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt("CO2 status", status);
+        editor.apply();
+    }
 
 
     public void onBackPressed(){

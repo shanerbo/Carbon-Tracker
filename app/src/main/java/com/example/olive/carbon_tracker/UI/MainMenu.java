@@ -57,11 +57,18 @@ public class MainMenu extends AppCompatActivity {
         getLatestBill();
         checkNotifications();
         setAlarm();
-//        generateTipsForCar(singleton.getHighestCO2FromCar());
-//        generateTipsForEnergy(singleton.getHighestCO2FromEnegy());
-//        generateTipsForUnrelated();
+        if(singleton.checkCO2Unit() == 0) {
+            generateTipsForCar(singleton.getHighestCO2FromCar());
+            generateTipsForEnergy(singleton.getHighestCO2FromEnegy());
+        }
+        else {
+            generateTipsForCarInHuman(singleton.getHighestCO2FromCar());
+            generateTipsForEnergyInHuman(singleton.getHighestCO2FromEnegy());
+        }
+        generateTipsForUnrelated();
 
-//        HighestCO2FromCar();
+
+        HighestCO2FromCar();
         getJourneyList();
         setContentView(R.layout.activity_main_menu);
         setButton(R.id.btnCreateJourney);
@@ -70,127 +77,159 @@ public class MainMenu extends AppCompatActivity {
         setButton(R.id.btnMonthlyUti);
     }
 
-//    private void generateTipsForEnergy(double co2) {
-//        allRandomEnegyTips.add(getString(R.string.energy_tip_1, co2, co2/2.06));
-//        allRandomEnegyTips.add(getString(R.string.energy_tip_2, co2, co2/2.06));
-//        allRandomEnegyTips.add(getString(R.string.energy_tip_3, co2, co2/2.06));
-//        allRandomEnegyTips.add(getString(R.string.energy_tip_4, co2, co2/2.06));
-//        allRandomEnegyTips.add(getString(R.string.energy_tip_5, co2, co2/2.06));
-//        allRandomEnegyTips.add(getString(R.string.energy_tip_6, co2, co2/2.06));
-//        allRandomEnegyTips.add(getString(R.string.energy_tip_7, co2, co2/2.06));
-//        allRandomEnegyTips.add(getString(R.string.energy_tip_8, co2, co2/2.06));
-//    }
-//
-//
-//    private void generateTipsForCar(double co2){
-//        allRandomCarTips.add(getString(R.string.vehicle_tip_1, co2, co2/2.06));
-//        allRandomCarTips.add(getString(R.string.vehicle_tip_2, co2, co2/2.06));
-//        allRandomCarTips.add(getString(R.string.vehicle_tip_3, co2, co2/2.06));
-//        allRandomCarTips.add(getString(R.string.vehicle_tip_4, co2, co2/2.06));
-//        allRandomCarTips.add(getString(R.string.vehicle_tip_5, co2, co2/2.06));
-//        allRandomCarTips.add(getString(R.string.vehicle_tip_6, co2, co2/2.06));
-//        allRandomCarTips.add(getString(R.string.vehicle_tip_7, co2, co2/2.06));
-//        allRandomCarTips.add(getString(R.string.vehicle_tip_8, co2, co2/2.06));
-//
-//    }
-//    private void generateTipsForUnrelated(){
-//        Cursor cursor = myDataBase.rawQuery("select count(*) from JourneyInfoTable where " +
-//                "JourneyMode = 'Car'",null);
-//        int CarTimes = 0;
-//        cursor.moveToFirst();
-//        while (!cursor.isAfterLast()){
-//            CarTimes = cursor.getInt(0);
-//            cursor.moveToNext();
-//        }
-//        allRandomUnrelatedTips.add(getString(R.string.unrelated_tip_1,CarTimes));
-//        cursor = myDataBase.rawQuery("select sum(UtilityAverageCO2) from " +
-//                "UtilityInfoTable  ",null);
-//        double totalUtilityCO2 = 0;
-//        cursor.moveToFirst();
-//        while (!cursor.isAfterLast()){
-//            totalUtilityCO2 = cursor.getDouble(0);
-//            cursor.moveToNext();
-//        }
-//        allRandomUnrelatedTips.add(getString(R.string.unrelated_tip_2, totalUtilityCO2, totalUtilityCO2/2.06));
-//        cursor = myDataBase.rawQuery("select sum(JourneyRouteTotal) from JourneyInfoTable " +
-//                "where JourneyMode = 'Car'",null);
-//        int TotalofTotalDST = 0;
-//        cursor.moveToFirst();
-//        while (!cursor.isAfterLast()){
-//            TotalofTotalDST = cursor.getInt(0);
-//            cursor.moveToNext();
-//        }
-//        allRandomUnrelatedTips.add(getString(R.string.unrelated_tip_3,TotalofTotalDST));
-//        cursor = myDataBase.rawQuery("select count(*) from JourneyInfoTable where " +
-//                "JourneyCarModel = 'Suv' ",null);
-//        int dringSUVtimes = 0;
-//        cursor.moveToFirst();
-//        while (!cursor.isAfterLast()){
-//            dringSUVtimes = cursor.getInt(0);
-//            cursor.moveToNext();
-//        }
-//        allRandomUnrelatedTips.add(getString(R.string.unrelated_tip_4,dringSUVtimes));
-//        cursor = myDataBase.rawQuery("select sum(JourneyRouteHwy) from JourneyInfoTable " +
-//                "where JourneyMode= 'Car'",null);
-//        int totalHWYDST = 0;
-//        cursor.moveToFirst();
-//        while (!cursor.isAfterLast()){
-//            totalHWYDST = cursor.getInt(0);
-//            cursor.moveToNext();
-//        }
-//        allRandomUnrelatedTips.add(getString(R.string.unrelated_tip_5,totalHWYDST));
-//        allRandomUnrelatedTips.add(getString(R.string.unrelated_tip_6,totalUtilityCO2, totalUtilityCO2/2.06));
-//        cursor = myDataBase.rawQuery("select sum(JourneyRouteCity) from JourneyInfoTable " +
-//                "where JourneyMode= 'Car'",null);
-//        int totalCITYDST = 0;
-//        cursor.moveToFirst();
-//        while (!cursor.isAfterLast()){
-//            totalCITYDST = cursor.getInt(0);
-//            cursor.moveToNext();
-//        }
-//        allRandomUnrelatedTips.add(getString(R.string.unrelated_tip_7,totalCITYDST));
-//        cursor = myDataBase.rawQuery("select count(*) from JourneyInfoTable " +
-//                "where JourneyMode ='Bus' or JourneyMode='Skytrain'",null);
-//        int TotalBUSSKYtraintime = 0;
-//        cursor.moveToFirst();
-//        while (!cursor.isAfterLast()){
-//            TotalBUSSKYtraintime = cursor.getInt(0);
-//            cursor.moveToNext();
-//        }
-//        cursor.close();
-//        allRandomUnrelatedTips.add(getString(R.string.unrelated_tip_8,TotalBUSSKYtraintime));
-//    }
-//    private void HighestCO2FromCar() {
-//        if (singleton.isCarCO2Highest()){
-//            singleton.setCarCO2Highest(false);
-//            showUpTips(0,allRandomCarTips);
-//        }else if (singleton.isEnegyHighest()){
-//            singleton.setEnegyHighest(false);
-//            showUpTips(0,allRandomEnegyTips);
-//        }else if(whichTipShowUP%3 ==0){
-//            showUpTips(0,allRandomUnrelatedTips);
-//        }else{
-//            whichTipShowUP++;
-//        }
-//    }
 
-//    private void showUpTips(final int i,final List<String> tipsList) {
-//        Snackbar tipBar =  Snackbar.make(findViewById(android.R.id.content), tipsList.get(i%tipsList.size()),
-//                Snackbar.LENGTH_LONG);
-//        View snackbarView = tipBar.getView();
-//        TextView tv= (TextView) snackbarView.findViewById(android.support.design.R.id.snackbar_text);
-//        tv.setMaxLines(5);
-//        //make snackBar contain up to 5 lines
-//            tipBar.setAction("Next", new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    showUpTips(i + 1,tipsList);
-//                }
-//            });
-//            tipBar.setActionTextColor(Color.RED);
-//            tipBar.setDuration(7500);
-//            tipBar.show();
-//    }
+    private void generateTipsForCar(double co2){
+        allRandomCarTips.add(getString(R.string.vehicle_tip_1, co2));
+        allRandomCarTips.add(getString(R.string.vehicle_tip_2, co2));
+        allRandomCarTips.add(getString(R.string.vehicle_tip_3, co2));
+        allRandomCarTips.add(getString(R.string.vehicle_tip_4, co2));
+        allRandomCarTips.add(getString(R.string.vehicle_tip_5, co2));
+        allRandomCarTips.add(getString(R.string.vehicle_tip_6, co2));
+        allRandomCarTips.add(getString(R.string.vehicle_tip_7, co2));
+        allRandomCarTips.add(getString(R.string.vehicle_tip_8, co2));
+    }
+
+    private void generateTipsForCarInHuman(double co2){
+        allRandomCarTips.add(getString(R.string.vehicle_tip_human_1, co2/2.06));
+        allRandomCarTips.add(getString(R.string.vehicle_tip_human_2, co2/2.06));
+        allRandomCarTips.add(getString(R.string.vehicle_tip_human_3, co2/2.06));
+        allRandomCarTips.add(getString(R.string.vehicle_tip_human_4, co2/2.06));
+        allRandomCarTips.add(getString(R.string.vehicle_tip_human_5, co2/2.06));
+        allRandomCarTips.add(getString(R.string.vehicle_tip_human_6, co2/2.06));
+        allRandomCarTips.add(getString(R.string.vehicle_tip_human_7, co2/2.06));
+        allRandomCarTips.add(getString(R.string.vehicle_tip_human_8, co2/2.06));
+    }
+
+
+    private void generateTipsForEnergy(double co2) {
+        allRandomEnegyTips.add(getString(R.string.energy_tip_1, co2));
+        allRandomEnegyTips.add(getString(R.string.energy_tip_2, co2));
+        allRandomEnegyTips.add(getString(R.string.energy_tip_3, co2));
+        allRandomEnegyTips.add(getString(R.string.energy_tip_4, co2));
+        allRandomEnegyTips.add(getString(R.string.energy_tip_5, co2));
+        allRandomEnegyTips.add(getString(R.string.energy_tip_6, co2));
+        allRandomEnegyTips.add(getString(R.string.energy_tip_7, co2));
+        allRandomEnegyTips.add(getString(R.string.energy_tip_8, co2));
+    }
+
+    private void generateTipsForEnergyInHuman(double co2){
+        allRandomEnegyTips.add(getString(R.string.energy_tip_human_1, co2/2.06));
+        allRandomEnegyTips.add(getString(R.string.energy_tip_human_2, co2/2.06));
+        allRandomEnegyTips.add(getString(R.string.energy_tip_human_3, co2/2.06));
+        allRandomEnegyTips.add(getString(R.string.energy_tip_human_4, co2/2.06));
+        allRandomEnegyTips.add(getString(R.string.energy_tip_human_5, co2/2.06));
+        allRandomEnegyTips.add(getString(R.string.energy_tip_human_6, co2/2.06));
+        allRandomEnegyTips.add(getString(R.string.energy_tip_human_7, co2/2.06));
+        allRandomEnegyTips.add(getString(R.string.energy_tip_human_8, co2/2.06));
+    }
+
+
+    private void generateTipsForUnrelated(){
+        Cursor cursor = myDataBase.rawQuery("select count(*) from JourneyInfoTable where " +
+                "JourneyMode = 'Car'",null);
+        int CarTimes = 0;
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()){
+            CarTimes = cursor.getInt(0);
+            cursor.moveToNext();
+        }
+        allRandomUnrelatedTips.add(getString(R.string.unrelated_tip_1,CarTimes));
+        cursor = myDataBase.rawQuery("select sum(UtilityAverageCO2) from " +
+                "UtilityInfoTable  ",null);
+        double totalUtilityCO2 = 0;
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()){
+            totalUtilityCO2 = cursor.getDouble(0);
+            cursor.moveToNext();
+        }
+        if(singleton.checkCO2Unit() == 0)
+            allRandomUnrelatedTips.add(getString(R.string.unrelated_tip_2, totalUtilityCO2));
+        else
+            allRandomUnrelatedTips.add(getString(R.string.unrelated_tip_human_2, totalUtilityCO2/2.06));
+
+        cursor = myDataBase.rawQuery("select sum(JourneyRouteTotal) from JourneyInfoTable " +
+                "where JourneyMode = 'Car'",null);
+        int TotalofTotalDST = 0;
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()){
+            TotalofTotalDST = cursor.getInt(0);
+            cursor.moveToNext();
+        }
+        allRandomUnrelatedTips.add(getString(R.string.unrelated_tip_3,TotalofTotalDST));
+        cursor = myDataBase.rawQuery("select count(*) from JourneyInfoTable where " +
+                "JourneyCarModel = 'Suv' ",null);
+        int dringSUVtimes = 0;
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()){
+            dringSUVtimes = cursor.getInt(0);
+            cursor.moveToNext();
+        }
+        allRandomUnrelatedTips.add(getString(R.string.unrelated_tip_4,dringSUVtimes));
+        cursor = myDataBase.rawQuery("select sum(JourneyRouteHwy) from JourneyInfoTable " +
+                "where JourneyMode= 'Car'",null);
+        int totalHWYDST = 0;
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()){
+            totalHWYDST = cursor.getInt(0);
+            cursor.moveToNext();
+        }
+        allRandomUnrelatedTips.add(getString(R.string.unrelated_tip_5,totalHWYDST));
+        if(singleton.checkCO2Unit() == 0)
+            allRandomUnrelatedTips.add(getString(R.string.unrelated_tip_6,totalUtilityCO2));
+        else
+            allRandomUnrelatedTips.add(getString(R.string.unrelated_tip_human_6,totalUtilityCO2/2.06));
+
+        cursor = myDataBase.rawQuery("select sum(JourneyRouteCity) from JourneyInfoTable " +
+                "where JourneyMode= 'Car'",null);
+        int totalCITYDST = 0;
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()){
+            totalCITYDST = cursor.getInt(0);
+            cursor.moveToNext();
+        }
+        allRandomUnrelatedTips.add(getString(R.string.unrelated_tip_7,totalCITYDST));
+        cursor = myDataBase.rawQuery("select count(*) from JourneyInfoTable " +
+                "where JourneyMode ='Bus' or JourneyMode='Skytrain'",null);
+        int TotalBUSSKYtraintime = 0;
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()){
+            TotalBUSSKYtraintime = cursor.getInt(0);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        allRandomUnrelatedTips.add(getString(R.string.unrelated_tip_8,TotalBUSSKYtraintime));
+    }
+    private void HighestCO2FromCar() {
+        if (singleton.isCarCO2Highest()){
+            singleton.setCarCO2Highest(false);
+            showUpTips(0,allRandomCarTips);
+        }else if (singleton.isEnegyHighest()){
+            singleton.setEnegyHighest(false);
+            showUpTips(0,allRandomEnegyTips);
+        }else if(whichTipShowUP%3 ==0){
+            showUpTips(0,allRandomUnrelatedTips);
+        }else{
+            whichTipShowUP++;
+        }
+    }
+
+    private void showUpTips(final int i,final List<String> tipsList) {
+        Snackbar tipBar =  Snackbar.make(findViewById(android.R.id.content), tipsList.get(i%tipsList.size()),
+                Snackbar.LENGTH_LONG);
+        View snackbarView = tipBar.getView();
+        TextView tv= (TextView) snackbarView.findViewById(android.support.design.R.id.snackbar_text);
+        tv.setMaxLines(5);
+        //make snackBar contain up to 5 lines
+            tipBar.setAction("Next", new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showUpTips(i + 1,tipsList);
+                }
+            });
+            tipBar.setActionTextColor(Color.RED);
+            tipBar.setDuration(7500);
+            tipBar.show();
+    }
 
     private void getJourneyList() {
         List<Journey> JourneyListFromDB = new ArrayList<>();
