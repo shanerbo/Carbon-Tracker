@@ -206,19 +206,19 @@ public class MonthGraph extends AppCompatActivity {
             totalUtility += utilityCO2.get(i).floatValue();
         }
 
-        if (totalBusCO2 != 0.0) {
+      //  if (totalBusCO2 != 0.0) {
             pieEntries.add(new PieEntry(totalBusCO2, ""));
-        }
-        if (totalCarCO2 != 0.0) {
+     //   }
+    //    if (totalCarCO2 != 0.0) {
             pieEntries.add(new PieEntry(totalCarCO2, ""));
-        }
+    //    }
 
-        if (totalSkyTrainCO2 != 0.0) {
+    //    if (totalSkyTrainCO2 != 0.0) {
             pieEntries.add(new PieEntry(totalSkyTrainCO2, ""));
-        }
-        if (totalUtility != 0.0) {
+     //   }
+     //   if (totalUtility != 0.0) {
             pieEntries.add(new PieEntry(totalUtility, ""));
-        }
+    //    }
 
         PieDataSet dataSet = new PieDataSet(pieEntries, "");
         dataSet.setColors(getColors());
