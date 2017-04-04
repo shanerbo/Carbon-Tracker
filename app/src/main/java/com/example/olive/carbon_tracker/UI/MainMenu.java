@@ -58,7 +58,10 @@ public class MainMenu extends AppCompatActivity {
         checkNotifications();
         setAlarm();
         generateTipsForCar(singleton.getHighestCO2FromCar());
-        generateTipsForEnergy(singleton.getHighestCO2FromEnegy());
+        if(singleton.checkCO2Unit() == 0)
+            generateTipsForEnergy(singleton.getHighestCO2FromEnegy());
+        else
+            generateTipsForEnergyInHuman(singleton.getHighestCO2FromEnegy());
         generateTipsForUnrelated();
 
         HighestCO2FromCar();
@@ -71,14 +74,25 @@ public class MainMenu extends AppCompatActivity {
     }
 
     private void generateTipsForEnergy(double co2) {
-        allRandomEnegyTips.add(getString(R.string.energy_tip_1, co2, co2/2.06));
-        allRandomEnegyTips.add(getString(R.string.energy_tip_2, co2, co2/2.06));
-        allRandomEnegyTips.add(getString(R.string.energy_tip_3, co2, co2/2.06));
-        allRandomEnegyTips.add(getString(R.string.energy_tip_4, co2, co2/2.06));
-        allRandomEnegyTips.add(getString(R.string.energy_tip_5, co2, co2/2.06));
-        allRandomEnegyTips.add(getString(R.string.energy_tip_6, co2, co2/2.06));
-        allRandomEnegyTips.add(getString(R.string.energy_tip_7, co2, co2/2.06));
-        allRandomEnegyTips.add(getString(R.string.energy_tip_8, co2, co2/2.06));
+        allRandomEnegyTips.add(getString(R.string.energy_tip_1, co2));
+        allRandomEnegyTips.add(getString(R.string.energy_tip_2, co2));
+        allRandomEnegyTips.add(getString(R.string.energy_tip_3, co2));
+        allRandomEnegyTips.add(getString(R.string.energy_tip_4, co2));
+        allRandomEnegyTips.add(getString(R.string.energy_tip_5, co2));
+        allRandomEnegyTips.add(getString(R.string.energy_tip_6, co2));
+        allRandomEnegyTips.add(getString(R.string.energy_tip_7, co2));
+        allRandomEnegyTips.add(getString(R.string.energy_tip_8, co2));
+    }
+
+    private void generateTipsForEnergyInHuman(double co2){
+        allRandomEnegyTips.add(getString(R.string.energy_tip_human_1, co2/2.06));
+        allRandomEnegyTips.add(getString(R.string.energy_tip_human_2, co2/2.06));
+        allRandomEnegyTips.add(getString(R.string.energy_tip_human_3, co2/2.06));
+        allRandomEnegyTips.add(getString(R.string.energy_tip_human_4, co2/2.06));
+        allRandomEnegyTips.add(getString(R.string.energy_tip_human_5, co2/2.06));
+        allRandomEnegyTips.add(getString(R.string.energy_tip_human_6, co2/2.06));
+        allRandomEnegyTips.add(getString(R.string.energy_tip_human_7, co2/2.06));
+        allRandomEnegyTips.add(getString(R.string.energy_tip_human_8, co2/2.06));
     }
 
 

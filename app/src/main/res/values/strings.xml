@@ -112,22 +112,33 @@
     <string name="vehicle_tip_8" formatted="false">Your driving is creating %f kg of CO2, equivalent to %f kg of regular garbage.
         Consider walking or riding a bike.</string>
 
-    <string name="energy_tip_1" formatted="false">Your electricity usage is producing %f kg of CO2, equivalent to %f kg of regular garbage.
-        Try unplugging unused electronic devices</string>
-    <string name="energy_tip_2" formatted="false">You are making %f kg of CO2, equivalent to %f kg of regular garbage, from electricity.
+    <string name="energy_tip_1">Your electricity usage is producing %.2f kg of CO2. Try unplugging unused electronic devices.</string>
+    <string name="energy_tip_2">You are making %.2f kg of CO2 from electricity. Try shutting off lights when not in use and consider taking shorter showers.</string>
+    <string name="energy_tip_3">Your electricity usage is making %.2f kg of CO2. Try installing solar panels.</string>
+    <string name="energy_tip_4">Your energy usage is creating %.2f kg of CO2. Consider putting your computers in sleep mode when they are not in use.</string>
+    <string name="energy_tip_5">Your energy usage is generating %.2f kg of CO2. Try doing your laundry with cold water, and remember to change air filters frequently.</string>
+    <string name="energy_tip_6">%.2f kg of CO2 is created from your electricity usage. Consider switching to LED light bulbs.</string>
+    <string name="energy_tip_7">Your energy usage is generating %.2f kg of CO2. Try using your microwave over your oven when possible.</string>
+    <string name="energy_tip_8">%.2f kg of CO2 emission comes from your energy usage. Consider managing your thermostat so your heater does not operate too often.</string>
+
+
+    <string name="energy_tip_human_1">Your electricity usage is producing as much CO2 as %.2f kg of regular
+        garbage can produce. Try unplugging unused electronic devices.</string>
+    <string name="energy_tip_human_2">You are making as much CO2 as %.2f kg of regular garbage can make.
         Try shutting off lights when not in use and consider taking shorter showers.</string>
-    <string name="energy_tip_3" formatted="false">Your electricity usage is making %f kg of CO2, equivalent to %f kg of regular garbage.
-        Try installing solar panels.</string>
-    <string name="energy_tip_4" formatted="false">Your energy usage is creating %f kg of CO2, equivalent to %f kg of regular garbage.
-        Consider putting your computers in sleep mode when they are not in use.</string>
-    <string name="energy_tip_5" formatted="false">Your energy usage is generating %f kg of CO2, equivalent to %f kg of regular garbage.
-        Try doing your laundry with cold water, and remember to change air filters frequently.</string>
-    <string name="energy_tip_6" formatted="false">%f kg of CO2, equivalent to %f kg of regular garbage, is created from your electricity usage.
-        Consider switching to LED light bulbs.</string>
-    <string name="energy_tip_7" formatted="false">Your energy usage is generating %f kg of CO2, equivalent to %f kg of regular garbage.
-        Try using your microwave over your oven when possible.</string>
-    <string name="energy_tip_8" formatted="false">%f kg of CO2 emission, equivalent to %f kg of regular garbage, comes from your energy usage.
-        Consider managing your thermostat so your heater does not operate too often.</string>
+    <string name="energy_tip_human_3">Your electricity usage is making as much CO2 as %.2f kg of regular
+    garbage can make. Try installing solar panels.</string>
+    <string name="energy_tip_human_4">Your energy usage is creating as much CO2 as %.2f kg of regular
+        garbage can create. Consider putting your computers in sleep mode when they are not in use.</string>
+    <string name="energy_tip_human_5">Your energy usage is generating as much CO2 as %.2f kg of regular
+        garbage can generate. Try doing your laundry with cold water, and remember to change air filters frequently.</string>
+    <string name="energy_tip_human_6">Your electricity usage is creating as much CO2 as %.2f kg of regular
+        garbage can create. Consider switching to LED light bulbs.</string>
+    <string name="energy_tip_human_7">Your energy usage is generating as much CO2 as %.2f kg of regular
+        garbage can generate. Try using your microwave over your oven when possible.</string>
+    <string name="energy_tip_human_8">Your energy usage is producing as much CO2 as %.2f kg of regular
+        garbage can produce. Consider managing your thermostat so your heater does not operate too often.</string>
+
 
     <string name="unrelated_tip_1">You drove %d times so far, When possible, walk or ride your bike in order to avoid carbon emissions completely. Carpooling
         and public transportation drastically reduce CO2 emissions by spreading them out over many riders.</string>
