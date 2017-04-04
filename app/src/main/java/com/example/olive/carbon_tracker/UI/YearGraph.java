@@ -495,14 +495,7 @@ public class YearGraph extends AppCompatActivity {
         singleton.setUserMonth(month);
         singleton.setUserYear(year);
 
-        } else {
-            super.onRestart();
-            String day = singleton.getUserDay();
-            String month = singleton.getUserMonth();
-            String year = singleton.getUserYear();
-            currentDate.setText(day + "/" + month + "/" + year);
-            singleton.setIsDateChanged(false);
-        }
+
     }
 
     public void monthNumber(String month) {

@@ -1,6 +1,7 @@
 package com.example.olive.carbon_tracker.UI;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import com.github.mikephil.charting.data.Entry;
