@@ -37,6 +37,12 @@ public class SingleDayGraph extends AppCompatActivity {
     List<Double> busCO2 = new ArrayList<>();
     List<Double> skytrainCO2 = new ArrayList<>();
     List<Double> utilityCO2 = new ArrayList<>();
+
+    List<String> carNames = new ArrayList<>();
+    List<Double> carNameSCO2 = new ArrayList<>();
+
+
+
     public static final int DAY_TOKEN = 0;
     public static final int MONTH_TOKEN = 1;
     public static final int YEAR_TOKEN = 2;
@@ -47,6 +53,7 @@ public class SingleDayGraph extends AppCompatActivity {
         setContentView(R.layout.activity_single_day_graph);
         viewCurrentDate();
         setupPieChart();
+        setupModePieChart();
         onRestart();
         setupCalendarButton();
     }
@@ -88,6 +95,49 @@ public class SingleDayGraph extends AppCompatActivity {
         chart.invalidate();
     }
 
+
+    private void setupModePieChart() {
+
+        getSingleDayCO2();
+
+        List<PieEntry> pieEntries = new ArrayList<>();
+
+        for(int i =0;i<carNames.size();i++){
+            pieEntries.add(new PieEntry(carNameSCO2.get(i).floatValue(), carNames.get(i)));
+
+        }
+
+
+
+
+        if (busCO2.get(0) != 0.0) {
+            pieEntries.add(new PieEntry(busCO2.get(0).floatValue(), "BUS"));
+        }
+        if (skytrainCO2.get(0) != 0.0) {
+            pieEntries.add(new PieEntry(skytrainCO2.get(0).floatValue(), "SKYTRAIN"));
+        }
+        if (utilityCO2.get(0) != 0.0) {
+            pieEntries.add(new PieEntry(utilityCO2.get(0).floatValue(), "UTILITY"));
+        }
+
+        PieDataSet dataSet = new PieDataSet(pieEntries, "");
+        dataSet.setColors(Color.rgb(0, 128, 255), Color.rgb(96, 96, 96), Color.rgb(255, 153, 2255), Color.rgb(255, 128, 0), Color.rgb(255, 0, 0));
+        PieData data = new PieData(dataSet);
+
+        data.setValueTextSize(11f);
+        data.setValueTextColor(Color.BLACK);
+
+        com.github.mikephil.charting.charts.PieChart chart = (com.github.mikephil.charting.charts.PieChart) findViewById(R.id.mode_PieChart);
+        chart.setUsePercentValues(false);
+
+        Legend l = chart.getLegend();
+        chart.getLegend().setEnabled(false);
+
+        chart.setData(data);
+        chart.animateY(1000);
+        chart.invalidate();
+    }
+
     public void onRestart() {
         super.onRestart();
         TextView currentDate = (TextView) findViewById(R.id.txtCurrentDate_SingleDay);
@@ -97,6 +147,7 @@ public class SingleDayGraph extends AppCompatActivity {
         currentDate.setText(day + "/" + month + "/" + year);
         singleton.setIsDateChanged(true);
         setupPieChart();
+        setupModePieChart();
     }
 
     private void viewCurrentDate() {
@@ -143,6 +194,8 @@ public class SingleDayGraph extends AppCompatActivity {
         List<Journey> journeyList = singleton.getUsersJourneys();
         List<MonthlyUtilitiesData> utilitiesList = singleton.getBillList();
         utilityCO2.clear();
+        carNameSCO2.clear();
+        carNames.clear();
         skytrainCO2.add(0, 0.0);
         busCO2.add(0, 0.0);
         carCO2.add(0, 0.0);
@@ -169,10 +222,42 @@ public class SingleDayGraph extends AppCompatActivity {
                         busCO2.add(0, currentJourneyCO2);
                         break;
                     default:
+
+                        double currentJourneyCO2Save = currentJourneyCO2;
                         currentJourneyCO2 += carCO2.remove(0);
                         carCO2.add(0, currentJourneyCO2);
+                        // for mode pie graph
+
+                        boolean foundMathchingCar = false;
+                        for(int j =0;j<carNames.size();j++){
+
+                            String currentCar = carNames.get(j);
+
+                             if(currentCar.equals(transportationMode)){
+                                 foundMathchingCar =true;
+                                 currentJourneyCO2Save += carNameSCO2.remove(j);
+                                 carNameSCO2.add(j,currentJourneyCO2Save);
+                             }
+
+
+                        }
+
+                        if(!foundMathchingCar){
+                            carNames.add(transportationMode);
+                            carNameSCO2.add(currentJourneyCO2Save);
+                        }
+
+
+
                         break;
                 }
+
+
+
+
+
+
+
 
             }
         }
