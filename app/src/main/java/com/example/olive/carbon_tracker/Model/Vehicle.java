@@ -66,7 +66,6 @@ public class Vehicle {
             this.indexID = 6;
             return image_6;
         }
-
     }
     public String getName() {
         return name;
