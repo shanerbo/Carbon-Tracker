@@ -211,15 +211,12 @@ public class DisplayJourneyList extends AppCompatActivity {
                     singleton.humanRelatableUnit();
                 else
                     singleton.originalUnit();
-                finish();
-                startActivity(getIntent());
+                ArrayAdapter<Journey> adapter = new myArrayAdapter();
+                ListView list = (ListView) findViewById(R.id.listJourneys);
+                list.setAdapter(adapter);
             }
         });
     }
-
-
-
-
 
 
     public void onBackPressed() {
