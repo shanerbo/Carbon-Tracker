@@ -65,6 +65,7 @@ public class MainMenu extends AppCompatActivity {
         getJourneyList();
         setContentView(R.layout.activity_main_menu);
         setButton(R.id.btnCreateJourney);
+        setButton(R.id.btnCurrentFootprint);
         setButton(R.id.btnEditJourney);
         setButton(R.id.btnMonthlyUti);
     }
@@ -306,7 +307,11 @@ public class MainMenu extends AppCompatActivity {
                 Intent showActivity = new Intent();
                 switch (id) {
                     case R.id.btnCreateJourney:
+                        //showActivity = DisplayCarList.makeIntent(MainMenu.this);
                         showActivity = new Intent(MainMenu.this, SelectTransportationModeAndDate.class);
+                        break;
+                    case R.id.btnCurrentFootprint:
+                        showActivity = new Intent(MainMenu.this,DisplayCarbonFootprint.class);
                         break;
                     case R.id.btnEditJourney:
                         showActivity = new Intent(MainMenu.this, DisplayJourneyList.class);

@@ -21,6 +21,9 @@
             android:name=".UI.MainMenu"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name=".UI.DisplayCarbonFootprint"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".UI.DisplayRouteList"
             android:label="@string/title_activity_display_route_list"
             android:theme="@style/AppTheme.NoActionBar" />

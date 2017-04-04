@@ -77,6 +77,7 @@
     <string name="edit_journeys">Edit Journeys</string>
     <string name="image_for_journey">Image for Journey</string>
     <string name="UserDeleteJourney">The Journey you selected has been deleted</string>
+    <string name="graphs">Graphs</string>
     <string name="_0_0">0.0</string>
     <string name="total_natural_gas_usage">Total Natural Gas Usage</string>
     <string name="gj">GJ</string>
