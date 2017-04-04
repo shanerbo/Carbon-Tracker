@@ -101,7 +101,6 @@ public class AddCar extends AppCompatActivity {
                 imageID = cursor.getInt(11);
                 cursor.moveToNext();
             }
-
             cursor.close();
 
             Vehicle VehicleToBeEdit = new Vehicle(CarName,CarMake,CarModel,CarYear,city08,hwy08,fuelType,_id,imageID);
@@ -109,7 +108,6 @@ public class AddCar extends AppCompatActivity {
             VehicleNameToBeEdit = _VehicleToBeEdit.getName();
             EditText Name = (EditText) findViewById(R.id.ID_Car_Name);
             Name.setText(VehicleNameToBeEdit);
-
         }else{
             position = singleton.getAddPosition_car();
         }
@@ -160,7 +158,9 @@ public class AddCar extends AppCompatActivity {
         SpinnerAdapter imageAdapter = new ImageAdapter(this,R.layout.single_element_image_spinner,
                 R.id.car_txt,image_list) ;
         ImageSpinner.setAdapter(imageAdapter);
-
+        if (singleton.checkEdit_car() ==1){
+            ImageSpinner.setSelection(_VehicleToBeEdit.getIndexID()-1);
+        }
         //image spinner end
 
         ArrayAdapter<String> make_adapter =  new ArrayAdapter<>(

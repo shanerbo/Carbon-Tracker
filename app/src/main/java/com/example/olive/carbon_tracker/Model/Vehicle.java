@@ -17,6 +17,12 @@ public class Vehicle {
     private String fuelType;
     private long vehicleDBId;
     private int imageID;
+
+    public int getIndexID() {
+        return indexID;
+    }
+
+    private int indexID;
     public Vehicle() {
     }
     private int image_1 = R.mipmap.car1;
@@ -42,16 +48,22 @@ public class Vehicle {
     }
     public int convertIDtoMipmapID(int id){
         if (id == 1){
+            this.indexID = 1;
             return image_1;
         }else if (id == 2){
+            this.indexID = 2;
             return image_2;
         }else if (id == 3){
+            this.indexID = 3;
             return image_3;
         }else if (id == 4){
+            this.indexID = 4;
             return image_4;
         }else if (id == 5){
+            this.indexID = 5;
             return image_5;
         }else{
+            this.indexID = 6;
             return image_6;
         }
 
