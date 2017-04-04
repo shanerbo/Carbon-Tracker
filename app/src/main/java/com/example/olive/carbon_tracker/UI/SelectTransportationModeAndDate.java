@@ -1,10 +1,12 @@
 package com.example.olive.carbon_tracker.UI;
 
 import android.app.Activity;
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.LauncherApps;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
@@ -23,25 +25,30 @@ import com.example.olive.carbon_tracker.Model.Singleton;
 import com.example.olive.carbon_tracker.Model.SuperUltraInfoDataBaseHelper;
 import com.example.olive.carbon_tracker.R;
 
-import java.nio.channels.SelectionKey;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
  * lets user to pick transportation mode and set travel date
  */
-public class SelectTransportationModeAndDate extends AppCompatActivity {
 
+public class SelectTransportationModeAndDate extends AppCompatActivity {
+    private static final long NUM_DAYS_REMINDER = 43;
     Singleton singleton = Singleton.getInstance();
     private static int UserTransportationMode;
     private SQLiteDatabase RouteDB;
     private long JourneyPosition = singleton.getEditPostion_Journey();
+    private enum databaseCountMode {
+        NoRecentJourneys,
+        MoreJourneys,
+        NoRecentUtilities,
+        MoreUtilities
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
         SuperUltraInfoDataBaseHelper RouteDBhelper = new SuperUltraInfoDataBaseHelper(this);
         RouteDB = RouteDBhelper.getWritableDatabase();
         setContentView(R.layout.activity_select_transportation_mode_and_date);
@@ -51,7 +58,7 @@ public class SelectTransportationModeAndDate extends AppCompatActivity {
         setButton(R.id.ID_button_mode_cancel);
         viewCurrentDate();
         setupCalendarButton();
-
+        checkNotifications();
     }
     public void onRestart() {
         super.onRestart();
@@ -164,7 +171,7 @@ public class SelectTransportationModeAndDate extends AppCompatActivity {
                             finish();
                         }else {
                             new AlertDialog.Builder(SelectTransportationModeAndDate.this)
-                                    .setTitle("Delete Journey")
+                                    .setTitle("Delete MoreJourneys")
                                     .setMessage(R.string.DeleteJourneyWarning)
                                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                         @Override
@@ -202,12 +209,102 @@ public class SelectTransportationModeAndDate extends AppCompatActivity {
             Intent goBackToJourneyList = DisplayJourneyList.makeIntent(SelectTransportationModeAndDate.this);
             startActivity(goBackToJourneyList);
         }else {
+            checkNotifications();
             Intent goBackToMainMenu = MainMenu.makeIntent(SelectTransportationModeAndDate.this);
             startActivity(goBackToMainMenu);
         }
     }
-    public static Intent makeIntent (Context context) {
+
+    public static Intent makeIntent(Context context) {
         return new Intent(context, SelectTransportationModeAndDate.class);
     }
 
+    // Remake notifications when necessary
+    private void checkNotifications() {
+        int journeys = getDatabaseCount(databaseCountMode.MoreJourneys);
+        int utilities = getDatabaseCount(databaseCountMode.MoreUtilities);
+        long dateDiff = getDateDifference(singleton.getLatestBill(), singleton.getCurrentDate());
+        if (!singleton.isAddJourneyToday()) {
+            singleton.setNotification(makeNotification(databaseCountMode.NoRecentJourneys));
+        } else if (dateDiff >= NUM_DAYS_REMINDER) {
+            singleton.setNotification(makeNotification(databaseCountMode.NoRecentUtilities));
+        } else if (journeys > utilities) {
+            singleton.setNotification(makeNotification(databaseCountMode.MoreUtilities, utilities));
+        } else {
+            singleton.setNotification(makeNotification(databaseCountMode.MoreJourneys, journeys));
+        }
+    }
+
+    private int getDatabaseCount(databaseCountMode mode) {
+        int count;
+        if (mode == databaseCountMode.MoreJourneys) {
+            String countQuery = "SELECT  * FROM " + "JourneyInfoTable";
+            Cursor cursor = RouteDB.rawQuery(countQuery, null);
+            count = cursor.getCount();
+            cursor.close();
+        } else if (mode == databaseCountMode.MoreUtilities) {
+            String countQuery = "SELECT  * FROM " + "UtilityInfoTable";
+            Cursor cursor = RouteDB.rawQuery(countQuery, null);
+            count = cursor.getCount();
+            cursor.close();
+        } else {
+            count = -1;
+        }
+        return count;
+    }
+
+    private Notification makeNotification(databaseCountMode mode) {
+        Notification.Builder builder = new Notification.Builder(this);
+        builder.setContentTitle(getString(R.string.app_name));
+        if (mode == databaseCountMode.NoRecentJourneys) {
+            builder.setContentText(getString(R.string.no_recent_journeys_notification));
+        } else {
+            builder.setContentText(getString(R.string.no_utilities_in_a_month_and_a_half));
+        }
+        builder.setSmallIcon(R.mipmap.ic_launcher);
+        builder.setContentIntent(makeNotificationIntent(mode));
+        return builder.build();
+    }
+
+    private Notification makeNotification(databaseCountMode mode, int count) {
+        Notification.Builder builder = new Notification.Builder(this);
+        builder.setContentTitle(getString(R.string.app_name));
+        if (mode == databaseCountMode.MoreUtilities) {
+            builder.setContentText(getString(R.string.more_utilities_notification, count));
+        } else {
+            builder.setContentText(getString(R.string.more_journeys_notification, count));
+        }
+        builder.setSmallIcon(R.mipmap.ic_launcher);
+        builder.setContentIntent(makeNotificationIntent(mode));
+        return builder.build();
+    }
+
+    private PendingIntent makeNotificationIntent(databaseCountMode mode) {
+        Intent intent;
+        if (mode == databaseCountMode.MoreUtilities
+                || mode == databaseCountMode.NoRecentUtilities) {
+            intent = new Intent(this, DisplayMonthlyUtilities.class);
+        } else {
+            intent = new Intent(this, SelectTransportationModeAndDate.class);
+        }
+        return PendingIntent.getActivity(this, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+    }
+
+    private long getDateDifference(String StartDate, String EndDate) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date start = sdf.parse(StartDate);
+            Date end = sdf.parse(EndDate);
+
+            long dateDifference = end.getTime() - start.getTime();
+            return dateDifference / 1000 / 60 / 60 / 24;
+        } catch (Exception e) {
+            Toast.makeText(
+                    SelectTransportationModeAndDate.this,
+                    getString(R.string.date_difference_error, "SelectTransportationAndDate"),
+                    Toast.LENGTH_LONG
+            ).show();
+        }
+        return -1;
+    }
 }

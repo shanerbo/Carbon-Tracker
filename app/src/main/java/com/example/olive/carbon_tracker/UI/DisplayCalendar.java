@@ -5,10 +5,11 @@ import android.os.Bundle;
 import android.view.WindowManager;
 import android.widget.CalendarView;
 import android.widget.CalendarView.OnDateChangeListener;
-import android.widget.Toast;
 
 import com.example.olive.carbon_tracker.Model.Singleton;
 import com.example.olive.carbon_tracker.R;
+
+import java.util.Calendar;
 
 /**
  * Sets date when using calender
@@ -21,7 +22,6 @@ public class DisplayCalendar extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
         setContentView(R.layout.activity_calendar);
         getUsersDataPick();
 
@@ -111,6 +111,4 @@ public class DisplayCalendar extends AppCompatActivity {
 
             return  null;
     }
-
-
 }

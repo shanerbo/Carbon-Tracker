@@ -311,6 +311,9 @@ public class YearGraph extends AppCompatActivity {
                 String prevDateNewFormat = year + "-" + month + "-" + "15";
 
 
+
+
+
                 if (getDateDifference(currentUtilityStartDate, prevDateNewFormat) >= 0 &&
                         getDateDifference(prevDateNewFormat, currentUtilityEndDate) >= 0) {
                     utilityCO2.remove(j);
@@ -492,6 +495,14 @@ public class YearGraph extends AppCompatActivity {
         singleton.setUserMonth(month);
         singleton.setUserYear(year);
 
+        } else {
+            super.onRestart();
+            String day = singleton.getUserDay();
+            String month = singleton.getUserMonth();
+            String year = singleton.getUserYear();
+            currentDate.setText(day + "/" + month + "/" + year);
+            singleton.setIsDateChanged(false);
+        }
     }
 
     public void monthNumber(String month) {

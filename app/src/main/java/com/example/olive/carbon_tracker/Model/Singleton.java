@@ -1,6 +1,7 @@
 package com.example.olive.carbon_tracker.Model;
 
 
+import android.app.Notification;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -37,6 +38,11 @@ public class Singleton {
 
 
     SQLiteDatabase CarInfoDB;
+
+    private Notification notification;
+    private boolean addJourneyToday = false;
+    private String currentDate;
+    private String latestBill;
 //-------------------------------tips
     private List<String> ShuffledTipsForCar;
     private List<String> shuffledTipsForGas;
@@ -106,6 +112,7 @@ public class Singleton {
     private static int addMonthlyUtilities;
     private static int deleteRoute;
     private static int TransportationMode;
+    private static int CO2Unit;
     private static Singleton instance = new Singleton();
     private static Vehicle userPickVehicle;
 
@@ -415,7 +422,7 @@ public class Singleton {
         }
     }
 
-//-----------------------------------Route's function-------------------------------------------
+   //------------------------------Transportation Mode functions------------------------------------
 
     public int checkTransportationMode() {
         return TransportationMode;
@@ -445,6 +452,15 @@ public class Singleton {
         return CarInfoDB;
     }
 
+    //----------------------------CO2 unit conversion functions-------------------------------------
+
+    public int checkCO2Unit(){ return CO2Unit; }
+
+    public void originalUnit(){ CO2Unit = 0; }
+
+    public void humanRelatableUnit() { CO2Unit = 1; }
+
+
     //-----------------------------------Journey functions-------------------------------------------
     public List<Journey> getUsersJourneys() {
         return journeyList;
@@ -454,7 +470,7 @@ public class Singleton {
         journeyList = JourneyList;
     }
 
-//    public void addUserJourney(Journey journey) {
+//    public void addUserJourney(Journeys journey) {
 //        journeyList.add(journey);
 //    }
 
@@ -537,6 +553,35 @@ public class Singleton {
         this.highestCO2FromGas = highestCO2FromGas;
     }
 
+    public Notification getNotification() {
+        return notification;
+    }
 
+    public void setNotification(Notification notification) {
+        this.notification = notification;
+    }
 
+    public boolean isAddJourneyToday() {
+        return addJourneyToday;
+    }
+
+    public void addedJourneyToday() {
+        addJourneyToday = true;
+    }
+
+    public String getCurrentDate() {
+        return currentDate;
+    }
+
+    public void setCurrentDate(String currentDate) {
+        this.currentDate = currentDate;
+    }
+
+    public String getLatestBill() {
+        return latestBill;
+    }
+
+    public void setLatestBill(String latestBill) {
+        this.latestBill = latestBill;
+    }
 }
