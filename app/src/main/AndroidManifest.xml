@@ -53,6 +53,14 @@
         <activity android:name=".UI.DisplayCalendar"/>
         <activity android:name=".UI.DisplayMonthlyUtilities"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".UI.AddMonthlyUtilities"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".UI.DisplayCalendar" />
+        <activity
+            android:name=".UI.DisplayMonthlyUtilities"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".UI.AboutActivity"></activity>
 
         <receiver android:process=":remote" android:name=".Model.AlarmReceiver" ></receiver>
     </application>

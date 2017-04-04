@@ -150,8 +150,13 @@
     <string name="no_recent_journeys_notification">You have not entered a journey today; want to enter one now?</string>
     <string name="no_utilities_in_a_month_and_a_half">You have not entered utility in over a month and a half; want to enter one now?</string>
     <string name="date_difference_error">ERROR: %s dateDifference calculation failed</string>
-
-
+    <string name="about_the_authors">About the Authors</string>
+    <string name="group_name_and_date">Created by Group Olive in 2017</string>
+    <string name="sfu_cs_hyperlink">Created for <a href="http://www.cs.sfu.ca/CourseCentral/276/bfraser/index.html">CMPT 276</a></string>
+    <string name="image_citations">
+        Images from:\nWelcome Screen Background: <a href="http://wide-wallpapers.net/road-to-monument-valley-utah-wide-wallpaper/">Road to Monument Valley, Utah</a>\nOld Car Icon: <a href="http://www.negaantiqueauto.com">Northeast Georgia Antique Auto Region</a>\nRoute 66 Sign: <a href="http://route36lanark.co.uk/Assets/Route_Logo_Temp.png">Route 36</a>Map Icon: Icon made by <a href="http://www.flaticon.com/authors/puppets">Puppets</a> from <a href="www.flaticon.com">www.flaticon.com</a>\nBills Icon: <a href="http://www.curvve.com/blog/osx/2011/chronicle-family-bill-payment-done-right/">Curvve Media</a>
+    </string>
+    <string name="app_version">Version %f</string>
 
 
 </resources>
