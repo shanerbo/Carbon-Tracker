@@ -57,12 +57,16 @@ public class MainMenu extends AppCompatActivity {
         getLatestBill();
         checkNotifications();
         setAlarm();
-        generateTipsForCar(singleton.getHighestCO2FromCar());
-        if(singleton.checkCO2Unit() == 0)
+        if(singleton.checkCO2Unit() == 0) {
+            generateTipsForCar(singleton.getHighestCO2FromCar());
             generateTipsForEnergy(singleton.getHighestCO2FromEnegy());
-        else
+        }
+        else {
+            generateTipsForCarInHuman(singleton.getHighestCO2FromCar());
             generateTipsForEnergyInHuman(singleton.getHighestCO2FromEnegy());
+        }
         generateTipsForUnrelated();
+
 
         HighestCO2FromCar();
         getJourneyList();
@@ -72,6 +76,30 @@ public class MainMenu extends AppCompatActivity {
         setButton(R.id.btnEditJourney);
         setButton(R.id.btnMonthlyUti);
     }
+
+
+    private void generateTipsForCar(double co2){
+        allRandomCarTips.add(getString(R.string.vehicle_tip_1, co2));
+        allRandomCarTips.add(getString(R.string.vehicle_tip_2, co2));
+        allRandomCarTips.add(getString(R.string.vehicle_tip_3, co2));
+        allRandomCarTips.add(getString(R.string.vehicle_tip_4, co2));
+        allRandomCarTips.add(getString(R.string.vehicle_tip_5, co2));
+        allRandomCarTips.add(getString(R.string.vehicle_tip_6, co2));
+        allRandomCarTips.add(getString(R.string.vehicle_tip_7, co2));
+        allRandomCarTips.add(getString(R.string.vehicle_tip_8, co2));
+    }
+
+    private void generateTipsForCarInHuman(double co2){
+        allRandomCarTips.add(getString(R.string.vehicle_tip_human_1, co2/2.06));
+        allRandomCarTips.add(getString(R.string.vehicle_tip_human_2, co2/2.06));
+        allRandomCarTips.add(getString(R.string.vehicle_tip_human_3, co2/2.06));
+        allRandomCarTips.add(getString(R.string.vehicle_tip_human_4, co2/2.06));
+        allRandomCarTips.add(getString(R.string.vehicle_tip_human_5, co2/2.06));
+        allRandomCarTips.add(getString(R.string.vehicle_tip_human_6, co2/2.06));
+        allRandomCarTips.add(getString(R.string.vehicle_tip_human_7, co2/2.06));
+        allRandomCarTips.add(getString(R.string.vehicle_tip_human_8, co2/2.06));
+    }
+
 
     private void generateTipsForEnergy(double co2) {
         allRandomEnegyTips.add(getString(R.string.energy_tip_1, co2));
@@ -96,17 +124,6 @@ public class MainMenu extends AppCompatActivity {
     }
 
 
-    private void generateTipsForCar(double co2){
-        allRandomCarTips.add(getString(R.string.vehicle_tip_1, co2, co2/2.06));
-        allRandomCarTips.add(getString(R.string.vehicle_tip_2, co2, co2/2.06));
-        allRandomCarTips.add(getString(R.string.vehicle_tip_3, co2, co2/2.06));
-        allRandomCarTips.add(getString(R.string.vehicle_tip_4, co2, co2/2.06));
-        allRandomCarTips.add(getString(R.string.vehicle_tip_5, co2, co2/2.06));
-        allRandomCarTips.add(getString(R.string.vehicle_tip_6, co2, co2/2.06));
-        allRandomCarTips.add(getString(R.string.vehicle_tip_7, co2, co2/2.06));
-        allRandomCarTips.add(getString(R.string.vehicle_tip_8, co2, co2/2.06));
-
-    }
     private void generateTipsForUnrelated(){
         Cursor cursor = myDataBase.rawQuery("select count(*) from JourneyInfoTable where " +
                 "JourneyMode = 'Car'",null);
@@ -125,7 +142,11 @@ public class MainMenu extends AppCompatActivity {
             totalUtilityCO2 = cursor.getDouble(0);
             cursor.moveToNext();
         }
-        allRandomUnrelatedTips.add(getString(R.string.unrelated_tip_2, totalUtilityCO2, totalUtilityCO2/2.06));
+        if(singleton.checkCO2Unit() == 0)
+            allRandomUnrelatedTips.add(getString(R.string.unrelated_tip_2, totalUtilityCO2));
+        else
+            allRandomUnrelatedTips.add(getString(R.string.unrelated_tip_human_2, totalUtilityCO2/2.06));
+
         cursor = myDataBase.rawQuery("select sum(JourneyRouteTotal) from JourneyInfoTable " +
                 "where JourneyMode = 'Car'",null);
         int TotalofTotalDST = 0;
@@ -153,7 +174,11 @@ public class MainMenu extends AppCompatActivity {
             cursor.moveToNext();
         }
         allRandomUnrelatedTips.add(getString(R.string.unrelated_tip_5,totalHWYDST));
-        allRandomUnrelatedTips.add(getString(R.string.unrelated_tip_6,totalUtilityCO2, totalUtilityCO2/2.06));
+        if(singleton.checkCO2Unit() == 0)
+            allRandomUnrelatedTips.add(getString(R.string.unrelated_tip_6,totalUtilityCO2));
+        else
+            allRandomUnrelatedTips.add(getString(R.string.unrelated_tip_6,totalUtilityCO2/2.06));
+
         cursor = myDataBase.rawQuery("select sum(JourneyRouteCity) from JourneyInfoTable " +
                 "where JourneyMode= 'Car'",null);
         int totalCITYDST = 0;
