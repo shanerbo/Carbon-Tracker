@@ -12,7 +12,7 @@ public class Vehicle {
     private String make;
     private String model;
     private int year;
-    private int iconId = R.drawable.old_vintage_car;
+    private int iconId = R.mipmap.car1;
     private double highway08;
     private double city08;
     private String fuelType;

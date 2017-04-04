@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/IndElecUsage"
-        android:layout_toEndOf="@+id/RouteImage"
+        android:layout_toEndOf="@+id/CarImage"
         android:text="@string/tempTotalDst"
         android:textAlignment="viewEnd"
         android:textSize="12sp" />
@@ -20,38 +20,39 @@
         android:id="@+id/StartingDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/RouteImage"
-        android:layout_toEndOf="@+id/RouteImage"
         android:text="@string/tempRouteName"
         android:textAlignment="viewEnd"
-        android:textSize="12sp" />
+        android:textSize="12sp"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/CarImage" />
 
     <TextView
         android:id="@+id/EndingDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/StartingDate"
-        android:layout_toEndOf="@+id/RouteImage"
+        android:layout_toEndOf="@+id/CarImage"
         android:text="@string/tempCityDst"
         android:textAlignment="viewEnd"
         android:textSize="12sp" />
 
     <ImageView
-        android:id="@+id/RouteImage"
+        android:id="@+id/CarImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/old_vintage_car"
+        app:srcCompat="@mipmap/car1"
         android:contentDescription=""
+        tools:ignore="ContentDescription"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        tools:ignore="ContentDescription" />
+        android:layout_marginTop="8dp" />
 
     <TextView
         android:id="@+id/IndElecUsage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/EndingDate"
-        android:layout_toEndOf="@+id/RouteImage"
+        android:layout_toEndOf="@+id/CarImage"
         android:text="@string/tempHwatDst"
         android:textAlignment="viewEnd"
         android:textSize="12sp" />

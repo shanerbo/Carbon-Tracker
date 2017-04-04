@@ -160,7 +160,7 @@ public class DisplayCarList extends AppCompatActivity {
                 itemView = getLayoutInflater().inflate(R.layout.singe_element_car_list, parent, false);
             }
             Vehicle currentVehicle = VehicleList.get(position);
-            ImageView imageView = (ImageView) itemView.findViewById(R.id.RouteImage);
+            ImageView imageView = (ImageView) itemView.findViewById(R.id.CarImage);
             imageView.setImageResource(currentVehicle.getIconId());
             TextView carName = (TextView) itemView.findViewById(R.id.StartingDate);
             carName.setText("Car Name: " + currentVehicle.getName());

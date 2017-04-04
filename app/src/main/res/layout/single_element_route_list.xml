@@ -37,11 +37,11 @@
         android:id="@+id/RouteImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/routesign"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
+        app:srcCompat="@mipmap/route66"
         android:contentDescription=""
-        tools:ignore="ContentDescription" />
+        tools:ignore="ContentDescription"
+        android:layout_alignBottom="@+id/totalDistanceWImage"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:id="@+id/IndElecUsage"
