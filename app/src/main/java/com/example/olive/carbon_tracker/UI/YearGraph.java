@@ -1,6 +1,7 @@
 package com.example.olive.carbon_tracker.UI;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,11 +16,15 @@ import com.example.olive.carbon_tracker.Model.Singleton;
 import com.example.olive.carbon_tracker.R;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
@@ -29,12 +34,18 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static android.support.v7.widget.AppCompatDrawableManager.get;
+import static com.example.olive.carbon_tracker.UI.MonthGraph.NATIONAL_AVERAGE;
+import static com.example.olive.carbon_tracker.UI.MonthGraph.PARIS_ACCORD;
+
 /**
  * uses a line graph to display average monthly carbon emission for one year
  */
 public class YearGraph extends AppCompatActivity {
     Singleton singleton = Singleton.getInstance();
     public static final int MONTHS = 12;
+    public static final int NATIONAL_AVERAGE = 50;
+    public static final int PARIS_ACCORD = 30;
     int chosenYear;
     int chosenMonth;
     int chosenDay;
@@ -53,39 +64,97 @@ public class YearGraph extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_year_graph);
         viewCurrentDate();
-        setupLineChart();
-        setupCalendarButton();
-        onRestart();
+        setupCharts();
 
     }
 
 
-    private void setupCalendarButton() {
-        Button btn = (Button) findViewById(R.id.btnChangeDate_YearGraph);
-        btn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent(YearGraph.this, DisplayCalendar.class);
-                startActivity(intent);
-            }
-        });
+    private void setupCharts() {
+        getYearCO2();
+        setupLineChart();
+        setupPieChart();
     }
 
-    public void onRestart() {
-        super.onRestart();
-        TextView currentDate = (TextView) findViewById(R.id.txtcurrentDate_YearGraph);
-        String day = singleton.getUserDay();
-        String month = singleton.getUserMonth();
-        String year = singleton.getUserYear();
-        currentDate.setText(day + "/" + month + "/" + year);
-        singleton.setIsDateChanged(true);
-        setupLineChart();
+
+    private void setupPieChart() {
+
+        List<PieEntry> pieEntries = new ArrayList<>();
+
+        float totalCarCO2 = 0;
+        float totalBusCO2 = 0;
+        float totalSkyTrainCO2 = 0;
+        float totalUtility = 0;
+
+        for (int i = 0; i < MONTHS; i++) {
+            totalCarCO2 += carCO2.get(i).floatValue();
+            totalBusCO2 += busCO2.get(i).floatValue();
+            totalSkyTrainCO2 += skytrainCO2.get(i).floatValue();
+            totalUtility += utilityCO2.get(i).floatValue();
+        }
+        if (totalBusCO2 != 0.0) {
+            pieEntries.add(new PieEntry(totalBusCO2, ""));
+        }
+        if (totalCarCO2 != 0.0) {
+            pieEntries.add(new PieEntry(totalCarCO2, ""));
+        }
+
+        if (totalSkyTrainCO2 != 0.0) {
+            pieEntries.add(new PieEntry(totalSkyTrainCO2, ""));
+        }
+        if (totalUtility != 0.0) {
+            pieEntries.add(new PieEntry(totalUtility, ""));
+        }
+
+        PieDataSet dataSet = new PieDataSet(pieEntries, "");
+        dataSet.setColors(getColors());
+        dataSet.setSelectionShift(5f);
+        dataSet.setSliceSpace(2);
+
+        PieData data = new PieData(dataSet);
+        data.setValueTextSize(11f);
+        data.setValueTextColor(Color.BLACK);
+
+        com.github.mikephil.charting.charts.PieChart chart = (com.github.mikephil.charting.charts.PieChart) findViewById(R.id.piechart_year);
+        chart.setUsePercentValues(false);
+        chart.setEntryLabelColor(Color.BLUE);
+        chart.setCenterTextOffset(0, -20);
+        chart.getLegend().setEnabled(false);
+        chart.setRotationAngle(0);
+        chart.setExtraOffsets(5, 10, 5, 5);
+        chart.setData(data);
+        chart.animateY(1000);
+        chart.invalidate();
     }
 
     private void setupLineChart() {
-
-        getYearCO2();
-
         if (!isChartEmpty) {
+            ArrayList<Entry> nationalAvgEntries = new ArrayList<Entry>();
+            ArrayList<Entry> parisAccordEntries = new ArrayList<Entry>();
+            LineDataSet set2 = new LineDataSet(parisAccordEntries, "Paris Accord");
+            for (int i = -1; i < MONTHS; i++) {
+                nationalAvgEntries.add(new Entry(i + 0.5f, NATIONAL_AVERAGE));
+                parisAccordEntries.add(new Entry(i + 0.5f, PARIS_ACCORD));
+            }
+
+            LineDataSet set = new LineDataSet(nationalAvgEntries, "National Avg");
+            set.setColor(Color.CYAN);
+            set.setLineWidth(2f);
+            set.setCircleColor(Color.CYAN);
+            set.setCircleRadius(2f);
+            set.setFillColor(Color.CYAN);
+            set.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+            set.setDrawValues(false);
+            set.setAxisDependency(YAxis.AxisDependency.LEFT);
+
+            set2.setColor(Color.MAGENTA);
+            set2.setLineWidth(2f);
+            set2.setCircleColor(Color.MAGENTA);
+            set2.setCircleRadius(2f);
+            set2.setFillColor(Color.MAGENTA);
+            set2.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+            set2.setDrawValues(false);
+            set2.setAxisDependency(YAxis.AxisDependency.LEFT);
+
 
             LineChart lineChart = (LineChart) findViewById(R.id.chart3);
 
@@ -127,7 +196,7 @@ public class YearGraph extends AppCompatActivity {
             LineDataSet busDataSet = new LineDataSet(busEntires, "Bus");
             LineDataSet carDataSet = new LineDataSet(carEntires, "Car");
             LineDataSet skytrainDataSet = new LineDataSet(skytrainEntires, "Sky Train");
-            LineDataSet utilityDataSet = new LineDataSet(utilityEntires, "MoreUtilities");
+            LineDataSet utilityDataSet = new LineDataSet(utilityEntires, "Utilities");
 
             busDataSet.setLineWidth(0f);
             busDataSet.setCircleRadius(6f);
@@ -150,6 +219,8 @@ public class YearGraph extends AppCompatActivity {
             utilityDataSet.setColor(ColorTemplate.MATERIAL_COLORS[3]);
             utilityDataSet.setCircleColor(ColorTemplate.MATERIAL_COLORS[3]);
 
+            lineDataSets.add(set);
+            lineDataSets.add(set2);
             lineDataSets.add(busDataSet);
             lineDataSets.add(carDataSet);
             lineDataSets.add(skytrainDataSet);
@@ -217,7 +288,7 @@ public class YearGraph extends AppCompatActivity {
         boolean insideRange;
         long smallestDateDifference = 9999999;
         double mostRecentCO2 = 0;
-        for (int i=0; i < utilitiesList.size(); i++) {
+        for (int i = 0; i < utilitiesList.size(); i++) {
             insideRange = false;
 
             isChartEmpty = false;
@@ -226,11 +297,11 @@ public class YearGraph extends AppCompatActivity {
             double currentUtilityIndCO2 = currentUtility.getIndCO2();
             //Log.i("utility,co2: " ,"" +currentUtilityIndCO2);
             String currentUtilityStartDate = currentUtility.getStartDate();
-            Log.i("utility,sd: " ,"" +currentUtilityStartDate);
+            Log.i("utility,sd: ", "" + currentUtilityStartDate);
             String currentUtilityEndDate = currentUtility.getEndDate();
-            Log.i("utility,ed: " ,"" +currentUtilityEndDate);
+            Log.i("utility,ed: ", "" + currentUtilityEndDate);
 
-            for (int j = 0; j <previousDates.size(); j++) {
+            for (int j = 0; j < previousDates.size(); j++) {
                 String prevDate = previousDates.get(j);
 
                 String[] prevDate2 = prevDate.split("/");
@@ -268,25 +339,33 @@ public class YearGraph extends AppCompatActivity {
 
 
     private String addZeroToDay(String startDay) {
-        if(startDay.equals("1")){
+        if (startDay.equals("1")) {
             return "01";
-        }        if(startDay.equals("2")){
+        }
+        if (startDay.equals("2")) {
             return "02";
-        }        if(startDay.equals("3")){
+        }
+        if (startDay.equals("3")) {
             return "03";
-        }        if(startDay.equals("4")){
+        }
+        if (startDay.equals("4")) {
             return "04";
-        }        if(startDay.equals("5")){
+        }
+        if (startDay.equals("5")) {
             return "05";
-        }        if(startDay.equals("6")){
+        }
+        if (startDay.equals("6")) {
             return "06";
-        }        if(startDay.equals("7")){
+        }
+        if (startDay.equals("7")) {
             return "07";
-        }        if(startDay.equals("8")){
+        }
+        if (startDay.equals("8")) {
             return "08";
-        }        if(startDay.equals("9")){
+        }
+        if (startDay.equals("9")) {
             return "09";
-        }else{
+        } else {
             return startDay;
         }
     }
@@ -304,6 +383,7 @@ public class YearGraph extends AppCompatActivity {
         }
         return -1;
     }
+
     private void initMonths() {
 
         chosenDay = Integer.parseInt(singleton.getUserDay());
@@ -398,34 +478,24 @@ public class YearGraph extends AppCompatActivity {
 
     private void viewCurrentDate() {
 
-        boolean isDateChanged = singleton.getIsDateChanged();
-        TextView currentDate = (TextView) findViewById(R.id.txtcurrentDate_YearGraph);
-        if (isDateChanged == false) {
-            Date date = new Date();
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEEE");
 
-            simpleDateFormat = new SimpleDateFormat("d");
-            String day = simpleDateFormat.format(date);
+        Date date = new Date();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEEE");
 
-            simpleDateFormat = new SimpleDateFormat("MMMM");
-            String month = simpleDateFormat.format(date);
+        simpleDateFormat = new SimpleDateFormat("d");
+        String day = simpleDateFormat.format(date);
 
-            simpleDateFormat = new SimpleDateFormat("yyyy");
-            String year = simpleDateFormat.format(date);
+        simpleDateFormat = new SimpleDateFormat("MMMM");
+        String month = simpleDateFormat.format(date);
 
-            singleton.setUserDay(day);
-            singleton.setUserMonth(month);
-            singleton.setUserYear(year);
-            currentDate.setText(day + "/" + month + "/" + year);
+        simpleDateFormat = new SimpleDateFormat("yyyy");
+        String year = simpleDateFormat.format(date);
 
-        } else {
-            super.onRestart();
-            String day = singleton.getUserDay();
-            String month = singleton.getUserMonth();
-            String year = singleton.getUserYear();
-            currentDate.setText(day + "/" + month + "/" + year);
-            singleton.setIsDateChanged(false);
-        }
+        singleton.setUserDay(day);
+        singleton.setUserMonth(month);
+        singleton.setUserYear(year);
+
+
     }
 
     public void monthNumber(String month) {
@@ -470,6 +540,7 @@ public class YearGraph extends AppCompatActivity {
         }
 
     }
+
     public int AbbrMonthNumber(String month) {
 
         switch (month) {
@@ -480,7 +551,7 @@ public class YearGraph extends AppCompatActivity {
                 return 2;
 
             case "Mar":
-                 return 3;
+                return 3;
 
             case "Apr":
                 return 4;
@@ -495,7 +566,7 @@ public class YearGraph extends AppCompatActivity {
                 return 7;
 
             case "Aug":
-                 return 8;
+                return 8;
 
             case "Sep":
                 return 9;
@@ -512,4 +583,20 @@ public class YearGraph extends AppCompatActivity {
         }
         return -1;
     }
+
+    private int[] getColors() {
+
+        int stacksize = 4;
+
+        // have as many colors as stack-values per entry
+        int[] colors = new int[stacksize];
+
+        for (int i = 0; i < colors.length; i++) {
+            colors[i] = ColorTemplate.MATERIAL_COLORS[i];
+        }
+
+        return colors;
+    }
+
+
 }
