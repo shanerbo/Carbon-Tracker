@@ -177,7 +177,7 @@ public class MainMenu extends AppCompatActivity {
         if(singleton.checkCO2Unit() == 0)
             allRandomUnrelatedTips.add(getString(R.string.unrelated_tip_6,totalUtilityCO2));
         else
-            allRandomUnrelatedTips.add(getString(R.string.unrelated_tip_6,totalUtilityCO2/2.06));
+            allRandomUnrelatedTips.add(getString(R.string.unrelated_tip_human_6,totalUtilityCO2/2.06));
 
         cursor = myDataBase.rawQuery("select sum(JourneyRouteCity) from JourneyInfoTable " +
                 "where JourneyMode= 'Car'",null);
