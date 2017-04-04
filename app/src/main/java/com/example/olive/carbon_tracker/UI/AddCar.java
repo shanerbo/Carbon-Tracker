@@ -84,6 +84,7 @@ public class AddCar extends AppCompatActivity {
             double hwy08 = 0;
             String fuelType = new String();
             long _id = 0;
+            int imageID = 0;
             Cursor cursor = CarDB.rawQuery("select * from CarInfoTable " +
                             "where _id = "+position
                     ,null);
@@ -97,12 +98,13 @@ public class AddCar extends AppCompatActivity {
                 hwy08 = cursor.getDouble(6);
                 fuelType = cursor.getString(7);
                 _id = cursor.getLong(0);
+                imageID = cursor.getInt(11);
                 cursor.moveToNext();
             }
 
             cursor.close();
 
-            Vehicle VehicleToBeEdit = new Vehicle(CarName,CarMake,CarModel,CarYear,city08,hwy08,fuelType,_id);
+            Vehicle VehicleToBeEdit = new Vehicle(CarName,CarMake,CarModel,CarYear,city08,hwy08,fuelType,_id,imageID);
             _VehicleToBeEdit = VehicleToBeEdit;
             VehicleNameToBeEdit = _VehicleToBeEdit.getName();
             EditText Name = (EditText) findViewById(R.id.ID_Car_Name);
@@ -131,12 +133,6 @@ public class AddCar extends AppCompatActivity {
 
     }
 
-    private void populateImageSpinner() {
-
-        }
-
-
-
     private int getIndex(Spinner spinner, String myString) {
         int index = 0;
 
@@ -159,11 +155,13 @@ public class AddCar extends AppCompatActivity {
     }
 
     private void populateDropDownMenus() {
+        //image spinner start
         Spinner ImageSpinner = (Spinner)findViewById(R.id.imageSpinner);
-        SpinnerAdapter adapter = new ImageAdapter(this,R.layout.single_element_image_spinner,
+        SpinnerAdapter imageAdapter = new ImageAdapter(this,R.layout.single_element_image_spinner,
                 R.id.car_txt,image_list) ;
-        ImageSpinner.setAdapter(adapter);
+        ImageSpinner.setAdapter(imageAdapter);
 
+        //image spinner end
 
         ArrayAdapter<String> make_adapter =  new ArrayAdapter<>(
                this, android.R.layout.simple_dropdown_item_1line, make_list);
@@ -293,7 +291,7 @@ public class AddCar extends AppCompatActivity {
                 Spinner Model_spinner = (Spinner) findViewById(R.id.ID_drop_down_model);
                 Spinner Year_spinner = (Spinner) findViewById(R.id.ID_drop_down_year);
                 Spinner Displ_spinner = (Spinner) findViewById(R.id.ID_drop_down_dspl);
-
+                Spinner Image_spinner = (Spinner) findViewById(R.id.imageSpinner);
                 if(nickname.length() != 0) {
 
                     String CarName = nickname.getText().toString();
@@ -301,6 +299,8 @@ public class AddCar extends AppCompatActivity {
                     String CarModel = Model_spinner.getSelectedItem().toString();
                     String CarYear = Year_spinner.getSelectedItem().toString();
                     String CityAndHighway = Displ_spinner.getSelectedItem().toString();
+                    int CarImage = (Image_spinner.getSelectedItemPosition())+1;
+                    Toast.makeText(getApplicationContext(),""+ CarImage,Toast.LENGTH_LONG).show();
 
                     List<String> city08_highway_08 = new ArrayList<>();
                     String CityHighway = new String();
@@ -352,6 +352,7 @@ public class AddCar extends AppCompatActivity {
                             cv.put(SuperUltraInfoDataBaseHelper.Car_displ,Double.parseDouble(displ));
                             cv.put(SuperUltraInfoDataBaseHelper.Car_Trany,trany);
                             cv.put(SuperUltraInfoDataBaseHelper.Car_Drive,drive);
+                            cv.put(SuperUltraInfoDataBaseHelper.Car_Image,CarImage);
 
                             long idPassBack = CarDB.update(SuperUltraInfoDataBaseHelper.Car_Table, cv, "_id="+DBID, null);
                             CarDB.close();
@@ -373,9 +374,10 @@ public class AddCar extends AppCompatActivity {
                             cv.put(SuperUltraInfoDataBaseHelper.Car_displ,Double.parseDouble(displ));
                             cv.put(SuperUltraInfoDataBaseHelper.Car_Trany,trany);
                             cv.put(SuperUltraInfoDataBaseHelper.Car_Drive,drive);
+                            cv.put(SuperUltraInfoDataBaseHelper.Car_Image,CarImage);
 
                             long idPassedBack = CarDB.insert(SuperUltraInfoDataBaseHelper.Car_Table,null,cv);
-                            Vehicle userInput = new Vehicle(CarName, CarMake, CarModel, CarYearFromString,city,highWay,fuelType,idPassedBack);
+                            Vehicle userInput = new Vehicle(CarName, CarMake, CarModel, CarYearFromString,city,highWay,fuelType,idPassedBack,CarImage);
                             singleton.setUserPickVehicleItem(userInput);
 
                             CarDB.close();
