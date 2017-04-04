@@ -55,6 +55,7 @@ public class DisplayJourneyList extends AppCompatActivity {
                 "JourneyRouteName, " +
                 "JourneyRouteTotal, " +
                 "JourneyCO2Emitted," +
+                "JourneyImage," +
                 "_id from JourneyInfoTable order by date(JourneyDate) asc ",null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()){
@@ -68,9 +69,10 @@ public class DisplayJourneyList extends AppCompatActivity {
             int totalDst = cursor.getInt(4);
             String vehicleName = cursor.getString(2);
             double co2 = cursor.getDouble(5);
+            int imageid = cursor.getInt(6);
             long JourneyDBId = cursor.getLong(cursor.getColumnIndex("_id"));
             Journey tempJourney = new Journey(date,mode,routeName,
-                    totalDst,vehicleName,co2,JourneyDBId);
+                    totalDst,vehicleName,co2,JourneyDBId,imageid);
             JourneyListFromDB.add(tempJourney);
             cursor.moveToNext();
         }
@@ -145,7 +147,7 @@ public class DisplayJourneyList extends AppCompatActivity {
 
     private void setImageView(View itemView, Journey journey) {
         ImageView imageView = (ImageView) itemView.findViewById(R.id.imgJourney);
-        imageView.setImageResource(journey.getIconID());
+        imageView.setImageResource(journey.getImageID());
     }
 
     private void setTextView(View itemView, Journey journey, int id) {
@@ -192,6 +194,7 @@ public class DisplayJourneyList extends AppCompatActivity {
             }
 
             Journey currJourney = JourneyList.get(position);
+            setImageView(itemView,currJourney);
             setTextView(itemView, currJourney, R.id.txtMode);
             setTextView(itemView, currJourney, R.id.txtCarName);
             setTextView(itemView, currJourney, R.id.textRouteName);

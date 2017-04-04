@@ -12,7 +12,7 @@ public class Route {
     private int cityDistance;
     private int highwayDistance;
     private int totalDistance;
-    private int iconId = R.drawable.routesign;
+    private int iconId = R.mipmap.route66;
     private long routeDBId;
 
     public Route(String name, int cityDistance, int highwayDistance, int totalDistance, long routeDBId) {

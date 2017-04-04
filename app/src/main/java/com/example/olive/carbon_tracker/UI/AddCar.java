@@ -11,16 +11,20 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 
 
 import com.example.olive.carbon_tracker.Model.DatabaseHelper;
+import com.example.olive.carbon_tracker.Model.ImageAdapter;
+import com.example.olive.carbon_tracker.Model.ImageSpinnerData;
 import com.example.olive.carbon_tracker.Model.Singleton;
 import com.example.olive.carbon_tracker.Model.SuperUltraInfoDataBaseHelper;
 import com.example.olive.carbon_tracker.Model.Vehicle;
@@ -41,7 +45,7 @@ public class AddCar extends AppCompatActivity {
     private VehicleData vehicleData = new VehicleData();
     private String VehicleNameToBeEdit;
     private Vehicle _VehicleToBeEdit;
-
+    private ArrayList<ImageSpinnerData> image_list = new ArrayList<>();
 
     private  List<String> carListDB;
 
@@ -52,15 +56,22 @@ public class AddCar extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_add_car);
 
         myDataBase = SQLiteDatabase.openOrCreateDatabase(DatabaseHelper.DB_PATH + DatabaseHelper.DB_NAME,null);
 
         SuperUltraInfoDataBaseHelper CarDBhelper = new SuperUltraInfoDataBaseHelper(this);
         CarDB = CarDBhelper.getWritableDatabase();
-
-
+        //this create image world
+            image_list.add(new ImageSpinnerData("Economy Car",R.mipmap.car1));
+            image_list.add(new ImageSpinnerData("Mid-size car",R.mipmap.car2));
+            image_list.add(new ImageSpinnerData("Compact car",R.mipmap.car3));
+            image_list.add(new ImageSpinnerData("Entry-level luxury car",R.mipmap.car4));
+            image_list.add(new ImageSpinnerData("Mid-size luxury car",R.mipmap.car5));
+            image_list.add(new ImageSpinnerData("Full-size car",R.mipmap.car6));
+        //image world created
         vehicleData = singleton.getVehicleData();
         if (singleton.checkEdit_car() ==1 ){
             position = singleton.getEditPosition_car();
@@ -73,6 +84,7 @@ public class AddCar extends AppCompatActivity {
             double hwy08 = 0;
             String fuelType = new String();
             long _id = 0;
+            int imageID = 0;
             Cursor cursor = CarDB.rawQuery("select * from CarInfoTable " +
                             "where _id = "+position
                     ,null);
@@ -86,17 +98,16 @@ public class AddCar extends AppCompatActivity {
                 hwy08 = cursor.getDouble(6);
                 fuelType = cursor.getString(7);
                 _id = cursor.getLong(0);
+                imageID = cursor.getInt(11);
                 cursor.moveToNext();
             }
-
             cursor.close();
 
-            Vehicle VehicleToBeEdit = new Vehicle(CarName,CarMake,CarModel,CarYear,city08,hwy08,fuelType,_id);
+            Vehicle VehicleToBeEdit = new Vehicle(CarName,CarMake,CarModel,CarYear,city08,hwy08,fuelType,_id,imageID);
             _VehicleToBeEdit = VehicleToBeEdit;
             VehicleNameToBeEdit = _VehicleToBeEdit.getName();
             EditText Name = (EditText) findViewById(R.id.ID_Car_Name);
             Name.setText(VehicleNameToBeEdit);
-
         }else{
             position = singleton.getAddPosition_car();
         }
@@ -113,9 +124,11 @@ public class AddCar extends AppCompatActivity {
         cursor.close();
 //        myHelper.close();
 
+        //populateImageSpinner();
         populateDropDownMenus();
         setupAddCarButton(position);
         delButton(position);
+
     }
 
     private int getIndex(Spinner spinner, String myString) {
@@ -140,6 +153,15 @@ public class AddCar extends AppCompatActivity {
     }
 
     private void populateDropDownMenus() {
+        //image spinner start
+        Spinner ImageSpinner = (Spinner)findViewById(R.id.imageSpinner);
+        SpinnerAdapter imageAdapter = new ImageAdapter(this,R.layout.single_element_image_spinner,
+                R.id.car_txt,image_list) ;
+        ImageSpinner.setAdapter(imageAdapter);
+        if (singleton.checkEdit_car() ==1){
+            ImageSpinner.setSelection(_VehicleToBeEdit.getIndexID()-1);
+        }
+        //image spinner end
 
         ArrayAdapter<String> make_adapter =  new ArrayAdapter<>(
                this, android.R.layout.simple_dropdown_item_1line, make_list);
@@ -147,12 +169,8 @@ public class AddCar extends AppCompatActivity {
 
         Make_spinner.setAdapter(make_adapter);
         if (singleton.checkEdit_car() ==1){
-//            Vehicle VehicleToBeEdit = VehicleList.get(position);
-
             Make_spinner.setSelection(getIndex(Make_spinner,_VehicleToBeEdit.getMake()));
-//            Toast.makeText(this, ""+_VehicleToBeEdit.getMake(),Toast.LENGTH_LONG).show();
         }
-
         Make_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position_model, long id) {
@@ -273,7 +291,7 @@ public class AddCar extends AppCompatActivity {
                 Spinner Model_spinner = (Spinner) findViewById(R.id.ID_drop_down_model);
                 Spinner Year_spinner = (Spinner) findViewById(R.id.ID_drop_down_year);
                 Spinner Displ_spinner = (Spinner) findViewById(R.id.ID_drop_down_dspl);
-
+                Spinner Image_spinner = (Spinner) findViewById(R.id.imageSpinner);
                 if(nickname.length() != 0) {
 
                     String CarName = nickname.getText().toString();
@@ -281,6 +299,8 @@ public class AddCar extends AppCompatActivity {
                     String CarModel = Model_spinner.getSelectedItem().toString();
                     String CarYear = Year_spinner.getSelectedItem().toString();
                     String CityAndHighway = Displ_spinner.getSelectedItem().toString();
+                    int CarImage = (Image_spinner.getSelectedItemPosition())+1;
+                    Toast.makeText(getApplicationContext(),""+ CarImage,Toast.LENGTH_LONG).show();
 
                     List<String> city08_highway_08 = new ArrayList<>();
                     String CityHighway = new String();
@@ -332,6 +352,7 @@ public class AddCar extends AppCompatActivity {
                             cv.put(SuperUltraInfoDataBaseHelper.Car_displ,Double.parseDouble(displ));
                             cv.put(SuperUltraInfoDataBaseHelper.Car_Trany,trany);
                             cv.put(SuperUltraInfoDataBaseHelper.Car_Drive,drive);
+                            cv.put(SuperUltraInfoDataBaseHelper.Car_Image,CarImage);
 
                             long idPassBack = CarDB.update(SuperUltraInfoDataBaseHelper.Car_Table, cv, "_id="+DBID, null);
                             CarDB.close();
@@ -353,9 +374,10 @@ public class AddCar extends AppCompatActivity {
                             cv.put(SuperUltraInfoDataBaseHelper.Car_displ,Double.parseDouble(displ));
                             cv.put(SuperUltraInfoDataBaseHelper.Car_Trany,trany);
                             cv.put(SuperUltraInfoDataBaseHelper.Car_Drive,drive);
+                            cv.put(SuperUltraInfoDataBaseHelper.Car_Image,CarImage);
 
                             long idPassedBack = CarDB.insert(SuperUltraInfoDataBaseHelper.Car_Table,null,cv);
-                            Vehicle userInput = new Vehicle(CarName, CarMake, CarModel, CarYearFromString,city,highWay,fuelType,idPassedBack);
+                            Vehicle userInput = new Vehicle(CarName, CarMake, CarModel, CarYearFromString,city,highWay,fuelType,idPassedBack,CarImage);
                             singleton.setUserPickVehicleItem(userInput);
 
                             CarDB.close();
@@ -424,6 +446,12 @@ public class AddCar extends AppCompatActivity {
         startActivity(goBackToDisplayCar);
         finish();
     }
+
+
+
+
+
+
 
     public static Intent makeIntent(Context context) {
         return new Intent(context, AddCar.class);

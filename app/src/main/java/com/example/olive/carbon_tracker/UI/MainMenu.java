@@ -239,6 +239,7 @@ public class MainMenu extends AppCompatActivity {
                 "JourneyRouteName, " +
                 "JourneyRouteTotal, " +
                 "JourneyCO2Emitted," +
+                "JourneyImage," +
                 "_id from JourneyInfoTable order by date(JourneyDate) asc ",null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()){
@@ -253,9 +254,10 @@ public class MainMenu extends AppCompatActivity {
             int totalDst = cursor.getInt(4);
             String vehicleName = cursor.getString(2);
             double co2 = cursor.getDouble(5);
+            int imageid = cursor.getInt(6);
             long JourneyDBId = cursor.getLong(cursor.getColumnIndex("_id"));
             Journey tempJourney = new Journey(date,mode,routeName,
-                    totalDst,vehicleName,co2,JourneyDBId);
+                    totalDst,vehicleName,co2,JourneyDBId,imageid);
             JourneyListFromDB.add(tempJourney);
             cursor.moveToNext();
         }
