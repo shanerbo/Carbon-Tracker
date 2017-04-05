@@ -24,6 +24,8 @@ public class SuperUltraInfoDataBaseHelper extends SQLiteOpenHelper {
     public static String Car_displ = "CarDispl";
     public static String Car_Trany = "CarTrany";
     public static String Car_Drive = "CarDrive";
+    public static String Car_Image = "CarImage";
+
 
 
 
@@ -56,6 +58,7 @@ public class SuperUltraInfoDataBaseHelper extends SQLiteOpenHelper {
     public static String Journey_RouteHwyDist = "JourneyRouteHwy";
     public static String Journey_RouteTotalDist = "JourneyRouteTotal";
     public static String Journey_CO2Emitted = "JourneyCO2Emitted";
+    public static String Journey_Image = "JourneyImage";
 
     public static String Utility_Table = "UtilityInfoTable";
     public static String Utility_Id = "_id";
@@ -88,7 +91,8 @@ public class SuperUltraInfoDataBaseHelper extends SQLiteOpenHelper {
                 + Car_FuelType + " text,"
                 + Car_displ + " real,"
                 + Car_Trany + " text,"
-                + Car_Drive + " text"
+                + Car_Drive + " text,"
+                + Car_Image + " integer"
                 + ");";
 
         CarDB.execSQL(createCarDB);
@@ -117,16 +121,13 @@ public class SuperUltraInfoDataBaseHelper extends SQLiteOpenHelper {
                 + Journey_CarCity + " real,"
                 + Journey_CarHwy + " real,"
                 + Journey_CarFuelType + " text,"
-                //+ Journey_CarDispl + " real,"
-                //+ Journey_CarTrany + " text,"
-                //+ Journey_CarDrive + " text,"
-
                 + Journey_RouteId + " integer,"
                 + Journey_RouteName + " text,"
                 + Journey_RouteCityDist + " integer,"
                 + Journey_RouteHwyDist  + " integer,"
                 + Journey_RouteTotalDist+ " integer,"
-                + Journey_CO2Emitted+ " real"
+                + Journey_CO2Emitted+ " real,"
+                + Journey_Image+ " integer"
                 + ");";
         CarDB.execSQL(createJourneyDB);
 
