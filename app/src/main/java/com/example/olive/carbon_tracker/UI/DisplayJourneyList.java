@@ -43,7 +43,7 @@ public class DisplayJourneyList extends AppCompatActivity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_display_journey_list);
         setListView();
-        unitButton();
+        //unitButton();
     }
 
     private void setListView() {
@@ -203,22 +203,22 @@ public class DisplayJourneyList extends AppCompatActivity {
         }
     }
 
-    private void unitButton() {
-        Button unitButton = (Button) findViewById(R.id.unit_btn);
-        unitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(singleton.checkCO2Unit() == 0)
-                    singleton.humanRelatableUnit();
-                else
-                    singleton.originalUnit();
-                ArrayAdapter<Journey> adapter = new myArrayAdapter();
-                ListView list = (ListView) findViewById(R.id.listJourneys);
-                list.setAdapter(adapter);
-                saveCO2UnitStatus(singleton.checkCO2Unit());
-            }
-        });
-    }
+//    private void unitButton() {
+//        Button unitButton = (Button) findViewById(R.id.unit_btn);
+//        unitButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if(singleton.checkCO2Unit() == 0)
+//                    singleton.humanRelatableUnit();
+//                else
+//                    singleton.originalUnit();
+//                ArrayAdapter<Journey> adapter = new myArrayAdapter();
+//                ListView list = (ListView) findViewById(R.id.listJourneys);
+//                list.setAdapter(adapter);
+//                saveCO2UnitStatus(singleton.checkCO2Unit());
+//            }
+//        });
+//    }
 
     private void saveCO2UnitStatus(int status) {
         SharedPreferences prefs = this.getSharedPreferences("CO2Status", MODE_PRIVATE);

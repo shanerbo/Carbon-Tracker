@@ -507,21 +507,9 @@ public class MainMenu extends AppCompatActivity {
 
     private void setToolBar(){
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
-//        getWindow().getDecorView().setOnSystemUiVisibilityChangeListener
-//                (new View.OnSystemUiVisibilityChangeListener() {
-//                    @Override
-//                    public void onSystemUiVisibilityChange(int visibility) {
-//                        if(visibility == 0)
-//                            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
-//                        else
-//                            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
-//                    }
-//                });
         Toolbar toolBar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolBar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-
     }
 
     @Override
@@ -539,18 +527,13 @@ public class MainMenu extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
         if(id == R.id.tool_change_unit){
             if(singleton.checkCO2Unit() == 0)
                 singleton.humanRelatableUnit();
             else
                 singleton.originalUnit();
             saveCO2UnitStatus(singleton.checkCO2Unit());
-            Toast.makeText(getApplicationContext(), "Change CO2 unit", Toast.LENGTH_SHORT).show();
-            return true;
-        }
-        if(id == R.id.tool_settings){
-            Toast.makeText(getApplicationContext(), "Go to settings", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "CO2 unit has been changed", Toast.LENGTH_SHORT).show();
             return true;
         }
         if(id == R.id.tool_about){

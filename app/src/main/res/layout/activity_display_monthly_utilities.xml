@@ -50,14 +50,6 @@
         android:id="@+id/include"
         layout="@layout/content_display_monthly_utilities" />
 
-    <Button
-        android:id="@+id/unit_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top|right"
-        android:text="@string/change_co2_unit"
-        android:textStyle="italic" />
-
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar_bill"
         android:layout_width="match_parent"

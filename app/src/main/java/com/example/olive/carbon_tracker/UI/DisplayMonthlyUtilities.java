@@ -10,6 +10,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -56,7 +58,6 @@ public class DisplayMonthlyUtilities extends AppCompatActivity {
         showAllBills();
         SetupAddBtn();
         EditBill();
-        unitButton();
         checkNotifications();
 
         setToolBar();
@@ -174,29 +175,7 @@ public class DisplayMonthlyUtilities extends AppCompatActivity {
         }
     }
 
-    private void unitButton() {
-        Button unitButton = (Button) findViewById(R.id.unit_btn);
-        unitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(singleton.checkCO2Unit() == 0)
-                    singleton.humanRelatableUnit();
-                else
-                    singleton.originalUnit();
-                ArrayAdapter<MonthlyUtilitiesData> adapter = new myArrayAdapter();
-                ListView list = (ListView) findViewById(R.id.ID_Bill_List);
-                list.setAdapter(adapter);
-                saveCO2UnitStatus(singleton.checkCO2Unit());
-            }
-        });
-    }
 
-    private void saveCO2UnitStatus(int status) {
-        SharedPreferences prefs = this.getSharedPreferences("CO2Status", MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putInt("CO2 status", status);
-        editor.apply();
-    }
 
 
     public void onBackPressed(){
@@ -299,16 +278,6 @@ public class DisplayMonthlyUtilities extends AppCompatActivity {
 
     private void setToolBar(){
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
-//        getWindow().getDecorView().setOnSystemUiVisibilityChangeListener
-//                (new View.OnSystemUiVisibilityChangeListener() {
-//                    @Override
-//                    public void onSystemUiVisibilityChange(int visibility) {
-//                        if(visibility == 0)
-//                            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
-//                        else
-//                            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
-//                    }
-//                });
         Toolbar toolBar = (Toolbar) findViewById(R.id.toolbar_bill);
         setSupportActionBar(toolBar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -319,6 +288,41 @@ public class DisplayMonthlyUtilities extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_item, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if(id == R.id.tool_change_unit){
+            if(singleton.checkCO2Unit() == 0)
+                singleton.humanRelatableUnit();
+            else
+                singleton.originalUnit();
+            Toast.makeText(getApplicationContext(), "CO2 unit has been changed", Toast.LENGTH_SHORT).show();
+            ArrayAdapter<MonthlyUtilitiesData> adapter = new myArrayAdapter();
+            ListView list = (ListView) findViewById(R.id.ID_Bill_List);
+            list.setAdapter(adapter);
+            saveCO2UnitStatus(singleton.checkCO2Unit());
+            return true;
+        }
+        if(id == R.id.tool_about){
+            Toast.makeText(getApplicationContext(), "Go to about", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void saveCO2UnitStatus(int status) {
+        SharedPreferences prefs = this.getSharedPreferences("CO2Status", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt("CO2 status", status);
+        editor.apply();
     }
 
 }
