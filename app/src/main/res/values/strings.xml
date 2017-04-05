@@ -180,6 +180,8 @@
         Images from:\nWelcome Screen Background: <a href="http://wide-wallpapers.net/road-to-monument-valley-utah-wide-wallpaper/">Road to Monument Valley, Utah</a>\nOld Car Icon: <a href="http://www.negaantiqueauto.com">Northeast Georgia Antique Auto Region</a>\nRoute 66 Sign: <a href="http://route36lanark.co.uk/Assets/Route_Logo_Temp.png">Route 36</a>Map Icon: Icon made by <a href="http://www.flaticon.com/authors/puppets">Puppets</a> from <a href="www.flaticon.com">www.flaticon.com</a>\nBills Icon: <a href="http://www.curvve.com/blog/osx/2011/chronicle-family-bill-payment-done-right/">Curvve Media</a>
     </string>
     <string name="app_version">Version %f</string>
+    <string name="about">About</string>
+    <string name="change_co2_unit">Change CO2 unit</string>
 
 
 </resources>

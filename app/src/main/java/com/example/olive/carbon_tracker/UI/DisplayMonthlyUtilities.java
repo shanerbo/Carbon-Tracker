@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -57,6 +58,8 @@ public class DisplayMonthlyUtilities extends AppCompatActivity {
         EditBill();
         unitButton();
         checkNotifications();
+
+        setToolBar();
     }
 
     private void SetupAddBtn() {
@@ -292,6 +295,30 @@ public class DisplayMonthlyUtilities extends AppCompatActivity {
             ).show();
         }
         return -1;
+    }
+
+    private void setToolBar(){
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+//        getWindow().getDecorView().setOnSystemUiVisibilityChangeListener
+//                (new View.OnSystemUiVisibilityChangeListener() {
+//                    @Override
+//                    public void onSystemUiVisibilityChange(int visibility) {
+//                        if(visibility == 0)
+//                            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+//                        else
+//                            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+//                    }
+//                });
+        Toolbar toolBar = (Toolbar) findViewById(R.id.toolbar_bill);
+        setSupportActionBar(toolBar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
 }

@@ -10,6 +10,7 @@ import java.util.Calendar;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -71,8 +72,11 @@ public class WelcomeScreen extends AppCompatActivity {
         else
             singleton.originalUnit();
 
+        hideNavigationBar();
 
     }
+
+
 
     private void setDates() {
         Calendar calendar = Calendar.getInstance();
@@ -84,5 +88,19 @@ public class WelcomeScreen extends AppCompatActivity {
     static public int getCO2UnitStatus(Context context){
         SharedPreferences prefs = context.getSharedPreferences("CO2Status", MODE_PRIVATE);
         return prefs.getInt("CO2 status", 0);
+    }
+
+    private void hideNavigationBar() {
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+        getWindow().getDecorView().setOnSystemUiVisibilityChangeListener
+                (new View.OnSystemUiVisibilityChangeListener() {
+                    @Override
+                    public void onSystemUiVisibilityChange(int visibility) {
+                        if(visibility == 0)
+                            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+                        else
+                            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+                    }
+                });
     }
 }

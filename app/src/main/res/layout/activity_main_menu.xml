@@ -15,9 +15,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/new_journey"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="77dp" />
+        android:layout_marginTop="55dp"
+        android:layout_below="@+id/toolbar"
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:id="@+id/btnCurrentFootprint"
@@ -45,4 +45,12 @@
         android:layout_below="@+id/btnEditJourney"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="46dp" />
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#111111"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme" />
 </RelativeLayout>
