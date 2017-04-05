@@ -7,7 +7,7 @@
     tools:context="com.example.olive.carbon_tracker.UI.AddCar">
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar_bill"
+        android:id="@+id/toolbar_add_car"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#2E2D2D"
@@ -22,9 +22,9 @@
         android:textSize="18sp"
         tools:layout_editor_absoluteX="148dp"
         tools:layout_editor_absoluteY="16dp"
-        android:layout_below="@+id/toolbar_bill"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="18dp" />
+        android:layout_marginTop="11dp"
+        android:layout_below="@+id/toolbar_add_car"
+        android:layout_centerHorizontal="true" />
 
     <EditText
         android:id="@+id/ID_Car_Name"

@@ -6,6 +6,15 @@
     android:layout_height="match_parent"
     tools:context="com.example.olive.carbon_tracker.UI.AddNewRoute">
 
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_add_route"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#2E2D2D"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme" />
+
     <TextView
         android:id="@+id/AddRouteName"
         android:layout_width="wrap_content"
