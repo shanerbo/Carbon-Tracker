@@ -111,18 +111,13 @@ public class SingleDayGraph extends AppCompatActivity {
 
 
     private void setupModePieChart() {
-
-
         List<PieEntry> pieEntries = new ArrayList<>();
         if (busCO2.get(0) != 0.0) {
             pieEntries.add(new PieEntry(busCO2.get(0).floatValue(), "BUS"));
         }
         for (int i = 0; i < carNamesForMode.size(); i++) {
             pieEntries.add(new PieEntry(carNameSCO2ForMode.get(i).floatValue(), carNamesForMode.get(i)));
-
         }
-
-
 
         if (skytrainCO2.get(0) != 0.0) {
             pieEntries.add(new PieEntry(skytrainCO2.get(0).floatValue(), "SKYTRAIN"));
@@ -163,22 +158,15 @@ public class SingleDayGraph extends AppCompatActivity {
 
 
         List<PieEntry> pieEntries = new ArrayList<>();
-        if (busCO2.get(0) != 0.0) {
-            pieEntries.add(new PieEntry(busCO2.get(0).floatValue(), "BUS"));
-        }
+
         for (int i = 0; i < routeNames.size(); i++) {
             pieEntries.add(new PieEntry(routeNameCO2.get(i).floatValue(), routeNames.get(i)));
 
         }
 
-
-
-        if (skytrainCO2.get(0) != 0.0) {
-            pieEntries.add(new PieEntry(skytrainCO2.get(0).floatValue(), "SKYTRAIN"));
-        }
-        if (utilityCO2.get(0) != 0.0) {
-            pieEntries.add(new PieEntry(utilityCO2.get(0).floatValue(), "UTILITY"));
-        }
+    //    if (utilityCO2.get(0) != 0.0) {
+       //     pieEntries.add(new PieEntry(utilityCO2.get(0).floatValue(), "UTILITY"));
+    //    }
 
         PieDataSet dataSet = new PieDataSet(pieEntries, "");
         dataSet.setColors(getColors());

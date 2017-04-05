@@ -41,6 +41,8 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import static com.example.olive.carbon_tracker.R.id.chart;
+
 /**
  * uses a stacked bar chart to display monthly carbon emission
  */
@@ -61,9 +63,12 @@ public class MonthGraph extends AppCompatActivity {
     List<Double> skytrainCO2 = new ArrayList<>();
     List<Double> utilityCO2 = new ArrayList<>();
     List<Journey> journeyList = singleton.getUsersJourneys();
-
+    List<String> carNamesForMode = new ArrayList<>();
+    List<Double> carNameSCO2ForMode = new ArrayList<>();
     private List<String> previousDates = new ArrayList<>();
     boolean isChartEmpty = true;
+    List<String> routeNames = new ArrayList<>();
+    List<Double> routeNameCO2 = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +94,8 @@ public class MonthGraph extends AppCompatActivity {
         getMonthCO2();
         setupCombinedCharts();
         setupPieChart();
+        setupModePieChart();
+        setupRoutePieChart();
     }
 
     private void setupCombinedCharts() {
@@ -111,7 +118,7 @@ public class MonthGraph extends AppCompatActivity {
         XAxis xAxis = chart.getXAxis();
         xAxis.setGranularity(1f);
         xAxis.setValueFormatter(formatter);
-
+        chart.getDescription().setEnabled(false);
         chart.setData(dataCombine);
         chart.animateX(1200);
         chart.animateY(1200);
@@ -205,39 +212,140 @@ public class MonthGraph extends AppCompatActivity {
             totalSkyTrainCO2 += skytrainCO2.get(i).floatValue();
             totalUtility += utilityCO2.get(i).floatValue();
         }
+        if (totalBusCO2 != 0.0) {
+            pieEntries.add(new PieEntry(totalBusCO2, "BUS"));
+        }
+       if (totalCarCO2 != 0.0) {
+            pieEntries.add(new PieEntry(totalCarCO2, "CAR"));
+       }
 
-      //  if (totalBusCO2 != 0.0) {
-            pieEntries.add(new PieEntry(totalBusCO2, ""));
-     //   }
-    //    if (totalCarCO2 != 0.0) {
-            pieEntries.add(new PieEntry(totalCarCO2, ""));
-    //    }
-
-    //    if (totalSkyTrainCO2 != 0.0) {
-            pieEntries.add(new PieEntry(totalSkyTrainCO2, ""));
-     //   }
-     //   if (totalUtility != 0.0) {
-            pieEntries.add(new PieEntry(totalUtility, ""));
-    //    }
+       if (totalSkyTrainCO2 != 0.0) {
+            pieEntries.add(new PieEntry(totalSkyTrainCO2, "SKYTRAIN"));
+        }
+        if (totalUtility != 0.0) {
+            pieEntries.add(new PieEntry(totalUtility, "UTILITY"));
+       }
 
         PieDataSet dataSet = new PieDataSet(pieEntries, "");
         dataSet.setColors(getColors());
-        dataSet.setSliceSpace(2);
-
         PieData data = new PieData(dataSet);
-        data.setValueTextSize(11f);
+        data.setValueTextSize(9f);
         data.setValueTextColor(Color.BLACK);
 
         com.github.mikephil.charting.charts.PieChart chart = (com.github.mikephil.charting.charts.PieChart) findViewById(R.id.piechart_month);
+        Legend l = chart.getLegend();
+        l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
+        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
+        l.setOrientation(Legend.LegendOrientation.VERTICAL);
+        chart.getDescription().setEnabled(false);
+        l.setDrawInside(false);
+        l.setXEntrySpace(7f);
+        l.setYEntrySpace(0f);
+        l.setYOffset(0f);
         chart.setUsePercentValues(false);
-        chart.getLegend().setEnabled(false);
         chart.setData(data);
         chart.animateY(1000);
-        chart.setEntryLabelTextSize(10f);
+        chart.setEntryLabelTextSize(9f);
         chart.setRotationAngle(0);
         chart.invalidate();
     }
+    private void setupModePieChart() {
 
+        List<PieEntry> pieEntries = new ArrayList<>();
+
+        float totalCarCO2 = 0;
+        float totalBusCO2 = 0;
+        float totalSkyTrainCO2 = 0;
+        float totalUtility = 0;
+
+        for (int i = 0; i < MONTH; i++) {
+            //totalCarCO2 += carNameSCO2ForMode.get(i).floatValue();
+            totalBusCO2 += busCO2.get(i).floatValue();
+            totalSkyTrainCO2 += skytrainCO2.get(i).floatValue();
+            totalUtility += utilityCO2.get(i).floatValue();
+        }
+        if (totalBusCO2 != 0.0) {
+            pieEntries.add(new PieEntry(totalBusCO2, "BUS"));
+        }
+        for (int i = 0; i < carNamesForMode.size(); i++) {
+            pieEntries.add(new PieEntry(carNameSCO2ForMode.get(i).floatValue(), carNamesForMode.get(i)));
+        }
+
+        if (totalSkyTrainCO2 != 0.0) {
+            pieEntries.add(new PieEntry(totalSkyTrainCO2, "SKYTRAIN"));
+        }
+        if (totalUtility != 0.0) {
+            pieEntries.add(new PieEntry(totalUtility, "UTILITY"));
+        }
+
+        PieDataSet dataSet = new PieDataSet(pieEntries, "");
+        dataSet.setColors(getColors());
+        PieData data = new PieData(dataSet);
+        data.setValueTextSize(9f);
+        data.setValueTextColor(Color.BLACK);
+
+        com.github.mikephil.charting.charts.PieChart chart = (com.github.mikephil.charting.charts.PieChart) findViewById(R.id.mode_PieChart_MonthGraph);
+        Legend l = chart.getLegend();
+        l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
+        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
+        l.setOrientation(Legend.LegendOrientation.VERTICAL);
+        l.setDrawInside(false);
+        l.setXEntrySpace(7f);
+        l.setYEntrySpace(0f);
+        l.setYOffset(0f);
+        chart.setUsePercentValues(false);
+        chart.getDescription().setEnabled(false);
+        chart.setData(data);
+        chart.animateY(1000);
+        chart.setEntryLabelTextSize(9f);
+        chart.setRotationAngle(0);
+        chart.invalidate();
+    }
+    private void setupRoutePieChart() {
+
+        List<PieEntry> pieEntries = new ArrayList<>();
+
+
+
+        for (int i = 0; i < MONTH; i++) {
+
+          //  totalUtility += utilityCO2.get(i).floatValue();
+        }
+
+        for (int i = 0; i <routeNameCO2.size(); i++) {
+            pieEntries.add(new PieEntry(routeNameCO2.get(i).floatValue(), routeNames.get(i)));
+        }
+
+
+     //   if (totalUtility != 0.0) {
+       //     pieEntries.add(new PieEntry(totalUtility, "UTILITY"));
+      //  }
+
+        PieDataSet dataSet = new PieDataSet(pieEntries, "");
+        dataSet.setColors(getColors());
+        PieData data = new PieData(dataSet);
+        data.setValueTextSize(9f);
+        data.setValueTextColor(Color.BLACK);
+
+        com.github.mikephil.charting.charts.PieChart chart = (com.github.mikephil.charting.charts.PieChart)
+                findViewById(R.id.route_PieChart_MonthGraph);
+        Legend l = chart.getLegend();
+        l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
+        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
+        l.setOrientation(Legend.LegendOrientation.VERTICAL);
+        l.setDrawInside(false);
+        l.setXEntrySpace(7f);
+        l.setYEntrySpace(0f);
+        l.setYOffset(0f);
+        chart.setUsePercentValues(false);
+        chart.getDescription().setEnabled(false);
+
+        chart.setData(data);
+        chart.animateY(1000);
+        chart.setEntryLabelTextSize(9f);
+        chart.setRotationAngle(0);
+        chart.invalidate();
+    }
     public void onRestart() {
         super.onRestart();
         TextView currentDate = (TextView) findViewById(R.id.txtCurrentData_MonthGraph);
@@ -286,6 +394,10 @@ public class MonthGraph extends AppCompatActivity {
         skytrainCO2.clear();
         carCO2.clear();
         utilityCO2.clear();
+        carNameSCO2ForMode.clear();
+        carNamesForMode.clear();
+        routeNames.clear();
+        routeNameCO2.clear();
         getPrevious28Days();
         List<MonthlyUtilitiesData> utilitiesList = singleton.getBillList();
         for (int i = 0; i < MONTH; i++) {
@@ -309,6 +421,9 @@ public class MonthGraph extends AppCompatActivity {
 
             for (int j = 0; j < previousDates.size(); j++) {
                 if (previousDates.get(j).equals(currentJourneyDate)) {
+                    double co2ForRoute = currentJourneyCO2;
+                    routeInfomation(currentJourney.getRouteName(), co2ForRoute);
+
                     switch (transportationMode) {
                         case "Skytrain":
                             currentJourneyCO2 += skytrainCO2.remove(j);
@@ -319,8 +434,10 @@ public class MonthGraph extends AppCompatActivity {
                             busCO2.add(j, currentJourneyCO2);
                             break;
                         default:
+                            double currentJourneyCO2Save = currentJourneyCO2;
                             currentJourneyCO2 += carCO2.remove(j);
                             carCO2.add(j, currentJourneyCO2);
+                            modeInformation(transportationMode,currentJourneyCO2Save);
                             break;
                     }
                 }
@@ -385,6 +502,50 @@ public class MonthGraph extends AppCompatActivity {
     }
 
 
+    private void modeInformation(String transportationMode, double currentJourneyCO2Save) {
+        boolean foundMathchingCar = false;
+        for (int j = 0; j < carNamesForMode.size(); j++) {
+
+            String currentCar = carNamesForMode.get(j);
+
+            if (currentCar.equals(transportationMode)) {
+                foundMathchingCar = true;
+                currentJourneyCO2Save += carNameSCO2ForMode.remove(j);
+                carNameSCO2ForMode.add(j, currentJourneyCO2Save);
+            }
+
+
+        }
+
+        if (!foundMathchingCar) {
+            carNamesForMode.add(transportationMode);
+            carNameSCO2ForMode.add(currentJourneyCO2Save);
+        }
+    }
+
+    private void routeInfomation(String currentJourneyRoute, double currentJourneyCO2) {
+
+        double currentJourneyCO2Save = currentJourneyCO2;
+        boolean foundRouteName = false;
+        for (int j = 0; j < routeNames.size(); j++) {
+
+            String currentRouteName = routeNames.get(j);
+
+            if (currentRouteName.equals(currentJourneyRoute)) {
+                foundRouteName = true;
+                currentJourneyCO2Save += routeNameCO2.remove(j);
+                routeNameCO2.add(j, currentJourneyCO2Save);
+            }
+
+
+        }
+
+        if (!foundRouteName) {
+            routeNames.add(currentJourneyRoute);
+            routeNameCO2.add(currentJourneyCO2Save);
+        }
+
+    }
     private long getDateDifference(String StartDate, String EndDate) {
 
         //SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
