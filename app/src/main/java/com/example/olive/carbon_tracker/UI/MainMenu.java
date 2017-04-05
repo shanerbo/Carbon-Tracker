@@ -537,7 +537,7 @@ public class MainMenu extends AppCompatActivity {
             return true;
         }
         if(id == R.id.tool_about){
-            Toast.makeText(getApplicationContext(), "Go to about", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(MainMenu.this, AboutActivity.class));
             return true;
         }
         return super.onOptionsItemSelected(item);
