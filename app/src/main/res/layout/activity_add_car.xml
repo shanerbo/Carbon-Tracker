@@ -6,29 +6,37 @@
     android:layout_height="match_parent"
     tools:context="com.example.olive.carbon_tracker.UI.AddCar">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_bill"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#2E2D2D"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme" />
+
     <TextView
         android:id="@+id/ID_add_car"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="11dp"
         android:text="@string/edit_a_car"
         android:textSize="18sp"
         tools:layout_editor_absoluteX="148dp"
         tools:layout_editor_absoluteY="16dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_below="@+id/toolbar_bill"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="18dp" />
 
     <EditText
         android:id="@+id/ID_Car_Name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ID_add_car"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="12dp"
         android:ems="10"
         android:hint="@string/nickname_for_your_car"
         android:textAlignment="center"
-        android:maxLines="1" />
+        android:maxLines="1"
+        android:layout_below="@+id/ID_add_car"
+        android:layout_centerHorizontal="true" />
 
     <Spinner
         android:id="@+id/ID_drop_down_make"
@@ -36,11 +44,11 @@
         android:layout_height="46dp"
         tools:layout_editor_absoluteX="43dp"
         tools:layout_editor_absoluteY="173dp"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="14dp"
         android:layout_marginRight="45dp"
+        tools:ignore="RtlHardcoded"
         android:layout_below="@+id/ID_Car_Name"
-        android:layout_alignStart="@+id/ID_Car_Name"
-        tools:ignore="RtlHardcoded" />
+        android:layout_toEndOf="@+id/ID_textview_make" />
     <!--android:layout_alignStart="@+id/ID_Car_Name"-->
 
     <Spinner
@@ -49,8 +57,8 @@
         android:layout_height="46dp"
         tools:layout_editor_absoluteX="43dp"
         tools:layout_editor_absoluteY="173dp"
+        android:layout_marginTop="20dp"
         android:layout_below="@+id/ID_drop_down_make"
-        android:layout_marginTop="27dp"
         android:layout_alignEnd="@+id/ID_drop_down_make"
         android:layout_toEndOf="@+id/ID_textview_model" />
 
@@ -61,15 +69,15 @@
         tools:layout_editor_absoluteX="43dp"
         tools:layout_editor_absoluteY="173dp"
         android:layout_below="@+id/ID_drop_down_model"
-        android:layout_marginTop="31dp"
-        android:layout_alignEnd="@+id/ID_drop_down_make"
-        android:layout_toEndOf="@+id/ID_textview_model" />
+        android:layout_alignStart="@+id/ID_drop_down_model"
+        android:layout_marginTop="14dp"
+        android:layout_alignEnd="@+id/ID_drop_down_model" />
 
     <Spinner
         android:id="@+id/ID_drop_down_dspl"
         android:layout_width="299dp"
         android:layout_height="46dp"
-        android:layout_marginTop="29dp"
+        android:layout_marginTop="16dp"
         tools:layout_editor_absoluteX="43dp"
         tools:layout_editor_absoluteY="173dp"
         android:layout_below="@+id/ID_drop_down_year"
@@ -98,8 +106,7 @@
         android:id="@+id/ID_textview_year"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
-        android:layout_marginTop="46dp"
+        android:layout_marginTop="32dp"
         android:text="@string/year"
         android:layout_below="@+id/ID_drop_down_model"
         android:layout_toStartOf="@+id/ID_drop_down_year" />
@@ -143,12 +150,10 @@
         android:id="@+id/imageSpinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/ID_button_OKAdd"
-        android:layout_alignStart="@+id/ID_drop_down_dspl"
-        android:layout_marginTop="0dp"
-        android:layout_marginBottom="30dp"
 
         android:layout_below="@+id/ID_drop_down_dspl"
-        android:layout_above="@+id/ID_button_OKAdd" />
+        android:layout_alignEnd="@+id/ID_drop_down_dspl"
+        android:layout_marginTop="26dp"
+        android:layout_toEndOf="@+id/ID_textview_dspl" />
 
 </RelativeLayout>
