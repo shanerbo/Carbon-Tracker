@@ -36,4 +36,13 @@
         android:id="@+id/include"
         layout="@layout/content_display_journey_list" />
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_journey"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="#2E2D2D"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme" />
+
 </android.support.design.widget.CoordinatorLayout>

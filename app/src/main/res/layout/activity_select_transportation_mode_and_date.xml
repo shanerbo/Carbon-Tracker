@@ -6,6 +6,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.example.olive.carbon_tracker.UI.SelectTransportationModeAndDate">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_mode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#2E2D2D"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme" />
+
     <TextView
         android:id="@+id/ID_what_mode"
         android:layout_width="wrap_content"
@@ -53,10 +61,10 @@
         android:id="@+id/txtCurrentDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="43dp"
-        android:text="@string/dd_mm_yyyy" />
+        android:layout_marginTop="49dp"
+        android:text="@string/dd_mm_yyyy"
+        android:layout_below="@+id/toolbar_mode"
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:id="@+id/btnChangeDate"

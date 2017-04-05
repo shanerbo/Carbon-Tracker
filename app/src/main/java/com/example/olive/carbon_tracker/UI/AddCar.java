@@ -306,7 +306,7 @@ public class AddCar extends AppCompatActivity {
                     String CarYear = Year_spinner.getSelectedItem().toString();
                     String CityAndHighway = Displ_spinner.getSelectedItem().toString();
                     int CarImage = (Image_spinner.getSelectedItemPosition())+1;
-                    Toast.makeText(getApplicationContext(),""+ CarImage,Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(),""+ CarImage,Toast.LENGTH_LONG).show();
 
                     List<String> city08_highway_08 = new ArrayList<>();
                     String CityHighway = new String();
