@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -44,6 +45,9 @@ public class SingleDayGraph extends AppCompatActivity {
 
     List<String> routeNames = new ArrayList<>();
     List<Double> routeNameCO2 = new ArrayList<>();
+
+    List<Double> electricityCO2 = new ArrayList<>();
+    List<Double> naturalGasCO2 = new ArrayList<>();
 
 
     public static final int DAY_TOKEN = 0;
@@ -122,10 +126,15 @@ public class SingleDayGraph extends AppCompatActivity {
         if (skytrainCO2.get(0) != 0.0) {
             pieEntries.add(new PieEntry(skytrainCO2.get(0).floatValue(), "SKYTRAIN"));
         }
-        if (utilityCO2.get(0) != 0.0) {
-            pieEntries.add(new PieEntry(utilityCO2.get(0).floatValue(), "UTILITY"));
+      //  if (utilityCO2.get(0) != 0.0) {
+        //    pieEntries.add(new PieEntry(utilityCO2.get(0).floatValue(), "UTILITY"));
+        //}
+        if (electricityCO2.get(0) != 0.0) {
+            pieEntries.add(new PieEntry(electricityCO2.get(0).floatValue(), "ELECTRICITY"));
         }
-
+        if (naturalGasCO2.get(0) != 0.0) {
+            pieEntries.add(new PieEntry(naturalGasCO2.get(0).floatValue(), "NATURAL GAS"));
+        }
         PieDataSet dataSet = new PieDataSet(pieEntries, "");
         dataSet.setColors(getColors());
         PieData data = new PieData(dataSet);
@@ -261,6 +270,8 @@ public class SingleDayGraph extends AppCompatActivity {
         busCO2.add(0, 0.0);
         carCO2.add(0, 0.0);
         utilityCO2.add(0, 0.0);
+        electricityCO2.add(0,0.0);
+        naturalGasCO2.add(0,0.0);
         String day = singleton.getUserDay();
         String month = singleton.getUserMonth();
         String year = singleton.getUserYear();
@@ -297,13 +308,23 @@ public class SingleDayGraph extends AppCompatActivity {
         boolean insideRange = false;
         long smallestDateDifference = 99999999;
         double mostRecentCO2 = 0;
+        double electricity = 0;
+        double currentElecCO2 =0;
+        double naturalGas =0;
+        double currentGasco2 = 0;
         for (int i = 0; i < utilitiesList.size(); i++) {
 
             MonthlyUtilitiesData currentUtility = utilitiesList.get(i);
+
+            Log.i("Elect"+currentUtility.getIndElecUsage(),"dfdf");
             double currentUtilityIndCO2 = currentUtility.getIndCO2();
             String currentUtilityStartDate = currentUtility.getStartDate();
             String currentUtilityEndDate = currentUtility.getEndDate();
-
+             electricity = currentUtility.getIndElecUsage();
+             currentElecCO2 = electricity * 0.009;
+             naturalGas = currentUtility.getIndGasUsage();
+             currentGasco2 = naturalGas *56.1;
+            Toast.makeText(getApplicationContext(),"Eco2 = "+ (+currentElecCO2 ),Toast.LENGTH_SHORT).show();
             String[] date = userDate.split("/");
             String monthNumber = addZeroToDay("" + getMonthNumber(date[MONTH_TOKEN]));
             String currentDate = date[YEAR_TOKEN] + "-" + monthNumber + "-" + addZeroToDay(date[DAY_TOKEN]);
@@ -313,6 +334,11 @@ public class SingleDayGraph extends AppCompatActivity {
 
                 currentUtilityIndCO2 += utilityCO2.remove(0);
                 utilityCO2.add(currentUtilityIndCO2);
+                currentElecCO2 += electricityCO2.remove(0);
+                electricityCO2.add(currentElecCO2);
+
+                currentGasco2 += naturalGasCO2.remove(0);
+                naturalGasCO2.add(currentGasco2);
                 insideRange = true;
 
             } else {
@@ -327,6 +353,11 @@ public class SingleDayGraph extends AppCompatActivity {
         if (!insideRange) {
             mostRecentCO2 += utilityCO2.remove(0);
             utilityCO2.add(mostRecentCO2);
+            currentElecCO2 += electricityCO2.remove(0);
+            electricityCO2.add(currentElecCO2);
+
+            currentGasco2 += naturalGasCO2.remove(0);
+            naturalGasCO2.add(currentGasco2);
         }
 
 
