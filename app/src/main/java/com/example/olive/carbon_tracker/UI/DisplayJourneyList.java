@@ -244,7 +244,7 @@ public class DisplayJourneyList extends AppCompatActivity {
     }
 
     private void setToolBar(){
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+        //getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
         Toolbar toolBar = (Toolbar) findViewById(R.id.toolbar_journey);
         setSupportActionBar(toolBar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -270,6 +270,9 @@ public class DisplayJourneyList extends AppCompatActivity {
                 singleton.humanRelatableUnit();
             else
                 singleton.originalUnit();
+            ArrayAdapter<Journey> adapter = new myArrayAdapter();
+            ListView list = (ListView) findViewById(R.id.listJourneys);
+            list.setAdapter(adapter);
             saveCO2UnitStatus(singleton.checkCO2Unit());
             Toast.makeText(getApplicationContext(), "CO2 unit has been changed", Toast.LENGTH_SHORT).show();
             return true;

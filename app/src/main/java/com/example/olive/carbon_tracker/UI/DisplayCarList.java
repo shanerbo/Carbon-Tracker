@@ -179,7 +179,7 @@ public class DisplayCarList extends AppCompatActivity {
     }
 
     private void setToolBar(){
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+        //getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
         Toolbar toolBar = (Toolbar) findViewById(R.id.toolbar_car);
         setSupportActionBar(toolBar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
