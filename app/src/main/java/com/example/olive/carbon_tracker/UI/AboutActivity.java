@@ -9,7 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.util.TypedValue
+import android.util.TypedValue;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,10 +29,12 @@ public class AboutActivity extends AppCompatActivity {
     }
 
     private void setTestView(int id) {
-//        TextView textView = (TextView) findViewById(id);
-//        float currentVersion = getResources().getDimension(R.dimen.current_version);
-//        String msg = getString(R.string.app_version, currentVersion);
-//        textView.setText(msg);
+        TextView textView = (TextView) findViewById(id);
+        TypedValue temp = new TypedValue();
+        getResources().getValue(R.dimen.current_version, temp, true);
+        float currentVersion = temp.getFloat();
+        String msg = getString(R.string.app_version, currentVersion);
+        textView.setText(msg);
     }
 
     public void onBackPressed() {
@@ -83,11 +85,6 @@ public class AboutActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = prefs.edit();
         editor.putInt("CO2 status", status);
         editor.apply();
-        TextView textView = (TextView) findViewById(id);
-        TypedValue temp = new TypedValue();
-        getResources().getDimension(R.dimen.current_version, temp, true);
-        float currentVersion = temp.getFloat();
-        String msg = getString(R.string.app_version, currentVersion);
-        textView.setText(msg);
+
     }
 }

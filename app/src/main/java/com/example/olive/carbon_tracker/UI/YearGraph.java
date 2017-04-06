@@ -35,6 +35,7 @@ import java.util.Date;
 import java.util.List;
 
 import static android.support.v7.widget.AppCompatDrawableManager.get;
+import static com.example.olive.carbon_tracker.R.id.chart;
 import static com.example.olive.carbon_tracker.UI.MonthGraph.NATIONAL_AVERAGE;
 import static com.example.olive.carbon_tracker.UI.MonthGraph.PARIS_ACCORD;
 
@@ -58,6 +59,10 @@ public class YearGraph extends AppCompatActivity {
     List<Journey> journeyList = singleton.getUsersJourneys();
     private List<String> previousDates = new ArrayList<>();
     boolean isChartEmpty = true;
+    List<String> carNamesForMode = new ArrayList<>();
+    List<Double> carNameSCO2ForMode = new ArrayList<>();
+    List<String> routeNames = new ArrayList<>();
+    List<Double> routeNameCO2 = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +78,8 @@ public class YearGraph extends AppCompatActivity {
         getYearCO2();
         setupLineChart();
         setupPieChart();
+        setupModePieChart();
+        setupRoutePieChart();
     }
 
 
@@ -92,38 +99,43 @@ public class YearGraph extends AppCompatActivity {
             totalUtility += utilityCO2.get(i).floatValue();
         }
         if (totalBusCO2 != 0.0) {
-            pieEntries.add(new PieEntry(totalBusCO2, ""));
+            pieEntries.add(new PieEntry(totalBusCO2, "BUS"));
         }
         if (totalCarCO2 != 0.0) {
-            pieEntries.add(new PieEntry(totalCarCO2, ""));
+            pieEntries.add(new PieEntry(totalCarCO2, "CAR"));
         }
 
         if (totalSkyTrainCO2 != 0.0) {
-            pieEntries.add(new PieEntry(totalSkyTrainCO2, ""));
+            pieEntries.add(new PieEntry(totalSkyTrainCO2, "SKYTRAIN"));
         }
         if (totalUtility != 0.0) {
-            pieEntries.add(new PieEntry(totalUtility, ""));
+            pieEntries.add(new PieEntry(totalUtility, "UTILITY"));
         }
 
         PieDataSet dataSet = new PieDataSet(pieEntries, "");
         dataSet.setColors(getColors());
-        dataSet.setSelectionShift(5f);
-        dataSet.setSliceSpace(2);
-
         PieData data = new PieData(dataSet);
-        data.setValueTextSize(11f);
+        data.setValueTextSize(9f);
         data.setValueTextColor(Color.BLACK);
 
         com.github.mikephil.charting.charts.PieChart chart = (com.github.mikephil.charting.charts.PieChart) findViewById(R.id.piechart_year);
+        Legend l = chart.getLegend();
+        l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
+        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
+        l.setOrientation(Legend.LegendOrientation.VERTICAL);
+        l.setDrawInside(false);
+        l.setXEntrySpace(7f);
+        l.setYEntrySpace(0f);
+        l.setYOffset(0f);
         chart.setUsePercentValues(false);
-        chart.setEntryLabelColor(Color.BLUE);
-        chart.setCenterTextOffset(0, -20);
-        chart.getLegend().setEnabled(false);
-        chart.setRotationAngle(0);
-        chart.setExtraOffsets(5, 10, 5, 5);
+        chart.getDescription().setEnabled(false);
         chart.setData(data);
         chart.animateY(1000);
+        chart.setEntryLabelTextSize(9f);
+        //chart.setEntryLabelColor(Color.BLACK);
+        chart.setRotationAngle(0);
         chart.invalidate();
+
     }
 
     private void setupLineChart() {
@@ -234,7 +246,105 @@ public class YearGraph extends AppCompatActivity {
         }
     }
 
+    private void setupModePieChart() {
 
+        List<PieEntry> pieEntries = new ArrayList<>();
+
+        float totalCarCO2 = 0;
+        float totalBusCO2 = 0;
+        float totalSkyTrainCO2 = 0;
+        float totalUtility = 0;
+
+        for (int i = 0; i < MONTHS; i++) {
+            //totalCarCO2 += carNameSCO2ForMode.get(i).floatValue();
+            totalBusCO2 += busCO2.get(i).floatValue();
+            totalSkyTrainCO2 += skytrainCO2.get(i).floatValue();
+            totalUtility += utilityCO2.get(i).floatValue();
+        }
+        if (totalBusCO2 != 0.0) {
+            pieEntries.add(new PieEntry(totalBusCO2, "BUS"));
+        }
+        for (int i = 0; i < carNamesForMode.size(); i++) {
+            pieEntries.add(new PieEntry(carNameSCO2ForMode.get(i).floatValue(), carNamesForMode.get(i)));
+        }
+
+        if (totalSkyTrainCO2 != 0.0) {
+            pieEntries.add(new PieEntry(totalSkyTrainCO2, "SKYTRAIN"));
+        }
+        if (totalUtility != 0.0) {
+            pieEntries.add(new PieEntry(totalUtility, "UTILITY"));
+        }
+
+        PieDataSet dataSet = new PieDataSet(pieEntries, "");
+        dataSet.setColors(getColors());
+        PieData data = new PieData(dataSet);
+        data.setValueTextSize(9f);
+        data.setValueTextColor(Color.BLACK);
+
+        com.github.mikephil.charting.charts.PieChart chart = (com.github.mikephil.charting.charts.PieChart) findViewById(R.id.mode_PieChart_YearGraph);
+        Legend l = chart.getLegend();
+        l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
+        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
+        l.setOrientation(Legend.LegendOrientation.VERTICAL);
+        l.setDrawInside(false);
+        l.setXEntrySpace(7f);
+        l.setYEntrySpace(0f);
+        l.setYOffset(0f);
+        chart.setUsePercentValues(false);
+        chart.getDescription().setEnabled(false);
+        chart.setData(data);
+        chart.animateY(1000);
+        chart.setEntryLabelTextSize(9f);
+        chart.setRotationAngle(0);
+        chart.invalidate();
+    }
+
+
+    private void setupRoutePieChart() {
+
+        List<PieEntry> pieEntries = new ArrayList<>();
+
+
+
+        for (int i = 0; i < MONTHS; i++) {
+
+            //  totalUtility += utilityCO2.get(i).floatValue();
+        }
+
+        for (int i = 0; i <routeNameCO2.size(); i++) {
+            pieEntries.add(new PieEntry(routeNameCO2.get(i).floatValue(), routeNames.get(i)));
+        }
+
+
+        //   if (totalUtility != 0.0) {
+        //     pieEntries.add(new PieEntry(totalUtility, "UTILITY"));
+        //  }
+
+        PieDataSet dataSet = new PieDataSet(pieEntries, "");
+        dataSet.setColors(getColors());
+        PieData data = new PieData(dataSet);
+        data.setValueTextSize(9f);
+        data.setValueTextColor(Color.BLACK);
+
+        com.github.mikephil.charting.charts.PieChart chart = (com.github.mikephil.charting.charts.PieChart)
+                findViewById(R.id.route_PieChart_YearGraph);
+        Legend l = chart.getLegend();
+        l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
+        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
+        l.setOrientation(Legend.LegendOrientation.VERTICAL);
+        l.setDrawInside(false);
+        l.setXEntrySpace(7f);
+        l.setYEntrySpace(0f);
+        l.setYOffset(0f);
+        chart.setUsePercentValues(false);
+        chart.getDescription().setEnabled(false);
+
+        chart.setData(data);
+        chart.animateY(1000);
+        chart.setEntryLabelTextSize(9f);
+        chart.setRotationAngle(0);
+        chart.invalidate();
+    }
     private void getYearCO2() {
 
         busCO2.clear();
@@ -265,6 +375,8 @@ public class YearGraph extends AppCompatActivity {
 
             for (int j = 0; j < previousDates.size(); j++) {
                 if (currentJourneyDate.equals(previousDates.get(j))) {
+                    double co2ForRoute = currentJourneyCO2;
+                    routeInfomation(currentJourney.getRouteName(), co2ForRoute);
                     switch (transportationMode) {
                         case "Skytrain":
                             currentJourneyCO2 += skytrainCO2.remove(j);
@@ -275,8 +387,11 @@ public class YearGraph extends AppCompatActivity {
                             busCO2.add(j, currentJourneyCO2);
                             break;
                         default:
+                            double currentJourneyCO2Save = currentJourneyCO2;
                             currentJourneyCO2 += carCO2.remove(j);
                             carCO2.add(j, currentJourneyCO2);
+                            modeInformation(transportationMode,currentJourneyCO2Save);
+
                             break;
                     }
                 }
@@ -337,6 +452,52 @@ public class YearGraph extends AppCompatActivity {
 
     }
 
+
+    private void modeInformation(String transportationMode, double currentJourneyCO2Save) {
+        boolean foundMathchingCar = false;
+        for (int j = 0; j < carNamesForMode.size(); j++) {
+
+            String currentCar = carNamesForMode.get(j);
+
+            if (currentCar.equals(transportationMode)) {
+                foundMathchingCar = true;
+                currentJourneyCO2Save += carNameSCO2ForMode.remove(j);
+                carNameSCO2ForMode.add(j, currentJourneyCO2Save);
+            }
+
+
+        }
+
+        if (!foundMathchingCar) {
+            carNamesForMode.add(transportationMode);
+            carNameSCO2ForMode.add(currentJourneyCO2Save);
+        }
+    }
+
+
+    private void routeInfomation(String currentJourneyRoute, double currentJourneyCO2) {
+
+        double currentJourneyCO2Save = currentJourneyCO2;
+        boolean foundRouteName = false;
+        for (int j = 0; j < routeNames.size(); j++) {
+
+            String currentRouteName = routeNames.get(j);
+
+            if (currentRouteName.equals(currentJourneyRoute)) {
+                foundRouteName = true;
+                currentJourneyCO2Save += routeNameCO2.remove(j);
+                routeNameCO2.add(j, currentJourneyCO2Save);
+            }
+
+
+        }
+
+        if (!foundRouteName) {
+            routeNames.add(currentJourneyRoute);
+            routeNameCO2.add(currentJourneyCO2Save);
+        }
+
+    }
 
     private String addZeroToDay(String startDay) {
         if (startDay.equals("1")) {

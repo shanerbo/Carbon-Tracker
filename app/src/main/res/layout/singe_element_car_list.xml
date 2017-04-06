@@ -14,6 +14,7 @@
         android:layout_toEndOf="@+id/CarImage"
         android:text="@string/tempTotalDst"
         android:textAlignment="viewEnd"
+        android:textColor="@android:color/black"
         android:textSize="12sp" />
 
     <TextView
@@ -34,6 +35,7 @@
         android:layout_toEndOf="@+id/CarImage"
         android:text="@string/tempCityDst"
         android:textAlignment="viewEnd"
+        android:textColor="@android:color/black"
         android:textSize="12sp" />
 
     <ImageView
@@ -55,6 +57,7 @@
         android:layout_toEndOf="@+id/CarImage"
         android:text="@string/tempHwatDst"
         android:textAlignment="viewEnd"
+        android:textColor="@android:color/black"
         android:textSize="12sp" />
 
 </RelativeLayout>
