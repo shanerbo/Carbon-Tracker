@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
@@ -9,41 +10,120 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.olive.carbon_tracker.UI.MainMenu"
-    android:background="@drawable/bgimage">
+    android:background="@drawable/bgimage"
+
+    >
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/btnMonthlyUti"
+        android:layout_marginStart="27dp"
+        android:adjustViewBounds="true"
+        android:maxHeight="100dp"
+        android:maxWidth="115dp"
+        app:srcCompat="@drawable/woddensign3" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:cropToPadding="false"
+        android:maxHeight="75dp"
+        android:maxWidth="75dp"
+        app:srcCompat="@drawable/woodensign"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="125dp" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:maxWidth="75dp"
+        android:minHeight="75dp"
+        app:srcCompat="@drawable/woodensign"
+        android:layout_alignBottom="@+id/imageView"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="13dp" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:cropToPadding="false"
+        android:maxHeight="115dp"
+        android:maxWidth="115dp"
+        app:srcCompat="@drawable/woddensign3"
+        android:layout_above="@+id/imageView2"
+        android:layout_alignStart="@+id/btnMonthlyUti"
+        android:layout_marginStart="9dp" />
 
     <Button
         android:id="@+id/btnCreateJourney"
+        style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/new_journey"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="77dp" />
+        android:textSize="10sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="33dp"
+        android:layout_alignBottom="@+id/imageView"
+        android:layout_alignEnd="@+id/imageView" />
 
     <Button
         android:id="@+id/btnCurrentFootprint"
+        style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
+
+
         android:layout_height="wrap_content"
         android:text="@string/carbon_footprint"
-        android:layout_alignTop="@+id/btnMonthlyUti"
-        android:layout_alignStart="@+id/btnMonthlyUti"
-        android:layout_marginTop="94dp" />
+        android:textSize="10sp"
+        android:textStyle="bold"
+        android:layout_alignTop="@+id/imageView5"
+        android:layout_alignStart="@+id/imageView5" />
+    " />
 
     <Button
         android:id="@+id/btnEditJourney"
+        style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/edit_journeys"
-        android:layout_below="@+id/btnCreateJourney"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="74dp" />
+        android:textSize="10sp"
+        android:textStyle="bold"
+        android:layout_alignBaseline="@+id/btnCreateJourney"
+        android:layout_alignBottom="@+id/btnCreateJourney"
+        android:layout_alignEnd="@+id/imageView2" />
+    " />
 
     <Button
         android:id="@+id/btnMonthlyUti"
+        style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/imageView4"
         android:text="@string/monthly_utilities"
-        android:layout_below="@+id/btnEditJourney"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="46dp" />
+        android:textSize="9sp"
+        android:textStyle="bold" /><![CDATA[
+
+
+
+
+
+
+
+    " />
+
+
+
+
+]]>
 </RelativeLayout>
