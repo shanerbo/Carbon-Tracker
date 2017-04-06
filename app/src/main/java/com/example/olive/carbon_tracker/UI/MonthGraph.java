@@ -46,8 +46,6 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import static com.example.olive.carbon_tracker.R.id.chart;
-
 /**
  * uses a stacked bar chart to display monthly carbon emission
  */
@@ -762,7 +760,7 @@ public class MonthGraph extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.toolbar_graph_item, menu);
+        getMenuInflater().inflate(R.menu.toolbar_calendar, menu);
         return true;
     }
 

@@ -541,7 +541,7 @@ public class SingleDayGraph extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.toolbar_graph_item, menu);
+        getMenuInflater().inflate(R.menu.toolbar_calendar, menu);
         return true;
     }
 

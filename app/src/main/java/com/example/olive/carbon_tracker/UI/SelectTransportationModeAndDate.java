@@ -61,7 +61,6 @@ public class SelectTransportationModeAndDate extends AppCompatActivity {
         setButton(R.id.ID_button_OKmode);
         setButton(R.id.ID_button_mode_cancel);
         viewCurrentDate();
-        setupCalendarButton();
         checkNotifications();
         setToolBar();
     }
@@ -103,17 +102,6 @@ public class SelectTransportationModeAndDate extends AppCompatActivity {
             currentDate.setText(day + "/" + month + "/" + year);
             singleton.setIsDateChanged(false);
         }
-    }
-
-
-    private void setupCalendarButton(){
-            Button btn = (Button) findViewById(R.id.btnChangeDate);
-            btn.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    Intent intent = new Intent(SelectTransportationModeAndDate.this,DisplayCalendar.class);
-                    startActivity(intent);
-                }
-            });
     }
 
     private void populateTransportationSpinner() {
@@ -336,7 +324,7 @@ public class SelectTransportationModeAndDate extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.toolbar_item, menu);
+        getMenuInflater().inflate(R.menu.toolbar_calendar, menu);
         return true;
     }
 
@@ -354,6 +342,10 @@ public class SelectTransportationModeAndDate extends AppCompatActivity {
         }
         if(id == R.id.tool_about){
             startActivity(new Intent(SelectTransportationModeAndDate.this, AboutActivity.class));
+            return true;
+        }
+        if(id == R.id.tool_date){
+            startActivity(new Intent(SelectTransportationModeAndDate.this, DisplayCalendar.class));
             return true;
         }
         return super.onOptionsItemSelected(item);

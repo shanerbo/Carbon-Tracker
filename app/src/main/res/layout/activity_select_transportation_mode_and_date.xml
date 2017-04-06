@@ -48,7 +48,7 @@
         app:backgroundTint="@android:color/holo_green_dark"
         app:fabSize="normal"
         app:srcCompat="@android:drawable/checkbox_on_background"
-        android:layout_marginBottom="34dp"
+        android:layout_marginBottom="63dp"
         android:layout_alignParentBottom="true"
         android:layout_alignEnd="@+id/ID_trans_mode_spinner" />
 
@@ -67,25 +67,18 @@
         android:id="@+id/txtCurrentDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar_mode"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="79dp"
         android:text="@string/dd_mm_yyyy"
         android:textAllCaps="true"
         android:textColor="@android:color/black"
-        android:textStyle="bold"
-        android:layout_below="@+id/toolbar_mode"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="79dp" />
+        android:textSize="18sp"
+        android:textStyle="bold" /><![CDATA[
         android:layout_marginTop="49dp"
         android:text="@string/dd_mm_yyyy"
         android:layout_below="@+id/toolbar_mode"
         android:layout_centerHorizontal="true" />
 
-    <Button
-        android:id="@+id/btnChangeDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="19dp"
-        android:text="@string/change_date"
-        android:layout_below="@+id/toolbar_mode"
-        android:layout_toStartOf="@+id/ID_button_OKmode" />
-
+    ]]>
 </RelativeLayout>
