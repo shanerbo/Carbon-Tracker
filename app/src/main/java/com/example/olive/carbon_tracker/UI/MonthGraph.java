@@ -416,6 +416,8 @@ public class MonthGraph extends AppCompatActivity {
         carNamesForMode.clear();
         routeNames.clear();
         routeNameCO2.clear();
+        electricityCO2.clear();
+        naturalGasCO2.clear();
         getPrevious28Days();
         List<MonthlyUtilitiesData> utilitiesList = singleton.getBillList();
         for (int i = 0; i < MONTH; i++) {
