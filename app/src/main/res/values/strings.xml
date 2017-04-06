@@ -2,9 +2,9 @@
     <string name="app_name">Carbon Tracker</string>
     <string name="pie_chart">Pie Chart</string>
     <string name="main_menu">Main Menu</string>
-    <string name="new_journey">New Journey</string>
+    <string name="new_journey">New\n Journey</string>
     <string name="select_journey">Select Journey</string>
-    <string name="carbon_footprint">Carbon Footprint</string>
+    <string name="carbon_footprint">Carbon\nFootprint</string>
     <string name="title_activity_display_route_list">DisplayRouteList</string>
     <string name="large_text">
         "route list"
@@ -74,7 +74,7 @@
     <string name="year">Year</string>
     <string name="select_a_transportation_mode">Select a transportation mode</string>
     <string name="textview">TextView</string>
-    <string name="edit_journeys">Edit Journeys</string>
+    <string name="edit_journeys">Edit\nJourneys</string>
     <string name="image_for_journey">Image for Journey</string>
     <string name="UserDeleteJourney">The Journey you selected has been deleted</string>
     <string name="_0_0">0.0</string>
@@ -91,7 +91,7 @@
     <string name="co2_emitted">co2 emitted</string>
     <string name="single_day">Single Day</string>
     <string name="month">Month</string>
-    <string name="monthly_utilities">Monthly Utilities</string>
+    <string name="monthly_utilities">Monthly\n Utilities</string>
     <string name="change_date">change date</string>
 
     <string name="vehicle_tip_1">You are creating %.2f kg of CO2 from driving. Try taking transits.</string>
