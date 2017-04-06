@@ -23,7 +23,7 @@
         android:id="@+id/tool_about"
         android:orderInCategory="3"
         android:title="@string/about"
-        android:icon="@drawable/gearwheel2"
+        android:icon="@drawable/gearwheel"
         app:showAsAction="ifRoom" />
 
 
