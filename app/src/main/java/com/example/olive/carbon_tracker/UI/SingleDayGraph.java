@@ -126,9 +126,7 @@ public class SingleDayGraph extends AppCompatActivity {
         if (skytrainCO2.get(0) != 0.0) {
             pieEntries.add(new PieEntry(skytrainCO2.get(0).floatValue(), "SKYTRAIN"));
         }
-      //  if (utilityCO2.get(0) != 0.0) {
-        //    pieEntries.add(new PieEntry(utilityCO2.get(0).floatValue(), "UTILITY"));
-        //}
+
         if (electricityCO2.get(0) != 0.0) {
             pieEntries.add(new PieEntry(electricityCO2.get(0).floatValue(), "ELECTRICITY"));
         }
@@ -173,9 +171,12 @@ public class SingleDayGraph extends AppCompatActivity {
 
         }
 
-    //    if (utilityCO2.get(0) != 0.0) {
-       //     pieEntries.add(new PieEntry(utilityCO2.get(0).floatValue(), "UTILITY"));
-    //    }
+        if (electricityCO2.get(0) != 0.0) {
+            pieEntries.add(new PieEntry(electricityCO2.get(0).floatValue(), "ELECTRICITY"));
+        }
+        if (naturalGasCO2.get(0) != 0.0) {
+            pieEntries.add(new PieEntry(naturalGasCO2.get(0).floatValue(), "NATURAL GAS"));
+        }
 
         PieDataSet dataSet = new PieDataSet(pieEntries, "");
         dataSet.setColors(getColors());
@@ -324,7 +325,6 @@ public class SingleDayGraph extends AppCompatActivity {
              currentElecCO2 = electricity * 0.009;
              naturalGas = currentUtility.getIndGasUsage();
              currentGasco2 = naturalGas *56.1;
-            Toast.makeText(getApplicationContext(),"Eco2 = "+ (+currentElecCO2 ),Toast.LENGTH_SHORT).show();
             String[] date = userDate.split("/");
             String monthNumber = addZeroToDay("" + getMonthNumber(date[MONTH_TOKEN]));
             String currentDate = date[YEAR_TOKEN] + "-" + monthNumber + "-" + addZeroToDay(date[DAY_TOKEN]);
@@ -387,6 +387,9 @@ public class SingleDayGraph extends AppCompatActivity {
         }
 
     }
+
+
+
 
 
     private void modeInformation(String transportationMode, double currentJourneyCO2Save) {
