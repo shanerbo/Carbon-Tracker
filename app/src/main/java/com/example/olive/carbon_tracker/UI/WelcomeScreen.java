@@ -15,6 +15,7 @@ import android.view.WindowManager;
 
 import com.example.olive.carbon_tracker.Model.DatabaseHelper;
 import com.example.olive.carbon_tracker.Model.Journey;
+import com.example.olive.carbon_tracker.Model.MonthlyUtilitiesData;
 import com.example.olive.carbon_tracker.Model.Singleton;
 import com.example.olive.carbon_tracker.Model.SuperUltraInfoDataBaseHelper;
 import com.example.olive.carbon_tracker.R;
@@ -36,6 +37,7 @@ public class WelcomeScreen extends AppCompatActivity {
     private List<String> allRandomEnegyTips = new ArrayList<>();
     private List<String> allRandomGasTips = new ArrayList<>();
     private List<String> allRandomUnrelatedTips = new ArrayList<>();
+    private List<MonthlyUtilitiesData> MonthlyUtilitiesList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +57,7 @@ public class WelcomeScreen extends AppCompatActivity {
         SQLiteDatabase createTable =TableHelper.getWritableDatabase();
         createTable.close();
         TableHelper.close();
+        ReadUtilityList();
 //------database done-------------------------
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -72,6 +75,32 @@ public class WelcomeScreen extends AppCompatActivity {
             singleton.originalUnit();
 
 
+    }
+
+    private void ReadUtilityList() {
+        List<MonthlyUtilitiesData> MonthlyUtilitiesFromDB = new ArrayList<>();
+        myDataBase = SQLiteDatabase.openOrCreateDatabase(DatabaseHelper.DB_PATH +
+                DatabaseHelper.DB_NAME,null);
+        Cursor cursor = myDataBase.rawQuery("select * from " +
+                "UtilityInfoTable order by UtilityEndDate asc",null);
+        cursor.moveToFirst();
+        while(!cursor.isAfterLast()){
+            String starDate = cursor.getString(1);
+            String endDate = cursor.getString(2);
+            long totalDays = cursor.getLong(5);
+            long totalPerson = cursor.getLong(6);
+            double indEle = cursor.getDouble(3)/totalPerson/totalDays;
+            double indGas = cursor.getDouble(4)/totalPerson/totalDays;
+            double co2 = cursor.getDouble(7);
+            long UtilityDBId = cursor.getLong(cursor.getColumnIndex("_id"));
+            MonthlyUtilitiesData tmpUtility = new MonthlyUtilitiesData(starDate,endDate,
+                    totalDays,indEle,indGas,totalPerson,co2,UtilityDBId);
+            MonthlyUtilitiesFromDB.add(tmpUtility);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        MonthlyUtilitiesList = MonthlyUtilitiesFromDB;
+        singleton.setBillList(MonthlyUtilitiesList);
     }
 
     private void setDates() {

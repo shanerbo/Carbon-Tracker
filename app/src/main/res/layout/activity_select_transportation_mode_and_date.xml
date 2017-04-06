@@ -4,16 +4,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.example.olive.carbon_tracker.UI.SelectTransportationModeAndDate">
+    tools:context="com.example.olive.carbon_tracker.UI.SelectTransportationModeAndDate"
+    android:background="@drawable/roadbackground"
+    >
 
     <TextView
         android:id="@+id/ID_what_mode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/btnChangeDate"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
+        android:layout_marginTop="75dp"
         android:text="@string/select_a_transportation_mode"
+        android:textAllCaps="false"
+        android:textColor="@android:color/black"
         android:textSize="18sp"
+        android:textStyle="bold"
         tools:layout_editor_absoluteX="161dp"
         tools:layout_editor_absoluteY="236dp" />
 
@@ -21,10 +27,10 @@
         android:id="@+id/ID_trans_mode_spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/ID_what_mode"
-        android:layout_alignStart="@+id/ID_what_mode"
+        android:layout_marginTop="10dp"
         android:layout_below="@+id/ID_what_mode"
-        android:layout_marginTop="22dp" />
+        android:layout_alignStart="@+id/ID_what_mode"
+        android:layout_alignEnd="@+id/ID_what_mode" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/ID_button_OKmode"
@@ -56,7 +62,10 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="43dp"
-        android:text="@string/dd_mm_yyyy" />
+        android:text="@string/dd_mm_yyyy"
+        android:textAllCaps="true"
+        android:textColor="@android:color/black"
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/btnChangeDate"

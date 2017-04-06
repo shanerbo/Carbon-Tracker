@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -18,6 +19,7 @@ import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -37,16 +39,31 @@ public class SingleDayGraph extends AppCompatActivity {
     List<Double> busCO2 = new ArrayList<>();
     List<Double> skytrainCO2 = new ArrayList<>();
     List<Double> utilityCO2 = new ArrayList<>();
+
+    List<String> carNamesForMode = new ArrayList<>();
+    List<Double> carNameSCO2ForMode = new ArrayList<>();
+
+    List<String> routeNames = new ArrayList<>();
+    List<Double> routeNameCO2 = new ArrayList<>();
+
+    List<Double> electricityCO2 = new ArrayList<>();
+    List<Double> naturalGasCO2 = new ArrayList<>();
+
+
     public static final int DAY_TOKEN = 0;
     public static final int MONTH_TOKEN = 1;
     public static final int YEAR_TOKEN = 2;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_single_day_graph);
         viewCurrentDate();
         setupPieChart();
+        setupModePieChart();
+        setupRoutePieChart();
         onRestart();
         setupCalendarButton();
     }
@@ -56,37 +73,137 @@ public class SingleDayGraph extends AppCompatActivity {
         getSingleDayCO2();
 
         List<PieEntry> pieEntries = new ArrayList<>();
-
-        if (carCO2.get(0) != 0.0) {
-            pieEntries.add(new PieEntry(carCO2.get(0).floatValue(), "CAR"));
-        }
-        if (busCO2.get(0) != 0.0) {
+      if (busCO2.get(0) != 0.0) {
             pieEntries.add(new PieEntry(busCO2.get(0).floatValue(), "BUS"));
-        }
-        if (skytrainCO2.get(0) != 0.0) {
+       }
+      if (carCO2.get(0) != 0.0) {
+            pieEntries.add(new PieEntry(carCO2.get(0).floatValue(), "CAR"));
+      }
+
+     if (skytrainCO2.get(0) != 0.0) {
             pieEntries.add(new PieEntry(skytrainCO2.get(0).floatValue(), "SKYTRAIN"));
-        }
-        if (utilityCO2.get(0) != 0.0) {
+    }
+       if (utilityCO2.get(0) != 0.0) {
             pieEntries.add(new PieEntry(utilityCO2.get(0).floatValue(), "UTILITY"));
-        }
+      }
 
         PieDataSet dataSet = new PieDataSet(pieEntries, "");
-        dataSet.setColors(Color.rgb(0, 128, 255), Color.rgb(96, 96, 96), Color.rgb(255, 153, 2255), Color.rgb(255, 128, 0), Color.rgb(255, 0, 0));
+
+        dataSet.setColors(getColors());
         PieData data = new PieData(dataSet);
 
-        data.setValueTextSize(11f);
+        data.setValueTextSize(9f);
         data.setValueTextColor(Color.BLACK);
 
         com.github.mikephil.charting.charts.PieChart chart = (com.github.mikephil.charting.charts.PieChart) findViewById(R.id.chart);
         chart.setUsePercentValues(false);
-
+        chart.getDescription().setEnabled(false);
         Legend l = chart.getLegend();
-        chart.getLegend().setEnabled(false);
-
+        l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
+        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
+        l.setOrientation(Legend.LegendOrientation.VERTICAL);
+        l.setDrawInside(false);
+        l.setXEntrySpace(7f);
+        l.setYEntrySpace(0f);
+        l.setYOffset(0f);
         chart.setData(data);
         chart.animateY(1000);
+        chart.setEntryLabelTextSize(9f);
         chart.invalidate();
+        chart.setRotationAngle(0);
     }
+
+
+    private void setupModePieChart() {
+        List<PieEntry> pieEntries = new ArrayList<>();
+        if (busCO2.get(0) != 0.0) {
+            pieEntries.add(new PieEntry(busCO2.get(0).floatValue(), "BUS"));
+        }
+        for (int i = 0; i < carNamesForMode.size(); i++) {
+            pieEntries.add(new PieEntry(carNameSCO2ForMode.get(i).floatValue(), carNamesForMode.get(i)));
+        }
+
+        if (skytrainCO2.get(0) != 0.0) {
+            pieEntries.add(new PieEntry(skytrainCO2.get(0).floatValue(), "SKYTRAIN"));
+        }
+      //  if (utilityCO2.get(0) != 0.0) {
+        //    pieEntries.add(new PieEntry(utilityCO2.get(0).floatValue(), "UTILITY"));
+        //}
+        if (electricityCO2.get(0) != 0.0) {
+            pieEntries.add(new PieEntry(electricityCO2.get(0).floatValue(), "ELECTRICITY"));
+        }
+        if (naturalGasCO2.get(0) != 0.0) {
+            pieEntries.add(new PieEntry(naturalGasCO2.get(0).floatValue(), "NATURAL GAS"));
+        }
+        PieDataSet dataSet = new PieDataSet(pieEntries, "");
+        dataSet.setColors(getColors());
+        PieData data = new PieData(dataSet);
+
+        data.setValueTextSize(9f);
+        data.setValueTextColor(Color.BLACK);
+
+        com.github.mikephil.charting.charts.PieChart chart = (com.github.mikephil.charting.charts.PieChart) findViewById(R.id.mode_PieChart);
+        chart.setUsePercentValues(false);
+
+        Legend l = chart.getLegend();
+        l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
+        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
+        l.setOrientation(Legend.LegendOrientation.VERTICAL);
+        l.setDrawInside(false);
+        l.setXEntrySpace(7f);
+        l.setYEntrySpace(0f);
+        l.setYOffset(0f);
+        chart.getDescription().setEnabled(false);
+        chart.setData(data);
+        chart.animateY(1000);
+        chart.setEntryLabelTextSize(9f);
+        chart.invalidate();
+        chart.setRotationAngle(0);
+    }
+
+
+    private void setupRoutePieChart() {
+
+
+
+        List<PieEntry> pieEntries = new ArrayList<>();
+
+        for (int i = 0; i < routeNames.size(); i++) {
+            pieEntries.add(new PieEntry(routeNameCO2.get(i).floatValue(), routeNames.get(i)));
+
+        }
+
+    //    if (utilityCO2.get(0) != 0.0) {
+       //     pieEntries.add(new PieEntry(utilityCO2.get(0).floatValue(), "UTILITY"));
+    //    }
+
+        PieDataSet dataSet = new PieDataSet(pieEntries, "");
+        dataSet.setColors(getColors());
+        PieData data = new PieData(dataSet);
+
+        data.setValueTextSize(9f);
+        data.setValueTextColor(Color.BLACK);
+
+        com.github.mikephil.charting.charts.PieChart chart = (com.github.mikephil.charting.charts.PieChart) findViewById(R.id.route_PieChart);
+        chart.setUsePercentValues(false);
+
+        Legend l = chart.getLegend();
+        l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
+        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
+        l.setOrientation(Legend.LegendOrientation.VERTICAL);
+        l.setDrawInside(false);
+        l.setXEntrySpace(7f);
+        l.setYEntrySpace(0f);
+        l.setYOffset(0f);
+        chart.getDescription().setEnabled(false);
+        chart.setData(data);
+        chart.animateY(1000);
+        chart.setEntryLabelTextSize(9f);
+        chart.invalidate();
+        chart.setRotationAngle(0);
+
+    }
+
 
     public void onRestart() {
         super.onRestart();
@@ -97,6 +214,8 @@ public class SingleDayGraph extends AppCompatActivity {
         currentDate.setText(day + "/" + month + "/" + year);
         singleton.setIsDateChanged(true);
         setupPieChart();
+        setupModePieChart();
+        setupRoutePieChart();
     }
 
     private void viewCurrentDate() {
@@ -143,10 +262,16 @@ public class SingleDayGraph extends AppCompatActivity {
         List<Journey> journeyList = singleton.getUsersJourneys();
         List<MonthlyUtilitiesData> utilitiesList = singleton.getBillList();
         utilityCO2.clear();
+        carNameSCO2ForMode.clear();
+        carNamesForMode.clear();
+        routeNames.clear();
+        routeNameCO2.clear();
         skytrainCO2.add(0, 0.0);
         busCO2.add(0, 0.0);
         carCO2.add(0, 0.0);
-        utilityCO2.add(0,0.0);
+        utilityCO2.add(0, 0.0);
+        electricityCO2.add(0,0.0);
+        naturalGasCO2.add(0,0.0);
         String day = singleton.getUserDay();
         String month = singleton.getUserMonth();
         String year = singleton.getUserYear();
@@ -156,9 +281,11 @@ public class SingleDayGraph extends AppCompatActivity {
             Journey currentJourney = journeyList.get(i);
             String transportationMode = currentJourney.getVehicleName();
 
+
             double currentJourneyCO2 = currentJourney.getCarbonEmitted();
             String currentDate = currentJourney.getDateOfTrip();
             if (userDate.equals(currentDate)) {
+                routeInfomation(currentJourney.getRouteName(), currentJourneyCO2);
                 switch (transportationMode) {
                     case "Skytrain":
                         currentJourneyCO2 += skytrainCO2.remove(0);
@@ -169,37 +296,52 @@ public class SingleDayGraph extends AppCompatActivity {
                         busCO2.add(0, currentJourneyCO2);
                         break;
                     default:
+                        double currentJourneyCO2Save = currentJourneyCO2;
                         currentJourneyCO2 += carCO2.remove(0);
                         carCO2.add(0, currentJourneyCO2);
+                        modeInformation(transportationMode, currentJourneyCO2Save);
                         break;
                 }
-
             }
         }
 
         boolean insideRange = false;
         long smallestDateDifference = 99999999;
         double mostRecentCO2 = 0;
+        double electricity = 0;
+        double currentElecCO2 =0;
+        double naturalGas =0;
+        double currentGasco2 = 0;
         for (int i = 0; i < utilitiesList.size(); i++) {
 
-            MonthlyUtilitiesData currentUtility= utilitiesList.get(i);
-            double currentUtilityIndCO2 =  currentUtility.getIndCO2();
+            MonthlyUtilitiesData currentUtility = utilitiesList.get(i);
+
+            Log.i("Elect"+currentUtility.getIndElecUsage(),"dfdf");
+            double currentUtilityIndCO2 = currentUtility.getIndCO2();
             String currentUtilityStartDate = currentUtility.getStartDate();
             String currentUtilityEndDate = currentUtility.getEndDate();
-
+             electricity = currentUtility.getIndElecUsage();
+             currentElecCO2 = electricity * 0.009;
+             naturalGas = currentUtility.getIndGasUsage();
+             currentGasco2 = naturalGas *56.1;
+            Toast.makeText(getApplicationContext(),"Eco2 = "+ (+currentElecCO2 ),Toast.LENGTH_SHORT).show();
             String[] date = userDate.split("/");
-            String monthNumber = addZeroToDay(""+getMonthNumber(date[MONTH_TOKEN]));
-            String currentDate =  date[YEAR_TOKEN]+ "-" + monthNumber + "-" + addZeroToDay(date[DAY_TOKEN]);
+            String monthNumber = addZeroToDay("" + getMonthNumber(date[MONTH_TOKEN]));
+            String currentDate = date[YEAR_TOKEN] + "-" + monthNumber + "-" + addZeroToDay(date[DAY_TOKEN]);
 
-            if(getDateDifference(currentUtilityStartDate, currentDate)>=0 &&
-                    getDateDifference(currentDate, currentUtilityEndDate)>=0){
+            if (getDateDifference(currentUtilityStartDate, currentDate) >= 0 &&
+                    getDateDifference(currentDate, currentUtilityEndDate) >= 0) {
 
                 currentUtilityIndCO2 += utilityCO2.remove(0);
                 utilityCO2.add(currentUtilityIndCO2);
+                currentElecCO2 += electricityCO2.remove(0);
+                electricityCO2.add(currentElecCO2);
+
+                currentGasco2 += naturalGasCO2.remove(0);
+                naturalGasCO2.add(currentGasco2);
                 insideRange = true;
 
-            }
-            else {
+            } else {
                 long currentDateDifference = getDateDifference(currentUtilityEndDate, currentDate);
                 if (currentDateDifference < smallestDateDifference && currentDateDifference > 0) {
                     mostRecentCO2 = currentUtilityIndCO2;
@@ -208,12 +350,64 @@ public class SingleDayGraph extends AppCompatActivity {
             }
 
         }
-        if(!insideRange){
+        if (!insideRange) {
             mostRecentCO2 += utilityCO2.remove(0);
             utilityCO2.add(mostRecentCO2);
+            currentElecCO2 += electricityCO2.remove(0);
+            electricityCO2.add(currentElecCO2);
+
+            currentGasco2 += naturalGasCO2.remove(0);
+            naturalGasCO2.add(currentGasco2);
         }
 
 
+    }
+
+
+    private void routeInfomation(String currentJourneyRoute, double currentJourneyCO2) {
+
+        double currentJourneyCO2Save = currentJourneyCO2;
+        boolean foundRouteName = false;
+        for (int j = 0; j < routeNames.size(); j++) {
+
+            String currentRouteName = routeNames.get(j);
+
+            if (currentRouteName.equals(currentJourneyRoute)) {
+                foundRouteName = true;
+                currentJourneyCO2Save += routeNameCO2.remove(j);
+                routeNameCO2.add(j, currentJourneyCO2Save);
+            }
+
+
+        }
+
+        if (!foundRouteName) {
+            routeNames.add(currentJourneyRoute);
+            routeNameCO2.add(currentJourneyCO2Save);
+        }
+
+    }
+
+
+    private void modeInformation(String transportationMode, double currentJourneyCO2Save) {
+        boolean foundMathchingCar = false;
+        for (int j = 0; j < carNamesForMode.size(); j++) {
+
+            String currentCar = carNamesForMode.get(j);
+
+            if (currentCar.equals(transportationMode)) {
+                foundMathchingCar = true;
+                currentJourneyCO2Save += carNameSCO2ForMode.remove(j);
+                carNameSCO2ForMode.add(j, currentJourneyCO2Save);
+            }
+
+
+        }
+
+        if (!foundMathchingCar) {
+            carNamesForMode.add(transportationMode);
+            carNameSCO2ForMode.add(currentJourneyCO2Save);
+        }
     }
 
     private long getDateDifference(String StartDate, String EndDate) {
@@ -224,8 +418,7 @@ public class SingleDayGraph extends AppCompatActivity {
             Date end = sdf.parse(EndDate);
             long dateDifference = end.getTime() - start.getTime();
             return dateDifference / 1000 / 60 / 60 / 24;
-        }
-        catch(Exception  e){
+        } catch (Exception e) {
             Toast.makeText(SingleDayGraph.this, "ERROR: SingleDayGraph" +
                     " dateDifference calculation failed", Toast.LENGTH_LONG).show();
         }
@@ -234,25 +427,33 @@ public class SingleDayGraph extends AppCompatActivity {
 
 
     private String addZeroToDay(String startDay) {
-        if(startDay.equals("1")){
+        if (startDay.equals("1")) {
             return "01";
-        }        if(startDay.equals("2")){
+        }
+        if (startDay.equals("2")) {
             return "02";
-        }        if(startDay.equals("3")){
+        }
+        if (startDay.equals("3")) {
             return "03";
-        }        if(startDay.equals("4")){
+        }
+        if (startDay.equals("4")) {
             return "04";
-        }        if(startDay.equals("5")){
+        }
+        if (startDay.equals("5")) {
             return "05";
-        }        if(startDay.equals("6")){
+        }
+        if (startDay.equals("6")) {
             return "06";
-        }        if(startDay.equals("7")){
+        }
+        if (startDay.equals("7")) {
             return "07";
-        }        if(startDay.equals("8")){
+        }
+        if (startDay.equals("8")) {
             return "08";
-        }        if(startDay.equals("9")){
+        }
+        if (startDay.equals("9")) {
             return "09";
-        }else{
+        } else {
             return startDay;
         }
     }
@@ -299,5 +500,17 @@ public class SingleDayGraph extends AppCompatActivity {
 
         }
         return -1;
+    }
+    private int[] getColors() {
+
+        int stacksize = 4;
+
+        int[] colors = new int[stacksize];
+
+        for (int i = 0; i < colors.length; i++) {
+            colors[i] = ColorTemplate.MATERIAL_COLORS[i];
+        }
+
+        return colors;
     }
 }
