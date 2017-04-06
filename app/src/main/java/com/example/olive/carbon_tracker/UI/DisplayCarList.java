@@ -42,10 +42,6 @@ public class DisplayCarList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_display_car_list);
-
-
-
-
         //VehicleList = singleton.getVehicleList();
         showAllCar();
         AddNewCar();
@@ -117,7 +113,8 @@ public class DisplayCarList extends AppCompatActivity {
                 "CarCity08, " +
                 "CarHwy08," +
                 "CarFuelType, " +
-                "_id from CarInfoTable",null);
+                "_id," +
+                "CarImage from CarInfoTable",null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()){
             String CarName = cursor.getString(0);
@@ -127,9 +124,10 @@ public class DisplayCarList extends AppCompatActivity {
             double CarCity08 = cursor.getDouble(4);
             double CarHwy08 = cursor.getDouble(5);
             String fuelType = cursor.getString(6);
+            int CarImageId = cursor.getInt(8);
             long carDBId = cursor.getLong(cursor.getColumnIndex("_id"));
             Vehicle tempVehicle = new Vehicle(CarName,CarMake,CarModel,
-                    CarYear,CarCity08,CarHwy08,fuelType,carDBId);
+                    CarYear,CarCity08,CarHwy08,fuelType,carDBId,CarImageId);
             VehicleListFromDB.add(tempVehicle);
             cursor.moveToNext();
         }
@@ -160,8 +158,8 @@ public class DisplayCarList extends AppCompatActivity {
                 itemView = getLayoutInflater().inflate(R.layout.singe_element_car_list, parent, false);
             }
             Vehicle currentVehicle = VehicleList.get(position);
-            ImageView imageView = (ImageView) itemView.findViewById(R.id.RouteImage);
-            imageView.setImageResource(currentVehicle.getIconId());
+            ImageView imageView = (ImageView) itemView.findViewById(R.id.CarImage);
+            imageView.setImageResource(currentVehicle.getImageID());
             TextView carName = (TextView) itemView.findViewById(R.id.StartingDate);
             carName.setText("Car Name: " + currentVehicle.getName());
             TextView carMake = (TextView) itemView.findViewById(R.id.EndingDate);

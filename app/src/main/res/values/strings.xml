@@ -77,7 +77,6 @@
     <string name="edit_journeys">Edit Journeys</string>
     <string name="image_for_journey">Image for Journey</string>
     <string name="UserDeleteJourney">The Journey you selected has been deleted</string>
-    <string name="graphs">Graphs</string>
     <string name="_0_0">0.0</string>
     <string name="total_natural_gas_usage">Total Natural Gas Usage</string>
     <string name="gj">GJ</string>
@@ -95,52 +94,76 @@
     <string name="monthly_utilities">Monthly Utilities</string>
     <string name="change_date">change date</string>
 
-    <string name="vehicle_tip_1" formatted="false">You are creating %f kg of CO2, equivalent to %f kg of regular garbage, from driving.
-        Try taking transits.</string>
-    <string name="vehicle_tip_2" formatted="false">Your driving is creating %f kg of CO2 emissions, equivalent to %f kg of regular garbage.
-        Try car pooling.</string>
-    <string name="vehicle_tip_3" formatted="false">Your car trips are generating %f kg of CO2, equivalent to %f kg of regular garbage.
-        Try getting an electric car.</string>
-    <string name="vehicle_tip_4" formatted="false">Your driving is creating %f kg of CO2, equivalent to %f kg of regular garbage.
-        Consider using cruise control.</string>
-    <string name="vehicle_tip_5" formatted="false">You are generating %f kg of CO2, equivalent to %f kg of regular garbage, from driving.
-        Remember to remove excessive weight from your car.</string>
-    <string name="vehicle_tip_6" formatted="false">%f kg of CO2, equivalent to %f kg of regular garbage, is generated from your driving.
-        Combine errands to make fewer trips.</string>
-    <string name="vehicle_tip_7" formatted="false">You are creating %f kg of CO2, equivalent to %f kg of regular garbage, from driving.
-        Consider getting a fuel efficient car.</string>
-    <string name="vehicle_tip_8" formatted="false">Your driving is creating %f kg of CO2, equivalent to %f kg of regular garbage.
-        Consider walking or riding a bike.</string>
+    <string name="vehicle_tip_1">You are creating %.2f kg of CO2 from driving. Try taking transits.</string>
+    <string name="vehicle_tip_2">Your driving is creating %.2f kg of CO2 emissions. Try car pooling.</string>
+    <string name="vehicle_tip_3">Your car trips are generating %.2f kg of CO2. Try getting an electric car.</string>
+    <string name="vehicle_tip_4">Your driving is creating %.2f kg of CO2. Consider using cruise control.</string>
+    <string name="vehicle_tip_5">You are generating %.2f kg of CO2 from driving. Remember to remove excessive weight from your car.</string>
+    <string name="vehicle_tip_6">%.2f kg of CO2 is generated from your driving. Combine errands to make fewer trips.</string>
+    <string name="vehicle_tip_7">You are creating %.2f kg of CO2 from driving. Consider getting a fuel efficient car.</string>
+    <string name="vehicle_tip_8">Your driving is creating %.2f kg of CO2. Consider walking or riding a bike.</string>
 
-    <string name="energy_tip_1" formatted="false">Your electricity usage is producing %f kg of CO2, equivalent to %f kg of regular garbage.
-        Try unplugging unused electronic devices</string>
-    <string name="energy_tip_2" formatted="false">You are making %f kg of CO2, equivalent to %f kg of regular garbage, from electricity.
-        Try shutting off lights when not in use and consider taking shorter showers.</string>
-    <string name="energy_tip_3" formatted="false">Your electricity usage is making %f kg of CO2, equivalent to %f kg of regular garbage.
-        Try installing solar panels.</string>
-    <string name="energy_tip_4" formatted="false">Your energy usage is creating %f kg of CO2, equivalent to %f kg of regular garbage.
-        Consider putting your computers in sleep mode when they are not in use.</string>
-    <string name="energy_tip_5" formatted="false">Your energy usage is generating %f kg of CO2, equivalent to %f kg of regular garbage.
-        Try doing your laundry with cold water, and remember to change air filters frequently.</string>
-    <string name="energy_tip_6" formatted="false">%f kg of CO2, equivalent to %f kg of regular garbage, is created from your electricity usage.
-        Consider switching to LED light bulbs.</string>
-    <string name="energy_tip_7" formatted="false">Your energy usage is generating %f kg of CO2, equivalent to %f kg of regular garbage.
-        Try using your microwave over your oven when possible.</string>
-    <string name="energy_tip_8" formatted="false">%f kg of CO2 emission, equivalent to %f kg of regular garbage, comes from your energy usage.
-        Consider managing your thermostat so your heater does not operate too often.</string>
+    <string name="vehicle_tip_human_1">You are creating as much CO2 as %.2f kg of regular garbage
+        can create from driving. Try taking transits.</string>
+    <string name="vehicle_tip_human_2">Your driving is creating as much CO2 as %.2f kg of regular
+        garbage can create. Try car pooling.</string>
+    <string name="vehicle_tip_human_3">Your car trips are generating as much CO2 as %.2f kg of regular
+        garbage can generate. Try getting an electric car.</string>
+    <string name="vehicle_tip_human_4">Your driving is creating as much CO2 as %.2f kg of regular
+        garbage can create. Consider using cruise control.</string>
+    <string name="vehicle_tip_human_5">You are generating as much CO2 as %.2f kg of regular
+        garbage can generate from driving. Remember to remove excessive weight from your car.</string>
+    <string name="vehicle_tip_human_6">Your driving is generating as much CO2 as %.2f kg of regular
+        garbage can generate. Combine errands to make fewer trips.</string>
+    <string name="vehicle_tip_human_7">You are creating as much CO2 as %.2f kg of regular
+        garbage can create from driving. Consider getting a fuel efficient car.</string>
+    <string name="vehicle_tip_human_8">Your driving is creating as much CO2 as %.2f kg of regular
+        garbage can create. Consider walking or riding a bike.</string>
+
+
+    <string name="energy_tip_1">Your electricity usage is producing %.2f kg of CO2. Try unplugging unused electronic devices.</string>
+    <string name="energy_tip_2">You are making %.2f kg of CO2 from electricity. Try shutting off lights when not in use and consider taking shorter showers.</string>
+    <string name="energy_tip_3">Your electricity usage is making %.2f kg of CO2. Try installing solar panels.</string>
+    <string name="energy_tip_4">Your energy usage is creating %.2f kg of CO2. Consider putting your computers in sleep mode when they are not in use.</string>
+    <string name="energy_tip_5">Your energy usage is generating %.2f kg of CO2. Try doing your laundry with cold water, and remember to change air filters frequently.</string>
+    <string name="energy_tip_6">%.2f kg of CO2 is created from your electricity usage. Consider switching to LED light bulbs.</string>
+    <string name="energy_tip_7">Your energy usage is generating %.2f kg of CO2. Try using your microwave over your oven when possible.</string>
+    <string name="energy_tip_8">%.2f kg of CO2 emission comes from your energy usage. Consider managing your thermostat so your heater does not operate too often.</string>
+
+    <string name="energy_tip_human_1">Your electricity usage is producing as much CO2 as %.2f kg of regular
+        garbage can produce. Try unplugging unused electronic devices.</string>
+    <string name="energy_tip_human_2">You are making as much CO2 as %.2f kg of regular garbage can make
+        from electricity. Try shutting off lights when not in use and consider taking shorter showers.</string>
+    <string name="energy_tip_human_3">Your electricity usage is making as much CO2 as %.2f kg of regular
+    garbage can make. Try installing solar panels.</string>
+    <string name="energy_tip_human_4">Your energy usage is creating as much CO2 as %.2f kg of regular
+        garbage can create. Consider putting your computers in sleep mode when they are not in use.</string>
+    <string name="energy_tip_human_5">Your energy usage is generating as much CO2 as %.2f kg of regular
+        garbage can generate. Try doing your laundry with cold water, and remember to change air filters frequently.</string>
+    <string name="energy_tip_human_6">Your electricity usage is creating as much CO2 as %.2f kg of regular
+        garbage can create. Consider switching to LED light bulbs.</string>
+    <string name="energy_tip_human_7">Your energy usage is generating as much CO2 as %.2f kg of regular
+        garbage can generate. Try using your microwave over your oven when possible.</string>
+    <string name="energy_tip_human_8">Your energy usage is producing as much CO2 as %.2f kg of regular
+        garbage can produce. Consider managing your thermostat so your heater does not operate too often.</string>
+
 
     <string name="unrelated_tip_1">You drove %d times so far, When possible, walk or ride your bike in order to avoid carbon emissions completely. Carpooling
         and public transportation drastically reduce CO2 emissions by spreading them out over many riders.</string>
-    <string name="unrelated_tip_2" formatted="false">You produce %f kg of CO2, equivalent to %f kg of regular garbage, from home application. A better concept
+    <string name="unrelated_tip_2">You have produced %.2f kg of CO2 from home application. A better concept
         is probably ‘embodied energy’, which takes account of all the carbon, water and energy that goes into producing any food or manufactured item. </string>
+    <string name="unrelated_tip_human_2">You have produced as much CO2 as %.2f kg of regular garbage can produce from home application.
+        A better concept is probably ‘embodied energy’, which takes account of all the carbon, water and energy that goes into producing any food or manufactured item. </string>
     <string name="unrelated_tip_3">Drive a low carbon-emission vehicle. You drove %d km on Highways and cities, High mileage doesn’t always mean low CO2 emissions.
         All vehicles have an estimated miles-per-gallon rating. Electric cars emit almost no CO2 in Canada. </string>
     <string name="unrelated_tip_4">Get a hitch-mounted cargo rack. Do not buy a minivan or SUV if you do not need 4WD and/or will only
         occasionally need the extra space since you drove SUV %d times </string>
     <string name="unrelated_tip_5">You drove %d kn on highways. Speeding and unnecessary acceleration reduce mileage by up to 33/100, waste gas and money,
         and increase your carbon footprint.</string>
-    <string name="unrelated_tip_6" formatted="false">Insulate and seal your home. You produced %f kg of CO2, equivalent to %f kg of regular garbage, from home application.
+    <string name="unrelated_tip_6">Insulate and seal your home. You produced %.2f kg of CO2 from home application.
         Reduce drafts and air leaks with caulk, insulation, and weather stripping. </string>
+    <string name="unrelated_tip_human_6">Insulate and seal your home. You produced as much CO2 as %.2f kg of regular garbage can
+        produce from home application. Reduce drafts and air leaks with caulk, insulation, and weather stripping. </string>
     <string name="unrelated_tip_7">You drove %d km in cities. Being stuck in traffic wastes gas and unnecessarily creates CO2.
         Use traffic websites and apps to pick different route.</string>
     <string name="unrelated_tip_8"> You have ridden buses and skytrains as your daily transportation %d times! Keep it up!</string>

@@ -255,27 +255,29 @@ public class SelectTransportationModeAndDate extends AppCompatActivity {
 
     private Notification makeNotification(databaseCountMode mode) {
         Notification.Builder builder = new Notification.Builder(this);
-        builder.setContentTitle(getString(R.string.app_name));
+        String msg;
         if (mode == databaseCountMode.NoRecentJourneys) {
-            builder.setContentText(getString(R.string.no_recent_journeys_notification));
+            msg = getString(R.string.no_recent_journeys_notification);
         } else {
-            builder.setContentText(getString(R.string.no_utilities_in_a_month_and_a_half));
+            msg = getString(R.string.no_utilities_in_a_month_and_a_half);
         }
         builder.setSmallIcon(R.mipmap.ic_launcher);
         builder.setContentIntent(makeNotificationIntent(mode));
+        builder.setStyle(new Notification.BigTextStyle().bigText(msg));
         return builder.build();
     }
 
     private Notification makeNotification(databaseCountMode mode, int count) {
         Notification.Builder builder = new Notification.Builder(this);
-        builder.setContentTitle(getString(R.string.app_name));
+        String msg;
         if (mode == databaseCountMode.MoreUtilities) {
-            builder.setContentText(getString(R.string.more_utilities_notification, count));
+            msg = getString(R.string.more_utilities_notification, count);
         } else {
-            builder.setContentText(getString(R.string.more_journeys_notification, count));
+            msg = getString(R.string.more_journeys_notification, count);
         }
         builder.setSmallIcon(R.mipmap.ic_launcher);
         builder.setContentIntent(makeNotificationIntent(mode));
+        builder.setStyle(new Notification.BigTextStyle().bigText(msg));
         return builder.build();
     }
 

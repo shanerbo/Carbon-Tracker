@@ -3,6 +3,7 @@ package com.example.olive.carbon_tracker.UI;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.design.widget.FloatingActionButton;
@@ -182,10 +183,17 @@ public class DisplayMonthlyUtilities extends AppCompatActivity {
                 ArrayAdapter<MonthlyUtilitiesData> adapter = new myArrayAdapter();
                 ListView list = (ListView) findViewById(R.id.ID_Bill_List);
                 list.setAdapter(adapter);
+                saveCO2UnitStatus(singleton.checkCO2Unit());
             }
         });
     }
 
+    private void saveCO2UnitStatus(int status) {
+        SharedPreferences prefs = this.getSharedPreferences("CO2Status", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt("CO2 status", status);
+        editor.apply();
+    }
 
 
     public void onBackPressed(){
@@ -230,26 +238,30 @@ public class DisplayMonthlyUtilities extends AppCompatActivity {
     private Notification makeNotification(databaseCountMode mode) {
         Notification.Builder builder = new Notification.Builder(this);
         builder.setContentTitle(getString(R.string.app_name));
+        String msg;
         if (mode == databaseCountMode.NoRecentJourneys) {
-            builder.setContentText(getString(R.string.no_recent_journeys_notification));
+            msg = getString(R.string.no_recent_journeys_notification);
         } else {
-            builder.setContentText(getString(R.string.no_utilities_in_a_month_and_a_half));
+            msg = getString(R.string.no_utilities_in_a_month_and_a_half);
         }
         builder.setSmallIcon(R.mipmap.ic_launcher);
         builder.setContentIntent(makeNotificationIntent(mode));
+        builder.setStyle(new Notification.BigTextStyle().bigText(msg));
         return builder.build();
     }
 
     private Notification makeNotification(databaseCountMode mode, int count) {
         Notification.Builder builder = new Notification.Builder(this);
         builder.setContentTitle(getString(R.string.app_name));
+        String msg;
         if (mode == databaseCountMode.MoreUtilities) {
-            builder.setContentText(getString(R.string.more_utilities_notification, count));
+            msg = getString(R.string.more_utilities_notification, count);
         } else {
-            builder.setContentText(getString(R.string.more_journeys_notification, count));
+            msg = getString(R.string.more_journeys_notification, count);
         }
         builder.setSmallIcon(R.mipmap.ic_launcher);
         builder.setContentIntent(makeNotificationIntent(mode));
+        builder.setStyle(new Notification.BigTextStyle().bigText(msg));
         return builder.build();
     }
 

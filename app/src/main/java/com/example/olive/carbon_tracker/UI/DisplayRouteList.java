@@ -108,19 +108,19 @@ public class DisplayRouteList extends AppCompatActivity {
                         mode = "Walk/bike";
                         double co2 = 0;
                         editJoutneyDB(_date,0,mode,mode,"N/A","N/A",0,0,0,"N/A",idPassedBack,name,cityDst,
-                                highWayDst,totalDst,_EditedJourneyID,co2);
+                                highWayDst,totalDst,_EditedJourneyID,co2,70);
                     }
                     else if (singleton.checkTransportationMode() == 2){
                         mode = "Bus";
                         double co2 = (cityDst + highWayDst)*0.089;
                         editJoutneyDB(_date,0,mode,mode,"N/A","N/A",0,0,0,"N/A",idPassedBack,name,cityDst,
-                                highWayDst,totalDst,_EditedJourneyID,co2);
+                                highWayDst,totalDst,_EditedJourneyID,co2,50);
                     }
                     else if (singleton.checkTransportationMode() == 3){
                         mode = "Skytrain";
                         double co2 = (cityDst + highWayDst)*0.033;
                         editJoutneyDB(_date,0,mode,mode,"N/A","N/A",0,0,0,"N/A",idPassedBack,name,cityDst,
-                                highWayDst,totalDst,_EditedJourneyID,co2);
+                                highWayDst,totalDst,_EditedJourneyID,co2,60);
                     }
                     else{
                         mode = "Car";
@@ -139,7 +139,7 @@ public class DisplayRouteList extends AppCompatActivity {
                         editJoutneyDB(_date,_vehicle.getVehicleDBId(),_vehicle.getName(),mode,_vehicle.getMake()
                                 ,_vehicle.getModel(),_vehicle.getYear(),_vehicle.getCity08(),
                                 _vehicle.getHighway08(),_vehicle.getFuelType(),idPassedBack,name,cityDst,
-                                highWayDst,totalDst,_EditedJourneyID,co2);
+                                highWayDst,totalDst,_EditedJourneyID,co2,_vehicle.getIndexID());
                     }
 
 
@@ -168,7 +168,7 @@ public class DisplayRouteList extends AppCompatActivity {
                                String CarModel, int CarYear, double CarCity08, double CarHwy08,
                                String CarFuelType,
                                long RouteId, String RouteName, int RouteCityDst,
-                               int RouteHwyDst, int TotalDst, long JourneyID,double totalCO2) {
+                               int RouteHwyDst, int TotalDst, long JourneyID,double totalCO2,int imageid) {
         ContentValues cv = new ContentValues();
         cv.put(SuperUltraInfoDataBaseHelper.Journey_Date,date);
 
@@ -189,6 +189,7 @@ public class DisplayRouteList extends AppCompatActivity {
         cv.put(SuperUltraInfoDataBaseHelper.Journey_RouteTotalDist, TotalDst);
 
         cv.put(SuperUltraInfoDataBaseHelper.Journey_CO2Emitted, totalCO2);
+        cv.put(SuperUltraInfoDataBaseHelper.Journey_Image, imageid);
 
 
         long idPassBack = RouteDB.update(SuperUltraInfoDataBaseHelper.Journey_Table,cv,"_id="+JourneyID, null);
@@ -270,8 +271,14 @@ public class DisplayRouteList extends AppCompatActivity {
 
         if (singleton.checkTransportationMode() == 1) { // Walk/Bike
             String TotalCO2 = String.format("%.2f", totalCO2);
-            Toast.makeText(getApplicationContext(), "You have produced: "+ TotalCO2 +"kg of CO2"+
-                    " ,equivalent to producing 0 kg of regular garbage.", Toast.LENGTH_SHORT).show();
+            if(singleton.checkCO2Unit() == 0){
+                Toast.makeText(getApplicationContext(), "You have produced: "+ TotalCO2 +"kg of CO2",
+                        Toast.LENGTH_SHORT).show();
+            }
+            else{
+                Toast.makeText(getApplicationContext(), "The CO2 emission you have produced is "+
+                        "equivalent to producing 0.00 kg of regular garbage.", Toast.LENGTH_SHORT).show();
+            }
 
 
             ContentValues cv = new ContentValues();
@@ -287,6 +294,7 @@ public class DisplayRouteList extends AppCompatActivity {
             cv.put(SuperUltraInfoDataBaseHelper.Journey_RouteTotalDist, userInput.getTotalDistance());
 
             cv.put(SuperUltraInfoDataBaseHelper.Journey_CO2Emitted, totalCO2);
+            cv.put(SuperUltraInfoDataBaseHelper.Journey_Image, 70);
 
             long idPassBack = RouteDB.insert(SuperUltraInfoDataBaseHelper.Journey_Table,null,cv);
             RouteDB.close();
@@ -297,8 +305,15 @@ public class DisplayRouteList extends AppCompatActivity {
             totalCO2 = (cityDistance+HwyDistance)*0.089;
             String TotalCO2 = String.format("%.2f", totalCO2);
             String HumanCO2 = String.format("%.2f", totalCO2/2.06);
-            Toast.makeText(getApplicationContext(), "You have produced: "+ TotalCO2 +"kg of CO2"+
-                    " ,equivalent to producing "+HumanCO2+"kg of regular garbage.", Toast.LENGTH_SHORT).show();
+            if(singleton.checkCO2Unit() == 0){
+                Toast.makeText(getApplicationContext(), "You have produced: "+ TotalCO2 +"kg of CO2",
+                        Toast.LENGTH_SHORT).show();
+            }
+            else{
+                Toast.makeText(getApplicationContext(), "The CO2 emission you have produced is "+
+                        "equivalent to producing "+HumanCO2+"kg of regular garbage.", Toast.LENGTH_SHORT).show();
+            }
+
 
 
             ContentValues cv = new ContentValues();
@@ -314,6 +329,7 @@ public class DisplayRouteList extends AppCompatActivity {
             cv.put(SuperUltraInfoDataBaseHelper.Journey_RouteTotalDist, userInput.getTotalDistance());
 
             cv.put(SuperUltraInfoDataBaseHelper.Journey_CO2Emitted, totalCO2);
+            cv.put(SuperUltraInfoDataBaseHelper.Journey_Image, 50);
 
             long idPassBack = RouteDB.insert(SuperUltraInfoDataBaseHelper.Journey_Table,null,cv);
             RouteDB.close();
@@ -324,8 +340,14 @@ public class DisplayRouteList extends AppCompatActivity {
             totalCO2 = (cityDistance+HwyDistance)*0.02348;
             String TotalCO2 = String.format("%.2f", totalCO2);
             String HumanCO2 = String.format("%.2f", totalCO2/2.06);
-            Toast.makeText(getApplicationContext(), "You have produced: "+ TotalCO2 +"kg of CO2"+
-                    " ,equivalent to producing "+HumanCO2+"kg of regular garbage.", Toast.LENGTH_SHORT).show();
+            if(singleton.checkCO2Unit() == 0){
+                Toast.makeText(getApplicationContext(), "You have produced: "+ TotalCO2 +"kg of CO2",
+                        Toast.LENGTH_SHORT).show();
+            }
+            else{
+                Toast.makeText(getApplicationContext(), "The CO2 emission you have produced is "+
+                        "equivalent to producing "+HumanCO2+"kg of regular garbage.", Toast.LENGTH_SHORT).show();
+            }
 
 
             ContentValues cv = new ContentValues();
@@ -341,6 +363,7 @@ public class DisplayRouteList extends AppCompatActivity {
             cv.put(SuperUltraInfoDataBaseHelper.Journey_RouteTotalDist, userInput.getTotalDistance());
 
             cv.put(SuperUltraInfoDataBaseHelper.Journey_CO2Emitted, totalCO2);
+            cv.put(SuperUltraInfoDataBaseHelper.Journey_Image, 60);
 
             long idPassBack = RouteDB.insert(SuperUltraInfoDataBaseHelper.Journey_Table,null,cv);
             RouteDB.close();
@@ -365,8 +388,14 @@ public class DisplayRouteList extends AppCompatActivity {
             totalCO2 = fuelCost * totalGas;
             String TotalCO2 = String.format("%.2f", totalCO2);
             String HumanCO2 = String.format("%.2f", totalCO2/2.06);
-            Toast.makeText(getApplicationContext(), "The CO2 you produced: "+TotalCO2+"kg of CO2"+
-                    " ,equivalent to producing "+HumanCO2+"kg of regular garbage.", Toast.LENGTH_LONG).show();
+            if(singleton.checkCO2Unit() == 0){
+                Toast.makeText(getApplicationContext(), "You have produced: "+ TotalCO2 +"kg of CO2",
+                        Toast.LENGTH_SHORT).show();
+            }
+            else{
+                Toast.makeText(getApplicationContext(), "The CO2 emission you have produced is "+
+                        "equivalent to producing "+HumanCO2+"kg of regular garbage.", Toast.LENGTH_SHORT).show();
+            }
 
             Cursor cursor = RouteDB.rawQuery("select max(JourneyCO2Emitted) from JourneyInfoTable" +
                     " where JourneyMode = 'Car'",null);
@@ -403,6 +432,7 @@ public class DisplayRouteList extends AppCompatActivity {
             cv.put(SuperUltraInfoDataBaseHelper.Journey_RouteTotalDist, userInput.getTotalDistance());
 
             cv.put(SuperUltraInfoDataBaseHelper.Journey_CO2Emitted, totalCO2);
+            cv.put(SuperUltraInfoDataBaseHelper.Journey_Image, _vehicle.getIndexID());
 
             long idPassBack = RouteDB.insert(SuperUltraInfoDataBaseHelper.Journey_Table,null,cv);
             RouteDB.close();
@@ -455,23 +485,29 @@ public class DisplayRouteList extends AppCompatActivity {
         DecimalFormat Format = new DecimalFormat("#.##");
         double CO2 = Double.valueOf(Format.format(co2));
         String VehicleName = "";
+        int imageid=0;
         switch(TransMode){
             case 0:
                 VehicleName = _vehicle.getName();
+                imageid = _vehicle.getIndexID();
                 break;
             case 1:
                 VehicleName = "Walk/Bike";
+                imageid = 70;
                 break;
             case 2:
                 VehicleName = "Bus";
+                imageid = 50;
                 break;
             case 3:
                 VehicleName = "Skytrain";
+                imageid = 60;
                 break;
         }
 
         long temp = 9999;
-        Journey journey = new Journey(day+"/"+month+"/"+year,VehicleName,currentRouteName,(cityDistance+hwyDistance), VehicleName, CO2, temp);
+        Journey journey = new Journey(day+"/"+month+"/"+year,VehicleName,currentRouteName,
+                (cityDistance+hwyDistance), VehicleName, CO2, temp,imageid);
         if (singleton.isEditingJourney()) {
             singleton.changeJourney(journey);
         } else {

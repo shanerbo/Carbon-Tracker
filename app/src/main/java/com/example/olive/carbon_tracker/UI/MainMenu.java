@@ -57,42 +57,72 @@ public class MainMenu extends AppCompatActivity {
         getLatestBill();
         checkNotifications();
         setAlarm();
-        generateTipsForCar(singleton.getHighestCO2FromCar());
-        generateTipsForEnergy(singleton.getHighestCO2FromEnegy());
+        if(singleton.checkCO2Unit() == 0) {
+            generateTipsForCar(singleton.getHighestCO2FromCar());
+            generateTipsForEnergy(singleton.getHighestCO2FromEnegy());
+        }
+        else {
+            generateTipsForCarInHuman(singleton.getHighestCO2FromCar());
+            generateTipsForEnergyInHuman(singleton.getHighestCO2FromEnegy());
+        }
         generateTipsForUnrelated();
+
 
         HighestCO2FromCar();
         getJourneyList();
         setContentView(R.layout.activity_main_menu);
         setButton(R.id.btnCreateJourney);
-        setButton(R.id.btnCurrentFootprint);
         setButton(R.id.btnEditJourney);
         setButton(R.id.btnMonthlyUti);
     }
 
-    private void generateTipsForEnergy(double co2) {
-        allRandomEnegyTips.add(getString(R.string.energy_tip_1, co2, co2/2.06));
-        allRandomEnegyTips.add(getString(R.string.energy_tip_2, co2, co2/2.06));
-        allRandomEnegyTips.add(getString(R.string.energy_tip_3, co2, co2/2.06));
-        allRandomEnegyTips.add(getString(R.string.energy_tip_4, co2, co2/2.06));
-        allRandomEnegyTips.add(getString(R.string.energy_tip_5, co2, co2/2.06));
-        allRandomEnegyTips.add(getString(R.string.energy_tip_6, co2, co2/2.06));
-        allRandomEnegyTips.add(getString(R.string.energy_tip_7, co2, co2/2.06));
-        allRandomEnegyTips.add(getString(R.string.energy_tip_8, co2, co2/2.06));
-    }
-
 
     private void generateTipsForCar(double co2){
-        allRandomCarTips.add(getString(R.string.vehicle_tip_1, co2, co2/2.06));
-        allRandomCarTips.add(getString(R.string.vehicle_tip_2, co2, co2/2.06));
-        allRandomCarTips.add(getString(R.string.vehicle_tip_3, co2, co2/2.06));
-        allRandomCarTips.add(getString(R.string.vehicle_tip_4, co2, co2/2.06));
-        allRandomCarTips.add(getString(R.string.vehicle_tip_5, co2, co2/2.06));
-        allRandomCarTips.add(getString(R.string.vehicle_tip_6, co2, co2/2.06));
-        allRandomCarTips.add(getString(R.string.vehicle_tip_7, co2, co2/2.06));
-        allRandomCarTips.add(getString(R.string.vehicle_tip_8, co2, co2/2.06));
-
+        allRandomCarTips.add(getString(R.string.vehicle_tip_1, co2));
+        allRandomCarTips.add(getString(R.string.vehicle_tip_2, co2));
+        allRandomCarTips.add(getString(R.string.vehicle_tip_3, co2));
+        allRandomCarTips.add(getString(R.string.vehicle_tip_4, co2));
+        allRandomCarTips.add(getString(R.string.vehicle_tip_5, co2));
+        allRandomCarTips.add(getString(R.string.vehicle_tip_6, co2));
+        allRandomCarTips.add(getString(R.string.vehicle_tip_7, co2));
+        allRandomCarTips.add(getString(R.string.vehicle_tip_8, co2));
     }
+
+    private void generateTipsForCarInHuman(double co2){
+        allRandomCarTips.add(getString(R.string.vehicle_tip_human_1, co2/2.06));
+        allRandomCarTips.add(getString(R.string.vehicle_tip_human_2, co2/2.06));
+        allRandomCarTips.add(getString(R.string.vehicle_tip_human_3, co2/2.06));
+        allRandomCarTips.add(getString(R.string.vehicle_tip_human_4, co2/2.06));
+        allRandomCarTips.add(getString(R.string.vehicle_tip_human_5, co2/2.06));
+        allRandomCarTips.add(getString(R.string.vehicle_tip_human_6, co2/2.06));
+        allRandomCarTips.add(getString(R.string.vehicle_tip_human_7, co2/2.06));
+        allRandomCarTips.add(getString(R.string.vehicle_tip_human_8, co2/2.06));
+    }
+
+
+    private void generateTipsForEnergy(double co2) {
+        allRandomEnegyTips.add(getString(R.string.energy_tip_1, co2));
+        allRandomEnegyTips.add(getString(R.string.energy_tip_2, co2));
+        allRandomEnegyTips.add(getString(R.string.energy_tip_3, co2));
+        allRandomEnegyTips.add(getString(R.string.energy_tip_4, co2));
+        allRandomEnegyTips.add(getString(R.string.energy_tip_5, co2));
+        allRandomEnegyTips.add(getString(R.string.energy_tip_6, co2));
+        allRandomEnegyTips.add(getString(R.string.energy_tip_7, co2));
+        allRandomEnegyTips.add(getString(R.string.energy_tip_8, co2));
+    }
+
+    private void generateTipsForEnergyInHuman(double co2){
+        allRandomEnegyTips.add(getString(R.string.energy_tip_human_1, co2/2.06));
+        allRandomEnegyTips.add(getString(R.string.energy_tip_human_2, co2/2.06));
+        allRandomEnegyTips.add(getString(R.string.energy_tip_human_3, co2/2.06));
+        allRandomEnegyTips.add(getString(R.string.energy_tip_human_4, co2/2.06));
+        allRandomEnegyTips.add(getString(R.string.energy_tip_human_5, co2/2.06));
+        allRandomEnegyTips.add(getString(R.string.energy_tip_human_6, co2/2.06));
+        allRandomEnegyTips.add(getString(R.string.energy_tip_human_7, co2/2.06));
+        allRandomEnegyTips.add(getString(R.string.energy_tip_human_8, co2/2.06));
+    }
+
+
     private void generateTipsForUnrelated(){
         Cursor cursor = myDataBase.rawQuery("select count(*) from JourneyInfoTable where " +
                 "JourneyMode = 'Car'",null);
@@ -111,7 +141,11 @@ public class MainMenu extends AppCompatActivity {
             totalUtilityCO2 = cursor.getDouble(0);
             cursor.moveToNext();
         }
-        allRandomUnrelatedTips.add(getString(R.string.unrelated_tip_2, totalUtilityCO2, totalUtilityCO2/2.06));
+        if(singleton.checkCO2Unit() == 0)
+            allRandomUnrelatedTips.add(getString(R.string.unrelated_tip_2, totalUtilityCO2));
+        else
+            allRandomUnrelatedTips.add(getString(R.string.unrelated_tip_human_2, totalUtilityCO2/2.06));
+
         cursor = myDataBase.rawQuery("select sum(JourneyRouteTotal) from JourneyInfoTable " +
                 "where JourneyMode = 'Car'",null);
         int TotalofTotalDST = 0;
@@ -139,7 +173,11 @@ public class MainMenu extends AppCompatActivity {
             cursor.moveToNext();
         }
         allRandomUnrelatedTips.add(getString(R.string.unrelated_tip_5,totalHWYDST));
-        allRandomUnrelatedTips.add(getString(R.string.unrelated_tip_6,totalUtilityCO2, totalUtilityCO2/2.06));
+        if(singleton.checkCO2Unit() == 0)
+            allRandomUnrelatedTips.add(getString(R.string.unrelated_tip_6,totalUtilityCO2));
+        else
+            allRandomUnrelatedTips.add(getString(R.string.unrelated_tip_human_6,totalUtilityCO2/2.06));
+
         cursor = myDataBase.rawQuery("select sum(JourneyRouteCity) from JourneyInfoTable " +
                 "where JourneyMode= 'Car'",null);
         int totalCITYDST = 0;
@@ -201,6 +239,7 @@ public class MainMenu extends AppCompatActivity {
                 "JourneyRouteName, " +
                 "JourneyRouteTotal, " +
                 "JourneyCO2Emitted," +
+                "JourneyImage," +
                 "_id from JourneyInfoTable order by date(JourneyDate) asc ",null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()){
@@ -215,9 +254,10 @@ public class MainMenu extends AppCompatActivity {
             int totalDst = cursor.getInt(4);
             String vehicleName = cursor.getString(2);
             double co2 = cursor.getDouble(5);
+            int imageid = cursor.getInt(6);
             long JourneyDBId = cursor.getLong(cursor.getColumnIndex("_id"));
             Journey tempJourney = new Journey(date,mode,routeName,
-                    totalDst,vehicleName,co2,JourneyDBId);
+                    totalDst,vehicleName,co2,JourneyDBId,imageid);
             JourneyListFromDB.add(tempJourney);
             cursor.moveToNext();
         }
@@ -307,11 +347,7 @@ public class MainMenu extends AppCompatActivity {
                 Intent showActivity = new Intent();
                 switch (id) {
                     case R.id.btnCreateJourney:
-                        //showActivity = DisplayCarList.makeIntent(MainMenu.this);
                         showActivity = new Intent(MainMenu.this, SelectTransportationModeAndDate.class);
-                        break;
-                    case R.id.btnCurrentFootprint:
-                        showActivity = new Intent(MainMenu.this,DisplayCarbonFootprint.class);
                         break;
                     case R.id.btnEditJourney:
                         showActivity = new Intent(MainMenu.this, DisplayJourneyList.class);
@@ -374,26 +410,30 @@ public class MainMenu extends AppCompatActivity {
     private Notification makeNotification(databaseCountMode mode) {
         Notification.Builder builder = new Notification.Builder(this);
         builder.setContentTitle(getString(R.string.app_name));
+        String msg;
         if (mode == databaseCountMode.NoRecentJourneys) {
-            builder.setContentText(getString(R.string.no_recent_journeys_notification));
+           msg = getString(R.string.no_recent_journeys_notification);
         } else {
-            builder.setContentText(getString(R.string.no_utilities_in_a_month_and_a_half));
+            msg = getString(R.string.no_utilities_in_a_month_and_a_half);
         }
         builder.setSmallIcon(R.mipmap.ic_launcher);
         builder.setContentIntent(makeNotificationIntent(mode));
+        builder.setStyle(new Notification.BigTextStyle().bigText(msg));
         return builder.build();
     }
 
     private Notification makeNotification(databaseCountMode mode, int count) {
         Notification.Builder builder = new Notification.Builder(this);
         builder.setContentTitle(getString(R.string.app_name));
+        String msg;
         if (mode == databaseCountMode.MoreUtilities) {
-            builder.setContentText(getString(R.string.more_utilities_notification, count));
+            msg = getString(R.string.more_utilities_notification, count);
         } else {
-            builder.setContentText(getString(R.string.more_journeys_notification, count));
+            msg = getString(R.string.more_journeys_notification, count);
         }
         builder.setSmallIcon(R.mipmap.ic_launcher);
         builder.setContentIntent(makeNotificationIntent(mode));
+        builder.setStyle(new Notification.BigTextStyle().bigText(msg));
         return builder.build();
     }
 
