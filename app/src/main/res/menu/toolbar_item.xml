@@ -9,13 +9,15 @@
         android:id="@+id/tool_change_unit"
         android:orderInCategory="1"
         android:title="@string/change_co2_unit"
-        app:showAsAction="never" />
+        android:icon="@drawable/garbagebag"
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/tool_about"
         android:orderInCategory="2"
         android:title="@string/about"
-        app:showAsAction="never" />
+        android:icon="@drawable/gearwheel"
+        app:showAsAction="ifRoom" />
 
 
 </menu>

@@ -80,6 +80,7 @@ public class MainMenu extends AppCompatActivity {
         setButton(R.id.btnCreateJourney);
         setButton(R.id.btnEditJourney);
         setButton(R.id.btnMonthlyUti);
+        setButton(R.id.btnCurrentFootprint);
 
         setToolBar();
     }
@@ -362,6 +363,9 @@ public class MainMenu extends AppCompatActivity {
                         break;
                     case R.id.btnMonthlyUti:
                         showActivity = new Intent(MainMenu.this, DisplayMonthlyUtilities.class);
+                        break;
+                    case R.id.btnCurrentFootprint:
+                        showActivity = new Intent(MainMenu.this, GraphPicker.class);
                         break;
                 }
                 startActivity(showActivity);

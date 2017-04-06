@@ -21,23 +21,24 @@
         android:id="@+id/txtAboutTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/about_the_authors"
-        tools:layout_editor_absoluteX="123dp"
-        tools:layout_editor_absoluteY="16dp"
         android:layout_below="@+id/toolbar_about"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="18dp" />
+        android:layout_marginTop="18dp"
+        android:text="@string/about_the_authors"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="123dp"
+        tools:layout_editor_absoluteY="16dp" />
 
     <TextView
         android:id="@+id/txtGroupNameAndDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
         android:text="@string/group_name_and_date"
         tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="68dp"
-        android:layout_marginTop="26dp"
         android:layout_below="@+id/txtAboutTitle"
-        android:layout_alignParentStart="true" />
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:id="@+id/txtSFULink"
@@ -47,13 +48,14 @@
         tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="85dp"
         android:layout_below="@+id/txtGroupNameAndDate"
-        android:layout_alignParentStart="true" />
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:id="@+id/txtImageCitations"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/image_citations"
+        android:layout_marginTop="34dp"
         android:layout_below="@+id/txtVersion"
         android:layout_alignParentStart="true" />
 
@@ -61,8 +63,8 @@
         android:id="@+id/txtVersion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
+        android:text="@string/app_version"
         android:layout_below="@+id/txtSFULink"
-        android:text="@string/app_version" />
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
