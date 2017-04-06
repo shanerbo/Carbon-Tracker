@@ -55,7 +55,7 @@
         android:id="@+id/toolbar_car"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#2E2D2D"
+        android:background="#111111"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme" />
 

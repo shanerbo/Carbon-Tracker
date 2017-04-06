@@ -12,7 +12,7 @@
         android:id="@+id/toolbar_mode"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#2E2D2D"
+        android:background="#111111"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme" />
 
@@ -20,16 +20,16 @@
         android:id="@+id/ID_what_mode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btnChangeDate"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="75dp"
+        android:layout_marginTop="59dp"
         android:text="@string/select_a_transportation_mode"
         android:textAllCaps="false"
         android:textColor="@android:color/black"
         android:textSize="18sp"
         android:textStyle="bold"
         tools:layout_editor_absoluteX="161dp"
-        tools:layout_editor_absoluteY="236dp" />
+        tools:layout_editor_absoluteY="236dp"
+        android:layout_below="@+id/txtCurrentDate"
+        android:layout_centerHorizontal="true" />
 
     <Spinner
         android:id="@+id/ID_trans_mode_spinner"
@@ -67,13 +67,13 @@
         android:id="@+id/txtCurrentDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="43dp"
         android:text="@string/dd_mm_yyyy"
         android:textAllCaps="true"
         android:textColor="@android:color/black"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_below="@+id/toolbar_mode"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="79dp" />
         android:layout_marginTop="49dp"
         android:text="@string/dd_mm_yyyy"
         android:layout_below="@+id/toolbar_mode"
@@ -83,9 +83,9 @@
         android:id="@+id/btnChangeDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/txtCurrentDate"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="13dp"
-        android:text="@string/change_date" />
+        android:layout_marginTop="19dp"
+        android:text="@string/change_date"
+        android:layout_below="@+id/toolbar_mode"
+        android:layout_toStartOf="@+id/ID_button_OKmode" />
 
 </RelativeLayout>
