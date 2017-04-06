@@ -14,6 +14,7 @@
         android:layout_toEndOf="@+id/RouteImage"
         android:text="@string/tempTotalDst"
         android:textAlignment="viewEnd"
+        android:textColor="@android:color/black"
         android:textSize="12sp" />
 
     <TextView
@@ -24,6 +25,7 @@
         android:layout_toEndOf="@+id/RouteImage"
         android:text="@string/tempRouteName"
         android:textAlignment="viewEnd"
+        android:textColor="@android:color/black"
         android:textSize="12sp" />
 
     <TextView
@@ -34,6 +36,7 @@
         android:layout_toEndOf="@+id/RouteImage"
         android:text="@string/tempCityDst"
         android:textAlignment="viewEnd"
+        android:textColor="@android:color/black"
         android:textSize="12sp" />
 
     <ImageView
@@ -54,6 +57,7 @@
         android:layout_toEndOf="@+id/RouteImage"
         android:text="@string/tempHwatDst"
         android:textAlignment="viewEnd"
+        android:textColor="@android:color/black"
         android:textSize="12sp" />
 
 </RelativeLayout>

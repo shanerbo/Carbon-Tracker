@@ -4,19 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.olive.carbon_tracker.UI.AddCar">
+    tools:context="com.example.olive.carbon_tracker.UI.AddCar"
+    android:background="@drawable/roadbackground">
 
     <TextView
         android:id="@+id/ID_add_car"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="11dp"
         android:text="@string/edit_a_car"
+        android:textColor="@android:color/black"
         android:textSize="18sp"
+        android:textStyle="bold"
         tools:layout_editor_absoluteX="148dp"
-        tools:layout_editor_absoluteY="16dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        tools:layout_editor_absoluteY="16dp" />
 
     <EditText
         android:id="@+id/ID_Car_Name"
@@ -27,8 +30,9 @@
         android:layout_marginTop="14dp"
         android:ems="10"
         android:hint="@string/nickname_for_your_car"
+        android:maxLines="1"
         android:textAlignment="center"
-        android:maxLines="1" />
+        android:textStyle="bold" />
 
     <Spinner
         android:id="@+id/ID_drop_down_make"
@@ -80,29 +84,35 @@
         android:id="@+id/ID_textview_make"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="14dp"
-        android:text="@string/make"
         android:layout_alignTop="@+id/ID_drop_down_make"
-        android:layout_toStartOf="@+id/ID_Car_Name" />
+        android:layout_marginTop="14dp"
+        android:layout_toStartOf="@+id/ID_Car_Name"
+        android:text="@string/make"
+        android:textColor="@android:color/black"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/ID_textview_model"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/ID_textview_make"
+        android:layout_below="@+id/ID_drop_down_make"
         android:layout_marginTop="39dp"
         android:text="@string/model"
-        android:layout_below="@+id/ID_drop_down_make"
-        android:layout_alignEnd="@+id/ID_textview_make" />
+        android:textColor="@android:color/black"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/ID_textview_year"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:layout_marginTop="46dp"
-        android:text="@string/year"
         android:layout_below="@+id/ID_drop_down_model"
-        android:layout_toStartOf="@+id/ID_drop_down_year" />
+        android:layout_marginTop="46dp"
+        android:layout_toStartOf="@+id/ID_drop_down_year"
+        android:text="@string/year"
+        android:textColor="@android:color/black"
+        android:textStyle="bold" />
 
 
     <android.support.design.widget.FloatingActionButton
@@ -137,6 +147,8 @@
         android:layout_toStartOf="@+id/ID_drop_down_year"
         android:text="@string/displacement_and_transmission"
         android:textAlignment="textEnd"
-        android:textSize="12sp" />
+        android:textColor="@android:color/black"
+        android:textSize="12sp"
+        android:textStyle="bold" />
 
 </RelativeLayout>

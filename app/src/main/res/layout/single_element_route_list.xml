@@ -10,28 +10,31 @@
         android:id="@+id/totalDistanceWImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/tempTotalDst"
-        android:textSize="12sp"
         android:layout_below="@+id/IndElecUsage"
-        android:layout_toEndOf="@+id/RouteImage" />
+        android:layout_toEndOf="@+id/RouteImage"
+        android:text="@string/tempTotalDst"
+        android:textColor="@android:color/background_dark"
+        android:textSize="12sp" />
 
     <TextView
         android:id="@+id/StartingDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/tempRouteName"
-        android:textSize="12sp"
         android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/RouteImage" />
+        android:layout_toEndOf="@+id/RouteImage"
+        android:text="@string/tempRouteName"
+        android:textColor="@android:color/background_dark"
+        android:textSize="12sp" />
 
     <TextView
         android:id="@+id/EndingDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/tempCityDst"
-        android:textSize="12sp"
         android:layout_below="@+id/StartingDate"
-        android:layout_toEndOf="@+id/RouteImage" />
+        android:layout_toEndOf="@+id/RouteImage"
+        android:text="@string/tempCityDst"
+        android:textColor="@android:color/background_dark"
+        android:textSize="12sp" />
 
     <ImageView
         android:id="@+id/RouteImage"
@@ -47,9 +50,10 @@
         android:id="@+id/IndElecUsage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/tempHwatDst"
-        android:textSize="12sp"
         android:layout_below="@+id/EndingDate"
-        android:layout_toEndOf="@+id/RouteImage" />
+        android:layout_toEndOf="@+id/RouteImage"
+        android:text="@string/tempHwatDst"
+        android:textColor="@android:color/background_dark"
+        android:textSize="12sp" />
 
 </RelativeLayout>

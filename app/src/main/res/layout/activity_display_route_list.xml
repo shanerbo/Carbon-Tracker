@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.example.olive.carbon_tracker.UI.DisplayRouteList">
+    tools:context="com.example.olive.carbon_tracker.UI.DisplayRouteList"
+    android:background="@drawable/roadbackground">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
