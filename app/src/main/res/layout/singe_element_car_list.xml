@@ -21,11 +21,12 @@
         android:id="@+id/StartingDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/CarImage"
         android:text="@string/tempRouteName"
         android:textAlignment="viewEnd"
-        android:textSize="12sp"
-        android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/CarImage" />
+        android:textColor="@android:color/black"
+        android:textSize="12sp" />
 
     <TextView
         android:id="@+id/EndingDate"
