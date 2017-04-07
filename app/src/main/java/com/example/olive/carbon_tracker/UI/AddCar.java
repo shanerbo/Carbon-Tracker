@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -126,13 +125,7 @@ public class AddCar extends AppCompatActivity {
             cursor.moveToNext();
         }
         cursor.close();
-//        myHelper.close();
-
-        //populateImageSpinner();
         populateDropDownMenus();
-        setupAddCarButton(position);
-        delButton(position);
-
         setToolBar();
 
     }
@@ -285,165 +278,143 @@ public class AddCar extends AppCompatActivity {
 
     }
 
-    private void setupAddCarButton(final long position) {
-        FloatingActionButton check = (FloatingActionButton) findViewById(R.id.ID_button_OKAdd);
+    private void setupAdd() {
+        EditText nickname = (EditText) findViewById(R.id.ID_Car_Name);
+        Spinner Make_spinner = (Spinner) findViewById(R.id.ID_drop_down_make);
+        Spinner Model_spinner = (Spinner) findViewById(R.id.ID_drop_down_model);
+        Spinner Year_spinner = (Spinner) findViewById(R.id.ID_drop_down_year);
+        Spinner Displ_spinner = (Spinner) findViewById(R.id.ID_drop_down_dspl);
+        Spinner Image_spinner = (Spinner) findViewById(R.id.imageSpinner);
+        if(nickname.length() != 0) {
 
-        check.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            String CarName = nickname.getText().toString();
+            String CarMake = Make_spinner.getSelectedItem().toString();
+            String CarModel = Model_spinner.getSelectedItem().toString();
+            String CarYear = Year_spinner.getSelectedItem().toString();
+            String CityAndHighway = Displ_spinner.getSelectedItem().toString();
+            int CarImage = (Image_spinner.getSelectedItemPosition())+1;
+            //Toast.makeText(getApplicationContext(),""+ CarImage,Toast.LENGTH_LONG).show();
 
-                EditText nickname = (EditText) findViewById(R.id.ID_Car_Name);
-                Spinner Make_spinner = (Spinner) findViewById(R.id.ID_drop_down_make);
-                Spinner Model_spinner = (Spinner) findViewById(R.id.ID_drop_down_model);
-                Spinner Year_spinner = (Spinner) findViewById(R.id.ID_drop_down_year);
-                Spinner Displ_spinner = (Spinner) findViewById(R.id.ID_drop_down_dspl);
-                Spinner Image_spinner = (Spinner) findViewById(R.id.imageSpinner);
-                if(nickname.length() != 0) {
+            List<String> city08_highway_08 = new ArrayList<>();
+            String CityHighway = new String();
+            String[] DTDparts = CityAndHighway.split(",");
+            String drive = DTDparts[0];
+            String trany = DTDparts[1];
+            String displ = DTDparts[2];
+            Cursor cursor = myDataBase.rawQuery("select city08, highway08, fuelType  from DB where " +
+                            "make = ? " +
+                            "and model = ?" +
+                            "and year = ?" +
+                            "and drive = ?" +
+                            "and trany = ?" +
+                            "and displ = ?",
+                    new String[]{CarMake,CarModel,CarYear,drive,trany,displ});
+            cursor.moveToFirst();
+            while(!cursor.isAfterLast()){
+                CityHighway = (cursor.getString(0))+","+(cursor.getString(1)+","+(cursor.getString(2)));
+                city08_highway_08.add(CityHighway);
+                cursor.moveToNext();
+            }
 
-                    String CarName = nickname.getText().toString();
-                    String CarMake = Make_spinner.getSelectedItem().toString();
-                    String CarModel = Model_spinner.getSelectedItem().toString();
-                    String CarYear = Year_spinner.getSelectedItem().toString();
-                    String CityAndHighway = Displ_spinner.getSelectedItem().toString();
-                    int CarImage = (Image_spinner.getSelectedItemPosition())+1;
-                    //Toast.makeText(getApplicationContext(),""+ CarImage,Toast.LENGTH_LONG).show();
+            cursor.close();
+            myDataBase.close();
+            String firstCityHighway = city08_highway_08.get(0);
+            String[] splitCityHighway = firstCityHighway.split(",");
 
-                    List<String> city08_highway_08 = new ArrayList<>();
-                    String CityHighway = new String();
-                    String[] DTDparts = CityAndHighway.split(",");
-                    String drive = DTDparts[0];
-                    String trany = DTDparts[1];
-                    String displ = DTDparts[2];
-                    Cursor cursor = myDataBase.rawQuery("select city08, highway08, fuelType  from DB where " +
-                                    "make = ? " +
-                                    "and model = ?" +
-                                    "and year = ?" +
-                                    "and drive = ?" +
-                                    "and trany = ?" +
-                                    "and displ = ?",
-                            new String[]{CarMake,CarModel,CarYear,drive,trany,displ});
-                    cursor.moveToFirst();
-                    while(!cursor.isAfterLast()){
-                        CityHighway = (cursor.getString(0))+","+(cursor.getString(1)+","+(cursor.getString(2)));
-                        city08_highway_08.add(CityHighway);
-                        cursor.moveToNext();
-                    }
-
-                    cursor.close();
-                    myDataBase.close();
-                    String firstCityHighway = city08_highway_08.get(0);
-                    String[] splitCityHighway = firstCityHighway.split(",");
-
-                    double city = Double.parseDouble(splitCityHighway[0]);
-                    double highWay = Double.parseDouble(splitCityHighway[1]);
-                    String fuelType = splitCityHighway[2];
-                    int CarYearFromString = Integer.parseInt(CarYear);
+            double city = Double.parseDouble(splitCityHighway[0]);
+            double highWay = Double.parseDouble(splitCityHighway[1]);
+            String fuelType = splitCityHighway[2];
+            int CarYearFromString = Integer.parseInt(CarYear);
 
 
-                    if (!CarName.matches("") && !CarMake.matches("") && !CarModel.matches("") && CarYearFromString > 0) {
+            if (!CarName.matches("") && !CarMake.matches("") && !CarModel.matches("") && CarYearFromString > 0) {
 
-                        if (singleton.checkEdit_car() == 1) {
-                            //VehicleList.set(position, userInput);
-                            long DBID = _VehicleToBeEdit.getVehicleDBId();
+                if (singleton.checkEdit_car() == 1) {
+                    long DBID = _VehicleToBeEdit.getVehicleDBId();
 
+                    ContentValues cv = new ContentValues();
+                    cv.put(SuperUltraInfoDataBaseHelper.Car_Name,CarName);
+                    cv.put(SuperUltraInfoDataBaseHelper.Car_Make,CarMake);
+                    cv.put(SuperUltraInfoDataBaseHelper.Car_Model,CarModel);
+                    cv.put(SuperUltraInfoDataBaseHelper.Car_Year,CarYearFromString);
+                    cv.put(SuperUltraInfoDataBaseHelper.Car_City_08,city);
+                    cv.put(SuperUltraInfoDataBaseHelper.Car_Hwy_08,highWay);
+                    cv.put(SuperUltraInfoDataBaseHelper.Car_FuelType,fuelType);
+                    cv.put(SuperUltraInfoDataBaseHelper.Car_displ,Double.parseDouble(displ));
+                    cv.put(SuperUltraInfoDataBaseHelper.Car_Trany,trany);
+                    cv.put(SuperUltraInfoDataBaseHelper.Car_Drive,drive);
+                    cv.put(SuperUltraInfoDataBaseHelper.Car_Image,CarImage);
 
-                            ContentValues cv = new ContentValues();
-                            cv.put(SuperUltraInfoDataBaseHelper.Car_Name,CarName);
-                            cv.put(SuperUltraInfoDataBaseHelper.Car_Make,CarMake);
-                            cv.put(SuperUltraInfoDataBaseHelper.Car_Model,CarModel);
-                            cv.put(SuperUltraInfoDataBaseHelper.Car_Year,CarYearFromString);
-                            cv.put(SuperUltraInfoDataBaseHelper.Car_City_08,city);
-                            cv.put(SuperUltraInfoDataBaseHelper.Car_Hwy_08,highWay);
-                            cv.put(SuperUltraInfoDataBaseHelper.Car_FuelType,fuelType);
-                            cv.put(SuperUltraInfoDataBaseHelper.Car_displ,Double.parseDouble(displ));
-                            cv.put(SuperUltraInfoDataBaseHelper.Car_Trany,trany);
-                            cv.put(SuperUltraInfoDataBaseHelper.Car_Drive,drive);
-                            cv.put(SuperUltraInfoDataBaseHelper.Car_Image,CarImage);
+                    long idPassBack = CarDB.update(SuperUltraInfoDataBaseHelper.Car_Table, cv, "_id="+DBID, null);
+                    CarDB.close();
+                    singleton.userFinishEdit_car();
 
-                            long idPassBack = CarDB.update(SuperUltraInfoDataBaseHelper.Car_Table, cv, "_id="+DBID, null);
-                            CarDB.close();
-//                            singleton.setVehiclesList(VehicleList);
-                            singleton.userFinishEdit_car();
+                    Intent userEditCar = DisplayCarList.makeIntent(AddCar.this);
+                    startActivity(userEditCar);
+                } else {
 
-                            Intent userEditCar = DisplayCarList.makeIntent(AddCar.this);
-                            startActivity(userEditCar);
-                        } else {
+                    ContentValues cv = new ContentValues();
+                    cv.put(SuperUltraInfoDataBaseHelper.Car_Name,CarName);
+                    cv.put(SuperUltraInfoDataBaseHelper.Car_Make,CarMake);
+                    cv.put(SuperUltraInfoDataBaseHelper.Car_Model,CarModel);
+                    cv.put(SuperUltraInfoDataBaseHelper.Car_Year,CarYearFromString);
+                    cv.put(SuperUltraInfoDataBaseHelper.Car_City_08,city);
+                    cv.put(SuperUltraInfoDataBaseHelper.Car_Hwy_08,highWay);
+                    cv.put(SuperUltraInfoDataBaseHelper.Car_FuelType,fuelType);
+                    cv.put(SuperUltraInfoDataBaseHelper.Car_displ,Double.parseDouble(displ));
+                    cv.put(SuperUltraInfoDataBaseHelper.Car_Trany,trany);
+                    cv.put(SuperUltraInfoDataBaseHelper.Car_Drive,drive);
+                    cv.put(SuperUltraInfoDataBaseHelper.Car_Image,CarImage);
 
-                            ContentValues cv = new ContentValues();
-                            cv.put(SuperUltraInfoDataBaseHelper.Car_Name,CarName);
-                            cv.put(SuperUltraInfoDataBaseHelper.Car_Make,CarMake);
-                            cv.put(SuperUltraInfoDataBaseHelper.Car_Model,CarModel);
-                            cv.put(SuperUltraInfoDataBaseHelper.Car_Year,CarYearFromString);
-                            cv.put(SuperUltraInfoDataBaseHelper.Car_City_08,city);
-                            cv.put(SuperUltraInfoDataBaseHelper.Car_Hwy_08,highWay);
-                            cv.put(SuperUltraInfoDataBaseHelper.Car_FuelType,fuelType);
-                            cv.put(SuperUltraInfoDataBaseHelper.Car_displ,Double.parseDouble(displ));
-                            cv.put(SuperUltraInfoDataBaseHelper.Car_Trany,trany);
-                            cv.put(SuperUltraInfoDataBaseHelper.Car_Drive,drive);
-                            cv.put(SuperUltraInfoDataBaseHelper.Car_Image,CarImage);
+                    long idPassedBack = CarDB.insert(SuperUltraInfoDataBaseHelper.Car_Table,null,cv);
+                    Vehicle userInput = new Vehicle(CarName, CarMake, CarModel, CarYearFromString,city,highWay,fuelType,idPassedBack,CarImage);
+                    singleton.setUserPickVehicleItem(userInput);
 
-                            long idPassedBack = CarDB.insert(SuperUltraInfoDataBaseHelper.Car_Table,null,cv);
-                            Vehicle userInput = new Vehicle(CarName, CarMake, CarModel, CarYearFromString,city,highWay,fuelType,idPassedBack,CarImage);
-                            singleton.setUserPickVehicleItem(userInput);
+                    CarDB.close();
 
-                            CarDB.close();
-
-                            singleton.userFinishAdd_car();
-                            Intent userCreateCar = DisplayRouteList.makeIntent(AddCar.this);
-                            startActivity(userCreateCar);
-                        }
-                    }
-
-                    finish();
-                }else{
-                    Toast.makeText(AddCar.this, "Please fill the name", Toast.LENGTH_SHORT).show();
+                    singleton.userFinishAdd_car();
+                    Intent userCreateCar = DisplayRouteList.makeIntent(AddCar.this);
+                    startActivity(userCreateCar);
                 }
             }
-        });
+
+            finish();
+        }else{
+            Toast.makeText(AddCar.this, "Please fill the name", Toast.LENGTH_SHORT).show();
+        }
 
     }
 
-    private void delButton(final long position) {
-        FloatingActionButton delete = (FloatingActionButton) findViewById(R.id.ID_button_delete);
+    private void setupDelete(final long position) {
+        new AlertDialog.Builder(AddCar.this)
+                .setTitle("Delete Car")
+                .setMessage(R.string.CarWarning)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent del_intent = new Intent();
+                        CarDB.delete(SuperUltraInfoDataBaseHelper.Car_Table,
+                                "  _id" + "="+position,null);
+                        CarDB.close();
 
-        if (singleton.checkAdd_car() == 1){
-            delete.setVisibility(View.INVISIBLE);
-            return;
-        }
-        delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new AlertDialog.Builder(AddCar.this)
-                        .setTitle("Delete Car")
-                        .setMessage(R.string.CarWarning)
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Intent del_intent = new Intent();
-                                CarDB.delete(SuperUltraInfoDataBaseHelper.Car_Table,
-                                        "  _id" + "="+position,null);
-                                CarDB.close();
-
-                                singleton.userFinishEdit_car();
-                                setResult(Activity.RESULT_OK,del_intent);
-                                Toast.makeText(AddCar.this,getString(R.string.UserDeleteVehicle),Toast.LENGTH_LONG).show();
-                                Intent goBackToDisplayCar = DisplayCarList.makeIntent(AddCar.this);
-                                startActivity(goBackToDisplayCar);
-                                finish();
-                            }
-                        })
-                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
-                                singleton.userFinishEdit_car();
-                                Intent goBackToDisplayCar = DisplayCarList.makeIntent(AddCar.this);
-                                startActivity(goBackToDisplayCar);
-                            }
-                        })
-                        .setIcon(android.R.drawable.ic_dialog_alert).show();
-            }
-        });
+                        singleton.userFinishEdit_car();
+                        setResult(Activity.RESULT_OK,del_intent);
+                        Toast.makeText(AddCar.this,getString(R.string.UserDeleteVehicle),Toast.LENGTH_LONG).show();
+                        Intent goBackToDisplayCar = DisplayCarList.makeIntent(AddCar.this);
+                        startActivity(goBackToDisplayCar);
+                        finish();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                        singleton.userFinishEdit_car();
+                        Intent goBackToDisplayCar = DisplayCarList.makeIntent(AddCar.this);
+                        startActivity(goBackToDisplayCar);
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert).show();
     }
     public void onBackPressed() {
         singleton.userFinishEdit_car();
@@ -480,8 +451,14 @@ public class AddCar extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.toolbar_item, menu);
-        return true;
+        if(singleton.checkAdd_MonthlyUtilities() == 1){
+            getMenuInflater().inflate(R.menu.toolbar_add_button, menu);
+            return true;
+        }
+        else {
+            getMenuInflater().inflate(R.menu.toolbar_check_delete_buttons, menu);
+            return true;
+        }
     }
 
     @Override
@@ -498,6 +475,14 @@ public class AddCar extends AppCompatActivity {
         }
         if(id == R.id.tool_about){
             startActivity(new Intent(AddCar.this, AboutActivity.class));
+            return true;
+        }
+        if(id == R.id.tool_add || id == R.id.tool_check){
+            setupAdd();
+            return true;
+        }
+        if(id == R.id.tool_delete){
+            setupDelete(position);
             return true;
         }
         return super.onOptionsItemSelected(item);

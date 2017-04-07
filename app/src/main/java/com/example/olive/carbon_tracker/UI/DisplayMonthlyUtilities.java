@@ -56,25 +56,11 @@ public class DisplayMonthlyUtilities extends AppCompatActivity {
         setContentView(R.layout.activity_display_monthly_utilities);
 
         showAllBills();
-        SetupAddBtn();
         EditBill();
         checkNotifications();
 
         setToolBar();
     }
-
-    private void SetupAddBtn() {
-        final FloatingActionButton AddBill = (FloatingActionButton) findViewById(R.id.add_bill_btn);
-        AddBill.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                singleton.userAddMonthlyUtilities();
-                startActivityForResult(new Intent(DisplayMonthlyUtilities.this, AddMonthlyUtilities.class), 1);
-                finish();
-            }
-        });
-    }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -298,7 +284,7 @@ public class DisplayMonthlyUtilities extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.toolbar_item, menu);
+        getMenuInflater().inflate(R.menu.toolbar_add_button, menu);
         return true;
     }
 
@@ -319,6 +305,12 @@ public class DisplayMonthlyUtilities extends AppCompatActivity {
         }
         if(id == R.id.tool_about){
             startActivity(new Intent(DisplayMonthlyUtilities.this, AboutActivity.class));
+            return true;
+        }
+        if(id == R.id.tool_add){
+            singleton.userAddMonthlyUtilities();
+            startActivityForResult(new Intent(DisplayMonthlyUtilities.this, AddMonthlyUtilities.class), 1);
+            finish();
             return true;
         }
         return super.onOptionsItemSelected(item);

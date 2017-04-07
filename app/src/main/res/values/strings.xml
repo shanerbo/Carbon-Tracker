@@ -22,9 +22,9 @@
     <string name="hint_in_km">in KM</string>
     <string name="hint_in_km_hway">in km</string>
     <string name="hint_0">0</string>
-    <string name="AddRouteName">Route Name:</string>
-    <string name="CityDst">Distance In City:</string>
-    <string name="HwayDst">Distance In Highway:</string>
+    <string name="AddRouteName">Route Name</string>
+    <string name="CityDst">Distance Driven In City</string>
+    <string name="HwayDst">Distance Driven In Highway</string>
     <string name="TotalDst">Total Distance:</string>
     <string name="default_totalDst_0">0</string>
     <string name="Hint_Route_name">Route Name</string>
@@ -188,6 +188,8 @@
     <string name="about">About</string>
     <string name="change_co2_unit">Change CO2 unit</string>
     <string name="add">add</string>
+    <string name="delete">delete</string>
+    <string name="check">check</string>
 
 
 </resources>

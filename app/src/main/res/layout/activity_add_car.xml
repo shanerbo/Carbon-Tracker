@@ -19,7 +19,7 @@
         android:id="@+id/ID_add_car"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="25dp"
         android:text="@string/edit_a_car"
         android:textColor="@android:color/black"
         android:textSize="18sp"
@@ -48,7 +48,7 @@
         android:layout_height="46dp"
         tools:layout_editor_absoluteX="43dp"
         tools:layout_editor_absoluteY="173dp"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="22dp"
         android:layout_marginRight="45dp"
         tools:ignore="RtlHardcoded"
         android:layout_below="@+id/ID_Car_Name"
@@ -72,16 +72,16 @@
         android:layout_height="46dp"
         tools:layout_editor_absoluteX="43dp"
         tools:layout_editor_absoluteY="173dp"
+        android:layout_marginTop="18dp"
         android:layout_below="@+id/ID_drop_down_model"
         android:layout_alignStart="@+id/ID_drop_down_model"
-        android:layout_marginTop="14dp"
         android:layout_alignEnd="@+id/ID_drop_down_model" />
 
     <Spinner
         android:id="@+id/ID_drop_down_dspl"
         android:layout_width="299dp"
         android:layout_height="46dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="20dp"
         tools:layout_editor_absoluteX="43dp"
         tools:layout_editor_absoluteY="173dp"
         android:layout_below="@+id/ID_drop_down_year"
@@ -122,29 +122,6 @@
         android:textStyle="bold" />
 
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/ID_button_OKAdd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        app:backgroundTint="@android:color/holo_green_dark"
-        app:fabSize="normal"
-        app:srcCompat="@android:drawable/checkbox_on_background"
-        android:layout_below="@+id/imageSpinner"
-        android:layout_alignEnd="@+id/ID_Car_Name"
-        android:layout_marginTop="19dp" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/ID_button_delete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        app:backgroundTint="@android:color/holo_red_light"
-        app:fabSize="normal"
-        app:srcCompat="@android:drawable/btn_dialog"
-        android:layout_alignTop="@+id/ID_button_OKAdd"
-        android:layout_alignStart="@+id/ID_Car_Name" />
-
     <TextView
         android:id="@+id/ID_textview_dspl"
         android:layout_width="wrap_content"
@@ -162,7 +139,7 @@
         android:id="@+id/imageSpinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="17dp"
+        android:layout_marginTop="32dp"
         android:layout_below="@+id/ID_drop_down_dspl"
         android:layout_alignStart="@+id/ID_drop_down_dspl"
         android:layout_alignEnd="@+id/ID_drop_down_dspl" />
