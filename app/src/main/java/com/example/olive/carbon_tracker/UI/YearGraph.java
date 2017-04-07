@@ -69,6 +69,8 @@ public class YearGraph extends AppCompatActivity {
     List<String> routeNames = new ArrayList<>();
     List<Double> routeNameCO2 = new ArrayList<>();
 
+    List<Double> electricityCO2 = new ArrayList<>();
+    List<Double> naturalGasCO2 = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -261,12 +263,15 @@ public class YearGraph extends AppCompatActivity {
         float totalBusCO2 = 0;
         float totalSkyTrainCO2 = 0;
         float totalUtility = 0;
-
+        float totalElecCO2 = 0;
+        float totalGasCO2 = 0;
         for (int i = 0; i < MONTHS; i++) {
             //totalCarCO2 += carNameSCO2ForMode.get(i).floatValue();
             totalBusCO2 += busCO2.get(i).floatValue();
             totalSkyTrainCO2 += skytrainCO2.get(i).floatValue();
             totalUtility += utilityCO2.get(i).floatValue();
+            totalElecCO2 += electricityCO2.get(i).floatValue();
+            totalGasCO2+= electricityCO2.get(i).floatValue();
         }
         if (totalBusCO2 != 0.0) {
             pieEntries.add(new PieEntry(totalBusCO2, "BUS"));
@@ -278,8 +283,11 @@ public class YearGraph extends AppCompatActivity {
         if (totalSkyTrainCO2 != 0.0) {
             pieEntries.add(new PieEntry(totalSkyTrainCO2, "SKYTRAIN"));
         }
-        if (totalUtility != 0.0) {
-            pieEntries.add(new PieEntry(totalUtility, "UTILITY"));
+        if (totalElecCO2!= 0.0) {
+            pieEntries.add(new PieEntry(totalElecCO2, "ELECTRICITY"));
+        }
+        if (totalGasCO2!= 0.0) {
+            pieEntries.add(new PieEntry(totalGasCO2, "NATURAL GAS"));
         }
 
         PieDataSet dataSet = new PieDataSet(pieEntries, "");
@@ -312,17 +320,23 @@ public class YearGraph extends AppCompatActivity {
         List<PieEntry> pieEntries = new ArrayList<>();
 
 
-
+        float totalElecCO2 = 0;
+        float totalGasCO2 = 0;
         for (int i = 0; i < MONTHS; i++) {
-
-            //  totalUtility += utilityCO2.get(i).floatValue();
+            totalElecCO2 += electricityCO2.get(i).floatValue();
+            totalGasCO2+= electricityCO2.get(i).floatValue();
         }
 
         for (int i = 0; i <routeNameCO2.size(); i++) {
             pieEntries.add(new PieEntry(routeNameCO2.get(i).floatValue(), routeNames.get(i)));
         }
 
-
+        if (totalElecCO2!= 0.0) {
+            pieEntries.add(new PieEntry(totalElecCO2, "ELECTRICITY"));
+        }
+        if (totalGasCO2!= 0.0) {
+            pieEntries.add(new PieEntry(totalGasCO2, "NATURAL GAS"));
+        }
         //   if (totalUtility != 0.0) {
         //     pieEntries.add(new PieEntry(totalUtility, "UTILITY"));
         //  }
@@ -359,12 +373,15 @@ public class YearGraph extends AppCompatActivity {
         carCO2.clear();
         utilityCO2.clear();
         initMonths();
-
+        electricityCO2.clear();
+        naturalGasCO2.clear();
         for (int i = 0; i < MONTHS; i++) {
             busCO2.add(i, 0.0);
             carCO2.add(i, 0.0);
             skytrainCO2.add(i, 0.0);
             utilityCO2.add(i, 0.0);
+            electricityCO2.add(i,0.0);
+            naturalGasCO2.add(i,0.0);
         }
 
         for (int i = 0; i < journeyList.size(); i++) {
@@ -410,6 +427,10 @@ public class YearGraph extends AppCompatActivity {
         boolean insideRange;
         long smallestDateDifference = 9999999;
         double mostRecentCO2 = 0;
+        double electricity = 0;
+        double currentElecCO2 =0;
+        double naturalGas =0;
+        double currentGasco2 = 0;
         for (int i = 0; i < utilitiesList.size(); i++) {
             insideRange = false;
 
@@ -422,7 +443,10 @@ public class YearGraph extends AppCompatActivity {
             Log.i("utility,sd: ", "" + currentUtilityStartDate);
             String currentUtilityEndDate = currentUtility.getEndDate();
             Log.i("utility,ed: ", "" + currentUtilityEndDate);
-
+            electricity = currentUtility.getIndElecUsage();
+            currentElecCO2 = electricity * 0.009;
+            naturalGas = currentUtility.getIndGasUsage();
+            currentGasco2 = naturalGas *56.1;
             for (int j = 0; j < previousDates.size(); j++) {
                 String prevDate = previousDates.get(j);
 
@@ -440,6 +464,12 @@ public class YearGraph extends AppCompatActivity {
                         getDateDifference(prevDateNewFormat, currentUtilityEndDate) >= 0) {
                     utilityCO2.remove(j);
                     utilityCO2.add(j, currentUtilityIndCO2);
+
+                    currentElecCO2 += electricityCO2.remove(j);
+                    electricityCO2.add(j,currentElecCO2);
+
+                    currentGasco2 += naturalGasCO2.remove(j);
+                    naturalGasCO2.add(j,currentGasco2);
                     insideRange = true;
                 } else {
                     long currentDateDifference = getDateDifference(currentUtilityEndDate, prevDateNewFormat);
@@ -449,6 +479,12 @@ public class YearGraph extends AppCompatActivity {
                         if (!insideRange) {
                             utilityCO2.remove(j);
                             utilityCO2.add(j, mostRecentCO2);
+
+                            currentElecCO2 += electricityCO2.remove(j);
+                            electricityCO2.add(j,currentElecCO2);
+
+                            currentGasco2 += naturalGasCO2.remove(j);
+                            naturalGasCO2.add(j,currentGasco2);
                         }
                     }
 
@@ -754,10 +790,10 @@ public class YearGraph extends AppCompatActivity {
 
     private int[] getColors() {
 
-        int stacksize = 4;
+        int col = 3;
 
-        // have as many colors as stack-values per entry
-        int[] colors = new int[stacksize];
+
+        int[] colors = new int[col];
 
         for (int i = 0; i < colors.length; i++) {
             colors[i] = ColorTemplate.MATERIAL_COLORS[i];
