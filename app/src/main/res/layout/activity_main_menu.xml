@@ -20,11 +20,13 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignTop="@+id/btnMonthlyUti"
-        android:layout_marginStart="27dp"
+        android:layout_marginStart="57dp"
         android:adjustViewBounds="true"
         android:maxHeight="100dp"
         android:maxWidth="115dp"
-        app:srcCompat="@drawable/woddensign3" />
+        app:srcCompat="@drawable/woodensign2"
+        android:contentDescription=""
+        tools:ignore="ContentDescription" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -32,24 +34,26 @@
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
         android:cropToPadding="false"
-        android:maxHeight="75dp"
-        android:maxWidth="75dp"
+        android:maxHeight="85dp"
+        android:maxWidth="85dp"
         app:srcCompat="@drawable/woodensign"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="125dp" />
+        android:layout_marginBottom="125dp"
+        tools:ignore="ContentDescription" />
 
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
-        android:maxWidth="75dp"
+        android:maxWidth="85dp"
         android:minHeight="75dp"
         app:srcCompat="@drawable/woodensign"
         android:layout_alignBottom="@+id/imageView"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="13dp" />
+        android:layout_marginEnd="13dp"
+        tools:ignore="ContentDescription" />
 
     <ImageView
         android:id="@+id/imageView4"
@@ -59,71 +63,71 @@
         android:cropToPadding="false"
         android:maxHeight="115dp"
         android:maxWidth="115dp"
-        app:srcCompat="@drawable/woddensign3"
+        app:srcCompat="@drawable/woodensign2"
         android:layout_above="@+id/imageView2"
-        android:layout_alignStart="@+id/btnMonthlyUti"
-        android:layout_marginStart="9dp" />
+        android:layout_alignEnd="@+id/imageView2"
+        android:layout_marginEnd="30dp"
+        tools:ignore="ContentDescription" />
 
     <Button
         android:id="@+id/btnCreateJourney"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/new_journey"
-        android:textSize="10sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="33dp"
         android:layout_alignBottom="@+id/imageView"
-        android:layout_alignEnd="@+id/imageView" />
+        android:layout_alignEnd="@+id/imageView"
+        android:layout_alignTop="@id/imageView"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="31dp"
+        android:text="@string/new_journey"
+        android:textSize="12sp"
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/btnCurrentFootprint"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
-
-
         android:layout_height="wrap_content"
         android:text="@string/carbon_footprint"
-        android:textSize="10sp"
+        android:textSize="12sp"
         android:textStyle="bold"
         android:layout_alignTop="@+id/imageView5"
         android:layout_alignStart="@+id/imageView5" />
-    " />
+
 
     <Button
         android:id="@+id/btnEditJourney"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/edit_journeys"
-        android:textSize="10sp"
-        android:textStyle="bold"
-        android:layout_alignBaseline="@+id/btnCreateJourney"
         android:layout_alignBottom="@+id/btnCreateJourney"
-        android:layout_alignEnd="@+id/imageView2" />
-    " />
+        android:layout_alignEnd="@+id/imageView2"
+        android:layout_alignStart="@id/imageView2"
+        android:text="@string/edit_journeys"
+        android:textAlignment="center"
+        android:textColor="@android:color/background_dark"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
 
     <Button
         android:id="@+id/btnMonthlyUti"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/imageView4"
         android:text="@string/monthly_utilities"
-        android:textSize="9sp"
-        android:textStyle="bold" /><![CDATA[
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:layout_alignTop="@+id/imageView4"
+        android:layout_alignStart="@id/imageView4"
+        android:layout_marginEnd="41dp"
+        android:layout_alignParentEnd="true" />
 
-
-
-
-
-
-
-    " />
-
-
-
-
-]]>
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#111111"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme" />
 </RelativeLayout>
