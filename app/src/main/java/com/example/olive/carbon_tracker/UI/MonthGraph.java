@@ -85,18 +85,7 @@ public class MonthGraph extends AppCompatActivity {
         viewCurrentDate();
         setupCharts();
         onRestart();
-        setupCalendarButton();
         setToolBar();
-    }
-
-    private void setupCalendarButton() {
-        Button btn = (Button) findViewById(R.id.btnCalendar_MonthGraph);
-        btn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent(MonthGraph.this, DisplayCalendar.class);
-                startActivity(intent);
-            }
-        });
     }
 
     private void setupCharts() {

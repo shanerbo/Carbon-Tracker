@@ -190,6 +190,11 @@
     <string name="add">add</string>
     <string name="delete">delete</string>
     <string name="check">check</string>
+    <string name="journey_carbon_emissions_bar_graph">Journey Carbon Emissions Bar Graph</string>
+    <string name="journey_carbon_emissions_pie_graph">Journey Carbon Emissions Pie Graph</string>
+    <string name="transportation_mode_carbon_emissions">Transportation Mode Carbon Emissions</string>
+    <string name="route_carbon_emissions">Route Carbon Emissions</string>
+    <string name="journey_carbon_emissions">Journey Carbon Emissions</string>
 
 
 </resources>

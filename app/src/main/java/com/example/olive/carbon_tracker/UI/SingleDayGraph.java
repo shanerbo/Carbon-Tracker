@@ -69,7 +69,6 @@ public class SingleDayGraph extends AppCompatActivity {
         setupModePieChart();
         setupRoutePieChart();
         onRestart();
-        setupCalendarButton();
         setToolBar();
     }
 
@@ -253,15 +252,6 @@ public class SingleDayGraph extends AppCompatActivity {
         }
     }
 
-    private void setupCalendarButton() {
-        Button btn = (Button) findViewById(R.id.btnChangeDateForMonth);
-        btn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent(SingleDayGraph.this, DisplayCalendar.class);
-                startActivity(intent);
-            }
-        });
-    }
 
     public void getSingleDayCO2() {
         todaysCO2.clear();
