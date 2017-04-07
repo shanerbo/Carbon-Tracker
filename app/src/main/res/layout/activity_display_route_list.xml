@@ -36,23 +36,6 @@
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/AddRoute"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top|left"
-        android:layout_margin="@dimen/fab_margin"
-        android:tint="@android:color/white"
-        app:backgroundTint="@color/colorAccent"
-        app:layout_anchor="@+id/include"
-        app:layout_anchorGravity="bottom|right"
-        app:srcCompat="@android:drawable/ic_input_add"
-        tools:ignore="RtlHardcoded" />
-
-    <include
-        android:id="@+id/include"
-        layout="@layout/content_display_route_list" />
-
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar_route"
         android:layout_width="match_parent"
@@ -61,5 +44,9 @@
         android:background="#111111"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme" />
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/content_display_route_list" />
 
 </android.support.design.widget.CoordinatorLayout>

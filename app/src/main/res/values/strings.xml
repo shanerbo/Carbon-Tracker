@@ -187,6 +187,7 @@
     <string name="app_version">Version %.2f</string>
     <string name="about">About</string>
     <string name="change_co2_unit">Change CO2 unit</string>
+    <string name="add">add</string>
 
 
 </resources>

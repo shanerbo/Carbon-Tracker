@@ -47,9 +47,7 @@ public class DisplayCarList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_display_car_list);
-        //VehicleList = singleton.getVehicleList();
         showAllCar();
-        AddNewCar();
         EditCar();
         UserChooseCar();
         setToolBar();
@@ -90,18 +88,6 @@ public class DisplayCarList extends AppCompatActivity {
         });
     }
 
-    private void AddNewCar() {
-        final FloatingActionButton AddCar = (FloatingActionButton) findViewById(R.id.ID_add_new_car_button);
-        AddCar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent AddIntent = com.example.olive.carbon_tracker.UI.AddCar.makeIntent(DisplayCarList.this);
-                singleton.userAddVehicle();
-                startActivityForResult(AddIntent,1);
-                finish();
-            }
-        });
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -199,7 +185,7 @@ public class DisplayCarList extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.toolbar_item, menu);
+        getMenuInflater().inflate(R.menu.toolbar_car_route_list, menu);
         return true;
     }
 
@@ -217,6 +203,13 @@ public class DisplayCarList extends AppCompatActivity {
         }
         if(id == R.id.tool_about){
             startActivity(new Intent(DisplayCarList.this, AboutActivity.class));
+            return true;
+        }
+        if(id == R.id.tool_add){
+            Intent AddIntent = com.example.olive.carbon_tracker.UI.AddCar.makeIntent(DisplayCarList.this);
+            singleton.userAddVehicle();
+            startActivityForResult(AddIntent,1);
+            finish();
             return true;
         }
         return super.onOptionsItemSelected(item);

@@ -63,8 +63,6 @@ public class DisplayRouteList extends AppCompatActivity {
         setContentView(R.layout.activity_display_route_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.ChooseRoute);
         setSupportActionBar(toolbar);
-        //RouteList = singleton.getRouteList();
-        AddRoute();
         EditRoute();
         showAllRoute();
         UserChooseRoute();
@@ -147,10 +145,6 @@ public class DisplayRouteList extends AppCompatActivity {
                     }
 
 
-
-//                        long idPassedBack = RouteDB.insert(SuperUltraInfoDataBaseHelper.Route_Table,null,cv);
-//                        Route userInput = new Route(name, cityDst, highWayDst, totalDst,idPassedBack);
-//                        calculateCO2(userInput);
                     singleton.userFinishEditJourney();
                     Intent userEditJourney = DisplayJourneyList.makeIntent(DisplayRouteList.this);
                     startActivity(userEditJourney);
@@ -201,19 +195,6 @@ public class DisplayRouteList extends AppCompatActivity {
 
     }
 
-    private void AddRoute() {
-        FloatingActionButton addRoute = (FloatingActionButton) findViewById(R.id.AddRoute);
-        addRoute.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent AddIntent = AddNewRoute.makeIntent(DisplayRouteList.this);
-                singleton.userAddRoute();
-                startActivityForResult(AddIntent,1);
-                finish();
-            }
-        });
-
-    }
 
     private void showAllRoute() {
         List<Route> RouteListFromDB = new ArrayList<Route>();
@@ -473,16 +454,6 @@ public class DisplayRouteList extends AppCompatActivity {
         Date date = new Date();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEEE");
 
-        //Toast.makeText(getApplicationContext(),"MONTHS "+simpleDateFormat.format(date).toUpperCase(),Toast.LENGTH_SHORT).show();
-       // System.out.println("DAY "+simpleDateFormat.format(date).toUpperCase());
-
-        simpleDateFormat = new SimpleDateFormat("MMMM");
-       // System.out.println("MONTHS "+simpleDateFormat.format(date).toUpperCase());
-
-        simpleDateFormat = new SimpleDateFormat("yyyy");
-     //   System.out.println("MONTHS "+simpleDateFormat.format(date).toUpperCase());
-        //Toast.makeText(getApplicationContext(),"MONTH "+simpleDateFormat.format(date).toUpperCase(),Toast.LENGTH_SHORT).show();
-
         String day =   singleton.getUserDay();
         String month =  singleton.getUserMonth();
         String year =  singleton.getUserYear();
@@ -585,7 +556,7 @@ public class DisplayRouteList extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.toolbar_item, menu);
+        getMenuInflater().inflate(R.menu.toolbar_car_route_list, menu);
         return true;
     }
 
@@ -603,6 +574,13 @@ public class DisplayRouteList extends AppCompatActivity {
         }
         if(id == R.id.tool_about){
             startActivity(new Intent(DisplayRouteList.this, AboutActivity.class));
+            return true;
+        }
+        if(id == R.id.tool_add){
+            Intent AddIntent = AddNewRoute.makeIntent(DisplayRouteList.this);
+            singleton.userAddRoute();
+            startActivityForResult(AddIntent,1);
+            finish();
             return true;
         }
         return super.onOptionsItemSelected(item);
