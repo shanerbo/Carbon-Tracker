@@ -195,6 +195,20 @@
     <string name="transportation_mode_carbon_emissions">Transportation Mode Carbon Emissions</string>
     <string name="route_carbon_emissions">Route Carbon Emissions</string>
     <string name="journey_carbon_emissions">Journey Carbon Emissions</string>
+    <string name="PleaseFillCarName">Please fill the name</string>
+    <string name="CO2UnitChanged">CO2 unit has been changed</string>
+    <string name="UnitChangedToGarbageUnit">CO2 unit has been changed to garbage unit</string>
+    <string name="UnitChangedToKG">CO2 unit has been changed to kg-CO2</string>
+    <string name="EndDateGreaterThanStartDate">Ending date cannot be equal to or earlier than starting date</string>
+    <string name="FillAtLeast1UsageData">Please fill in at least one of the usage data</string>
+    <string name="ValueCannotBe0">Number of people cannot be zero(blank)</string>
+    <string name="PickADate">Please pick a date</string>
+    <string name="BillHasBeenDeleted">The selected bill has been deleted</string>
+    <string name="TotaoDisCannotBe0">The total distance must not add up to zero.</string>
+    <string name="EnterInfoForRoute">Please enter at least your name and one of the distance fields.</string>
+    <string name="co2_production">You have produced: %s kg of CO2</string>
+    <string name="DifferentUnitForCO2Emitted">The CO2 emission you have produced is equivalent to producing %s kg of regular garbage.</string>
+    <string name="zero_emissions">The CO2 emission you have produced is equivalent to producing 0.00 kg of regular garbage.</string>
 
 
 </resources>

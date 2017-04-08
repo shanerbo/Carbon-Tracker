@@ -379,22 +379,21 @@ public class AddMonthlyUtilities extends AppCompatActivity {
                     finish();
                 }
                 else if(dateDifference <= 0){
-                    Toast.makeText(AddMonthlyUtilities.this,"Ending date cannot be equal to or " +
-                            "earlier than starting date",Toast.LENGTH_LONG).show();
+                    Toast.makeText(AddMonthlyUtilities.this, R.string.EndDateGreaterThanStartDate,
+                            Toast.LENGTH_LONG).show();
                 }
                 else if(electricUsage.matches("") && naturalGasUsage.matches("")){
-                    Toast.makeText(AddMonthlyUtilities.this,"Please fill in at least one of the" +
-                            " usage data",Toast.LENGTH_LONG).show();
+                    Toast.makeText(AddMonthlyUtilities.this, R.string.FillAtLeast1UsageData,Toast.LENGTH_LONG).show();
                 }
                 else if(numOfPeople.matches("") || parseInt(numOfPeople)== 0){
-                    Toast.makeText(AddMonthlyUtilities.this,"Number of people cannot be zero(blank)",
+                    Toast.makeText(AddMonthlyUtilities.this, R.string.ValueCannotBe0,
                             Toast.LENGTH_LONG).show();
                 }
 
 
             }
             catch(Exception  e){
-                Toast.makeText(AddMonthlyUtilities.this, "Please pick a date", Toast.LENGTH_LONG).show();
+                Toast.makeText(AddMonthlyUtilities.this, R.string.PickADate, Toast.LENGTH_LONG).show();
             }
     }
 
@@ -471,7 +470,7 @@ public class AddMonthlyUtilities extends AppCompatActivity {
                         UtilityDB.close();
                         singleton.userFinishEditMonthlyUtilities();
                         setResult(Activity.RESULT_OK, del_intent);
-                        Toast.makeText(AddMonthlyUtilities.this, "The selected bill has been deleted",
+                        Toast.makeText(AddMonthlyUtilities.this, R.string.BillHasBeenDeleted,
                                 Toast.LENGTH_LONG).show();
                         startActivity(new Intent(AddMonthlyUtilities.this, DisplayMonthlyUtilities.class));
                         finish();
@@ -537,12 +536,14 @@ public class AddMonthlyUtilities extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if(id == R.id.tool_change_unit){
-            if(singleton.checkCO2Unit() == 0)
+            if(singleton.checkCO2Unit() == 0) {
                 singleton.humanRelatableUnit();
-            else
+                Toast.makeText(getApplicationContext(), R.string.UnitChangedToGarbageUnit, Toast.LENGTH_SHORT).show();
+            }
+            else {
                 singleton.originalUnit();
-            saveCO2UnitStatus(singleton.checkCO2Unit());
-            Toast.makeText(getApplicationContext(), "CO2 unit has been changed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), R.string.UnitChangedToKG, Toast.LENGTH_SHORT).show();
+            }saveCO2UnitStatus(singleton.checkCO2Unit());
             return true;
         }
         if(id == R.id.tool_about){

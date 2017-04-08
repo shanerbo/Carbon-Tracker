@@ -116,7 +116,7 @@ public class AddNewRoute extends AppCompatActivity {
             int highWayDst = Integer.parseInt(temp_highWayDst);
             int totalDst = CalculateTotalDistance(cityDst, highWayDst);
             if (totalDst == 0) {
-                String msg = "The total distance must not add up to zero.";
+                String msg = getString(R.string.TotaoDisCannotBe0);
                 Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
                 return;
             }
@@ -152,7 +152,7 @@ public class AddNewRoute extends AppCompatActivity {
             }
             finish();
         } else if (equalsZero(temp_cityDst, temp_highWayDst)) {
-            String msg = "The total distance must not add up to zero.";
+            String msg = getString(R.string.TotaoDisCannotBe0);
             Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
         } else if (temp_cityDst.matches("") || temp_highWayDst.matches("")) {
             int cityDst;
@@ -172,7 +172,7 @@ public class AddNewRoute extends AppCompatActivity {
 
             int totalDst = CalculateTotalDistance(cityDst, highWayDst);
             if (totalDst == 0) {
-                String msg = "The total distance must not add up to zero.";
+                String msg = getString(R.string.TotaoDisCannotBe0);
                 Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
                 return;
             }
@@ -208,7 +208,7 @@ public class AddNewRoute extends AppCompatActivity {
                 }
             }
         } else {
-            String msg = "Please enter at least your name and one of the distance fields.";
+            String msg = getString(R.string.EnterInfoForRoute);
             Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
         }
     }
@@ -340,12 +340,11 @@ public class AddNewRoute extends AppCompatActivity {
         if (TransportMode == 1) { // Walk/Bike
             String TotalCO2 = String.format("%.2f", totalCO2);
             if(singleton.checkCO2Unit() == 0){
-                Toast.makeText(getApplicationContext(), "You have produced: "+ TotalCO2 +"kg of CO2",
+                Toast.makeText(getApplicationContext(), getString(R.string.co2_production, TotalCO2),
                         Toast.LENGTH_SHORT).show();
             }
             else{
-                Toast.makeText(getApplicationContext(), "The CO2 emission you have produced is "+
-                        "equivalent to producing 0.00 kg of regular garbage.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), R.string.zero_emissions, Toast.LENGTH_SHORT).show();
             }
 
             addJourneyToDBNotCar(_date,userInput,RouteDB,"Walk/Bike",totalCO2,70);
@@ -357,12 +356,13 @@ public class AddNewRoute extends AppCompatActivity {
             String TotalCO2 = String.format("%.2f", totalCO2);
             String HumanCO2 = String.format("%.2f", totalCO2/2.06);
             if(singleton.checkCO2Unit() == 0){
-                Toast.makeText(getApplicationContext(), "You have produced: "+ TotalCO2 +"kg of CO2",
+                Toast.makeText(getApplicationContext(), getString(R.string.co2_production, TotalCO2),
                         Toast.LENGTH_SHORT).show();
             }
             else{
-                Toast.makeText(getApplicationContext(), "The CO2 emission you have produced is "+
-                        "equivalent to producing "+HumanCO2+"kg of regular garbage.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),
+                        getString(R.string.DifferentUnitForCO2Emitted, HumanCO2),
+                        Toast.LENGTH_SHORT).show();
             }
 
             Cursor cursor = RouteDB.rawQuery("select max(JourneyCO2Emitted) from JourneyInfoTable" +
@@ -388,12 +388,13 @@ public class AddNewRoute extends AppCompatActivity {
             String TotalCO2 = String.format("%.2f", totalCO2);
             String HumanCO2 = String.format("%.2f", totalCO2/2.06);
             if(singleton.checkCO2Unit() == 0){
-                Toast.makeText(getApplicationContext(), "You have produced: "+ TotalCO2 +"kg of CO2",
+                Toast.makeText(getApplicationContext(), getString(R.string.co2_production, TotalCO2),
                         Toast.LENGTH_SHORT).show();
             }
             else{
-                Toast.makeText(getApplicationContext(), "The CO2 emission you have produced is "+
-                        "equivalent to producing "+HumanCO2+"kg of regular garbage.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),
+                        getString(R.string.DifferentUnitForCO2Emitted, HumanCO2),
+                        Toast.LENGTH_SHORT).show();
             }
 
             Cursor cursor = RouteDB.rawQuery("select max(JourneyCO2Emitted) from JourneyInfoTable" +
@@ -434,12 +435,13 @@ public class AddNewRoute extends AppCompatActivity {
             String TotalCO2 = String.format("%.2f", totalCO2);
             String HumanCO2 = String.format("%.2f", totalCO2/2.06);
             if(singleton.checkCO2Unit() == 0){
-                Toast.makeText(getApplicationContext(), "You have produced: "+ TotalCO2 +"kg of CO2",
+                Toast.makeText(getApplicationContext(), getString(R.string.co2_production, TotalCO2),
                         Toast.LENGTH_SHORT).show();
             }
             else{
-                Toast.makeText(getApplicationContext(), "The CO2 emission you have produced is "+
-                        "equivalent to producing "+HumanCO2+"kg of regular garbage.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),
+                        getString(R.string.DifferentUnitForCO2Emitted, HumanCO2),
+                        Toast.LENGTH_SHORT).show();
             }
 
             Cursor cursor = RouteDB.rawQuery("select max(JourneyCO2Emitted) from JourneyInfoTable" +
@@ -634,12 +636,15 @@ public class AddNewRoute extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if(id == R.id.tool_change_unit){
-            if(singleton.checkCO2Unit() == 0)
+            if(singleton.checkCO2Unit() == 0) {
                 singleton.humanRelatableUnit();
-            else
+                Toast.makeText(getApplicationContext(), R.string.UnitChangedToGarbageUnit, Toast.LENGTH_SHORT).show();
+            }
+            else {
                 singleton.originalUnit();
+                Toast.makeText(getApplicationContext(), R.string.UnitChangedToKG, Toast.LENGTH_SHORT).show();
+            }
             saveCO2UnitStatus(singleton.checkCO2Unit());
-            Toast.makeText(getApplicationContext(), "CO2 unit has been changed", Toast.LENGTH_SHORT).show();
             return true;
         }
         if(id == R.id.tool_about){
