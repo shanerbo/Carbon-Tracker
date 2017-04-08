@@ -285,7 +285,7 @@ public class SelectTransportationModeAndDate extends AppCompatActivity {
         } catch (Exception e) {
             Toast.makeText(
                     SelectTransportationModeAndDate.this,
-                    getString(R.string.date_difference_error, "SelectTransportationAndDate"),
+                    getString(R.string.date_difference_error, getString(R.string.select_transportation_mode)),
                     Toast.LENGTH_LONG
             ).show();
         }
