@@ -212,6 +212,9 @@
     <string name="no_data_available">NO DATA AVAILABLE</string>
     <string name="month_graph">Month Graph</string>
     <string name="display_monthly_utilities">Display Monthly Utilities</string>
+    <string name="errorSingleDayCalculationFailed">ERROR: SingleDayGraph dateDifference calculation failed</string>
+    <string name="errorYearGraphCalculationFail">ERROR: YearGraph dateDifference calculation failed</string>
+    <string name="alreadyAtAboutScreen">You are already at About screen</string>
 
 
 </resources>
