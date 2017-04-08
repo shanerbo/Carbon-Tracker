@@ -293,7 +293,6 @@ public class AddCar extends AppCompatActivity {
             String CarYear = Year_spinner.getSelectedItem().toString();
             String CityAndHighway = Displ_spinner.getSelectedItem().toString();
             int CarImage = (Image_spinner.getSelectedItemPosition())+1;
-            //Toast.makeText(getApplicationContext(),""+ CarImage,Toast.LENGTH_LONG).show();
 
             List<String> city08_highway_08 = new ArrayList<>();
             String CityHighway = new String();
@@ -380,7 +379,7 @@ public class AddCar extends AppCompatActivity {
 
             finish();
         }else{
-            Toast.makeText(AddCar.this, "Please fill the name", Toast.LENGTH_SHORT).show();
+            Toast.makeText(AddCar.this, R.string.PleaseFillCarName, Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -465,12 +464,15 @@ public class AddCar extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if(id == R.id.tool_change_unit){
-            if(singleton.checkCO2Unit() == 0)
+            if(singleton.checkCO2Unit() == 0) {
                 singleton.humanRelatableUnit();
-            else
+                Toast.makeText(getApplicationContext(), R.string.UnitChangedToGarbageUnit, Toast.LENGTH_SHORT).show();
+            }
+            else {
                 singleton.originalUnit();
-            saveCO2UnitStatus(singleton.checkCO2Unit());
-            Toast.makeText(getApplicationContext(), "CO2 unit has been changed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), R.string.UnitChangedToKG, Toast.LENGTH_SHORT).show();
+            }saveCO2UnitStatus(singleton.checkCO2Unit());
+
             return true;
         }
         if(id == R.id.tool_about){

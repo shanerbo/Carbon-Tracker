@@ -255,15 +255,15 @@ public class DisplayJourneyList extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if(id == R.id.tool_change_unit){
-            if(singleton.checkCO2Unit() == 0)
+            if(singleton.checkCO2Unit() == 0) {
                 singleton.humanRelatableUnit();
-            else
+                Toast.makeText(getApplicationContext(), R.string.UnitChangedToGarbageUnit, Toast.LENGTH_SHORT).show();
+            }
+            else {
                 singleton.originalUnit();
-            ArrayAdapter<Journey> adapter = new myArrayAdapter();
-            ListView list = (ListView) findViewById(R.id.listJourneys);
-            list.setAdapter(adapter);
+                Toast.makeText(getApplicationContext(), R.string.UnitChangedToKG, Toast.LENGTH_SHORT).show();
+            }
             saveCO2UnitStatus(singleton.checkCO2Unit());
-            Toast.makeText(getApplicationContext(), "CO2 unit has been changed", Toast.LENGTH_SHORT).show();
             return true;
         }
         if(id == R.id.tool_about){

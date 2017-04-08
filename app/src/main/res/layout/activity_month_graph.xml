@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.olive.carbon_tracker.UI.MonthGraph">
+    tools:context="com.example.olive.carbon_tracker.UI.MonthGraph"
+    android:background="@drawable/sky">
 
 
     <RelativeLayout
@@ -16,7 +17,7 @@
             android:id="@+id/toolbar_month_graph"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#111111"
+            android:background="@color/colorPrimaryDark"
             android:minHeight="?attr/actionBarSize"
             android:theme="?attr/actionBarTheme" />
 
