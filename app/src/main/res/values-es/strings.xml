@@ -63,7 +63,7 @@
 
     <string-array name="year_list">
         <item>"1985"</item>
-        <item>"1. "</item>
+        <item>"Unesdoc.unesco.org unesdoc.unesco.org Unesdoc.unesco.org unesdoc.unesco.org"</item>
         <item>"********2007? 2009!"</item>
     </string-array>
     <string name="title_activity_display_car_list">"DisplayCarList"</string>
@@ -152,7 +152,7 @@
     <string name="group_name_and_date">"Creado por el Grupo de oliva en 2017"</string>
     <string name="sfu_cs_hyperlink">"Creado para &lt;a href=\"https://www.sfu.ca/computing.html\"&gt; CMPT 276 &lt;/a&gt;"</string>
     <string name="image_citations">"
-        Imágenes de: \ n Bienvenido pantalla de fondo: &lt;a href=\"http://wide-wallpapers.net/road-to-monument-valley-utah-wide-wallpaper/\"&gt; Camino a Monument Valley, Utah &lt;/a&gt; \ n viejo icono del coche: &lt;a href=\"http://www.negaantiqueauto.com\"&gt; noreste de Georgia antigüedades Auto Región &lt;/a&gt; \ n ruta 66: &lt;a href = \"http://route36lanark.co. uk / Activos / Route_Logo_Temp.png \"&gt; ruta 36 &lt;/a&gt; \ n icono en el Mapa: Icono hecha por &lt;a href=\"http://www.flaticon.com/authors/puppets\"&gt; Títeres &lt;/a&gt; de &lt; a href = \"www.flaticon.com\"&gt; www.flaticon.com &lt;/a&gt; \ n Bills icono: &lt;a href = \"http://www.curvve.com/blog/osx/2011/chronicle-family- de pago de cuentas-hecho-derecho / \"&gt; Curvve medios &lt;/a&gt;
+        Imágenes de: \ nBienvenido pantalla de fondo: &lt;a href=\"http://wide-wallpapers.net/road-to-monument-valley-utah-wide-wallpaper/\"&gt; Camino al valle del monumento, Utah &lt;/a&gt; \ Icono de coches NOld: &lt;a href=\"http://www.negaantiqueauto.com\"&gt; noreste de Georgia antigüedades Auto Región &lt;/a&gt; \ nRoute 66 Señal: &lt;a href = \"http://www.route66restequip.com/route66sign .png \"&gt; ruta 66 Equipo de restaurante &lt;/a&gt; \ Nmap icono: Icono hecha por &lt;a href=\"http://www.flaticon.com/authors/puppets\"&gt; Títeres &lt;/a&gt; de &lt;a href =\" www.flaticon.com \"&gt; www.flaticon.com &lt;/a&gt; \ nBills icono: &lt;a href =\" http://www.curvve.com/blog/osx/2011/chronicle-family-bill-payment-done -right / \"&gt; Curvve medios &lt;/a&gt; \ nGarbage Bolsa icono: &lt;a href =\" https://img.clipartfest.com/88267079e3acce8631a0e4971bba224f_garbage-icons-detailed-garbage-trash-bag-clipart-white_404-399.png \"&gt; ClipartFest &lt;/a&gt; \ nCalender icono: &lt;a Departamento Race href=\"http://www.racedepartment.com/images/rd_calext/calendar.png\"&gt; &lt;/a&gt; \ nGear icono: &lt;a href =\" https://pixabay.com/p-1630709/?no_redirect\"&gt;Pixabay &lt;/a&gt; \ NCAR icono: &lt;a href = \"http s: //www.vexels.com/vectors/preview/77467/flat-vintage-cars-icon-set \"&gt; Vexels &lt;/a&gt; \ nBus icono: &lt;a href =\" http://www.iconarchive.com /show/kameleon.pics-icons-by-webalys/Bus-icon.html\"&gt;Icon Archivo &lt;/a&gt; \ nTrain icono: &lt;a href = \"https://www.iconfinder.com/icons/625850/directions_gps_map_navigation_rail_train_travel_icon # size = 128\" &gt; icono del Finder &lt;/a&gt; \ nWalking icono: &lt;a href=\"https://www.iconfinder.com/icons/339252/human_pedestrian_walk_walking_icon\"&gt; Icono Buscador &lt;/a&gt; \ Antecedentes nUtilities: &lt;a href = \"http://www.kansasfolks.net/FamilyInfo/Photo%20Galleries/2014%20Colorado%20Vacation/Colorado%20Sightseeing/images/Wind_0055.jpg\"&gt; Kansas Folks &lt;/a&gt; \ nGraphs Antecedentes: &lt;a href = \"http://wallpapers.ae/wp-content/uploads/2016/02/Sun-Light-Sky-Wallpaper-720x1080.jpg\"&gt;Wallpapers.ae &lt;/a&gt; \ nSingle poste de muestra: &lt;a href =\" http : //www.clipartkid.com/images/97/blank-wooden-signs-wooden-sign-by-jackspade2012-KtqtU0-clipart.png \"&gt; prediseñada Kid &lt;/a&gt; \ nDouble poste de muestra: &lt;a href =\" http://www.miltonernestschool.ik.org/images/navbar-crop-u487.p ng \"&gt; Milton escuela Ernest &lt;/a&gt;
     "</string>
     <string name="app_version">"Versión% .2f"</string>
     <string name="about">"Acerca de"</string>
@@ -185,6 +185,4 @@
     <string name="errorSingleDayCalculationFailed">"ERROR: cálculo SingleDayGraph DateDifference falló"</string>
     <string name="errorYearGraphCalculationFail">"ERROR: cálculo YearGraph DateDifference falló"</string>
     <string name="alreadyAtAboutScreen">"Ya está en pantalla Acerca de"</string>
-
-
 </resources>

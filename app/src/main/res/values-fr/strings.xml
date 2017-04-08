@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">"Tracker Carbone"</string>
     <string name="pie_chart">"Graphique \"Camembert\""</string>
-    <string name="main_menu">"Menu principal"</string>
+    <string name="main_menu">"Menu Principal"</string>
     <string name="new_journey">"New \ n Journey"</string>
     <string name="select_journey">"Journey Select"</string>
     <string name="carbon_footprint">"Carbon \n Empreinte"</string>
@@ -44,10 +44,10 @@ Article neuf dans son emballage d'origine.
 Spécial garage/atelier/mécanicien.
 Origine: Allemagne. 
 "</string>
-    <string name="tempRouteName">"VueTexte"</string>
-    <string name="tempTotalDst">"VueTexte"</string>
-    <string name="tempCityDst">"VueTexte"</string>
-    <string name="tempHwatDst">"VueTexte"</string>
+    <string name="tempRouteName">"VueTextye"</string>
+    <string name="tempTotalDst">"VueTextye"</string>
+    <string name="tempCityDst">"VueTextye"</string>
+    <string name="tempHwatDst">"VueTextye"</string>
     <string name="Warning">"L'itinéraire choisi sera mis au rebut. Voulez-vous encore supprimer?"</string>
     <string name="CarWarning">"L'itinéraire choisi sera mis au rebut. Voulez-vous encore supprimer?"</string>
     <string name="BillWarning">"L'itinéraire choisi sera mis au rebut. Voulez-vous encore supprimer?"</string>
@@ -86,7 +86,7 @@ Origine: Allemagne.
     <string name="model">"Modèle"</string>
     <string name="year">"Année"</string>
     <string name="select_a_transportation_mode">"Sélectionnez un mode de transport"</string>
-    <string name="textview">"VueTexte"</string>
+    <string name="textview">"VueTextye"</string>
     <string name="edit_journeys">"Modifier \ nJourneys"</string>
     <string name="image_for_journey">"Image pour Journey"</string>
     <string name="UserDeleteJourney">"Le voyage que vous avez sélectionné a été supprimé"</string>
@@ -165,7 +165,7 @@ Origine: Allemagne.
     <string name="group_name_and_date">"Créé par Olive Group en 2017"</string>
     <string name="sfu_cs_hyperlink">"Créé pour &lt;a href=\"https://www.sfu.ca/computing.html\"&gt; CMPT 276 &lt;/a&gt;"</string>
     <string name="image_citations">"
-        Images de: \ n Bienvenue Contexte de l'écran: &lt;a href=\"http://wide-wallpapers.net/road-to-monument-valley-utah-wide-wallpaper/\"&gt; Road to Monument Valley, Utah &lt;/a&gt; \ n Old Car Icon: &lt;a href=\"http://www.negaantiqueauto.com\"&gt; &lt;/a&gt; Nord-Georgia Antique Région Auto \ n Route 66 Signe: &lt;a href = \"http://route36lanark.co. Royaume-Uni / assets / Route_Logo_Temp.png \"&gt; Route 36 &lt;/a&gt; \ n Map Icon: Icône faite par &lt;a href=\"http://www.flaticon.com/authors/puppets\"&gt; Marionnettes &lt;/a&gt; de &lt; a href = \"www.flaticon.com\"&gt; www.flaticon.com &lt;/a&gt; \ n Bills Icône: &lt;a href = \"http://www.curvve.com/blog/osx/2011/chronicle-family- facture paiement fait droit / \"&gt; Curvve médias &lt;/a&gt;
+        Images de: \ nBienvenue fond d'écran: &lt;a href=\"http://wide-wallpapers.net/road-to-monument-valley-utah-wide-wallpaper/\"&gt; Road to Monument Valley, Utah &lt;/a&gt; \ Nold Car Icon: &lt;a href=\"http://www.negaantiqueauto.com\"&gt; Géorgie du Nord Antique Auto Région &lt;/a&gt; \ nRoute 66 Signe: &lt;a href = \"http://www.route66restequip.com/route66sign .png \"&gt; Route 66 restaurant Equipement &lt;/a&gt; \ nmap Icône: Icône faite par &lt;a href=\"http://www.flaticon.com/authors/puppets\"&gt; Marionnettes &lt;/a&gt; &lt;a href =\" www.flaticon.com \"&gt; www.flaticon.com &lt;/a&gt; \ nBills Icône: &lt;a href =\" http://www.curvve.com/blog/osx/2011/chronicle-family-bill-payment-done -droit / \"&gt; Curvve médias &lt;/a&gt; \ nGarbage Sac Icône: &lt;a href =\" https://img.clipartfest.com/88267079e3acce8631a0e4971bba224f_garbage-icons-detailed-garbage-trash-bag-clipart-white_404-399.png \"&gt; ClipartFest &lt;/a&gt; \ nCalender Icône: \ nGear Icône &lt;a href=\"http://www.racedepartment.com/images/rd_calext/calendar.png\"&gt; Département Race: &lt;a href =\" https://pixabay.com/p-1630709/?no_redirect\"&gt;Pixabay &lt;/a&gt; \ NCAR Icône: &lt;a href = \"http s: //www.vexels.com/vectors/preview/77467/flat-vintage-cars-icon-set \"&gt; Vexels &lt;/a&gt; \ NBUS Icône: &lt;a href =\" http://www.iconarchive.com /show/kameleon.pics-icons-by-webalys/Bus-icon.html\"&gt;Icon Archive &lt;/a&gt; \ nTrain Icône: &lt;a href = \"https://www.iconfinder.com/icons/625850/directions_gps_map_navigation_rail_train_travel_icon # size = 128\" &gt; icône Finder &lt;/a&gt; \ nWalking Icône: &lt;a href=\"https://www.iconfinder.com/icons/339252/human_pedestrian_walk_walking_icon\"&gt; icône Finder &lt;/a&gt; \ nUtilities Contexte: &lt;a href = \"http://www.kansasfolks.net/FamilyInfo/Photo%20Galleries/2014%20Colorado%20Vacation/Colorado%20Sightseeing/images/Wind_0055.jpg\"&gt; Kansas \ nGraphs Contexte de Folks: &lt;a href = \"http://wallpapers.ae/wp-content/uploads/2016/02/Sun-Light-Sky-Wallpaper-720x1080.jpg\"&gt;Wallpapers.ae &lt;/a&gt; \ nSingle Poster Signe: &lt;a href =\" http : //www.clipartkid.com/images/97/blank-wooden-signs-wooden-sign-by-jackspade2012-KtqtU0-clipart.png \"&gt; Clip Kid \ nDouble Poster signe: &lt;a href =\" http://www.miltonernestschool.ik.org/images/navbar-crop-u487.p ng \"&gt; Milton Ernest école &lt;/a&gt;
     "</string>
     <string name="app_version">"Version% .2f"</string>
     <string name="about">"À Propos"</string>
@@ -198,6 +198,4 @@ Origine: Allemagne.
     <string name="errorSingleDayCalculationFailed">"ERREUR: SingleDayGraph calcul DateDifference échoué"</string>
     <string name="errorYearGraphCalculationFail">"ERREUR: YearGraph calcul DateDifference échoué"</string>
     <string name="alreadyAtAboutScreen">"Vous êtes déjà à propos de l'écran"</string>
-
-
 </resources>
