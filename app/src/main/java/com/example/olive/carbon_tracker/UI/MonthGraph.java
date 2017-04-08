@@ -55,8 +55,8 @@ public class MonthGraph extends AppCompatActivity {
     public static final int MONTH_TOKEN = 1;
     public static final int YEAR_TOKEN = 2;
     public static final int MONTH = 28;
-    public static final int NATIONAL_AVERAGE = 50;
-    public static final int PARIS_ACCORD = 30;
+    public static final int NATIONAL_AVERAGE = 47;
+    public static final int PARIS_ACCORD = 40;
     int chosenYear;
     int chosenMonth;
     int chosenDay;

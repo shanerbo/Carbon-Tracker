@@ -50,8 +50,8 @@ import static com.example.olive.carbon_tracker.UI.MonthGraph.PARIS_ACCORD;
 public class YearGraph extends AppCompatActivity {
     Singleton singleton = Singleton.getInstance();
     public static final int MONTHS = 12;
-    public static final int NATIONAL_AVERAGE = 50;
-    public static final int PARIS_ACCORD = 30;
+    public static final int NATIONAL_AVERAGE = 47;
+    public static final int PARIS_ACCORD = 40;
     int chosenYear;
     int chosenMonth;
     int chosenDay;
