@@ -3,7 +3,7 @@ package com.example.olive.carbon_tracker.Model;
 import android.media.Image;
 
 /**
- * Stores vehicle icon spinner data
+ * Stores vehicle icons spinner data
  */
 
 public class ImageSpinnerData {
