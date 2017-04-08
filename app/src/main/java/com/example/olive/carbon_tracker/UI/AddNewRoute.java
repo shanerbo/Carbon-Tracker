@@ -37,6 +37,10 @@ import java.util.List;
 
 import static java.lang.Math.round;
 
+/**
+ * Adds/edits a route
+ */
+
 public class AddNewRoute extends AppCompatActivity {
     private List<Route> RouteList = new ArrayList<>();
     private String _currentRouteName;
@@ -60,12 +64,10 @@ public class AddNewRoute extends AppCompatActivity {
         SuperUltraInfoDataBaseHelper RouteDBhelper = new SuperUltraInfoDataBaseHelper(this);
         RouteDB = RouteDBhelper.getWritableDatabase();
 
-        //getSupportActionBar().hide();
         setContentView(R.layout.activity_add_new_route);
         RouteList = singleton.getRouteList();
         if(singleton.checkEdit() == 1){
             position = singleton.getEditPosition_Route();
-            //Route RouteToBeEdited = RouteList.get(position);
             String RouteName = new String();
             int CityDistance = 0;
             int HwyDistance = 0;

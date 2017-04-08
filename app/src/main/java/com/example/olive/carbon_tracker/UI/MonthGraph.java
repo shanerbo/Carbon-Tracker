@@ -253,14 +253,12 @@ public class MonthGraph extends AppCompatActivity {
 
         List<PieEntry> pieEntries = new ArrayList<>();
 
-        float totalCarCO2 = 0;
         float totalBusCO2 = 0;
         float totalSkyTrainCO2 = 0;
         float totalUtility = 0;
         float totalElecCO2 = 0;
         float totalGasCO2 = 0;
         for (int i = 0; i < MONTH; i++) {
-            //totalCarCO2 += carNameSCO2ForMode.get(i).floatValue();
             totalBusCO2 += busCO2.get(i).floatValue();
             totalSkyTrainCO2 += skytrainCO2.get(i).floatValue();
             totalUtility += utilityCO2.get(i).floatValue();
@@ -315,8 +313,6 @@ public class MonthGraph extends AppCompatActivity {
         float totalElecCO2 = 0;
         float totalGasCO2 = 0;
         for (int i = 0; i < MONTH; i++) {
-
-          //  totalUtility += utilityCO2.get(i).floatValue();
             totalElecCO2 += electricityCO2.get(i).floatValue();
             totalGasCO2+= electricityCO2.get(i).floatValue();
         }
@@ -463,15 +459,14 @@ public class MonthGraph extends AppCompatActivity {
         }
 
 
-        boolean insideRange = false;
+        boolean insideRange;
         long smallestDateDifference = 9999999;
-        double mostRecentCO2 = 0;
-        double electricity = 0;
-        double currentElecCO2 =0;
-        double naturalGas =0;
-        double currentGasco2 = 0;
+        double mostRecentCO2;
+        double electricity;
+        double currentElecCO2;
+        double naturalGas;
+        double currentGasco2;
         for (int i = 0; i < utilitiesList.size(); i++) {
-            //for(int i = utilitiesList.size()-1; i>=0; i--){
             insideRange = false;
 
             isChartEmpty = false;
@@ -487,9 +482,6 @@ public class MonthGraph extends AppCompatActivity {
             currentElecCO2 = electricity * 0.009;
             naturalGas = currentUtility.getIndGasUsage();
             currentGasco2 = naturalGas *56.1;
-            //String firstDate = previousDates.get(0);
-// if(getDateDifference(currentUtilityEndDate, firstDate)+1 < smallestDateDifference) {
-// smallestDateDifference = getDateDifference(currentUtilityEndDate, firstDate) + 1; // } //smallestDateDifference = 2; //smallestDateDifference = getDateDifference(currentUtilityEndDate, firstDate)+1;
             for (int j = 0; j < previousDates.size(); j++) {
                 String prevDate = previousDates.get(j);
 
@@ -503,7 +495,6 @@ public class MonthGraph extends AppCompatActivity {
                 if (getDateDifference(currentUtilityStartDate, prevDateNewFormat) >= 0 &&
                         getDateDifference(prevDateNewFormat, currentUtilityEndDate) >= 0) {
                     utilityCO2.remove(j);
-                    //currentUtilityIndCO2 += utilityCO2.remove(j);
                     utilityCO2.add(j, currentUtilityIndCO2);
                     currentElecCO2 += electricityCO2.remove(j);
                     electricityCO2.add(j,currentElecCO2);
@@ -515,10 +506,8 @@ public class MonthGraph extends AppCompatActivity {
                     long currentDateDifference = getDateDifference(currentUtilityEndDate, prevDateNewFormat);
                     if (currentDateDifference < smallestDateDifference && currentDateDifference > 0) {
                         mostRecentCO2 = currentUtilityIndCO2;
-                        //smallestDateDifference = currentDateDifference;
 
                         if (!insideRange) {
-                            //currentUtilityIndCO2 += utilityCO2.remove(j);
                             utilityCO2.remove(j);
                             utilityCO2.add(j, mostRecentCO2);
 
@@ -582,7 +571,6 @@ public class MonthGraph extends AppCompatActivity {
     }
     private long getDateDifference(String StartDate, String EndDate) {
 
-        //SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         try {
             Date start = sdf.parse(StartDate);

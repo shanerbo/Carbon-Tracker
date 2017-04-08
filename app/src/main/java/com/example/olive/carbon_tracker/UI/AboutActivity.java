@@ -17,6 +17,10 @@ import android.widget.Toast;
 import com.example.olive.carbon_tracker.Model.Singleton;
 import com.example.olive.carbon_tracker.R;
 
+/**
+ * About Screen: contains project info, citations, etc.
+ */
+
 public class AboutActivity extends AppCompatActivity {
     Singleton singleton = Singleton.getInstance();
 

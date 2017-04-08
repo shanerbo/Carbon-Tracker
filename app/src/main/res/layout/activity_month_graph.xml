@@ -29,6 +29,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="62dp"
             android:text="@string/dd_mm_yyyy"
+            android:textColor="@android:color/black"
             android:textSize="14sp"
             android:textStyle="bold"
             tools:ignore="SmallSp"
@@ -49,7 +50,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
                 android:text="@string/journey_carbon_emissions_bar_graph"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textColor="@android:color/black"
+                android:textStyle="bold" />
 
             <com.github.mikephil.charting.charts.CombinedChart
                 android:id="@+id/chart2"
@@ -67,7 +70,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="@string/journey_carbon_emissions_pie_graph"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textColor="@android:color/black"
+                android:textStyle="bold" />
 
             <com.github.mikephil.charting.charts.PieChart
                 android:id="@+id/piechart_month"
@@ -81,7 +86,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/transportation_mode_carbon_emissions"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textColor="@android:color/black"
+                android:textStyle="bold" />
 
             <com.github.mikephil.charting.charts.PieChart
                 android:id="@+id/mode_PieChart_MonthGraph"
@@ -95,7 +102,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/route_carbon_emissions"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textColor="@android:color/black"
+                android:textStyle="bold" />
 
             <com.github.mikephil.charting.charts.PieChart
                 android:id="@+id/route_PieChart_MonthGraph"

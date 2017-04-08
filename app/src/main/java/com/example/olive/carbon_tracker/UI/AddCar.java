@@ -78,7 +78,6 @@ public class AddCar extends AppCompatActivity {
         vehicleData = singleton.getVehicleData();
         if (singleton.checkEdit_car() ==1 ){
             position = singleton.getEditPosition_car();
-            //Vehicle VehicleToBeEdit = VehicleList.get(position);
             String CarName = new String();
             String CarMake = new String();
             String CarModel = new String();
@@ -175,7 +174,6 @@ public class AddCar extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position_model, long id) {
                 final String Make = parent.getSelectedItem().toString();
 
-                //List<String> model_list = singleton.updateModels(Make);
                 List<String> model_list = new ArrayList<>();
                 String model;
                 Cursor cursor = myDataBase.rawQuery("select distinct model from DB where make = ?order by model asc", new String[]{Make});
@@ -187,14 +185,12 @@ public class AddCar extends AppCompatActivity {
                 }
 
                 cursor.close();
-                //myHelper.close();
 
                 ArrayAdapter<String> model_adapter =  new ArrayAdapter<>(
                         AddCar.this, android.R.layout.simple_dropdown_item_1line, model_list);
                 Spinner Model_spinner = (Spinner) findViewById(R.id.ID_drop_down_model);
                 Model_spinner.setAdapter(model_adapter);
                 if (singleton.checkEdit_car() ==1){
-//                    Vehicle VehicleToBeEdit = VehicleList.get(position);
                     Model_spinner.setSelection(getIndex(Model_spinner,_VehicleToBeEdit.getModel()));
                 }
 
@@ -224,7 +220,6 @@ public class AddCar extends AppCompatActivity {
                         Spinner Year_spinner = (Spinner) findViewById(R.id.ID_drop_down_year);
                         Year_spinner.setAdapter(year_adapter);
                         if (singleton.checkEdit_car() ==1){
-//                            Vehicle VehicleToBeEdit = VehicleList.get(position);
                             int Year = _VehicleToBeEdit.getYear();
                             Year_spinner.setSelection(getIndex(Year_spinner,Year));
                         }
@@ -254,24 +249,16 @@ public class AddCar extends AppCompatActivity {
                                 Spinner Displ_spinner = (Spinner) findViewById(R.id.ID_drop_down_dspl);
                                 Displ_spinner.setAdapter(displ_adapter);
 
-
                             }
-
 
                             @Override
-                            public void onNothingSelected(AdapterView<?> parent) {
-
-                            }
+                            public void onNothingSelected(AdapterView<?> parent) {    }
                         });
-
                     }
-
                     @Override
                     public void onNothingSelected(AdapterView<?> parent) { }
                 });
-
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) { }
         });

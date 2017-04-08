@@ -31,7 +31,6 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-// ListView Icon: Icon made by Puppets (http://www.flaticon.com/authors/puppets) from www.flaticon.com
 
 /**
  * displays the list of journeys created by the user
@@ -263,6 +262,9 @@ public class DisplayJourneyList extends AppCompatActivity {
                 singleton.originalUnit();
                 Toast.makeText(getApplicationContext(), R.string.UnitChangedToKG, Toast.LENGTH_SHORT).show();
             }
+            ArrayAdapter<Journey> adapter = new myArrayAdapter();
+            ListView list = (ListView) findViewById(R.id.listJourneys);
+            list.setAdapter(adapter);
             saveCO2UnitStatus(singleton.checkCO2Unit());
             return true;
         }

@@ -28,6 +28,7 @@
             android:layout_marginStart="14dp"
             android:layout_marginTop="62dp"
             android:text="@string/dd_mm_yyyy"
+            android:textColor="@android:color/black"
             android:textStyle="bold" />
 
         <LinearLayout
@@ -41,13 +42,14 @@
                 android:layout_height="89dp" />
 
 
-
             <TextView
                 android:id="@+id/textView9"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/journey_carbon_emissions"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textColor="@android:color/black"
+                android:textStyle="bold" />
 
             <com.github.mikephil.charting.charts.PieChart
 
@@ -64,7 +66,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/transportation_mode_carbon_emissions"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textColor="@android:color/black"
+                android:textStyle="bold" />
 
             <com.github.mikephil.charting.charts.PieChart
                 android:id="@+id/mode_PieChart"
@@ -80,7 +84,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/route_carbon_emissions"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textColor="@android:color/black"
+                android:textStyle="bold" />
 
             <com.github.mikephil.charting.charts.PieChart
                 android:id="@+id/route_PieChart"

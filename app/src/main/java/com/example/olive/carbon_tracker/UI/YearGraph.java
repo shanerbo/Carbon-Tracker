@@ -141,7 +141,6 @@ public class YearGraph extends AppCompatActivity {
         chart.setData(data);
         chart.animateY(1000);
         chart.setEntryLabelTextSize(9f);
-        //chart.setEntryLabelColor(Color.BLACK);
         chart.setRotationAngle(0);
         chart.invalidate();
 
@@ -266,7 +265,6 @@ public class YearGraph extends AppCompatActivity {
         float totalElecCO2 = 0;
         float totalGasCO2 = 0;
         for (int i = 0; i < MONTHS; i++) {
-            //totalCarCO2 += carNameSCO2ForMode.get(i).floatValue();
             totalBusCO2 += busCO2.get(i).floatValue();
             totalSkyTrainCO2 += skytrainCO2.get(i).floatValue();
             totalUtility += utilityCO2.get(i).floatValue();
@@ -337,9 +335,6 @@ public class YearGraph extends AppCompatActivity {
         if (totalGasCO2!= 0.0) {
             pieEntries.add(new PieEntry(totalGasCO2, "NATURAL GAS"));
         }
-        //   if (totalUtility != 0.0) {
-        //     pieEntries.add(new PieEntry(totalUtility, "UTILITY"));
-        //  }
 
         PieDataSet dataSet = new PieDataSet(pieEntries, "");
         dataSet.setColors(getColors());
@@ -426,11 +421,11 @@ public class YearGraph extends AppCompatActivity {
 
         boolean insideRange;
         long smallestDateDifference = 9999999;
-        double mostRecentCO2 = 0;
-        double electricity = 0;
-        double currentElecCO2 =0;
-        double naturalGas =0;
-        double currentGasco2 = 0;
+        double mostRecentCO2;
+        double electricity;
+        double currentElecCO2;
+        double naturalGas;
+        double currentGasco2;
         for (int i = 0; i < utilitiesList.size(); i++) {
             insideRange = false;
 

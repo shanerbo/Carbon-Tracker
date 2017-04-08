@@ -37,7 +37,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * lets user navigate to add journey, edit journey, add utility and display carbon footprint
+ * lets user navigate to add journey, edit journey, add utility, display carbon footprint and generate tips
  */
 public class MainMenu extends AppCompatActivity {
     private static final long NUM_DAYS_REMINDER = 43;

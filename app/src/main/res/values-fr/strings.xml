@@ -109,9 +109,9 @@ Origine: Allemagne.
 
     <string name="vehicle_tip_1">"Vous créez% .2f kg de CO2 de conduire. Essayez de prendre transits."</string>
     <string name="vehicle_tip_2">"Votre conduite crée% .2f kg d'émissions de CO2. Essayer le covoiturage."</string>
-    <string name="vehicle_tip_3">"Vos déplacements en voiture génèrent les kg de% de CO2. Essayez d'obtenir une voiture électrique."</string>
+    <string name="vehicle_tip_3">"Vos déplacements en voiture génèrent les kg de%.2f de CO2. Essayez d'obtenir une voiture électrique."</string>
     <string name="vehicle_tip_4">"Votre conduite crée% .2f kg de CO2. Pensez à utiliser le régulateur de vitesse."</string>
-    <string name="vehicle_tip_5">"Vous êtes la génération de kg de% du CO2 à partir de la conduite. Rappelez-vous d'enlever le poids excessif de votre voiture."</string>
+    <string name="vehicle_tip_5">"Vous êtes la génération de kg de%.2f du CO2 à partir de la conduite. Rappelez-vous d'enlever le poids excessif de votre voiture."</string>
     <string name="vehicle_tip_6">"% .2f kg de CO2 est généré à partir de votre conduite. Combiner les courses à faire moins de voyages."</string>
     <string name="vehicle_tip_7">"Vous créez% .2f kg de CO2 de conduire. Envisager d'obtenir une voiture économe en carburant."</string>
     <string name="vehicle_tip_8">"Votre conduite crée% .2f kg de CO2. Pensez à la marche ou le vélo."</string>
@@ -127,22 +127,22 @@ Origine: Allemagne.
 
 
     <string name="energy_tip_1">"Votre consommation d'électricité est produit% .2f kg de CO2. Essayez de débrancher les appareils électroniques inutilisés."</string>
-    <string name="energy_tip_2">"Vous faites de kg de CO2% de l'électricité. Essayez de fermer les lumières lorsqu'ils ne sont pas en cours d'utilisation et envisager de prendre des douches plus courtes."</string>
-    <string name="energy_tip_3">"Votre consommation d'électricité rend les kg de% du CO2. Essayez d'installer des panneaux solaires."</string>
+    <string name="energy_tip_2">"Vous faites de kg de CO2%.2f de l'électricité. Essayez de fermer les lumières lorsqu'ils ne sont pas en cours d'utilisation et envisager de prendre des douches plus courtes."</string>
+    <string name="energy_tip_3">"Votre consommation d'électricité rend les kg de%.2f du CO2. Essayez d'installer des panneaux solaires."</string>
     <string name="energy_tip_4">"Votre consommation d'énergie crée% .2f kg de CO2. Pensez à mettre vos ordinateurs en mode veille quand ils ne sont pas utilisés."</string>
     <string name="energy_tip_5">"Votre consommation d'énergie génère% .2f kg de CO2. Essayez de faire votre lessive à l'eau froide et ne pas oublier de changer les filtres à air fréquemment."</string>
     <string name="energy_tip_6">"% .2f kg de CO2 est créé à partir de votre consommation d'électricité. Envisager de passer à des ampoules d'éclairage à LED."</string>
     <string name="energy_tip_7">"Votre consommation d'énergie génère% .2f kg de CO2. Essayez d'utiliser votre micro-ondes sur votre four si possible."</string>
     <string name="energy_tip_8">"% .2f kg d'émission de CO2 provient de votre consommation d'énergie. Pensez à la gestion de votre thermostat de sorte que votre appareil de chauffage ne fonctionne pas trop souvent."</string>
 
-    <string name="energy_tip_human_1">"Votre consommation d'électricité est produit autant de CO2 que% s kg d'ordures ménagères peuvent produire. Essayez de débrancher les appareils électroniques inutilisés."</string>
+    <string name="energy_tip_human_1">"Votre consommation d'électricité est produit autant de CO2 que%.2f s kg d'ordures ménagères peuvent produire. Essayez de débrancher les appareils électroniques inutilisés."</string>
     <string name="energy_tip_human_2">"Vous faites autant de CO2 que% .2f kg d'ordures ménagères peuvent faire de l'électricité. Essayez de fermer les lumières lorsqu'ils ne sont pas en cours d'utilisation et envisager de prendre des douches plus courtes."</string>
     <string name="energy_tip_human_3">"Votre consommation d'électricité fait autant de CO2 en% .2f kg d'ordures ménagères peuvent faire. Essayez d'installer des panneaux solaires."</string>
     <string name="energy_tip_human_4">"Votre consommation d'énergie crée autant de CO2 que% .2f kg d'ordures ménagères peuvent créer. Pensez à mettre vos ordinateurs en mode veille quand ils ne sont pas utilisés."</string>
     <string name="energy_tip_human_5">"Votre consommation d'énergie génère plus de CO2 que% .2f kg d'ordures ménagères peuvent générer. Essayez de faire votre lessive à l'eau froide et ne pas oublier de changer les filtres à air fréquemment."</string>
     <string name="energy_tip_human_6">"Votre consommation d'électricité crée autant de CO2 que% .2f kg d'ordures ménagères peuvent créer. Envisager de passer à des ampoules d'éclairage à LED."</string>
     <string name="energy_tip_human_7">"Votre consommation d'énergie génère plus de CO2 que% .2f kg d'ordures ménagères peuvent générer. Essayez d'utiliser votre micro-ondes sur votre four si possible."</string>
-    <string name="energy_tip_human_8">"Votre consommation d'énergie est produit autant de CO2 que% s kg d'ordures ménagères peuvent produire. Pensez à la gestion de votre thermostat de sorte que votre appareil de chauffage ne fonctionne pas trop souvent."</string>
+    <string name="energy_tip_human_8">"Votre consommation d'énergie est produit autant de CO2 que%.2f s kg d'ordures ménagères peuvent produire. Pensez à la gestion de votre thermostat de sorte que votre appareil de chauffage ne fonctionne pas trop souvent."</string>
 
 
     <string name="unrelated_tip_1">"Vous conduisiez %d fois jusqu'à présent, si possible, à pied ou à vélo afin d'éviter complètement les émissions de carbone. Le covoiturage et les transports en commun de réduire drastiquement les émissions de CO2 en les étalant sur de nombreux coureurs."</string>

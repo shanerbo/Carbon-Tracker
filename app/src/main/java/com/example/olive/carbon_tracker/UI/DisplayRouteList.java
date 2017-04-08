@@ -486,8 +486,6 @@ public class DisplayRouteList extends AppCompatActivity {
                 (cityDistance+hwyDistance), VehicleName, CO2, temp,imageid);
         if (singleton.isEditingJourney()) {
             singleton.changeJourney(journey);
-        } else {
-            //singleton.addUserJourney(journey);
         }
     }
     private String checkDayIsSingleDIgit(String userDay) {
