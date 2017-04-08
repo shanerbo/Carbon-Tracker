@@ -255,7 +255,7 @@ public class DisplayMonthlyUtilities extends AppCompatActivity {
         } catch (Exception e) {
             Toast.makeText(
                     DisplayMonthlyUtilities.this,
-                    getString(R.string.date_difference_error, "DisplayMonthlyUtilities"),
+                    getString(R.string.date_difference_error, getString(R.string.display_monthly_utilities)),
                     Toast.LENGTH_LONG
             ).show();
         }
