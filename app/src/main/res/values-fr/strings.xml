@@ -1,17 +1,17 @@
 <resources>
-    <string name="app_name">"Traqueur De Carbone"</string>
+    <string name="app_name">"Tracker Carbone"</string>
     <string name="pie_chart">"Graphique \"Camembert\""</string>
     <string name="main_menu">"Menu principal"</string>
-    <string name="new_journey">"Nouveau Journey"</string>
-    <string name="select_journey">"Sélectionnez Journey"</string>
-    <string name="carbon_footprint">"Empreinte carbone"</string>
+    <string name="new_journey">"New \ n Journey"</string>
+    <string name="select_journey">"Journey Select"</string>
+    <string name="carbon_footprint">"Carbon \n Empreinte"</string>
     <string name="title_activity_display_route_list">"DisplayRouteList"</string>
     <string name="large_text">"
-        \"Liste de route\"
+        « Liste d'itinéraires »
     "</string>
     <!--CreateNewJourney-->
-    <string name="RouteName">"Nom de l'itinéraire: "</string>
-    <string name="CityDistance">"Distance de la ville: "</string>
+    <string name="RouteName">"Nom de la route: "</string>
+    <string name="CityDistance">"Distance dans la ville: "</string>
     <string name="HwayDistance">"Distance de la route: "</string>
     <string name="TotalDistance">"Distance totale: "</string>
     <string name="action_settings">"Paramètres"</string>
@@ -22,9 +22,9 @@
     <string name="hint_in_km">"KM"</string>
     <string name="hint_in_km_hway">"en km"</string>
     <string name="hint_0">"1 0"</string>
-    <string name="AddRouteName">"Nom de l'itinéraire:"</string>
-    <string name="CityDst">"Distance En Ville:"</string>
-    <string name="HwayDst">"Distance En route:"</string>
+    <string name="AddRouteName">"Nom de la route"</string>
+    <string name="CityDst">"Distance parcourue en ville"</string>
+    <string name="HwayDst">"Distance parcourue en route"</string>
     <string name="TotalDst">"Distance totale:"</string>
     <string name="default_totalDst_0">"1 0"</string>
     <string name="Hint_Route_name">"Nom de la route"</string>
@@ -44,17 +44,17 @@ Article neuf dans son emballage d'origine.
 Spécial garage/atelier/mécanicien.
 Origine: Allemagne. 
 "</string>
-    <string name="tempRouteName">"VueTextye"</string>
-    <string name="tempTotalDst">"VueTextye"</string>
-    <string name="tempCityDst">"VueTextye"</string>
-    <string name="tempHwatDst">"VueTextye"</string>
+    <string name="tempRouteName">"VueTexte"</string>
+    <string name="tempTotalDst">"VueTexte"</string>
+    <string name="tempCityDst">"VueTexte"</string>
+    <string name="tempHwatDst">"VueTexte"</string>
     <string name="Warning">"L'itinéraire choisi sera mis au rebut. Voulez-vous encore supprimer?"</string>
     <string name="CarWarning">"L'itinéraire choisi sera mis au rebut. Voulez-vous encore supprimer?"</string>
     <string name="BillWarning">"L'itinéraire choisi sera mis au rebut. Voulez-vous encore supprimer?"</string>
-    <string name="DeleteJourneyWarning">"Le voyage sera rejeté, Voulez-vous toujours de le supprimer?"</string>
+    <string name="DeleteJourneyWarning">"Le voyage sera mis au rebut, Voulez-vous toujours de le supprimer?"</string>
     <string name="CO2Emission">"L'émission de CO2 est: "</string>
-    <string name="UserDeleteRoute">"La Route Vous Select a été supprimé"</string>
-    <string name="UserDeleteVehicle">"La voiture que vous Select a été supprimé"</string>
+    <string name="UserDeleteRoute">"La route que vous sélectionnez a été supprimé"</string>
+    <string name="UserDeleteVehicle">"La voiture que vous sélectionnez a été supprimé"</string>
 
     <!--CreateNewJourney-->
 
@@ -75,62 +75,129 @@ Origine: Allemagne.
 
     <string-array name="year_list">
         <item>"1985"</item>
-        <item>"045.01 1"</item>
+        <item>"88
+"</item>
         <item>"20"</item>
     </string-array>
     <string name="title_activity_display_car_list">"DisplayCarList"</string>
-    <string name="edit_a_car">"Modifier A Car"</string>
-    <string name="displacement_and_transmission">"Déplacement et transmission"</string>
+    <string name="edit_a_car">"Modifier une voiture"</string>
+    <string name="displacement_and_transmission">"Transmission de déplacement et"</string>
     <string name="make">"Manufacturer"</string>
     <string name="model">"Modèle"</string>
     <string name="year">"Année"</string>
     <string name="select_a_transportation_mode">"Sélectionnez un mode de transport"</string>
-    <string name="textview">"VueTextye"</string>
-    <string name="edit_journeys">"Modifier Journeys"</string>
-    <string name="image_for_journey">"Photo pour Journey"</string>
+    <string name="textview">"VueTexte"</string>
+    <string name="edit_journeys">"Modifier \ nJourneys"</string>
+    <string name="image_for_journey">"Image pour Journey"</string>
     <string name="UserDeleteJourney">"Le voyage que vous avez sélectionné a été supprimé"</string>
-    <string name="graphs">"Graphiques"</string>
     <string name="_0_0">"0.0"</string>
     <string name="total_natural_gas_usage">"Utilisation totale de gaz naturel"</string>
     <string name="gj">"GJ"</string>
     <string name="number_of_people_living_in_the_house">"Nombre de personnes vivant dans la maison"</string>
     <string name="kw_h">"kW.h"</string>
-    <string name="billing_date">"Ajouter une facture mensuelle des services publics"</string>
+    <string name="billing_date">"Ajouter une facture mensuelle de services publics"</string>
     <string name="start_date">"Date de début"</string>
     <string name="end_date">"Date de fin"</string>
     <string name="dd_mm_yyyy">"jj/mm/aaaa"</string>
-    <string name="total_electricity_usage">"Totale consommation d'électricité"</string>
-    <string name="click_date_to_change">"Date cliquez pour changer"</string>
-    <string name="co2_emitted">"co2 émis"</string>
+    <string name="total_electricity_usage">"Utilisation totale d'électricité"</string>
+    <string name="click_date_to_change">"cliquez sur ce jour pour changer"</string>
+    <string name="co2_emitted">"émis co2"</string>
     <string name="single_day">"Seule journée"</string>
     <string name="month">"Mois"</string>
-    <string name="monthly_utilities">"Utilitaires mensuels"</string>
+    <string name="monthly_utilities">"Mensuel \ n Utilities"</string>
     <string name="change_date">"date de modification"</string>
-    <string name="vehicle_tip_1">"Vous créez %f kg de CO2 provenant de la conduite. Essayez d'utiliser le transport."</string>
-    <string name="vehicle_tip_2">"Conduite crée %f kg d'émissions de CO2. Essayer le covoiturage."</string>
-    <string name="vehicle_tip_3">"Vos déplacements en voiture génèrent %f kg de CO2. Essayez d'obtenir une voiture électrique."</string>
-    <string name="vehicle_tip_4">"Conduite crée %f kg de CO2. Envisagez d'utiliser le régulateur de vitesse."</string>
-    <string name="vehicle_tip_5">"Vous générez %f kg de CO2 provenant de la conduite. Pensez à retirer l'excès de poids de votre voiture."</string>
-    <string name="vehicle_tip_6">"%f kg de CO2 est généré à partir de votre conduite. Combinez courses à faire moins de voyages."</string>
-    <string name="vehicle_tip_7">"Vous créez %f kg de CO2 provenant de la conduite. Envisager d'obtenir une voiture économe en carburant."</string>
-    <string name="vehicle_tip_8">"Conduite crée %f kg de CO2. Pensez à la marche ou le vélo."</string>
-    <string name="energy_tip_1">"Votre consommation d'électricité fait %f de CO2, essayez de débrancher les appareils électroniques inutilisés"</string>
-    <string name="energy_tip_2">"Vous faites %f kg de CO2 de l' électricité, essayez de fermer les lumières lorsqu'ils ne sont pas utilisés et envisager de prendre des douches plus courtes."</string>
-    <string name="energy_tip_3">"Votre consommation d'électricité fait %f kg de CO2, essayez d' installer des panneaux solaires."</string>
-    <string name="energy_tip_4">"Votre facture d'énergie crée %f kg de CO2. Envisager de mettre vos ordinateurs en mode veille lorsqu'ils ne sont pas en cours d'utilisation."</string>
-    <string name="energy_tip_5">"Votre facture d'énergie génère %f kg de CO2. Essayez de laver votre linge à l'eau froide, et oubliez pas de changer les filtres à air fréquemment."</string>
-    <string name="energy_tip_6">"%f kg de CO2 est créé à partir de votre facture d'électricité. Envisager de passer à des ampoules LED."</string>
-    <string name="energy_tip_7">"Votre consommation d'énergie génère %f kg de CO2. Essayez d'utiliser votre micro-ondes sur votre four si possible."</string>
-    <string name="energy_tip_8">"%f des émissions de CO2 proviennent de votre facture d'énergie. Envisager la gestion de votre thermostat.Try en utilisant votre chauffe moins souvent."</string>
 
-    <string name="unrelated_tip_1">"Vous avez conduit %d fois la voiture à ce jour, si possible, à pied ou à vélo pour éviter les émissions de carbone complètement. Covoiturage et les transports publics de réduire drastiquement les émissions de CO2 en les étalant sur de nombreux coureurs."</string>
-    <string name="unrelated_tip_2">"Vous produisez %f de l' application de la maison Une meilleure idée est probablement «énergie intrinsèque», qui tient compte de tout le carbone, l' eau et l' énergie qui va dans la production d'aliments ou de l' article manufacturé. "</string>
-    <string name="unrelated_tip_3">"Conduire un véhicule à bas carbone. Vous avez conduit %d dans HWY et la ville, kilométrage élevé ne signifie pas toujours faibles émissions de CO2. Tous les véhicules ont une cote estimée miles par gallon. Les voitures électriques émettent pas de CO2 si elles sont chargées d'électricité propre. "</string>
-    <string name="unrelated_tip_4">"Obtenez un porte-bagages monté sur attelage. Ne pas acheter une mini-fourgonnette ou un VUS si vous n'avez pas besoin 4WD et / ou ne aurez parfois besoin de l'espace supplémentaire. Depuis que vous avez conduit SUV %d fois "</string>
-    <string name="unrelated_tip_5">"Vous avez conduit %d KM sur la route, la vitesse et l' accélération nécessaire de réduire le kilométrage jusqu'à 33/100, du gaz et de l' argent des déchets, et d' augmenter votre empreinte carbone."</string>
-    <string name="unrelated_tip_6">"Isoler et sceller votre maison. Vous avez produit %f CO2 de la maison, de réduire les courants d' air et les fuites d'air avec du calfeutrage, l' isolation et le calfeutrage. "</string>
-    <string name="unrelated_tip_7">"Vous avez conduit %d KM sur la ville, Être coincé dans le gaz des déchets de la circulation et crée inutilement CO2. Utilisez les sites Web de la circulation et des applications et aller d'une manière différente ou attendre."</string>
-    <string name="unrelated_tip_8">" Vous avez utilisé Bus et Skytrain que vos quotidiens transport %d fois! Continuez!"</string>
+    <string name="vehicle_tip_1">"Vous créez% .2f kg de CO2 de conduire. Essayez de prendre transits."</string>
+    <string name="vehicle_tip_2">"Votre conduite crée% .2f kg d'émissions de CO2. Essayer le covoiturage."</string>
+    <string name="vehicle_tip_3">"Vos déplacements en voiture génèrent les kg de% de CO2. Essayez d'obtenir une voiture électrique."</string>
+    <string name="vehicle_tip_4">"Votre conduite crée% .2f kg de CO2. Pensez à utiliser le régulateur de vitesse."</string>
+    <string name="vehicle_tip_5">"Vous êtes la génération de kg de% du CO2 à partir de la conduite. Rappelez-vous d'enlever le poids excessif de votre voiture."</string>
+    <string name="vehicle_tip_6">"% .2f kg de CO2 est généré à partir de votre conduite. Combiner les courses à faire moins de voyages."</string>
+    <string name="vehicle_tip_7">"Vous créez% .2f kg de CO2 de conduire. Envisager d'obtenir une voiture économe en carburant."</string>
+    <string name="vehicle_tip_8">"Votre conduite crée% .2f kg de CO2. Pensez à la marche ou le vélo."</string>
+
+    <string name="vehicle_tip_human_1">"Vous créez autant de CO2 que% .2f kg d'ordures peuvent créer de conduire. Essayez de prendre transits."</string>
+    <string name="vehicle_tip_human_2">"Votre conduite crée autant de CO2 que% .2f kg d'ordures ménagères peuvent créer. Essayer le covoiturage."</string>
+    <string name="vehicle_tip_human_3">"Vos déplacements en voiture génèrent autant de CO2 que% .2f kg d'ordures ménagères peuvent générer. Essayez d'obtenir une voiture électrique."</string>
+    <string name="vehicle_tip_human_4">"Votre conduite crée autant de CO2 que% .2f kg d'ordures ménagères peuvent créer. Pensez à utiliser le régulateur de vitesse."</string>
+    <string name="vehicle_tip_human_5">"Vous générez autant de CO2 que% .2f kg d'ordures ménagères peuvent générer de conduire. Rappelez-vous d'enlever le poids excessif de votre voiture."</string>
+    <string name="vehicle_tip_human_6">"Votre conduite génère autant de CO2 que% .2f kg d'ordures ménagères peuvent générer. Combiner les courses à faire moins de voyages."</string>
+    <string name="vehicle_tip_human_7">"Vous créez autant de CO2 que% .2f kg d'ordures peuvent créer de conduire. Envisager d'obtenir une voiture économe en carburant."</string>
+    <string name="vehicle_tip_human_8">"Votre conduite crée autant de CO2 que% .2f kg d'ordures ménagères peuvent créer. Pensez à la marche ou le vélo."</string>
+
+
+    <string name="energy_tip_1">"Votre consommation d'électricité est produit% .2f kg de CO2. Essayez de débrancher les appareils électroniques inutilisés."</string>
+    <string name="energy_tip_2">"Vous faites de kg de CO2% de l'électricité. Essayez de fermer les lumières lorsqu'ils ne sont pas en cours d'utilisation et envisager de prendre des douches plus courtes."</string>
+    <string name="energy_tip_3">"Votre consommation d'électricité rend les kg de% du CO2. Essayez d'installer des panneaux solaires."</string>
+    <string name="energy_tip_4">"Votre consommation d'énergie crée% .2f kg de CO2. Pensez à mettre vos ordinateurs en mode veille quand ils ne sont pas utilisés."</string>
+    <string name="energy_tip_5">"Votre consommation d'énergie génère% .2f kg de CO2. Essayez de faire votre lessive à l'eau froide et ne pas oublier de changer les filtres à air fréquemment."</string>
+    <string name="energy_tip_6">"% .2f kg de CO2 est créé à partir de votre consommation d'électricité. Envisager de passer à des ampoules d'éclairage à LED."</string>
+    <string name="energy_tip_7">"Votre consommation d'énergie génère% .2f kg de CO2. Essayez d'utiliser votre micro-ondes sur votre four si possible."</string>
+    <string name="energy_tip_8">"% .2f kg d'émission de CO2 provient de votre consommation d'énergie. Pensez à la gestion de votre thermostat de sorte que votre appareil de chauffage ne fonctionne pas trop souvent."</string>
+
+    <string name="energy_tip_human_1">"Votre consommation d'électricité est produit autant de CO2 que% s kg d'ordures ménagères peuvent produire. Essayez de débrancher les appareils électroniques inutilisés."</string>
+    <string name="energy_tip_human_2">"Vous faites autant de CO2 que% .2f kg d'ordures ménagères peuvent faire de l'électricité. Essayez de fermer les lumières lorsqu'ils ne sont pas en cours d'utilisation et envisager de prendre des douches plus courtes."</string>
+    <string name="energy_tip_human_3">"Votre consommation d'électricité fait autant de CO2 en% .2f kg d'ordures ménagères peuvent faire. Essayez d'installer des panneaux solaires."</string>
+    <string name="energy_tip_human_4">"Votre consommation d'énergie crée autant de CO2 que% .2f kg d'ordures ménagères peuvent créer. Pensez à mettre vos ordinateurs en mode veille quand ils ne sont pas utilisés."</string>
+    <string name="energy_tip_human_5">"Votre consommation d'énergie génère plus de CO2 que% .2f kg d'ordures ménagères peuvent générer. Essayez de faire votre lessive à l'eau froide et ne pas oublier de changer les filtres à air fréquemment."</string>
+    <string name="energy_tip_human_6">"Votre consommation d'électricité crée autant de CO2 que% .2f kg d'ordures ménagères peuvent créer. Envisager de passer à des ampoules d'éclairage à LED."</string>
+    <string name="energy_tip_human_7">"Votre consommation d'énergie génère plus de CO2 que% .2f kg d'ordures ménagères peuvent générer. Essayez d'utiliser votre micro-ondes sur votre four si possible."</string>
+    <string name="energy_tip_human_8">"Votre consommation d'énergie est produit autant de CO2 que% s kg d'ordures ménagères peuvent produire. Pensez à la gestion de votre thermostat de sorte que votre appareil de chauffage ne fonctionne pas trop souvent."</string>
+
+
+    <string name="unrelated_tip_1">"Vous conduisiez %d fois jusqu'à présent, si possible, à pied ou à vélo afin d'éviter complètement les émissions de carbone. Le covoiturage et les transports en commun de réduire drastiquement les émissions de CO2 en les étalant sur de nombreux coureurs."</string>
+    <string name="unrelated_tip_2">"Vous avez produit% .2f kg de CO2 de l'application de la maison. Une meilleure idée est probablement « énergie intrinsèque », qui tient compte de tout le carbone, l'eau et l'énergie qui va dans la production des aliments ou des articles manufacturés. "</string>
+    <string name="unrelated_tip_human_2">"Vous avez produit autant de CO2 que% .2f kg d'ordures ménagères peuvent produire à partir de l'application de la maison. Une meilleure idée est probablement « énergie intrinsèque », qui tient compte de tout le carbone, l'eau et l'énergie qui va dans la production des aliments ou des articles manufacturés. "</string>
+    <string name="unrelated_tip_3">"Conduire un véhicule à faibles émissions de carbone. Vous conduisiez %d km sur les routes et les villes, kilométrage élevé ne signifie pas toujours de faibles émissions de CO2. Tous les véhicules ont une cote estimée miles par gallon. Les voitures électriques émettent presque pas de CO2 au Canada. "</string>
+    <string name="unrelated_tip_4">"Obtenez un porte-bagages monté sur attelage. Ne pas acheter une mini - fourgonnette ou un VUS si vous n'avez pas besoin 4 roues motrices et / ou ne aurez besoin de temps en temps l'espace supplémentaire puisque vous conduisiez SUV %d fois "</string>
+    <string name="unrelated_tip_5">"Vous conduisiez %d kn sur les routes. Excès de vitesse et de l'accélération nécessaire de réduire le kilométrage de jusqu'à 33/100, le gaz des déchets et de l'argent, et d'augmenter votre empreinte carbone."</string>
+    <string name="unrelated_tip_6">"Isoler et sceller votre maison. Vous avez produit% .2f kg de CO2 provenant de l'application de la maison. Réduire les courants d'air et les fuites d'air avec du calfeutrage, l'isolation et le décapage de temps. "</string>
+    <string name="unrelated_tip_human_6">"Isoler et sceller votre maison. Vous avez produit autant de CO2 que% .2f kg d'ordures ménagères peuvent produire à partir de l'application de la maison. Réduire les courants d'air et les fuites d'air avec du calfeutrage, l'isolation et le décapage de temps. "</string>
+    <string name="unrelated_tip_7">"Vous conduisiez %d km dans les villes. Être coincé dans la circulation des déchets de gaz et crée inutilement CO2. Utilisez les sites de trafic et des applications pour choisir une voie différente."</string>
+    <string name="unrelated_tip_8">" Vous avez des bus et montés Aérotrain comme votre transport quotidien %d fois! Continuez!"</string>
+
+    <string name="more_journeys_notification">"Vous avez entré %d voyages; veulent entrer plus?"</string>
+    <string name="more_utilities_notification">"Vous avez saisi %d factures de services publics; voulez ajouter plus?"</string>
+    <string name="no_recent_journeys_notification">"Vous n'êtes pas entré dans un voyage aujourd'hui; veulent entrer un maintenant?"</string>
+    <string name="no_utilities_in_a_month_and_a_half">"Vous n'avez pas entré utilité dans plus d'un mois et demi; veulent entrer un maintenant?"</string>
+    <string name="date_difference_error">"ERREUR: %s calcul DateDifference échoué"</string>
+    <string name="about_the_authors">"Au sujet des aueurs"</string>
+    <string name="group_name_and_date">"Créé par Olive Group en 2017"</string>
+    <string name="sfu_cs_hyperlink">"Créé pour &lt;a href=\"https://www.sfu.ca/computing.html\"&gt; CMPT 276 &lt;/a&gt;"</string>
+    <string name="image_citations">"
+        Images de: \ n Bienvenue Contexte de l'écran: &lt;a href=\"http://wide-wallpapers.net/road-to-monument-valley-utah-wide-wallpaper/\"&gt; Road to Monument Valley, Utah &lt;/a&gt; \ n Old Car Icon: &lt;a href=\"http://www.negaantiqueauto.com\"&gt; &lt;/a&gt; Nord-Georgia Antique Région Auto \ n Route 66 Signe: &lt;a href = \"http://route36lanark.co. Royaume-Uni / assets / Route_Logo_Temp.png \"&gt; Route 36 &lt;/a&gt; \ n Map Icon: Icône faite par &lt;a href=\"http://www.flaticon.com/authors/puppets\"&gt; Marionnettes &lt;/a&gt; de &lt; a href = \"www.flaticon.com\"&gt; www.flaticon.com &lt;/a&gt; \ n Bills Icône: &lt;a href = \"http://www.curvve.com/blog/osx/2011/chronicle-family- facture paiement fait droit / \"&gt; Curvve médias &lt;/a&gt;
+    "</string>
+    <string name="app_version">"Version% .2f"</string>
+    <string name="about">"À Propos"</string>
+    <string name="change_co2_unit">"Unité de changement de CO2"</string>
+    <string name="add">"ajouter"</string>
+    <string name="delete">"effacer"</string>
+    <string name="check">"vérification"</string>
+    <string name="journey_carbon_emissions_bar_graph">"Journey Émissions de carbone Graphique à barres"</string>
+    <string name="journey_carbon_emissions_pie_graph">"Journey Émissions de carbone Pie Graphique"</string>
+    <string name="transportation_mode_carbon_emissions">"Mode de transport des émissions de carbone"</string>
+    <string name="route_carbon_emissions">"Route des émissions de carbone"</string>
+    <string name="journey_carbon_emissions">"Journey Émissions de carbone"</string>
+    <string name="PleaseFillCarName">"S'il vous plaît remplir le nom"</string>
+    <string name="CO2UnitChanged">"unité de CO2 a été modifié"</string>
+    <string name="UnitChangedToGarbageUnit">"unité de CO2 a été modifiée à l'unité des ordures"</string>
+    <string name="UnitChangedToKG">"unité de CO2 a été modifié en kg CO2"</string>
+    <string name="EndDateGreaterThanStartDate">"Date de fin ne peut pas être égale ou antérieure à la date de départ"</string>
+    <string name="FillAtLeast1UsageData">"S'il vous plaît remplir au moins une des données d'utilisation"</string>
+    <string name="ValueCannotBe0">"Nombre de personnes ne peut pas être égale à zéro (blanc)"</string>
+    <string name="PickADate">"S'il vous plaît choisir une date"</string>
+    <string name="BillHasBeenDeleted">"Le projet de loi sélectionné a été supprimé"</string>
+    <string name="TotaoDisCannotBe0">"La distance totale ne doit pas ajouter à zéro."</string>
+    <string name="EnterInfoForRoute">"S'il vous plaît entrer au moins votre nom et l'un des champs de distance."</string>
+    <string name="co2_production">"Vous avez produit: %s les kg de CO2"</string>
+    <string name="DifferentUnitForCO2Emitted">"L'émission de CO2 que vous avez produit est équivalent à la production %s de kg d'ordures ménagères."</string>
+    <string name="zero_emissions">"L'émission de CO2 que vous avez produit est équivalent à la production de 0,00 kg d'ordures ménagères."</string>
+    <string name="no_data_available">"Aucune donnée disponible"</string>
+    <string name="month_graph">"mois Graphique"</string>
+    <string name="display_monthly_utilities">"Afficher Utilitaires mensuels"</string>
+    <string name="errorSingleDayCalculationFailed">"ERREUR: SingleDayGraph calcul DateDifference échoué"</string>
+    <string name="errorYearGraphCalculationFail">"ERREUR: YearGraph calcul DateDifference échoué"</string>
+    <string name="alreadyAtAboutScreen">"Vous êtes déjà à propos de l'écran"</string>
 
 
 </resources>

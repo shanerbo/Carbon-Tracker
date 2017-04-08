@@ -1,10 +1,14 @@
 package com.example.olive.carbon_tracker.UI;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -65,7 +69,7 @@ public class SingleDayGraph extends AppCompatActivity {
         setupModePieChart();
         setupRoutePieChart();
         onRestart();
-        setupCalendarButton();
+        setToolBar();
     }
 
     private void setupPieChart() {
@@ -126,9 +130,7 @@ public class SingleDayGraph extends AppCompatActivity {
         if (skytrainCO2.get(0) != 0.0) {
             pieEntries.add(new PieEntry(skytrainCO2.get(0).floatValue(), "SKYTRAIN"));
         }
-      //  if (utilityCO2.get(0) != 0.0) {
-        //    pieEntries.add(new PieEntry(utilityCO2.get(0).floatValue(), "UTILITY"));
-        //}
+
         if (electricityCO2.get(0) != 0.0) {
             pieEntries.add(new PieEntry(electricityCO2.get(0).floatValue(), "ELECTRICITY"));
         }
@@ -173,9 +175,12 @@ public class SingleDayGraph extends AppCompatActivity {
 
         }
 
-    //    if (utilityCO2.get(0) != 0.0) {
-       //     pieEntries.add(new PieEntry(utilityCO2.get(0).floatValue(), "UTILITY"));
-    //    }
+        if (electricityCO2.get(0) != 0.0) {
+            pieEntries.add(new PieEntry(electricityCO2.get(0).floatValue(), "ELECTRICITY"));
+        }
+        if (naturalGasCO2.get(0) != 0.0) {
+            pieEntries.add(new PieEntry(naturalGasCO2.get(0).floatValue(), "NATURAL GAS"));
+        }
 
         PieDataSet dataSet = new PieDataSet(pieEntries, "");
         dataSet.setColors(getColors());
@@ -247,15 +252,6 @@ public class SingleDayGraph extends AppCompatActivity {
         }
     }
 
-    private void setupCalendarButton() {
-        Button btn = (Button) findViewById(R.id.btnChangeDateForMonth);
-        btn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent(SingleDayGraph.this, DisplayCalendar.class);
-                startActivity(intent);
-            }
-        });
-    }
 
     public void getSingleDayCO2() {
         todaysCO2.clear();
@@ -324,7 +320,6 @@ public class SingleDayGraph extends AppCompatActivity {
              currentElecCO2 = electricity * 0.009;
              naturalGas = currentUtility.getIndGasUsage();
              currentGasco2 = naturalGas *56.1;
-            Toast.makeText(getApplicationContext(),"Eco2 = "+ (+currentElecCO2 ),Toast.LENGTH_SHORT).show();
             String[] date = userDate.split("/");
             String monthNumber = addZeroToDay("" + getMonthNumber(date[MONTH_TOKEN]));
             String currentDate = date[YEAR_TOKEN] + "-" + monthNumber + "-" + addZeroToDay(date[DAY_TOKEN]);
@@ -389,6 +384,9 @@ public class SingleDayGraph extends AppCompatActivity {
     }
 
 
+
+
+
     private void modeInformation(String transportationMode, double currentJourneyCO2Save) {
         boolean foundMathchingCar = false;
         for (int j = 0; j < carNamesForMode.size(); j++) {
@@ -419,8 +417,7 @@ public class SingleDayGraph extends AppCompatActivity {
             long dateDifference = end.getTime() - start.getTime();
             return dateDifference / 1000 / 60 / 60 / 24;
         } catch (Exception e) {
-            Toast.makeText(SingleDayGraph.this, "ERROR: SingleDayGraph" +
-                    " dateDifference calculation failed", Toast.LENGTH_LONG).show();
+            Toast.makeText(SingleDayGraph.this, R.string.errorSingleDayCalculationFailed, Toast.LENGTH_LONG).show();
         }
         return -1;
     }
@@ -512,5 +509,64 @@ public class SingleDayGraph extends AppCompatActivity {
         }
 
         return colors;
+    }
+
+    private void setToolBar(){
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_LOW_PROFILE
+                | View.SYSTEM_UI_FLAG_IMMERSIVE);
+        Toolbar toolBar = (Toolbar) findViewById(R.id.toolbar_single_day);
+        setSupportActionBar(toolBar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_calendar, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if(id == R.id.tool_change_unit){
+            if(singleton.checkCO2Unit() == 0) {
+                singleton.humanRelatableUnit();
+                Toast.makeText(getApplicationContext(), R.string.UnitChangedToGarbageUnit, Toast.LENGTH_SHORT).show();
+            }
+            else {
+                singleton.originalUnit();
+                Toast.makeText(getApplicationContext(), R.string.UnitChangedToKG, Toast.LENGTH_SHORT).show();
+            }
+            saveCO2UnitStatus(singleton.checkCO2Unit());
+            return true;
+        }
+        if(id == R.id.tool_about){
+            startActivity(new Intent(SingleDayGraph.this, AboutActivity.class));
+            return true;
+        }
+        if(id == R.id.tool_date){
+            startActivity(new Intent(SingleDayGraph.this, DisplayCalendar.class));
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void saveCO2UnitStatus(int status) {
+        SharedPreferences prefs = this.getSharedPreferences("CO2Status", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt("CO2 status", status);
+        editor.apply();
     }
 }

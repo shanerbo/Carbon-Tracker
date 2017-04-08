@@ -22,9 +22,9 @@
     <string name="hint_in_km">in KM</string>
     <string name="hint_in_km_hway">in km</string>
     <string name="hint_0">0</string>
-    <string name="AddRouteName">Route Name:</string>
-    <string name="CityDst">Distance In City:</string>
-    <string name="HwayDst">Distance In Highway:</string>
+    <string name="AddRouteName">Route Name</string>
+    <string name="CityDst">Distance Driven In City</string>
+    <string name="HwayDst">Distance Driven In Highway</string>
     <string name="TotalDst">Total Distance:</string>
     <string name="default_totalDst_0">0</string>
     <string name="Hint_Route_name">Route Name</string>
@@ -175,11 +175,39 @@
     <string name="date_difference_error">ERROR: %s dateDifference calculation failed</string>
     <string name="about_the_authors">About the Authors</string>
     <string name="group_name_and_date">Created by Group Olive in 2017</string>
-    <string name="sfu_cs_hyperlink">Created for <a href="http://www.cs.sfu.ca/CourseCentral/276/bfraser/index.html">CMPT 276</a></string>
+    <string name="sfu_cs_hyperlink">Created for <a href="https://www.sfu.ca/computing.html">CMPT 276</a></string>
     <string name="image_citations">
         Images from:\nWelcome Screen Background: <a href="http://wide-wallpapers.net/road-to-monument-valley-utah-wide-wallpaper/">Road to Monument Valley, Utah</a>\nOld Car Icon: <a href="http://www.negaantiqueauto.com">Northeast Georgia Antique Auto Region</a>\nRoute 66 Sign: <a href="http://www.route66restequip.com/route66sign.png">Route 66 Restaurant Equipment</a>\nMap Icon: Icon made by <a href="http://www.flaticon.com/authors/puppets">Puppets</a> from <a href="www.flaticon.com">www.flaticon.com</a>\nBills Icon: <a href="http://www.curvve.com/blog/osx/2011/chronicle-family-bill-payment-done-right/">Curvve Media</a>\nGarbage Bag Icon: <a href="https://img.clipartfest.com/88267079e3acce8631a0e4971bba224f_garbage-icons-detailed-garbage-trash-bag-clipart-white_404-399.png">ClipartFest</a>\nCalender Icon: <a href="http://www.racedepartment.com/images/rd_calext/calendar.png">Race Department</a>\nGear Icon: <a href="https://pixabay.com/p-1630709/?no_redirect">Pixabay</a>\nCar Icon: <a href="https://www.vexels.com/vectors/preview/77467/flat-vintage-cars-icon-set">Vexels</a>\nBus Icon: <a href="http://www.iconarchive.com/show/kameleon.pics-icons-by-webalys/Bus-icon.html">Icon Archive</a>\nTrain Icon: <a href="https://www.iconfinder.com/icons/625850/directions_gps_map_navigation_rail_train_travel_icon#size=128">Icon Finder</a>\nWalking Icon: <a href="https://www.iconfinder.com/icons/339252/human_pedestrian_walk_walking_icon">Icon Finder</a>\nUtilities Background: <a href="http://www.kansasfolks.net/FamilyInfo/Photo%20Galleries/2014%20Colorado%20Vacation/Colorado%20Sightseeing/images/Wind_0055.jpg">Kansas Folks</a>\nGraphs Background: <a href="http://wallpapers.ae/wp-content/uploads/2016/02/Sun-Light-Sky-Wallpaper-720x1080.jpg">Wallpapers.ae</a>\nSingle Post Sign: <a href="http://www.clipartkid.com/images/97/blank-wooden-signs-wooden-sign-by-jackspade2012-KtqtU0-clipart.png">Clipart Kid</a>\nDouble Post Sign: <a href="http://www.miltonernestschool.ik.org/images/navbar-crop-u487.png">Milton Ernest School</a>
     </string>
-    <string name="app_version">Version %f</string>
-
-
+    <string name="app_version">Version %.2f</string>
+    <string name="about">About</string>
+    <string name="change_co2_unit">Change CO2 unit</string>
+    <string name="add">add</string>
+    <string name="delete">delete</string>
+    <string name="check">check</string>
+    <string name="journey_carbon_emissions_bar_graph">Journey Carbon Emissions Bar Graph</string>
+    <string name="journey_carbon_emissions_pie_graph">Journey Carbon Emissions Pie Graph</string>
+    <string name="transportation_mode_carbon_emissions">Transportation Mode Carbon Emissions</string>
+    <string name="route_carbon_emissions">Route Carbon Emissions</string>
+    <string name="journey_carbon_emissions">Journey Carbon Emissions</string>
+    <string name="PleaseFillCarName">Please fill the name</string>
+    <string name="CO2UnitChanged">CO2 unit has been changed</string>
+    <string name="UnitChangedToGarbageUnit">CO2 unit has been changed to garbage unit</string>
+    <string name="UnitChangedToKG">CO2 unit has been changed to kg-CO2</string>
+    <string name="EndDateGreaterThanStartDate">Ending date cannot be equal to or earlier than starting date</string>
+    <string name="FillAtLeast1UsageData">Please fill in at least one of the usage data</string>
+    <string name="ValueCannotBe0">Number of people cannot be zero(blank)</string>
+    <string name="PickADate">Please pick a date</string>
+    <string name="BillHasBeenDeleted">The selected bill has been deleted</string>
+    <string name="TotaoDisCannotBe0">The total distance must not add up to zero.</string>
+    <string name="EnterInfoForRoute">Please enter at least your name and one of the distance fields.</string>
+    <string name="co2_production">You have produced: %s kg of CO2</string>
+    <string name="DifferentUnitForCO2Emitted">The CO2 emission you have produced is equivalent to producing %s kg of regular garbage.</string>
+    <string name="zero_emissions">The CO2 emission you have produced is equivalent to producing 0.00 kg of regular garbage.</string>
+    <string name="no_data_available">NO DATA AVAILABLE</string>
+    <string name="month_graph">Month Graph</string>
+    <string name="display_monthly_utilities">Display Monthly Utilities</string>
+    <string name="errorSingleDayCalculationFailed">ERROR: SingleDayGraph dateDifference calculation failed</string>
+    <string name="errorYearGraphCalculationFail">ERROR: YearGraph dateDifference calculation failed</string>
+    <string name="alreadyAtAboutScreen">You are already at About screen</string>
 </resources>

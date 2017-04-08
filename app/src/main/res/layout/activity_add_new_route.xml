@@ -7,101 +7,89 @@
     tools:context="com.example.olive.carbon_tracker.UI.AddNewRoute"
     android:background="@drawable/roadbackground">
 
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_add_route"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme" />
+
     <TextView
         android:id="@+id/AddRouteName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="92dp"
-        android:layout_marginTop="136dp"
+        android:layout_marginTop="75dp"
         android:text="@string/AddRouteName"
         android:textColor="@android:color/black"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_below="@+id/toolbar_add_route"
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:id="@+id/AddCityDst"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/AddRouteName"
-        android:layout_below="@+id/AddRouteName"
-        android:layout_marginTop="45dp"
         android:text="@string/CityDst"
         android:textColor="@android:color/black"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_below="@+id/RouteNameInput"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="44dp" />
 
     <TextView
         android:id="@+id/AddHwayDst"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/AddCityDst"
-        android:layout_below="@+id/AddCityDst"
-        android:layout_marginTop="45dp"
         android:text="@string/HwayDst"
         android:textColor="@android:color/black"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_marginTop="47dp"
+        android:layout_below="@+id/CityDstInput"
+        android:layout_centerHorizontal="true" />
 
     <EditText
         android:id="@+id/RouteNameInput"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/AddRouteName"
-        android:layout_alignBottom="@+id/AddRouteName"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="32dp"
         android:ems="10"
         android:hint="@string/Hint_Route_name"
         android:inputType="textPersonName"
+        android:textAlignment="center"
         android:textSize="12sp"
         android:textStyle="bold"
-        tools:ignore="RelativeOverlap" />
+        tools:ignore="RelativeOverlap"
+        android:layout_below="@+id/AddRouteName"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="23dp" />
 
     <EditText
         android:id="@+id/CityDstInput"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/AddCityDst"
-        android:layout_alignBottom="@+id/AddCityDst"
-        android:layout_alignStart="@+id/RouteNameInput"
         android:ems="10"
         android:hint="@string/City_in_km"
         android:inputType="number"
+        android:textAlignment="center"
         android:textSize="12sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_below="@+id/AddCityDst"
+        android:layout_alignStart="@+id/RouteNameInput"
+        android:layout_marginTop="19dp" />
 
     <EditText
         android:id="@+id/HwayDstInput"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/AddHwayDst"
-        android:layout_alignBottom="@+id/AddHwayDst"
-        android:layout_alignStart="@+id/CityDstInput"
         android:ems="10"
         android:hint="@string/hway_in_km"
         android:inputType="number"
+        android:textAlignment="center"
         android:textSize="12sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_below="@+id/AddHwayDst"
+        android:layout_alignStart="@+id/CityDstInput"
+        android:layout_marginTop="20dp" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/comfirm_add"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        app:backgroundTint="@android:color/holo_green_dark"
-        app:fabSize="normal"
-        app:srcCompat="@android:drawable/checkbox_on_background"
-        android:layout_marginBottom="47dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignEnd="@+id/HwayDstInput" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/comfirm_delete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        app:backgroundTint="@android:color/holo_red_light"
-        app:fabSize="normal"
-        app:srcCompat="@android:drawable/btn_dialog"
-        android:layout_alignTop="@+id/comfirm_add"
-        android:layout_alignStart="@+id/AddHwayDst" />
 </RelativeLayout>

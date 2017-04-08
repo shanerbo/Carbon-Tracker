@@ -28,18 +28,21 @@
                 app:title="Select A Journey"
                 app:popupTheme="@style/AppTheme.PopupOverlay" />
 
-            <Button
-                android:id="@+id/unit_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="top|left"
-                android:text="Change CO2 Unit"
-                android:textStyle="italic" />
+
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
     <include
         android:id="@+id/include"
         layout="@layout/content_display_journey_list" />
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_journey"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@color/colorPrimaryDark"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme" />
 
 </android.support.design.widget.CoordinatorLayout>

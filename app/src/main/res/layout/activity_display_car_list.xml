@@ -38,17 +38,12 @@
     <include layout="@layout/content_display_car_list"
         android:id="@+id/include2" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/ID_add_new_car_button"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_car"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="top|left"
-        android:layout_margin="@dimen/fab_margin"
-        android:tint="@android:color/white"
-        app:backgroundTint="@color/colorAccent"
-        app:layout_anchor="@+id/include2"
-        app:layout_anchorGravity="bottom|right"
-        app:srcCompat="@android:drawable/ic_input_add"
-        tools:ignore="RtlHardcoded" />
+        android:background="@color/colorPrimaryDark"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme" />
 
 </android.support.design.widget.CoordinatorLayout>

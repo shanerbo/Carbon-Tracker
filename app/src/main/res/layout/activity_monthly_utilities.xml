@@ -4,7 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.olive.carbon_tracker.UI.AddMonthlyUtilities">
+    tools:context="com.example.olive.carbon_tracker.UI.AddMonthlyUtilities"
+    android:background="@drawable/utility">
+    >
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_add_bill"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme" />
 
     <TextView
         android:id="@+id/textView8"
@@ -21,13 +31,14 @@
         android:id="@+id/ID_Billing_Date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="27dp"
+        android:layout_below="@+id/toolbar_add_bill"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
         android:text="@string/billing_date"
         android:textSize="18sp"
+        android:textStyle="bold"
         tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="16dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        tools:layout_editor_absoluteY="16dp" />
 
     <Button
         android:id="@+id/ID_startDate_button"
@@ -80,7 +91,7 @@
         android:id="@+id/TVNaturalGasUsage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="33dp"
         android:text="@string/total_natural_gas_usage"
         android:layout_below="@+id/editElecUsage"
         android:layout_alignStart="@+id/TVelecUsage" />
@@ -121,39 +132,17 @@
         android:textSize="14sp" />
 
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/ok_billing_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        app:backgroundTint="@android:color/holo_green_dark"
-        app:fabSize="normal"
-        app:srcCompat="@android:drawable/checkbox_on_background"
-        android:layout_marginBottom="38dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignEnd="@+id/DisplayEndDate" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/cancel_billing_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        app:backgroundTint="@android:color/holo_red_light"
-        app:fabSize="normal"
-        app:srcCompat="@android:drawable/btn_dialog"
-        android:layout_alignTop="@+id/ok_billing_btn"
-        android:layout_alignEnd="@+id/ID_endDate_button" />
-
     <TextView
         android:id="@+id/TVnum_people"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/TVNaturalGasUsage"
-        android:layout_alignStart="@+id/TVNaturalGasUsage"
-        android:layout_below="@+id/editNaturalGasUsage"
-        android:layout_marginTop="18dp"
+        android:layout_marginTop="33dp"
         android:text="@string/number_of_people_living_in_the_house"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:layout_below="@+id/editNaturalGasUsage"
+        android:layout_alignStart="@+id/TVNaturalGasUsage"
+        android:layout_toStartOf="@+id/editNum_people"
+        android:layout_alignEnd="@+id/TVNaturalGasUsage" />
 
     <EditText
         android:id="@+id/editNum_people"

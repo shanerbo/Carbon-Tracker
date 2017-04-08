@@ -4,12 +4,15 @@ import android.app.Activity;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -58,9 +61,9 @@ public class AddMonthlyUtilities extends AppCompatActivity {
         setupCalendarButton(R.id.ID_endDate_button);
 
         uesrWantToEditBill();
-        setupAddButton();
-        setupDeleteButton(position);
         viewCurrentDate();
+
+        setToolBar();
     }
 
     private void uesrWantToEditBill() {
@@ -201,207 +204,197 @@ public class AddMonthlyUtilities extends AppCompatActivity {
     }
 
 
-    private void setupAddButton() {
-        FloatingActionButton check = (FloatingActionButton) findViewById(R.id.ok_billing_btn);
+    private void setupAdd() {
+        String startDay = singleton.getStartDay();
+        String startMonth = singleton.getStartMonth();
+        String startYear = singleton.getStartYear();
 
-        check.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        String EndDay = singleton.getEndDay();
+        String EndMonth = singleton.getEndMonth();
+        String EndYear = singleton.getEndYear();
 
-                String startDay = singleton.getStartDay();
-                String startMonth = singleton.getStartMonth();
-                String startYear = singleton.getStartYear();
-
-                String EndDay = singleton.getEndDay();
-                String EndMonth = singleton.getEndMonth();
-                String EndYear = singleton.getEndYear();
-
-                EditText ETelectricUsage = (EditText) findViewById(R.id.editElecUsage);
-                EditText ETnaturalGasUsage = (EditText) findViewById(R.id.editNaturalGasUsage);
-                EditText ETnumOfPeople = (EditText) findViewById(R.id.editNum_people);
-                String electricUsage = ETelectricUsage.getText().toString();
-                String naturalGasUsage = ETnaturalGasUsage.getText().toString();
-                String numOfPeople = ETnumOfPeople.getText().toString();
+        EditText ETelectricUsage = (EditText) findViewById(R.id.editElecUsage);
+        EditText ETnaturalGasUsage = (EditText) findViewById(R.id.editNaturalGasUsage);
+        EditText ETnumOfPeople = (EditText) findViewById(R.id.editNum_people);
+        String electricUsage = ETelectricUsage.getText().toString();
+        String naturalGasUsage = ETnaturalGasUsage.getText().toString();
+        String numOfPeople = ETnumOfPeople.getText().toString();
 
 
-                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                    try {
-                        Date start = sdf.parse(startDay+"/"+startMonth+"/"+startYear);
-                        Date end = sdf.parse(EndDay+"/"+EndMonth+"/"+EndYear);
-                        long dateDifference = end.getTime() - start.getTime(); //convert date into msec
-                        dateDifference = dateDifference / 86400000;
-                        //convert time in msec back to days (1000*60*60*24 = 86400000)
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            try {
+                Date start = sdf.parse(startDay+"/"+startMonth+"/"+startYear);
+                Date end = sdf.parse(EndDay+"/"+EndMonth+"/"+EndYear);
+                long dateDifference = end.getTime() - start.getTime(); //convert date into msec
+                dateDifference = dateDifference / 86400000;
+                //convert time in msec back to days (1000*60*60*24 = 86400000)
 
-                        if(dateDifference > 0 && (!electricUsage.matches("") || !naturalGasUsage.matches(""))
-                                && !numOfPeople.matches("") && parseInt(numOfPeople)!= 0){
+                if(dateDifference > 0 && (!electricUsage.matches("") || !naturalGasUsage.matches(""))
+                        && !numOfPeople.matches("") && parseInt(numOfPeople)!= 0){
 
-                                if(!electricUsage.matches("") && naturalGasUsage.matches("")) {
-                                    //when no natural gas data given
-                                    double indElecUsage = parseDouble(electricUsage) / parseDouble(numOfPeople);
-                                    double indGasUsage = 0;
-                                    double indCO2 = indElecUsage*0.009 + indGasUsage*56.1;
-                                        //0.009kg CO2 per kwh of elec, 56.1kg CO2 per GJ of natural gas
-                                    String startDate = startYear+"-"+addZeroToDay(startMonth)+"-"+addZeroToDay(startDay);
-                                    String endDate = EndYear+"-"+addZeroToDay(EndMonth)+"-"+addZeroToDay(EndDay);
-                                    double CO2PerDayPerPerson = indCO2/dateDifference;
+                        if(!electricUsage.matches("") && naturalGasUsage.matches("")) {
+                            //when no natural gas data given
+                            double indElecUsage = parseDouble(electricUsage) / parseDouble(numOfPeople);
+                            double indGasUsage = 0;
+                            double indCO2 = indElecUsage*0.009 + indGasUsage*56.1;
+                                //0.009kg CO2 per kwh of elec, 56.1kg CO2 per GJ of natural gas
+                            String startDate = startYear+"-"+addZeroToDay(startMonth)+"-"+addZeroToDay(startDay);
+                            String endDate = EndYear+"-"+addZeroToDay(EndMonth)+"-"+addZeroToDay(EndDay);
+                            double CO2PerDayPerPerson = indCO2/dateDifference;
 
-                                    if(singleton.checkEditMonthlyUtilities() == 1){ //editing
-                                        Cursor cursor = UtilityDB.rawQuery("select max(UtilityAverageCO2) from UtilityInfoTable",null);
-                                        double maxCO2 = 0;
-                                        cursor.moveToFirst();
-                                        while (!cursor.isAfterLast()){
-                                            maxCO2 = cursor.getDouble(0);
-                                            cursor.moveToNext();
-                                        }
-                                        cursor.close();
-                                        if (maxCO2 < CO2PerDayPerPerson){
-                                            singleton.setEnegyHighest(true);
-                                            singleton.setHighestCO2FromEnegy(CO2PerDayPerPerson);
-                                        }
-                                        UpdateUtilityToDB(startDate,endDate , parseDouble(electricUsage),
-                                                0, dateDifference,
-                                                parseLong(numOfPeople), CO2PerDayPerPerson);
-                                        singleton.userFinishEditMonthlyUtilities();
-                                    }
-                                    else {
-                                        Cursor cursor = UtilityDB.rawQuery("select max(UtilityAverageCO2) from UtilityInfoTable",null);
-                                        double maxCO2 = 0;
-                                        cursor.moveToFirst();
-                                        while (!cursor.isAfterLast()){
-                                            maxCO2 = cursor.getDouble(0);
-                                            cursor.moveToNext();
-                                        }
-                                        cursor.close();
-                                        if (maxCO2 < CO2PerDayPerPerson){
-                                            singleton.setEnegyHighest(true);
-                                            singleton.setHighestCO2FromEnegy(CO2PerDayPerPerson);
-                                        }
-                                        addNewUtilityToDB(startDate,endDate , parseDouble(electricUsage),
-                                                0, dateDifference,
-                                                parseLong(numOfPeople), CO2PerDayPerPerson);
-                                        singleton.userFinishAdd_MonthlyUtilities();
-                                    }
+                            if(singleton.checkEditMonthlyUtilities() == 1){ //editing
+                                Cursor cursor = UtilityDB.rawQuery("select max(UtilityAverageCO2) from UtilityInfoTable",null);
+                                double maxCO2 = 0;
+                                cursor.moveToFirst();
+                                while (!cursor.isAfterLast()){
+                                    maxCO2 = cursor.getDouble(0);
+                                    cursor.moveToNext();
                                 }
-
-                                else if(!naturalGasUsage.matches("") && electricUsage.matches("")) {
-                                    //when no electricity data given
-                                    double indElecUsage = 0;
-                                    double indGasUsage = parseDouble(naturalGasUsage) / parseDouble(numOfPeople);
-                                    double indCO2 = indElecUsage*0.009 + indGasUsage*56.1;
-                                        //0.009kg CO2 per kwh of elec, 56.1kg CO2 per GJ of natural gas
-                                    String startDate = startYear+"-"+addZeroToDay(startMonth)+"-"+addZeroToDay(startDay);
-                                    String endDate = EndYear+"-"+addZeroToDay(EndMonth)+"-"+addZeroToDay(EndDay);
-                                    double CO2PerDayPerPerson = indCO2/dateDifference;
-
-                                    if(singleton.checkEditMonthlyUtilities() == 1){ //editing
-                                        Cursor cursor = UtilityDB.rawQuery("select max(UtilityAverageCO2) from UtilityInfoTable",null);
-                                        double maxCO2 = 0;
-                                        cursor.moveToFirst();
-                                        while (!cursor.isAfterLast()){
-                                            maxCO2 = cursor.getDouble(0);
-                                            cursor.moveToNext();
-                                        }
-                                        cursor.close();
-                                        if (maxCO2 < CO2PerDayPerPerson){
-                                            singleton.setEnegyHighest(true);
-                                            singleton.setHighestCO2FromEnegy(CO2PerDayPerPerson);
-                                        }
-                                        UpdateUtilityToDB(startDate,endDate , 0,
-                                                parseDouble(naturalGasUsage), dateDifference,
-                                                parseLong(numOfPeople), CO2PerDayPerPerson);
-                                        singleton.userFinishEditMonthlyUtilities();
-                                    }
-                                    else {
-                                        Cursor cursor = UtilityDB.rawQuery("select max(UtilityAverageCO2) from UtilityInfoTable",null);
-                                        double maxCO2 = 0;
-                                        cursor.moveToFirst();
-                                        while (!cursor.isAfterLast()){
-                                            maxCO2 = cursor.getDouble(0);
-                                            cursor.moveToNext();
-                                        }
-                                        cursor.close();
-                                        if (maxCO2 < CO2PerDayPerPerson){
-                                            singleton.setEnegyHighest(true);
-                                            singleton.setHighestCO2FromEnegy(CO2PerDayPerPerson);
-                                        }
-                                        addNewUtilityToDB(startDate,endDate , 0,
-                                                parseDouble(naturalGasUsage), dateDifference,
-                                                parseLong(numOfPeople), CO2PerDayPerPerson);
-                                        singleton.userFinishAdd_MonthlyUtilities();
-                                    }
+                                cursor.close();
+                                if (maxCO2 < CO2PerDayPerPerson){
+                                    singleton.setEnegyHighest(true);
+                                    singleton.setHighestCO2FromEnegy(CO2PerDayPerPerson);
                                 }
-
-                                else{   //when both electricity and natural gas data are given
-                                    double indElecUsage = parseDouble(electricUsage) / parseDouble(numOfPeople);
-                                    double indGasUsage = parseDouble(naturalGasUsage) / parseDouble(numOfPeople);
-                                    double indCO2 = indElecUsage*0.009 + indGasUsage*56.1;
-                                        //0.009kg CO2 per kwh of elec, 56.1kg CO2 per GJ of natural gas
-                                    String startDate = startYear+"-"+addZeroToDay(startMonth)+"-"+addZeroToDay(startDay);
-                                    String endDate = EndYear+"-"+addZeroToDay(EndMonth)+"-"+addZeroToDay(EndDay);
-                                    double CO2PerDayPerPerson = indCO2/dateDifference;
-
-                                    if(singleton.checkEditMonthlyUtilities() == 1){ //editing
-                                        Cursor cursor = UtilityDB.rawQuery("select max(UtilityAverageCO2) from UtilityInfoTable",null);
-                                        double maxCO2 = 0;
-                                        cursor.moveToFirst();
-                                        while (!cursor.isAfterLast()){
-                                            maxCO2 = cursor.getDouble(0);
-                                            cursor.moveToNext();
-                                        }
-                                        cursor.close();
-                                        if (maxCO2 < CO2PerDayPerPerson){
-                                            singleton.setEnegyHighest(true);
-                                            singleton.setHighestCO2FromEnegy(CO2PerDayPerPerson);
-                                        }
-                                        UpdateUtilityToDB(startDate,endDate , parseDouble(electricUsage),
-                                                parseDouble(naturalGasUsage), dateDifference,
-                                                parseLong(numOfPeople), CO2PerDayPerPerson);
-                                        singleton.userFinishEditMonthlyUtilities();
-                                    }
-                                    else {
-                                        Cursor cursor = UtilityDB.rawQuery("select max(UtilityAverageCO2) from UtilityInfoTable",null);
-                                        double maxCO2 = 0;
-                                        cursor.moveToFirst();
-                                        while (!cursor.isAfterLast()){
-                                            maxCO2 = cursor.getDouble(0);
-                                            cursor.moveToNext();
-                                        }
-                                        cursor.close();
-                                        if (maxCO2 < CO2PerDayPerPerson){
-                                            singleton.setEnegyHighest(true);
-                                            singleton.setHighestCO2FromEnegy(CO2PerDayPerPerson);
-                                        }
-                                        addNewUtilityToDB(startDate,endDate,parseDouble(electricUsage),
-                                                parseDouble(naturalGasUsage), dateDifference,
-                                                parseLong(numOfPeople),CO2PerDayPerPerson);
-                                        singleton.userFinishAdd_MonthlyUtilities();
-                                    }
+                                UpdateUtilityToDB(startDate,endDate , parseDouble(electricUsage),
+                                        0, dateDifference,
+                                        parseLong(numOfPeople), CO2PerDayPerPerson);
+                                singleton.userFinishEditMonthlyUtilities();
+                            }
+                            else {
+                                Cursor cursor = UtilityDB.rawQuery("select max(UtilityAverageCO2) from UtilityInfoTable",null);
+                                double maxCO2 = 0;
+                                cursor.moveToFirst();
+                                while (!cursor.isAfterLast()){
+                                    maxCO2 = cursor.getDouble(0);
+                                    cursor.moveToNext();
                                 }
-                            setLatestBill();
-                            startActivity(new Intent(AddMonthlyUtilities.this, DisplayMonthlyUtilities.class));
-                            finish();
-                        }
-                        else if(dateDifference <= 0){
-                            Toast.makeText(AddMonthlyUtilities.this,"Ending date cannot be equal to or " +
-                                    "earlier than starting date",Toast.LENGTH_LONG).show();
-                        }
-                        else if(electricUsage.matches("") && naturalGasUsage.matches("")){
-                            Toast.makeText(AddMonthlyUtilities.this,"Please fill in at least one of the" +
-                                    " usage data",Toast.LENGTH_LONG).show();
-                        }
-                        else if(numOfPeople.matches("") || parseInt(numOfPeople)== 0){
-                            Toast.makeText(AddMonthlyUtilities.this,"Number of people cannot be zero(blank)",
-                                    Toast.LENGTH_LONG).show();
+                                cursor.close();
+                                if (maxCO2 < CO2PerDayPerPerson){
+                                    singleton.setEnegyHighest(true);
+                                    singleton.setHighestCO2FromEnegy(CO2PerDayPerPerson);
+                                }
+                                addNewUtilityToDB(startDate,endDate , parseDouble(electricUsage),
+                                        0, dateDifference,
+                                        parseLong(numOfPeople), CO2PerDayPerPerson);
+                                singleton.userFinishAdd_MonthlyUtilities();
+                            }
                         }
 
+                        else if(!naturalGasUsage.matches("") && electricUsage.matches("")) {
+                            //when no electricity data given
+                            double indElecUsage = 0;
+                            double indGasUsage = parseDouble(naturalGasUsage) / parseDouble(numOfPeople);
+                            double indCO2 = indElecUsage*0.009 + indGasUsage*56.1;
+                                //0.009kg CO2 per kwh of elec, 56.1kg CO2 per GJ of natural gas
+                            String startDate = startYear+"-"+addZeroToDay(startMonth)+"-"+addZeroToDay(startDay);
+                            String endDate = EndYear+"-"+addZeroToDay(EndMonth)+"-"+addZeroToDay(EndDay);
+                            double CO2PerDayPerPerson = indCO2/dateDifference;
 
-                    }
-                    catch(Exception  e){
-                        Toast.makeText(AddMonthlyUtilities.this, "Please pick a date", Toast.LENGTH_LONG).show();
-                    }
+                            if(singleton.checkEditMonthlyUtilities() == 1){ //editing
+                                Cursor cursor = UtilityDB.rawQuery("select max(UtilityAverageCO2) from UtilityInfoTable",null);
+                                double maxCO2 = 0;
+                                cursor.moveToFirst();
+                                while (!cursor.isAfterLast()){
+                                    maxCO2 = cursor.getDouble(0);
+                                    cursor.moveToNext();
+                                }
+                                cursor.close();
+                                if (maxCO2 < CO2PerDayPerPerson){
+                                    singleton.setEnegyHighest(true);
+                                    singleton.setHighestCO2FromEnegy(CO2PerDayPerPerson);
+                                }
+                                UpdateUtilityToDB(startDate,endDate , 0,
+                                        parseDouble(naturalGasUsage), dateDifference,
+                                        parseLong(numOfPeople), CO2PerDayPerPerson);
+                                singleton.userFinishEditMonthlyUtilities();
+                            }
+                            else {
+                                Cursor cursor = UtilityDB.rawQuery("select max(UtilityAverageCO2) from UtilityInfoTable",null);
+                                double maxCO2 = 0;
+                                cursor.moveToFirst();
+                                while (!cursor.isAfterLast()){
+                                    maxCO2 = cursor.getDouble(0);
+                                    cursor.moveToNext();
+                                }
+                                cursor.close();
+                                if (maxCO2 < CO2PerDayPerPerson){
+                                    singleton.setEnegyHighest(true);
+                                    singleton.setHighestCO2FromEnegy(CO2PerDayPerPerson);
+                                }
+                                addNewUtilityToDB(startDate,endDate , 0,
+                                        parseDouble(naturalGasUsage), dateDifference,
+                                        parseLong(numOfPeople), CO2PerDayPerPerson);
+                                singleton.userFinishAdd_MonthlyUtilities();
+                            }
+                        }
+
+                        else{   //when both electricity and natural gas data are given
+                            double indElecUsage = parseDouble(electricUsage) / parseDouble(numOfPeople);
+                            double indGasUsage = parseDouble(naturalGasUsage) / parseDouble(numOfPeople);
+                            double indCO2 = indElecUsage*0.009 + indGasUsage*56.1;
+                                //0.009kg CO2 per kwh of elec, 56.1kg CO2 per GJ of natural gas
+                            String startDate = startYear+"-"+addZeroToDay(startMonth)+"-"+addZeroToDay(startDay);
+                            String endDate = EndYear+"-"+addZeroToDay(EndMonth)+"-"+addZeroToDay(EndDay);
+                            double CO2PerDayPerPerson = indCO2/dateDifference;
+
+                            if(singleton.checkEditMonthlyUtilities() == 1){ //editing
+                                Cursor cursor = UtilityDB.rawQuery("select max(UtilityAverageCO2) from UtilityInfoTable",null);
+                                double maxCO2 = 0;
+                                cursor.moveToFirst();
+                                while (!cursor.isAfterLast()){
+                                    maxCO2 = cursor.getDouble(0);
+                                    cursor.moveToNext();
+                                }
+                                cursor.close();
+                                if (maxCO2 < CO2PerDayPerPerson){
+                                    singleton.setEnegyHighest(true);
+                                    singleton.setHighestCO2FromEnegy(CO2PerDayPerPerson);
+                                }
+                                UpdateUtilityToDB(startDate,endDate , parseDouble(electricUsage),
+                                        parseDouble(naturalGasUsage), dateDifference,
+                                        parseLong(numOfPeople), CO2PerDayPerPerson);
+                                singleton.userFinishEditMonthlyUtilities();
+                            }
+                            else {
+                                Cursor cursor = UtilityDB.rawQuery("select max(UtilityAverageCO2) from UtilityInfoTable",null);
+                                double maxCO2 = 0;
+                                cursor.moveToFirst();
+                                while (!cursor.isAfterLast()){
+                                    maxCO2 = cursor.getDouble(0);
+                                    cursor.moveToNext();
+                                }
+                                cursor.close();
+                                if (maxCO2 < CO2PerDayPerPerson){
+                                    singleton.setEnegyHighest(true);
+                                    singleton.setHighestCO2FromEnegy(CO2PerDayPerPerson);
+                                }
+                                addNewUtilityToDB(startDate,endDate,parseDouble(electricUsage),
+                                        parseDouble(naturalGasUsage), dateDifference,
+                                        parseLong(numOfPeople),CO2PerDayPerPerson);
+                                singleton.userFinishAdd_MonthlyUtilities();
+                            }
+                        }
+                    setLatestBill();
+                    startActivity(new Intent(AddMonthlyUtilities.this, DisplayMonthlyUtilities.class));
+                    finish();
+                }
+                else if(dateDifference <= 0){
+                    Toast.makeText(AddMonthlyUtilities.this, R.string.EndDateGreaterThanStartDate,
+                            Toast.LENGTH_LONG).show();
+                }
+                else if(electricUsage.matches("") && naturalGasUsage.matches("")){
+                    Toast.makeText(AddMonthlyUtilities.this, R.string.FillAtLeast1UsageData,Toast.LENGTH_LONG).show();
+                }
+                else if(numOfPeople.matches("") || parseInt(numOfPeople)== 0){
+                    Toast.makeText(AddMonthlyUtilities.this, R.string.ValueCannotBe0,
+                            Toast.LENGTH_LONG).show();
+                }
+
 
             }
-        });
+            catch(Exception  e){
+                Toast.makeText(AddMonthlyUtilities.this, R.string.PickADate, Toast.LENGTH_LONG).show();
+            }
     }
 
     private String addZeroToDay(String startDay) {
@@ -463,46 +456,36 @@ public class AddMonthlyUtilities extends AppCompatActivity {
     }
 
 
-    private void setupDeleteButton(final long position){
-        FloatingActionButton delete = (FloatingActionButton) findViewById(R.id.cancel_billing_btn);
-        if(singleton.checkAdd_MonthlyUtilities() == 1){
-            delete.setVisibility(View.INVISIBLE);
-            return;
-        }
-        delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new AlertDialog.Builder(AddMonthlyUtilities.this)
-                        .setTitle("Delete Bill")
-                        .setMessage(R.string.BillWarning)
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Intent del_intent = new Intent();
-                                //TODO delete bill from database
-                                UtilityDB.delete(SuperUltraInfoDataBaseHelper.Utility_Table,
-                                        "_id"+"="+position,null);
-                                UtilityDB.close();
-                                singleton.userFinishEditMonthlyUtilities();
-                                setResult(Activity.RESULT_OK, del_intent);
-                                Toast.makeText(AddMonthlyUtilities.this, "The selected bill has been deleted",
-                                        Toast.LENGTH_LONG).show();
-                                startActivity(new Intent(AddMonthlyUtilities.this, DisplayMonthlyUtilities.class));
-                                finish();
-                            }
-                        })
-                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
-                                singleton.userFinishEditMonthlyUtilities();
-                                startActivity(new Intent(AddMonthlyUtilities.this, DisplayMonthlyUtilities.class));
-                                finish();
-                            }
-                        })
-                        .setIcon(android.R.drawable.ic_dialog_alert).show();
-            }
-        });
+    private void setupDelete(final long position){
+        new AlertDialog.Builder(AddMonthlyUtilities.this)
+                .setTitle("Delete Bill")
+                .setMessage(R.string.BillWarning)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent del_intent = new Intent();
+                        //TODO delete bill from database
+                        UtilityDB.delete(SuperUltraInfoDataBaseHelper.Utility_Table,
+                                "_id"+"="+position,null);
+                        UtilityDB.close();
+                        singleton.userFinishEditMonthlyUtilities();
+                        setResult(Activity.RESULT_OK, del_intent);
+                        Toast.makeText(AddMonthlyUtilities.this, R.string.BillHasBeenDeleted,
+                                Toast.LENGTH_LONG).show();
+                        startActivity(new Intent(AddMonthlyUtilities.this, DisplayMonthlyUtilities.class));
+                        finish();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                        singleton.userFinishEditMonthlyUtilities();
+                        startActivity(new Intent(AddMonthlyUtilities.this, DisplayMonthlyUtilities.class));
+                        finish();
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert).show();
     }
 
     public void onBackPressed(){
@@ -516,5 +499,73 @@ public class AddMonthlyUtilities extends AppCompatActivity {
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         singleton.setLatestBill(sdf.format(calendar.getTime()));
+    }
+
+    private void setToolBar(){
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_LOW_PROFILE
+                | View.SYSTEM_UI_FLAG_IMMERSIVE);
+        Toolbar toolBar = (Toolbar) findViewById(R.id.toolbar_add_bill);
+        setSupportActionBar(toolBar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if(singleton.checkAdd_MonthlyUtilities() == 1){
+            getMenuInflater().inflate(R.menu.toolbar_add_button, menu);
+            return true;
+        }
+        else {
+            getMenuInflater().inflate(R.menu.toolbar_check_delete_buttons, menu);
+            return true;
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if(id == R.id.tool_change_unit){
+            if(singleton.checkCO2Unit() == 0) {
+                singleton.humanRelatableUnit();
+                Toast.makeText(getApplicationContext(), R.string.UnitChangedToGarbageUnit, Toast.LENGTH_SHORT).show();
+            }
+            else {
+                singleton.originalUnit();
+                Toast.makeText(getApplicationContext(), R.string.UnitChangedToKG, Toast.LENGTH_SHORT).show();
+            }saveCO2UnitStatus(singleton.checkCO2Unit());
+            return true;
+        }
+        if(id == R.id.tool_about){
+            startActivity(new Intent(AddMonthlyUtilities.this, AboutActivity.class));
+            return true;
+        }
+        if(id == R.id.tool_add || id == R.id.tool_check){
+            setupAdd();
+            return true;
+        }
+        if(id == R.id.tool_delete){
+            setupDelete(position);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void saveCO2UnitStatus(int status) {
+        SharedPreferences prefs = this.getSharedPreferences("CO2Status", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt("CO2 status", status);
+        editor.apply();
     }
 }

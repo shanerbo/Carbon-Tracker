@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.olive.carbon_tracker.UI.GraphPicker">
+    tools:context="com.example.olive.carbon_tracker.UI.GraphPicker"
+    android:background="@drawable/sky">
 
     <Button
         android:id="@+id/btnSingleDay"
@@ -33,5 +34,13 @@
         android:text="@string/year"
         android:layout_below="@+id/btnMonthGraph"
         android:layout_centerHorizontal="true" />
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_graph_picker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme" />
 
 </RelativeLayout>
