@@ -6,12 +6,16 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -54,11 +58,9 @@ public class SelectTransportationModeAndDate extends AppCompatActivity {
         setContentView(R.layout.activity_select_transportation_mode_and_date);
 
         populateTransportationSpinner();
-        setButton(R.id.ID_button_OKmode);
-        setButton(R.id.ID_button_mode_cancel);
         viewCurrentDate();
-        setupCalendarButton();
         checkNotifications();
+        setToolBar();
     }
     public void onRestart() {
         super.onRestart();
@@ -67,8 +69,6 @@ public class SelectTransportationModeAndDate extends AppCompatActivity {
         String month = singleton.getUserMonth();
         String year = singleton.getUserYear();
         currentDate.setText(day + "/" + month + "/" + year);
-        //TODO fix the problem that if i want to edit a journey like march 8th 2016,
-        // the text shows is 08/March 2016 but the calender is pointing to the current date
         singleton.setIsDateChanged(false);
     }
     private void viewCurrentDate(){
@@ -98,17 +98,6 @@ public class SelectTransportationModeAndDate extends AppCompatActivity {
             currentDate.setText(day + "/" + month + "/" + year);
             singleton.setIsDateChanged(false);
         }
-    }
-
-
-    private void setupCalendarButton(){
-            Button btn = (Button) findViewById(R.id.btnChangeDate);
-            btn.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    Intent intent = new Intent(SelectTransportationModeAndDate.this,DisplayCalendar.class);
-                    startActivity(intent);
-                }
-            });
     }
 
     private void populateTransportationSpinner() {
@@ -147,61 +136,54 @@ public class SelectTransportationModeAndDate extends AppCompatActivity {
     }
 
     private void setButton(final int id) {
-        FloatingActionButton button = (FloatingActionButton) findViewById(id);
-
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                switch (id) {
-                    case R.id.ID_button_OKmode:
-                        if(UserTransportationMode == 0) { //user selects car
-                            Intent showActivity = new Intent(SelectTransportationModeAndDate.this, DisplayCarList.class);
-                            startActivity(showActivity);
-                            break;
-                        }
-                        else { //user selects transportation modes other than cars
-                            Intent showActivity = new Intent(SelectTransportationModeAndDate.this, DisplayRouteList.class);
-                            startActivity(showActivity);
-                            break;
-                        }
-                    case R.id.ID_button_mode_cancel:
-                        if (!singleton.isEditingJourney()){
-                            Intent goBackToMainMenu = MainMenu.makeIntent(SelectTransportationModeAndDate.this);
-                            startActivity(goBackToMainMenu);
-                            finish();
-                        }else {
-                            new AlertDialog.Builder(SelectTransportationModeAndDate.this)
-                                    .setTitle("Delete MoreJourneys")
-                                    .setMessage(R.string.DeleteJourneyWarning)
-                                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-
-                                            Intent del_intent = new Intent();
-                                            RouteDB.delete(SuperUltraInfoDataBaseHelper.Journey_Table,
-                                                    "_id" + "=" + JourneyPosition, null);
-                                            RouteDB.close();
-                                            singleton.userFinishEditJourney();
-                                            setResult(Activity.RESULT_OK, del_intent);
-                                            //    Toast.makeText(SelectTransportationModeAndDate.this,getString(R.string.UserDeleteJourney),Toast.LENGTH_LONG).show();
-                                            finish();
-                                            Intent ShowNewJourneyList = DisplayJourneyList.makeIntent(SelectTransportationModeAndDate.this);
-                                            startActivity(ShowNewJourneyList);
-                                        }
-                                    })
-                                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            dialog.cancel();
-                                            singleton.userFinishEdit();
-                                        }
-                                    })
-                                    .setIcon(android.R.drawable.ic_dialog_alert).show();
-                        }
-                        break;
+        switch (id) {
+            case R.id.tool_check:
+                if(UserTransportationMode == 0) { //user selects car
+                    Intent showActivity = new Intent(SelectTransportationModeAndDate.this, DisplayCarList.class);
+                    startActivity(showActivity);
+                    break;
                 }
-            }
-        });
+                else { //user selects transportation modes other than cars
+                    Intent showActivity = new Intent(SelectTransportationModeAndDate.this, DisplayRouteList.class);
+                    startActivity(showActivity);
+                    break;
+                }
+            case R.id.tool_delete:
+                if (!singleton.isEditingJourney()){
+                    Intent goBackToMainMenu = MainMenu.makeIntent(SelectTransportationModeAndDate.this);
+                    startActivity(goBackToMainMenu);
+                    finish();
+                }else {
+                    new AlertDialog.Builder(SelectTransportationModeAndDate.this)
+                            .setTitle("Delete MoreJourneys")
+                            .setMessage(R.string.DeleteJourneyWarning)
+                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    Intent del_intent = new Intent();
+                                    RouteDB.delete(SuperUltraInfoDataBaseHelper.Journey_Table,
+                                            "_id" + "=" + JourneyPosition, null);
+                                    RouteDB.close();
+                                    singleton.userFinishEditJourney();
+                                    setResult(Activity.RESULT_OK, del_intent);
+                                    finish();
+                                    Intent ShowNewJourneyList = DisplayJourneyList.makeIntent(SelectTransportationModeAndDate.this);
+                                    startActivity(ShowNewJourneyList);
+                                }
+                            })
+                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                    singleton.userFinishEdit();
+                                }
+                            })
+                            .setIcon(android.R.drawable.ic_dialog_alert).show();
+                }
+                break;
+        }
+
     }
     public void onBackPressed() {
         if (singleton.isEditingJourney()){
@@ -308,5 +290,69 @@ public class SelectTransportationModeAndDate extends AppCompatActivity {
             ).show();
         }
         return -1;
+    }
+
+    private void setToolBar(){
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_LOW_PROFILE
+                | View.SYSTEM_UI_FLAG_IMMERSIVE);
+        Toolbar toolBar = (Toolbar) findViewById(R.id.toolbar_mode);
+        setSupportActionBar(toolBar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_transmode, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if(id == R.id.tool_change_unit){
+            if(singleton.checkCO2Unit() == 0)
+                singleton.humanRelatableUnit();
+            else
+                singleton.originalUnit();
+            saveCO2UnitStatus(singleton.checkCO2Unit());
+            Toast.makeText(getApplicationContext(), "CO2 unit has been changed", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        if(id == R.id.tool_about){
+            startActivity(new Intent(SelectTransportationModeAndDate.this, AboutActivity.class));
+            return true;
+        }
+        if(id == R.id.tool_date){
+            startActivity(new Intent(SelectTransportationModeAndDate.this, DisplayCalendar.class));
+            return true;
+        }
+        if(id == R.id.tool_check){
+            setButton(R.id.tool_check);
+            return true;
+        }
+        if(id == R.id.tool_delete){
+            setButton(R.id.tool_delete);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void saveCO2UnitStatus(int status) {
+        SharedPreferences prefs = this.getSharedPreferences("CO2Status", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt("CO2 status", status);
+        editor.apply();
     }
 }
