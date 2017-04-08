@@ -129,7 +129,7 @@ public class MonthGraph extends AppCompatActivity {
         ArrayList<BarEntry> transportationEntries = new ArrayList<BarEntry>();
 
         if (isChartEmpty) {
-            Toast.makeText(getApplicationContext(), "NO DATA AVAILABLE", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), R.string.no_data_available, Toast.LENGTH_SHORT).show();
 
         } else {
             for (int i = 0; i < MONTH; i++) {
@@ -590,8 +590,11 @@ public class MonthGraph extends AppCompatActivity {
             long dateDifference = end.getTime() - start.getTime();
             return dateDifference / 1000 / 60 / 60 / 24;
         } catch (Exception e) {
-            Toast.makeText(MonthGraph.this, "ERROR: SingleDayGraph" +
-                    " dateDifference calculation failed", Toast.LENGTH_LONG).show();
+            Toast.makeText(
+                    MonthGraph.this,
+                    getString(R.string.date_difference_error, getString(R.string.month_graph)),
+                    Toast.LENGTH_LONG
+            ).show();
         }
         return -1;
     }
@@ -809,12 +812,15 @@ public class MonthGraph extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if(id == R.id.tool_change_unit){
-            if(singleton.checkCO2Unit() == 0)
+            if(singleton.checkCO2Unit() == 0) {
                 singleton.humanRelatableUnit();
-            else
+                Toast.makeText(getApplicationContext(), R.string.UnitChangedToGarbageUnit, Toast.LENGTH_SHORT).show();
+            }
+            else {
                 singleton.originalUnit();
+                Toast.makeText(getApplicationContext(), R.string.UnitChangedToKG, Toast.LENGTH_SHORT).show();
+            }
             saveCO2UnitStatus(singleton.checkCO2Unit());
-            Toast.makeText(getApplicationContext(), "CO2 unit has been changed", Toast.LENGTH_SHORT).show();
             return true;
         }
         if(id == R.id.tool_about){

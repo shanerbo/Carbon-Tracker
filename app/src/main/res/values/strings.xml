@@ -209,6 +209,9 @@
     <string name="co2_production">You have produced: %s kg of CO2</string>
     <string name="DifferentUnitForCO2Emitted">The CO2 emission you have produced is equivalent to producing %s kg of regular garbage.</string>
     <string name="zero_emissions">The CO2 emission you have produced is equivalent to producing 0.00 kg of regular garbage.</string>
+    <string name="no_data_available">NO DATA AVAILABLE</string>
+    <string name="month_graph">Month Graph</string>
+    <string name="display_monthly_utilities">Display Monthly Utilities</string>
     <string name="errorSingleDayCalculationFailed">ERROR: SingleDayGraph dateDifference calculation failed</string>
     <string name="errorYearGraphCalculationFail">ERROR: YearGraph dateDifference calculation failed</string>
     <string name="alreadyAtAboutScreen">You are already at About screen</string>
