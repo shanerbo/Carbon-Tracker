@@ -1,10 +1,11 @@
 package com.example.olive.carbon_tracker.UI;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,17 +25,24 @@ public class AboutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_about);
-        setTestView(R.id.txtVersion);
+        setTextView(R.id.txtVersion);
+        setTextView(R.id.txtSFULink);
+        setTextView(R.id.txtImageCitations);
         setToolBar();
     }
 
-    private void setTestView(int id) {
+    private void setTextView(int id) {
         TextView textView = (TextView) findViewById(id);
-        TypedValue temp = new TypedValue();
-        getResources().getValue(R.dimen.current_version, temp, true);
-        float currentVersion = temp.getFloat();
-        String msg = getString(R.string.app_version, currentVersion);
-        textView.setText(msg);
+        String msg;
+        if (id == R.id.txtVersion) {
+            TypedValue temp = new TypedValue();
+            getResources().getValue(R.dimen.current_version, temp, true);
+            float currentVersion = temp.getFloat();
+            msg = getString(R.string.app_version, currentVersion);
+            textView.setText(msg);
+        } else {
+            textView.setMovementMethod(LinkMovementMethod.getInstance());
+        }
     }
 
     public void onBackPressed() {
