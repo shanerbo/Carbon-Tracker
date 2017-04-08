@@ -417,8 +417,7 @@ public class SingleDayGraph extends AppCompatActivity {
             long dateDifference = end.getTime() - start.getTime();
             return dateDifference / 1000 / 60 / 60 / 24;
         } catch (Exception e) {
-            Toast.makeText(SingleDayGraph.this, "ERROR: SingleDayGraph" +
-                    " dateDifference calculation failed", Toast.LENGTH_LONG).show();
+            Toast.makeText(SingleDayGraph.this, R.string.errorSingleDayCalculationFailed, Toast.LENGTH_LONG).show();
         }
         return -1;
     }
@@ -542,12 +541,15 @@ public class SingleDayGraph extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if(id == R.id.tool_change_unit){
-            if(singleton.checkCO2Unit() == 0)
+            if(singleton.checkCO2Unit() == 0) {
                 singleton.humanRelatableUnit();
-            else
+                Toast.makeText(getApplicationContext(), R.string.UnitChangedToGarbageUnit, Toast.LENGTH_SHORT).show();
+            }
+            else {
                 singleton.originalUnit();
+                Toast.makeText(getApplicationContext(), R.string.UnitChangedToKG, Toast.LENGTH_SHORT).show();
+            }
             saveCO2UnitStatus(singleton.checkCO2Unit());
-            Toast.makeText(getApplicationContext(), "CO2 unit has been changed", Toast.LENGTH_SHORT).show();
             return true;
         }
         if(id == R.id.tool_about){
