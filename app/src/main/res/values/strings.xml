@@ -215,6 +215,4 @@
     <string name="errorSingleDayCalculationFailed">ERROR: SingleDayGraph dateDifference calculation failed</string>
     <string name="errorYearGraphCalculationFail">ERROR: YearGraph dateDifference calculation failed</string>
     <string name="alreadyAtAboutScreen">You are already at About screen</string>
-
-
 </resources>
