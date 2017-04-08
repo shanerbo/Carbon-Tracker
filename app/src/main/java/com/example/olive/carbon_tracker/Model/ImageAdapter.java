@@ -17,7 +17,7 @@ import com.example.olive.carbon_tracker.R;
 import java.util.ArrayList;
 
 /**
- * Helps adapt vehicle icon
+ * Helps adapt vehicle icons
  */
 
 public class ImageAdapter extends ArrayAdapter<ImageSpinnerData> {
